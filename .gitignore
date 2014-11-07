@@ -1,0 +1,7 @@
+.DS_Store
+.*~
+Pods
+Stripchat.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+Stripchat.xcodeproj/project.xcworkspace/xcuserdata/
+Stripchat.xcodeproj/xcuserdata/
+Stripchat.xcworkspace/
