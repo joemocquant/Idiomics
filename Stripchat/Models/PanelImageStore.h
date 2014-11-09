@@ -13,15 +13,14 @@
 
 @optional
 
-- (void)didLoadPanelWithPanelId:(NSString *)panelId;
+- (void)didLoadPanelWithPanelKey:(NSString *)key;
+- (void)didLoadAllPanels;
 
 @end
 
 @interface PanelImageStore : NSObject
-{
-    NSMutableDictionary *panelImageDictionary;
-}
 
+@property (nonatomic, strong, readonly) NSMutableDictionary *panelImageDictionary;
 @property (nonatomic, weak) id<PanelImageStoreDelegate> delegate;
 
 + (instancetype)sharedStore;

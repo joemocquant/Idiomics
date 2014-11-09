@@ -11,13 +11,16 @@
 #import "Helper.h"
 #import "Panel.h"
 #import "PanelStore.h"
-#import "PanelImageStore.h"
 #import <ReactiveCocoa.h>
 #import <Mantle.h>
+#import "MosaicLayout.h"
+#import "MosaicCell.h"
 
-@interface BrowserViewController ()
-
-@end
+#define kColumnsiPadLandscape 5
+#define kColumnsiPadPortrait 4
+#define kColumnsiPhoneLandscape 3
+#define kColumnsiPhonePortrait 2
+#define kDoubleColumnProbability 40
 
 @implementation BrowserViewController
 
@@ -28,15 +31,35 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.title = @"Stripchat";
-    
     [[PanelImageStore sharedStore] setDelegate:self];
     [self loadAllPannels];
+
+    cv = [[UICollectionView alloc] initWithFrame:self.view.frame
+                            collectionViewLayout:[[MosaicLayout alloc] init]];
+    
+    [(MosaicLayout *)cv.collectionViewLayout setDelegate:self];
+    [cv setDelegate:self];
+    [cv setDataSource:self];
+    
+    [cv registerClass:[MosaicCell class] forCellWithReuseIdentifier:@"cell"];
+    
+    cv.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+
+    [self.view addSubview:cv];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                               duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    MosaicLayout *layout = (MosaicLayout *)cv.collectionViewLayout;
+    [layout invalidateLayout];
 }
 
 
@@ -50,19 +73,16 @@
             case 200:
                 //OK
             {
-                NSArray *panels = [responseObject objectForKey:@"rows"];
-                panels = [[[[panels valueForKey:@"value"] rac_sequence] map:^Panel *(id panel) {
-                    
-                    return [MTLJSONAdapter modelOfClass:Panel.class fromJSONDictionary:panel error:nil];
-                    
-                }] array];
+                NSDictionary *panels = [[responseObject objectForKey:@"rows"] valueForKey:@"value"];
                 
-                for (Panel *panel in panels) {
-                    [[PanelStore sharedStore] addPanel:panel forKey:panel.panelId];
-                }
+                for (NSDictionary *panel in panels) {
+                    
+                    Panel *p = [MTLJSONAdapter modelOfClass:Panel.class fromJSONDictionary:panel error:nil];
+                    [[PanelStore sharedStore] addPanel:p];
+                };
                 
                 [[PanelImageStore sharedStore] setAllPanelImages];
-                
+                [cv reloadData];
                 break;
             }
                 
@@ -93,9 +113,194 @@
 
 #pragma mark - PanelImageStoreDelegate
 
-- (void)didLoadPanelWithPanelId:(NSString *)panelId;
+- (void)didLoadPanelWithPanelKey:(NSString *)key
 {
-    NSLog(@"Panel id:%@ loaded", panelId);
+    NSLog(@"Panel id:%@ loaded", key);
+}
+
+- (void)didLoadAllPanels
+{
+    NSLog(@"did load all panels!");
+}
+
+
+#pragma mark - UICollectionViewDelegate
+
+
+#pragma mark - UICollectionViewDataSource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section
+{
+    return [[[PanelStore sharedStore] allPanels] count];
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"cell";
+    MosaicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    
+    NSDictionary *dictionary = @{@"imageFilename": ((Panel *)[[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row]).imageUrl,
+                                 @"title": @""};
+    
+    MosaicData *data = [[MosaicData alloc] initWithDictionary:dictionary];
+    cell.mosaicData = data;
+    
+    float randomWhite = (arc4random() % 40 + 10) / 255.0;
+    cell.backgroundColor = [UIColor colorWithWhite:randomWhite alpha:1];
+    return cell;
+}
+
+
+#pragma mark - MosaicLayoutDelegate
+
+-(float)collectionView:(UICollectionView *)collectionView relativeHeightForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    //  Base relative height for simple layout type. This is 1.0 (height equals to width)
+    float retVal = 1.0;
+    
+    NSDictionary *dictionary = @{@"imageFilename": ((Panel *)[[[PanelStore sharedStore] allPanels]objectAtIndex:indexPath.row]).imageUrl,
+                                 @"title": @""};
+    
+    MosaicData *aMosaicModule = [[MosaicData alloc] initWithDictionary:dictionary];
+    
+    if (aMosaicModule.relativeHeight != 0){
+        
+        //  If the relative height was set before, return it
+        retVal = aMosaicModule.relativeHeight;
+        
+    }else{
+        
+        BOOL isDoubleColumn = [self collectionView:collectionView isDoubleColumnAtIndexPath:indexPath];
+        if (isDoubleColumn){
+            //  Base relative height for double layout type. This is 0.75 (height equals to 75% width)
+            retVal = 0.75;
+        }
+        
+        /*  Relative height random modifier. The max height of relative height is 25% more than
+         *  the base relative height */
+        
+        float extraRandomHeight = arc4random() % 25;
+        retVal = retVal + (extraRandomHeight / 100);
+        
+        /*  Persist the relative height on MosaicData so the value will be the same every time
+         *  the mosaic layout invalidates */
+        
+        aMosaicModule.relativeHeight = retVal;
+    }
+    
+    return retVal;
+}
+
+-(BOOL)collectionView:(UICollectionView *)collectionView isDoubleColumnAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    NSDictionary *dictionary = @{@"imageFilename": ((Panel *)[[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row]).imageUrl,
+                                 @"title": @""};
+    
+    MosaicData *aMosaicModule = [[MosaicData alloc] initWithDictionary:dictionary];
+    
+    if (aMosaicModule.layoutType == kMosaicLayoutTypeUndefined){
+        
+        /*  First layout. We have to decide if the MosaicData should be
+         *  double column (if possible) or not. */
+        
+        NSUInteger random = arc4random() % 100;
+        if (random < kDoubleColumnProbability){
+            aMosaicModule.layoutType = kMosaicLayoutTypeDouble;
+        }else{
+            aMosaicModule.layoutType = kMosaicLayoutTypeSingle;
+        }
+    }
+    
+    BOOL retVal = aMosaicModule.layoutType == kMosaicLayoutTypeDouble;
+    
+    return retVal;
+    
+}
+
+-(NSUInteger)numberOfColumnsInCollectionView:(UICollectionView *)collectionView
+{
+    UIInterfaceOrientation anOrientation = self.interfaceOrientation;
+    
+    //  Set the quantity of columns according of the device and interface orientation
+    NSUInteger retVal = 0;
+    if (UIInterfaceOrientationIsLandscape(anOrientation)){
+        
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad){
+            retVal = kColumnsiPadLandscape;
+        }else{
+            retVal = kColumnsiPhoneLandscape;
+        }
+        
+    }else{
+        
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad){
+            retVal = kColumnsiPadPortrait;
+        }else{
+            retVal = kColumnsiPhonePortrait;
+        }
+    }
+    
+    return retVal;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *key = ((Panel *)[[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row]).imageUrl;
+    UIImage *originalImage = [[[PanelImageStore sharedStore] panelImageDictionary] objectForKey:key];
+    originalImageView = [[UIImageView alloc] initWithImage:originalImage];
+    
+    fullScreenImageView = [[UIImageView alloc] init];
+    [fullScreenImageView setContentMode:UIViewContentModeScaleAspectFit];
+    
+    fullScreenImageView.image = [originalImageView image];
+    // ***********************************************************************************
+    // You can either use this to zoom in from the center of your cell
+    CGRect tempPoint = CGRectMake(originalImageView.center.x, originalImageView.center.y, 0, 0);
+    // OR, if you want to zoom from the tapped point...
+    // CGRect tempPoint = CGRectMake(pointInCollectionView.x, pointInCollectionView.y, 0, 0);
+    // ***********************************************************************************
+    CGRect startingPoint = [self.view convertRect:tempPoint fromView:[collectionView cellForItemAtIndexPath:indexPath]];
+    [fullScreenImageView setFrame:startingPoint];
+    [fullScreenImageView setBackgroundColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.9f]];
+    
+    [self.view addSubview:fullScreenImageView];
+    
+    [UIView animateWithDuration:0.4
+                     animations:^{
+                         [fullScreenImageView setFrame:CGRectMake(0,
+                                                                  0,
+                                                                  self.view.bounds.size.width,
+                                                                  self.view.bounds.size.height)];
+                     }];
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fullScreenImageViewTapped:)];
+    singleTap.numberOfTapsRequired = 1;
+    singleTap.numberOfTouchesRequired = 1;
+    [fullScreenImageView addGestureRecognizer:singleTap];
+    [fullScreenImageView setUserInteractionEnabled:YES];
+}
+
+- (void)fullScreenImageViewTapped:(UIGestureRecognizer *)gestureRecognizer
+{
+    
+    CGRect point=[self.view convertRect:originalImageView.bounds fromView:originalImageView];
+    
+    gestureRecognizer.view.backgroundColor=[UIColor clearColor];
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         [(UIImageView *)gestureRecognizer.view setFrame:point];
+                     }];
+    [self performSelector:@selector(animationDone:) withObject:[gestureRecognizer view] afterDelay:0.4];
+}
+
+-(void)animationDone:(UIView *)view
+{
+    [fullScreenImageView removeFromSuperview];
+    fullScreenImageView = nil;
 }
 
 @end

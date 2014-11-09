@@ -14,7 +14,7 @@
 
 @property (nonatomic, copy, readonly) NSString *panelId;
 @property (nonatomic, assign, readonly) CGSize dimensions;
-@property (nonatomic, copy, readonly) NSURL *imageUrl;
+@property (nonatomic, copy, readonly) NSString *imageUrl;
 @property (nonatomic, copy, readonly) NSArray *balloons;
 
 @end

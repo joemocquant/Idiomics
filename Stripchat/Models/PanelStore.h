@@ -11,11 +11,11 @@
 
 @interface PanelStore : NSObject
 {
-    NSMutableDictionary *allPanels;
+    NSMutableArray *allPanels;
 }
 
 + (instancetype)sharedStore;
-- (NSMutableDictionary *)allPanels;
-- (void)addPanel:(Panel *)panel forKey:(NSString *)key;
+- (NSMutableArray *)allPanels;
+- (void)addPanel:(Panel *)panel;
 
 @end

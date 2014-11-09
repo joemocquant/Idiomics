@@ -13,7 +13,7 @@
 
 @property (nonatomic, copy, readwrite) NSString *panelId;
 @property (nonatomic, assign, readwrite) CGSize dimensions;
-@property (nonatomic, copy, readwrite) NSURL *imageUrl;
+@property (nonatomic, copy, readwrite) NSString *imageUrl;
 @property (nonatomic, copy, readwrite) NSArray *balloons;
 
 @end
@@ -42,10 +42,6 @@
         CGSize size = [dimensions CGSizeValue];
         return @[@(size.width), @(size.height)];
     }];
-}
-
-+ (NSValueTransformer *)imageUrlJSONTransformer {
-    return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
 }
 
 + (NSValueTransformer *)balloonsJSONTransformer
