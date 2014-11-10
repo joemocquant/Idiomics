@@ -21,16 +21,10 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    
 
     BrowserViewController *bvc = [[BrowserViewController alloc] init];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:bvc];
     
-    if ([navController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        navController.interactivePopGestureRecognizer.enabled = NO;
-    }
-    
-    [[self window] setRootViewController:navController];
+    [[self window] setRootViewController:bvc];
     [self.window makeKeyAndVisible];
     
     return YES;

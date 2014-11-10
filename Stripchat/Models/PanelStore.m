@@ -31,18 +31,18 @@
 
 #pragma mark - Instance methods
 
-- (NSMutableDictionary *)allPanels
+- (NSMutableArray *)allPanels
 {
     if (!allPanels) {
-        allPanels = [[NSMutableDictionary alloc] init];
+        allPanels = [[NSMutableArray alloc] init];
     }
 
     return allPanels;
 }
 
-- (void)addPanel:(Panel *)panel forKey:(NSString *)key
+- (void)addPanel:(Panel *)panel
 {
-    [self.allPanels setObject:panel forKey:key];
+    [self.allPanels addObject:panel];
 }
 
 @end

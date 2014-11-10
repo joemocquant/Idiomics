@@ -49,13 +49,12 @@
 
 - (void)setAllPanelImages
 {
-    NSArray *requestOperations = [NSMutableArray array];
-
-    requestOperations = [[[[[PanelStore sharedStore] allPanels] rac_sequence] map:^id(RACTuple *panelTuple) {
+    NSMutableArray *requestOperations = [NSMutableArray array];
+    
+    for (Panel *panel in [[PanelStore sharedStore] allPanels]) {
         
-        Panel *panel = panelTuple.second;
         NSURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
-                                                                              URLString:[panel.imageUrl absoluteString]
+                                                                              URLString:panel.imageUrl
                                                                              parameters:nil
                                                                                   error:nil];
         
@@ -64,22 +63,18 @@
 
         [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
             
-            [self.panelImageDictionary setValue:responseObject forKey:panel.panelId];
-            [self.delegate didLoadPanelWithPanelId:panel.panelId];
+            [self addPanelImage:responseObject forKey:panel.imageUrl];
+            [self.delegate didLoadPanelWithPanelKey:panel.imageUrl];
         }
                                                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                     
-                                                    [self.panelImageDictionary setValue:panel forKey:panel.panelId];
-                                                    [self.delegate didLoadPanelWithPanelId:panel.panelId];
-                                                    
-#ifdef __DEBUG__
-                                                    NSLog(@"Panel Image loading error: %@", error);
-#endif
+                                                    [self addPanelImage:nil forKey:panel.imageUrl];
+                                                    [self.delegate didLoadPanelWithPanelKey:panel.imageUrl];
                                                 }];
         
-        return requestOperation;
-        
-    }] array];
+     
+        [requestOperations addObject:requestOperation];
+    };
     
     NSArray *operations = [AFURLConnectionOperation batchOfRequestOperations:requestOperations
                                                                progressBlock:^(NSUInteger numberOfFinishedOperations,
@@ -87,9 +82,7 @@
                                                                    
                                                                } completionBlock:^(NSArray *operations) {
                                                                    
-#ifdef __DEBUG__
-                                                                   NSLog(@"All panel images loaded!");
-#endif
+                                                                   [self.delegate didLoadAllPanels];
                                                                }];
     
     [[NSOperationQueue mainQueue] addOperations:operations waitUntilFinished:NO];
@@ -98,6 +91,11 @@
 - (UIImage *)panelImageForKey:(NSString *)s
 {
     return [self.panelImageDictionary objectForKey:s];
+}
+
+- (void)addPanelImage:(UIImage *)panelImage forKey:(NSString *)key
+{
+    [self.panelImageDictionary setValue:panelImage forKey:key];
 }
 
 - (void)deletePanelImageForKey:(NSString *)s

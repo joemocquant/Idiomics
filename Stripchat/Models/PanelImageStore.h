@@ -13,7 +13,8 @@
 
 @optional
 
-- (void)didLoadPanelWithPanelId:(NSString *)panelId;
+- (void)didLoadPanelWithPanelKey:(NSString *)key;
+- (void)didLoadAllPanels;
 
 @end
 
@@ -27,6 +28,7 @@
 + (instancetype)sharedStore;
 - (void)setAllPanelImages;
 - (UIImage *)panelImageForKey:(NSString *)s;
+- (void)addPanelImage:(UIImage *)panelImage forKey:(NSString *)key;
 - (void)deletePanelImageForKey:(NSString *)s;
 - (void)deletePanelImageDicitonary;
 

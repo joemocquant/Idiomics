@@ -7,5 +7,6 @@ target :Stripchat do
     pod 'UIView-Autolayout'
     pod 'Mantle'
     pod 'ReactiveCocoa'
+    pod 'UIView-Autolayout'
     
 end
