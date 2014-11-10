@@ -13,6 +13,7 @@
 #import "PanelStore.h"
 #import "MosaicLayout.h"
 #import "MosaicCell.h"
+#import "PanelView.h"
 #import <ReactiveCocoa.h>
 #import <Mantle.h>
 #import <UIView+AutoLayout.h>
@@ -48,44 +49,6 @@
     
     [cv setTranslatesAutoresizingMaskIntoConstraints:NO];
     [cv pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
-    
-    panelScrollView = [[UIScrollView alloc] init];
-    [panelScrollView setDelegate:self];
-    [panelScrollView setMinimumZoomScale:1.0];
-    [panelScrollView setBackgroundColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.8f]];
-    [panelScrollView setHidden:YES];
-    
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                action:@selector(PanelScrollViewTapped:)];
-    singleTap.numberOfTapsRequired = 1;
-    singleTap.numberOfTouchesRequired = 1;
-    
-    [panelScrollView addGestureRecognizer:singleTap];
-    [panelScrollView setUserInteractionEnabled:YES];
-
-    
-    [self.view addSubview:panelScrollView];
-    
-    [panelScrollView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [panelScrollView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
-    
-    panelImageView = [[UIImageView alloc] init];
-    [panelImageView setContentMode:UIViewContentModeScaleAspectFit];
-    [panelScrollView addSubview:panelImageView];
-    
-    [panelImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
-    [panelImageView centerInView:panelScrollView];
-    
-    [panelScrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[panelImageView]|"
-                                                                            options:NSLayoutFormatAlignAllCenterY
-                                                                            metrics:nil
-                                                                              views:NSDictionaryOfVariableBindings(panelImageView)]];
-    
-    [panelScrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panelImageView]|"
-                                                                            options:NSLayoutFormatAlignAllCenterX
-                                                                            metrics:nil
-                                                                              views:NSDictionaryOfVariableBindings(panelImageView)]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -162,38 +125,6 @@
 - (void)didLoadAllPanels
 {
     NSLog(@"did load all panels!");
-}
-
-
-#pragma mark - UICollectionViewDelegate
-
-
-#pragma mark - UICollectionViewDataSource
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView
-     numberOfItemsInSection:(NSInteger)section
-{
-    return [[[PanelStore sharedStore] allPanels] count];
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *cellIdentifier = @"cell";
-    MosaicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier
-                                                                 forIndexPath:indexPath];
-    
-    Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row];
-    NSDictionary *dictionary = @{@"imageFilename": panel.imageUrl,
-                                 @"title": @""};
-    
-    MosaicData *data = [[MosaicData alloc] initWithDictionary:dictionary];
-    cell.mosaicData = data;
-    
-    float randomWhite = (arc4random() % 40 + 10) / 255.0;
-    cell.backgroundColor = [UIColor colorWithWhite:randomWhite alpha:1];
-    
-    return cell;
 }
 
 
@@ -291,58 +222,73 @@
     return retVal;
 }
 
+
+#pragma mark - UICollectionViewDataSource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section
+{
+    return [[[PanelStore sharedStore] allPanels] count];
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"cell";
+    MosaicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier
+                                                                 forIndexPath:indexPath];
+    
+    Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row];
+    NSDictionary *dictionary = @{@"imageFilename": panel.imageUrl,
+                                 @"title": @""};
+    
+    MosaicData *data = [[MosaicData alloc] initWithDictionary:dictionary];
+    cell.mosaicData = data;
+    
+    float randomWhite = (arc4random() % 40 + 10) / 255.0;
+    cell.backgroundColor = [UIColor colorWithWhite:randomWhite alpha:1];
+    
+    return cell;
+}
+
+
+#pragma mark - UICollectionViewDelegate
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (!panelScrollView.isHidden) {
+    if ([self.view subviews].count == 2) {
         return;
     }
     
-    [panelScrollView setHidden:NO];
-    
     MosaicCell *selectedCell = (MosaicCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    cellImageView = selectedCell.imageView;
-    panelImageView.image = [cellImageView image];
+    UIImageView *cellImageView = selectedCell.imageView;
+    
+    PanelView *panelView = [[PanelView alloc] initWithCell:cellImageView];
+    [self.view addSubview:panelView];
+    
+    [panelView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [panelView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
     
     //should be calculated instead of setting 10.0
-    [panelScrollView setMaximumZoomScale:10.0];
-    
+    [panelView.panelScrollView setMaximumZoomScale:10.0];
     
     CGRect tempPoint = CGRectMake(cellImageView.center.x, cellImageView.center.y, 0, 0);
-
     CGRect startingPoint = [self.view convertRect:tempPoint fromView:selectedCell];
-    [panelScrollView setFrame:startingPoint];
+    
+    [panelView setFrame:startingPoint];
 
-    [UIView animateWithDuration:0.4
+    [UIView animateWithDuration:0.2
                      animations:^{
-                         [panelScrollView setFrame:CGRectMake(0,
-                                                              0,
-                                                              self.view.bounds.size.width,
-                                                              self.view.bounds.size.height)];
+                         [panelView setFrame:CGRectMake(0,
+                                                        0,
+                                                        self.view.bounds.size.width,
+                                                        self.view.bounds.size.height)];
+                         
+                         [panelView.panelScrollView setFrame:CGRectMake(0,
+                                                        0,
+                                                        self.view.bounds.size.width,
+                                                        self.view.bounds.size.height)];
                         }];
-    
-}
-
-- (void)PanelScrollViewTapped:(UIGestureRecognizer *)gestureRecognizer
-{
-    CGRect point = [panelScrollView convertRect:cellImageView.bounds fromView:cellImageView];
-    
-    [UIView animateWithDuration:0.4
-                     animations:^{
-                         
-                         [(UIImageView *)gestureRecognizer.view.subviews[0] setFrame:point];
-                         
-                     } completion:^(BOOL finished) {
-                         [panelScrollView setHidden:YES];
-                         [panelScrollView setZoomScale:1.0];
-                     }];
-}
-
-
-#pragma mark - UIScrollViewDelegate
-
-- (UIView *) viewForZoomingInScrollView:(UIScrollView *)scrollView
-{
-    return panelImageView;
 }
 
 @end

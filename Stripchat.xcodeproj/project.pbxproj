@@ -21,6 +21,7 @@
 		010EBEA81A0E98270051EEBE /* MosaicLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE9F1A0E98270051EEBE /* MosaicLayout.m */; };
 		010EBEA91A0E98270051EEBE /* MosaicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEA21A0E98270051EEBE /* MosaicData.m */; };
 		010EBEAA1A0E98270051EEBE /* MosaicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEA71A0E98270051EEBE /* MosaicCell.m */; };
+		010EBEB01A1114B60051EEBE /* PanelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEAF1A1114B60051EEBE /* PanelView.m */; };
 		F71D691C3C6E3B98D3A23B9D /* libPods-Stripchat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A50F5B1916834E0A51F71EB /* libPods-Stripchat.a */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,8 @@
 		010EBEA41A0E98270051EEBE /* MosaicLayoutDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicLayoutDelegate.h; sourceTree = "<group>"; };
 		010EBEA61A0E98270051EEBE /* MosaicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicCell.h; sourceTree = "<group>"; };
 		010EBEA71A0E98270051EEBE /* MosaicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicCell.m; sourceTree = "<group>"; };
+		010EBEAE1A1114B60051EEBE /* PanelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanelView.h; sourceTree = "<group>"; };
+		010EBEAF1A1114B60051EEBE /* PanelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanelView.m; sourceTree = "<group>"; };
 		4DF84BD531092FC632B67E6A /* Pods-Stripchat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stripchat.release.xcconfig"; path = "Pods/Target Support Files/Pods-Stripchat/Pods-Stripchat.release.xcconfig"; sourceTree = "<group>"; };
 		7A50F5B1916834E0A51F71EB /* libPods-Stripchat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Stripchat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9BDF3792F0F3144E7EEC4AE /* Pods-Stripchat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stripchat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Stripchat/Pods-Stripchat.debug.xcconfig"; sourceTree = "<group>"; };
@@ -178,6 +181,8 @@
 		010EBE3A1A0C0D6E0051EEBE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				010EBEAE1A1114B60051EEBE /* PanelView.h */,
+				010EBEAF1A1114B60051EEBE /* PanelView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -395,6 +400,7 @@
 				010EBEAA1A0E98270051EEBE /* MosaicCell.m in Sources */,
 				010EBE111A0C07FB0051EEBE /* AppDelegate.m in Sources */,
 				010EBEA91A0E98270051EEBE /* MosaicData.m in Sources */,
+				010EBEB01A1114B60051EEBE /* PanelView.m in Sources */,
 				010EBEA81A0E98270051EEBE /* MosaicLayout.m in Sources */,
 				010EBE0E1A0C07FB0051EEBE /* main.m in Sources */,
 				010EBE4D1A0C5B580051EEBE /* PanelStore.m in Sources */,
