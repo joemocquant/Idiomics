@@ -9,22 +9,25 @@
 #import "MosaicCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import <AFNetworking.h>
+#import "PanelImageStore.h"
 
 #define kLabelHeight 20
 #define kLabelMargin 10
 #define kImageViewMargin 0
 
-@interface MosaicCell()
--(void)setup;
+@interface MosaicCell ()
+
+- (void)setup;
+
 @end
 
 @implementation MosaicCell
 
-@synthesize image;
 
 #pragma mark - Private
 
--(void)setup{
+- (void)setup
+{
     self.backgroundColor = [UIColor whiteColor];
     
     //  Set image view
@@ -87,16 +90,19 @@
     [self addSubview:_titleLabel];
 }
 
+
 #pragma mark - Properties
 
--(UIImage *)image{
+- (UIImage *)image
+{
     return _imageView.image;
 }
 
--(void)setImage:(UIImage *)newImage{
+- (void)setImage:(UIImage *)newImage
+{
     _imageView.image = newImage;
     
-    if (_mosaicData.firstTimeShown){
+    if (_mosaicData.firstTimeShown) {
         _mosaicData.firstTimeShown = NO;
         
         _imageView.alpha = 0.0;
@@ -112,12 +118,12 @@
     }
 }
 
--(MosaicData *)mosaicData{
+- (MosaicData *)mosaicData{
     return _mosaicData;
 }
 
--(void)setHighlighted:(BOOL)highlighted{
-    
+- (void)setHighlighted:(BOOL)highlighted
+{
     //  This avoids the animation runs every time the cell is reused
     if (self.isHighlighted != highlighted){
         _imageView.alpha = 0.0;
@@ -129,14 +135,13 @@
     [super setHighlighted:highlighted];    
 }
 
--(void)setMosaicData:(MosaicData *)newMosaicData{
-
+- (void)setMosaicData:(MosaicData *)newMosaicData
+{
     _mosaicData = newMosaicData;
     
-    
     //  Image set
-    if ([_mosaicData.imageFilename hasPrefix:@"http://"] ||
-        [_mosaicData.imageFilename hasPrefix:@"https://"]){
+    //if ([_mosaicData.imageFilename hasPrefix:@"http://"] ||
+    //    [_mosaicData.imageFilename hasPrefix:@"https://"]){
         //  Download image from the web
 //        void (^imageSuccess)(UIImage *downloadedImage) = ^(UIImage *downloadedImage){
 //            
@@ -145,7 +150,10 @@
 //                self.image = downloadedImage;
 //            }
 //        };
-        
+    
+    UIImage *cached = [[PanelImageStore sharedStore] panelImageForKey:_mosaicData.imageFilename];
+    
+    if (!cached) {
         NSURL *anURL = [NSURL URLWithString:_mosaicData.imageFilename];
         NSURLRequest *anURLRequest = [NSURLRequest requestWithURL:anURL];
         
@@ -157,6 +165,7 @@
             //  This check is to avoid wrong images on reused cells
             if ([newMosaicData.title isEqualToString:_mosaicData.title]){
                 self.image = responseObject;
+                [[PanelImageStore sharedStore] addPanelImage:responseObject forKey:_mosaicData.imageFilename];
             }
             
         }
@@ -165,8 +174,7 @@
         [operation start];
         
     }else{
-        //  Load image from bundle
-        self.image = [UIImage imageNamed:_mosaicData.imageFilename];
+        self.image = cached;
     }
     
     
@@ -174,9 +182,11 @@
     _titleLabel.text = _mosaicData.title;
 }
 
+
 #pragma mark - Public
 
-- (id)initWithFrame:(CGRect)frame{
+- (id)initWithFrame:(CGRect)frame
+{
     self = [super initWithFrame:frame];
     if (self) {
         [self setup];
@@ -184,7 +194,8 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder{
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
     self = [super initWithCoder:aDecoder];
     if (self){
         [self setup];
@@ -192,7 +203,8 @@
     return self;
 }
 
--(void)layoutSubviews{
+- (void)layoutSubviews
+{
     [super layoutSubviews];
     
     _titleLabel.frame = CGRectMake(kLabelMargin,
@@ -205,9 +217,15 @@
     _imageView.layer.shadowOpacity = 1;
 }
 
--(void)prepareForReuse{
+- (void)prepareForReuse
+{
     [super prepareForReuse];
     self.image = nil;
+}
+
+- (UIImageView *)imageView
+{
+    return _imageView;
 }
 
 @end

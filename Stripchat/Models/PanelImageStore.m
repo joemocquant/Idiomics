@@ -12,12 +12,6 @@
 #import <AFNetworking.h>
 #import <ReactiveCocoa.h>
 
-@interface PanelImageStore ()
-
-@property (nonatomic, strong, readwrite) NSMutableDictionary *panelImageDictionary;
-
-@end
-
 @implementation PanelImageStore
 
 
@@ -43,11 +37,11 @@
 
 - (NSMutableDictionary *)panelImageDictionary
 {
-    if (!_panelImageDictionary) {
-        _panelImageDictionary = [[NSMutableDictionary alloc] init];
+    if (!panelImageDictionary) {
+        panelImageDictionary = [[NSMutableDictionary alloc] init];
     }
     
-    return _panelImageDictionary;
+    return panelImageDictionary;
 }
 
 
@@ -69,12 +63,12 @@
 
         [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
             
-            [self.panelImageDictionary setValue:responseObject forKey:panel.imageUrl];
+            [self addPanelImage:responseObject forKey:panel.imageUrl];
             [self.delegate didLoadPanelWithPanelKey:panel.imageUrl];
         }
                                                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                     
-                                                    [self.panelImageDictionary setValue:panel forKey:panel.imageUrl];
+                                                    [self addPanelImage:nil forKey:panel.imageUrl];
                                                     [self.delegate didLoadPanelWithPanelKey:panel.imageUrl];
                                                 }];
         
@@ -97,6 +91,11 @@
 - (UIImage *)panelImageForKey:(NSString *)s
 {
     return [self.panelImageDictionary objectForKey:s];
+}
+
+- (void)addPanelImage:(UIImage *)panelImage forKey:(NSString *)key
+{
+    [self.panelImageDictionary setValue:panelImage forKey:key];
 }
 
 - (void)deletePanelImageForKey:(NSString *)s

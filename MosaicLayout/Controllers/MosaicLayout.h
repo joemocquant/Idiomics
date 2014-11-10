@@ -9,14 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "MosaicLayoutDelegate.h"
 
-@interface MosaicLayout : UICollectionViewLayout{
+@interface MosaicLayout : UICollectionViewLayout
+{
     NSMutableArray *_columns;
     NSMutableArray *_itemsAttributes;
 }
 
-@property (weak) id <MosaicLayoutDelegate> delegate;
+@property (weak) id<MosaicLayoutDelegate> delegate;
 @property (readonly) NSUInteger columnsQuantity;
 
--(float)columnWidth;
+- (float)columnWidth;
 
 @end

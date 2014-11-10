@@ -11,16 +11,19 @@
 #define kHeightModule 40
 
 @interface MosaicLayout()
--(NSUInteger)shortestColumnIndex;
--(NSUInteger)longestColumnIndex;
--(BOOL)canUseDoubleColumnOnIndex:(NSUInteger)columnIndex;
+
+- (NSUInteger)shortestColumnIndex;
+- (NSUInteger)longestColumnIndex;
+- (BOOL)canUseDoubleColumnOnIndex:(NSUInteger)columnIndex;
+
 @end
 
 @implementation MosaicLayout
 
 #pragma mark - Private
 
--(NSUInteger)shortestColumnIndex{
+- (NSUInteger)shortestColumnIndex
+{
     NSUInteger retVal = 0;
     CGFloat shortestValue = MAXFLOAT;
     
@@ -35,7 +38,8 @@
     return retVal;
 }
 
--(NSUInteger)longestColumnIndex{
+- (NSUInteger)longestColumnIndex
+{
     NSUInteger retVal = 0;
     CGFloat longestValue = 0;
     
@@ -50,7 +54,8 @@
     return retVal;
 }
 
--(BOOL)canUseDoubleColumnOnIndex:(NSUInteger)columnIndex{
+- (BOOL)canUseDoubleColumnOnIndex:(NSUInteger)columnIndex
+{
     BOOL retVal = NO;
 
     if (columnIndex < self.columnsQuantity-1){
@@ -63,25 +68,30 @@
     return retVal;
 }
 
+
 #pragma mark - Properties
 
--(NSUInteger) columnsQuantity{
+- (NSUInteger) columnsQuantity
+{
     NSUInteger retVal = [self.delegate numberOfColumnsInCollectionView:self.collectionView];
     return retVal;
 }
 
 #pragma mark - Public
 
--(float)columnWidth{
+
+- (float)columnWidth
+{
     float retVal = self.collectionView.bounds.size.width / self.columnsQuantity;
     retVal = roundf(retVal);
     return retVal;
 }
 
+
 #pragma mark UICollectionViewLayout
 
--(void)prepareLayout{
-    
+- (void)prepareLayout
+{
     //  Set all column heights to 0
     _columns = [NSMutableArray arrayWithCapacity:self.columnsQuantity];
     for (NSInteger i = 0; i < self.columnsQuantity; i++) {
@@ -132,7 +142,8 @@
     }
 }
 
--(NSArray *)layoutAttributesForElementsInRect:(CGRect)rect{    
+- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
+{
     NSPredicate *filterPredicate = [NSPredicate predicateWithBlock:^BOOL(UICollectionViewLayoutAttributes * evaluatedObject, NSDictionary *bindings) {
         BOOL predicateRetVal = CGRectIntersectsRect(rect, [evaluatedObject frame]);
         return predicateRetVal;
@@ -142,12 +153,14 @@
     return retVal;
 }
 
--(UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath{
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
+{
     UICollectionViewLayoutAttributes *retVal = [_itemsAttributes objectAtIndex:indexPath.row];
     return retVal;
 }
 
--(CGSize)collectionViewContentSize{
+- (CGSize)collectionViewContentSize
+{
     CGSize retVal = self.collectionView.bounds.size;
     
     NSUInteger columnIndex = [self longestColumnIndex];

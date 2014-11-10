@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "MosaicData.h"
 
-@interface MosaicCell : UICollectionViewCell{
+@interface MosaicCell : UICollectionViewCell
+{
     UIImageView *_imageView;
     MosaicData *_mosaicData;
     UILabel *_titleLabel;
@@ -17,5 +18,7 @@
 
 @property (strong) UIImage *image;
 @property (strong) MosaicData *mosaicData;
+
+- (UIImageView *)imageView;
 
 @end

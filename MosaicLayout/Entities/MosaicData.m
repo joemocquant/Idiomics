@@ -9,11 +9,11 @@
 #import "MosaicData.h"
 
 @implementation MosaicData
-@synthesize title, imageFilename;
 
--(id)initWithDictionary:(NSDictionary *)aDict{
+- (instancetype)initWithDictionary:(NSDictionary *)aDict
+{
     self = [self init];
-    if (self){
+    if (self) {
         self.imageFilename = [aDict objectForKey:@"imageFilename"];
         self.title = [aDict objectForKey:@"title"];
         self.firstTimeShown = YES;
@@ -21,7 +21,8 @@
     return self;
 }
 
--(NSString *)description{
+- (NSString *)description
+{
     NSString *retVal = [NSString stringWithFormat:@"%@ %@", [super description], self.title];
     return retVal;
 }

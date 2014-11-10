@@ -16,11 +16,12 @@ typedef enum {
 
 @interface MosaicData : NSObject
 
--(id)initWithDictionary:(NSDictionary *)aDict;
+- (instancetype)initWithDictionary:(NSDictionary *)aDict;
 
 @property (strong) NSString *imageFilename;
 @property (strong) NSString *title;
 @property (assign) BOOL firstTimeShown;
 @property (assign) MosaicLayoutType layoutType;
 @property (assign) float relativeHeight;
+
 @end

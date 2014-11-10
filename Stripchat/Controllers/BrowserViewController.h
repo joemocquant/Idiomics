@@ -13,11 +13,15 @@
 @interface BrowserViewController : UIViewController <PanelImageStoreDelegate,
                                                      MosaicLayoutDelegate,
                                                      UICollectionViewDelegate,
-                                                     UICollectionViewDataSource>
+                                                     UICollectionViewDataSource,
+                                                     UIScrollViewDelegate>
 {
     UICollectionView *cv;
+    
     UIImageView *originalImageView;
     UIImageView *fullScreenImageView;
+    UIScrollView *fullScreenScrollView;
+    BOOL isFullScreen;
 }
 
 @end

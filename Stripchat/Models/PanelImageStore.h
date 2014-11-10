@@ -19,13 +19,16 @@
 @end
 
 @interface PanelImageStore : NSObject
+{
+    NSMutableDictionary *panelImageDictionary;
+}
 
-@property (nonatomic, strong, readonly) NSMutableDictionary *panelImageDictionary;
 @property (nonatomic, weak) id<PanelImageStoreDelegate> delegate;
 
 + (instancetype)sharedStore;
 - (void)setAllPanelImages;
 - (UIImage *)panelImageForKey:(NSString *)s;
+- (void)addPanelImage:(UIImage *)panelImage forKey:(NSString *)key;
 - (void)deletePanelImageForKey:(NSString *)s;
 - (void)deletePanelImageDicitonary;
 
