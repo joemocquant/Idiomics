@@ -11,10 +11,11 @@
 #import "Helper.h"
 #import "Panel.h"
 #import "PanelStore.h"
-#import <ReactiveCocoa.h>
-#import <Mantle.h>
 #import "MosaicLayout.h"
 #import "MosaicCell.h"
+#import <ReactiveCocoa.h>
+#import <Mantle.h>
+#import <UIView+AutoLayout.h>
 
 #define kColumnsiPadLandscape 5
 #define kColumnsiPadPortrait 4
@@ -27,27 +28,64 @@
 
 #pragma mark - Lifecycle
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     [[PanelImageStore sharedStore] setDelegate:self];
     [self loadAllPannels];
 
-    cv = [[UICollectionView alloc] initWithFrame:self.view.frame
+    cv = [[UICollectionView alloc] initWithFrame:CGRectZero
                             collectionViewLayout:[[MosaicLayout alloc] init]];
     
     [(MosaicLayout *)cv.collectionViewLayout setDelegate:self];
     [cv setDelegate:self];
     [cv setDataSource:self];
-    
     [cv registerClass:[MosaicCell class] forCellWithReuseIdentifier:@"cell"];
     
-    cv.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-
-    isFullScreen = NO;
-    self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:cv];
+    
+    [cv setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [cv pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
+    
+    panelScrollView = [[UIScrollView alloc] init];
+    [panelScrollView setDelegate:self];
+    [panelScrollView setMinimumZoomScale:1.0];
+    [panelScrollView setBackgroundColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.8f]];
+    [panelScrollView setHidden:YES];
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                action:@selector(PanelScrollViewTapped:)];
+    singleTap.numberOfTapsRequired = 1;
+    singleTap.numberOfTouchesRequired = 1;
+    
+    [panelScrollView addGestureRecognizer:singleTap];
+    [panelScrollView setUserInteractionEnabled:YES];
+
+    
+    [self.view addSubview:panelScrollView];
+    
+    [panelScrollView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [panelScrollView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
+    
+    panelImageView = [[UIImageView alloc] init];
+    [panelImageView setContentMode:UIViewContentModeScaleAspectFit];
+    [panelScrollView addSubview:panelImageView];
+    
+    [panelImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [panelImageView centerInView:panelScrollView];
+    
+    [panelScrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[panelImageView]|"
+                                                                            options:NSLayoutFormatAlignAllCenterY
+                                                                            metrics:nil
+                                                                              views:NSDictionaryOfVariableBindings(panelImageView)]];
+    
+    [panelScrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panelImageView]|"
+                                                                            options:NSLayoutFormatAlignAllCenterX
+                                                                            metrics:nil
+                                                                              views:NSDictionaryOfVariableBindings(panelImageView)]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,14 +101,6 @@
     
     MosaicLayout *layout = (MosaicLayout *)cv.collectionViewLayout;
     [layout invalidateLayout];
-    
-    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
-        [fullScreenScrollView setContentSize:CGSizeMake(self.view.bounds.size.width,
-                                                        self.view.bounds.size.height)];
-    } else {
-        [fullScreenScrollView setContentSize:CGSizeMake(self.view.bounds.size.height,
-                                                        self.view.bounds.size.width)];
-    }
 }
 
 
@@ -233,7 +263,6 @@
     BOOL retVal = aMosaicModule.layoutType == kMosaicLayoutTypeDouble;
     
     return retVal;
-    
 }
 
 - (NSUInteger)numberOfColumnsInCollectionView:(UICollectionView *)collectionView
@@ -264,60 +293,38 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (isFullScreen) {
+    if (!panelScrollView.isHidden) {
         return;
     }
     
-    isFullScreen = YES;
+    [panelScrollView setHidden:NO];
     
     MosaicCell *selectedCell = (MosaicCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    originalImageView = selectedCell.imageView;
+    cellImageView = selectedCell.imageView;
+    panelImageView.image = [cellImageView image];
     
-    fullScreenScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-    fullScreenScrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    [fullScreenScrollView setDelegate:self];
-    [fullScreenScrollView setMinimumZoomScale:1.0];
-    [fullScreenScrollView setMaximumZoomScale:10.0];
-    [fullScreenScrollView setContentSize:CGSizeMake(self.view.bounds.size.width,
-                                                    self.view.bounds.size.height)];
+    //should be calculated instead of setting 10.0
+    [panelScrollView setMaximumZoomScale:10.0];
     
-    fullScreenImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    [fullScreenImageView setContentMode:UIViewContentModeScaleAspectFit];
-    fullScreenImageView.image = [originalImageView image];
-    [fullScreenScrollView addSubview:fullScreenImageView];
-    fullScreenImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
-    CGRect tempPoint = CGRectMake(originalImageView.center.x, originalImageView.center.y, 0, 0);
+    CGRect tempPoint = CGRectMake(cellImageView.center.x, cellImageView.center.y, 0, 0);
 
     CGRect startingPoint = [self.view convertRect:tempPoint fromView:selectedCell];
-    [fullScreenScrollView setFrame:startingPoint];
-    
-    [fullScreenScrollView setBackgroundColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.8f]];
-    
-    [self.view addSubview:fullScreenScrollView];
-    
+    [panelScrollView setFrame:startingPoint];
+
     [UIView animateWithDuration:0.4
                      animations:^{
-                         [fullScreenScrollView setFrame:CGRectMake(0,
-                                                                   0,
-                                                                   self.view.bounds.size.width,
-                                                                   self.view.bounds.size.height)];
+                         [panelScrollView setFrame:CGRectMake(0,
+                                                              0,
+                                                              self.view.bounds.size.width,
+                                                              self.view.bounds.size.height)];
                         }];
     
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                action:@selector(fullScreenScrollViewTapped:)];
-    singleTap.numberOfTapsRequired = 1;
-    singleTap.numberOfTouchesRequired = 1;
-    
-    [fullScreenScrollView addGestureRecognizer:singleTap];
-    [fullScreenScrollView setUserInteractionEnabled:YES];
 }
 
-- (void)fullScreenScrollViewTapped:(UIGestureRecognizer *)gestureRecognizer
+- (void)PanelScrollViewTapped:(UIGestureRecognizer *)gestureRecognizer
 {
-    CGRect point = [fullScreenScrollView convertRect:originalImageView.bounds fromView:originalImageView];
-    
-    gestureRecognizer.view.backgroundColor = [UIColor clearColor];
+    CGRect point = [panelScrollView convertRect:cellImageView.bounds fromView:cellImageView];
     
     [UIView animateWithDuration:0.4
                      animations:^{
@@ -325,16 +332,17 @@
                          [(UIImageView *)gestureRecognizer.view.subviews[0] setFrame:point];
                          
                      } completion:^(BOOL finished) {
-                         
-                         isFullScreen = NO;
-                         [fullScreenScrollView removeFromSuperview];
-                         fullScreenScrollView = nil;
+                         [panelScrollView setHidden:YES];
+                         [panelScrollView setZoomScale:1.0];
                      }];
 }
 
--(UIView *) viewForZoomingInScrollView:(UIScrollView *)scrollView
+
+#pragma mark - UIScrollViewDelegate
+
+- (UIView *) viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-    return fullScreenImageView;
+    return panelImageView;
 }
 
 @end

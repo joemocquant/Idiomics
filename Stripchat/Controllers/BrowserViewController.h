@@ -17,11 +17,9 @@
                                                      UIScrollViewDelegate>
 {
     UICollectionView *cv;
-    
-    UIImageView *originalImageView;
-    UIImageView *fullScreenImageView;
-    UIScrollView *fullScreenScrollView;
-    BOOL isFullScreen;
+    UIImageView *cellImageView;
+    UIImageView *panelImageView;
+    UIScrollView *panelScrollView;
 }
 
 @end
