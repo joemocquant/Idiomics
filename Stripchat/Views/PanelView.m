@@ -7,9 +7,29 @@
 //
 
 #import "PanelView.h"
+#import "Colors.h"
+#import "SpeechBar.h"
 #import <UIView+AutoLayout.h>
 
+@interface PanelView ()
+
+// Override inputAccessoryView to readWrite
+@property (nonatomic, readwrite, retain) UIView *inputAccessoryView;
+
+@end
+
 @implementation PanelView
+
+- (bool) canBecomeFirstResponder {
+    return true;
+}
+
+- (UIView *)inputAccessoryView {
+    if(!_inputAccessoryView) {
+        _inputAccessoryView = [[SpeechBar alloc] init];
+    }
+    return _inputAccessoryView;
+}
 
 
 #pragma mark - Initialization
@@ -26,17 +46,12 @@
     return self;
 }
 
-- (UIScrollView *)panelScrollView
-{
-    return panelScrollView;
-}
-
 - (void)setupPanelView
 {
     panelScrollView = [[UIScrollView alloc] init];
     [panelScrollView setDelegate:self];
     [panelScrollView setMinimumZoomScale:1.0];
-    [panelScrollView setBackgroundColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.8f]];
+    [panelScrollView setBackgroundColor:[[Colors gray3] colorWithAlphaComponent:0.8f]];
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                 action:@selector(PanelScrollViewTapped:)];
@@ -49,7 +64,9 @@
     [self addSubview:panelScrollView];
     
     [panelScrollView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [panelScrollView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self];
+    [panelScrollView pinEdges:JRTViewPinLeftEdge | JRTViewPinTopEdge | JRTViewPinRightEdge
+            toSameEdgesOfView:self];
+    [panelScrollView pinAttribute:NSLayoutAttributeBottom toSameAttributeOfItem:self withConstant:-60];
     
     panelImageView = [[UIImageView alloc] init];
     [panelImageView setImage:cellImageView.image];
@@ -77,12 +94,20 @@
     
     [UIView animateWithDuration:0.2
                      animations:^{
-                         
+                         [self becomeFirstResponder];
                          [(UIImageView *)gestureRecognizer.view.subviews[0] setFrame:point];
                          
                      } completion:^(BOOL finished) {
                          [self removeFromSuperview];
                      }];
+}
+
+
+#pragma mark - Instance methods
+
+- (UIScrollView *)panelScrollView
+{
+    return panelScrollView;
 }
 
 

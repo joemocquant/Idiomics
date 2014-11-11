@@ -265,6 +265,7 @@
     
     PanelView *panelView = [[PanelView alloc] initWithCell:cellImageView];
     [self.view addSubview:panelView];
+    [panelView becomeFirstResponder];
     
     [panelView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [panelView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
