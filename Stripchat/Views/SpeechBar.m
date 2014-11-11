@@ -16,12 +16,12 @@
 
 #pragma mark - Initialization
 
-- (instancetype)initWithPanelView:(PanelView *)pv
+- (instancetype)init
 {
     self = [super init];
     
     if (self) {
-        panelView = pv;
+
         [self setBackgroundColor:[Colors white]];
         [self setAlpha:0.85];
         
@@ -40,7 +40,7 @@
 
 - (void)setupSpeechTextView
 {
-    speechTextField = [[UITextView alloc] init];
+    UITextView *speechTextField = [UITextView new];
     [speechTextField setDelegate:self];
     [speechTextField setBackgroundColor:[Colors clear]];
     [speechTextField setText:NSLocalizedStringFromTable(@"SPEECHPLACEHOLDER", @"Stripchat", nil)];
@@ -82,7 +82,7 @@
 
 - (void)setupHorizontalDash
 {
-    UIView *horizontalDash = [[UIView alloc] init];
+    UIView *horizontalDash = [UIView new];
     [horizontalDash setBackgroundColor:[Colors gray4]];
     [self addSubview:horizontalDash];
     
@@ -104,7 +104,7 @@
 
 - (void)setupVerticalDash
 {
-    UIView *verticalDash = [[UIView alloc] init];
+    UIView *verticalDash = [UIView new];
     [verticalDash setBackgroundColor:[Colors gray4]];
     [verticalDash setAlpha:0.7];
     [self addSubview:verticalDash];

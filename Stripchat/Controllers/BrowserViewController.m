@@ -13,7 +13,8 @@
 #import "PanelStore.h"
 #import "MosaicLayout.h"
 #import "MosaicCell.h"
-#import "PanelView.h"
+#import "PanelViewController.h"
+#import "TransitionAnimator.h"
 #import <ReactiveCocoa.h>
 #import <Mantle.h>
 #import <UIView+AutoLayout.h>
@@ -38,7 +39,7 @@
     [self loadAllPannels];
 
     cv = [[UICollectionView alloc] initWithFrame:CGRectZero
-                            collectionViewLayout:[[MosaicLayout alloc] init]];
+                            collectionViewLayout:[MosaicLayout new]];
     
     [(MosaicLayout *)cv.collectionViewLayout setDelegate:self];
     [cv setDelegate:self];
@@ -260,37 +261,38 @@
     }
     
     Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row];
+    selectedCell = (MosaicCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
-    MosaicCell *selectedCell = (MosaicCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    UIImageView *cellImageView = selectedCell.imageView;
-    
-    PanelView *panelView = [[PanelView alloc] initWithPanel:panel fromCellImageView:cellImageView];
-    [self.view addSubview:panelView];
-    [panelView becomeFirstResponder];
-    
-    [panelView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [panelView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
-    
-    //should be calculated instead of setting 10.0
-    [panelView.panelScrollView setMaximumZoomScale:10.0];
-    
-    CGRect tempPoint = CGRectMake(cellImageView.center.x, cellImageView.center.y, 0, 0);
-    CGRect startingPoint = [self.view convertRect:tempPoint fromView:selectedCell];
-    
-    [panelView setFrame:startingPoint];
+    PanelViewController *pvc = [[PanelViewController alloc] initWithPanel:panel];
 
-    [UIView animateWithDuration:0.2
-                     animations:^{
-                         [panelView setFrame:CGRectMake(0,
-                                                        0,
-                                                        self.view.bounds.size.width,
-                                                        self.view.bounds.size.height)];
-                         
-                         [panelView.panelScrollView setFrame:CGRectMake(0,
-                                                        0,
-                                                        self.view.bounds.size.width,
-                                                        self.view.bounds.size.height)];
-                        }];
+    [pvc setTransitioningDelegate:self];
+    [pvc setModalPresentationStyle:UIModalPresentationCustom];
+    
+    [self presentViewController:pvc animated:YES completion:nil];
+}
+
+
+#pragma mark - UIViewControllerTransitioningDelegate
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
+                                                                  presentingController:(UIViewController *)presenting
+                                                                      sourceController:(UIViewController *)source
+{
+    TransitionAnimator *animator = [TransitionAnimator new];
+    
+    animator.presenting = YES;
+    animator.selectedCell = selectedCell;
+    
+    return animator;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+{
+    TransitionAnimator *animator = [TransitionAnimator new];
+    animator.presenting = NO;
+    animator.selectedCell = selectedCell;
+    
+    return animator;
 }
 
 @end

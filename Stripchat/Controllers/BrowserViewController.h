@@ -8,14 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "PanelImageStore.h"
+#import "MosaicCell.h"
 #import "MosaicLayoutDelegate.h"
 
 @interface BrowserViewController : UIViewController <PanelImageStoreDelegate,
                                                      MosaicLayoutDelegate,
                                                      UICollectionViewDelegate,
-                                                     UICollectionViewDataSource>
+                                                     UICollectionViewDataSource,
+                                                     UIViewControllerTransitioningDelegate>
 {
     UICollectionView *cv;
+    MosaicCell *selectedCell;
 }
 
 @end

@@ -7,14 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PanelView.h"
 
 @interface SpeechBar : UIView <UITextViewDelegate>
-{
-    UITextView *speechTextField;
-    PanelView *panelView;
-}
-
-- (instancetype)initWithPanelView:(PanelView *)pv;
 
 @end
