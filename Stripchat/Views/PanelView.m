@@ -7,6 +7,8 @@
 //
 
 #import "PanelView.h"
+#import "Panel.h"
+#import "PanelImageStore.h"
 #import "Colors.h"
 #import "SpeechBar.h"
 #import <UIView+AutoLayout.h>
@@ -20,13 +22,15 @@
 
 @implementation PanelView
 
-- (bool) canBecomeFirstResponder {
-    return true;
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
 }
 
-- (UIView *)inputAccessoryView {
+- (UIView *)inputAccessoryView
+{
     if(!_inputAccessoryView) {
-        _inputAccessoryView = [[SpeechBar alloc] init];
+        _inputAccessoryView = [[SpeechBar alloc] initWithPanelView:self];
     }
     return _inputAccessoryView;
 }
@@ -34,11 +38,12 @@
 
 #pragma mark - Initialization
 
-- (instancetype)initWithCell:(UIImageView *)civ
+- (instancetype)initWithPanel:(Panel *)p fromCellImageView:(UIImageView *)civ
 {
     self = [super init];
     
     if (self) {
+        self.panel = p;
         cellImageView = civ;
         [self setupPanelView];
     }
@@ -68,24 +73,25 @@
             toSameEdgesOfView:self];
     [panelScrollView pinAttribute:NSLayoutAttributeBottom toSameAttributeOfItem:self withConstant:-60];
     
-    panelImageView = [[UIImageView alloc] init];
-    [panelImageView setImage:cellImageView.image];
-    [panelImageView setContentMode:UIViewContentModeScaleAspectFit];
-    [panelScrollView addSubview:panelImageView];
+    self.panelImageView = [[UIImageView alloc] init];
     
-    [panelImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self.panelImageView setImage:[((UIImage *)[[PanelImageStore sharedStore] panelImageForKey:self.panel.imageUrl]) copy]];
+    [self.panelImageView setContentMode:UIViewContentModeScaleAspectFit];
+    [panelScrollView addSubview:self.panelImageView];
     
-    [panelImageView centerInView:panelScrollView];
+    [self.panelImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
     
-    [panelScrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[panelImageView]|"
+    [self.panelImageView centerInView:panelScrollView];
+    
+    [panelScrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_panelImageView]|"
                                                                             options:NSLayoutFormatAlignAllCenterY
                                                                             metrics:nil
-                                                                              views:NSDictionaryOfVariableBindings(panelImageView)]];
+                                                                              views:NSDictionaryOfVariableBindings(_panelImageView)]];
     
-    [panelScrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panelImageView]|"
+    [panelScrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_panelImageView]|"
                                                                             options:NSLayoutFormatAlignAllCenterX
                                                                             metrics:nil
-                                                                              views:NSDictionaryOfVariableBindings(panelImageView)]];
+                                                                              views:NSDictionaryOfVariableBindings(_panelImageView)]];
 }
 
 - (void)PanelScrollViewTapped:(UIGestureRecognizer *)gestureRecognizer
@@ -115,7 +121,7 @@
 
 - (UIView *) viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-    return panelImageView;
+    return self.panelImageView;
 }
 
 @end

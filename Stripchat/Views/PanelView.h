@@ -7,15 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Panel.h"
 
 @interface PanelView : UIView <UIScrollViewDelegate>
 {
-    UIImageView *panelImageView;
     UIScrollView *panelScrollView;
     UIImageView *cellImageView;
 }
 
-- (instancetype)initWithCell:(UIImageView *)civ;
+@property (nonatomic, strong) Panel *panel;
+@property (nonatomic, strong) UIImageView *panelImageView;
+
+- (instancetype)initWithPanel:(Panel *)p fromCellImageView:(UIImageView *)civ;
 - (UIScrollView *)panelScrollView;
 
 @end

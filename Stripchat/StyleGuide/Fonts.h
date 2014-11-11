@@ -13,5 +13,6 @@
 
 + (UIFont *)helvetica10;
 + (UIFont *)helvetica20;
++ (UIFont *)helveticaNeueLight20;
 
 @end

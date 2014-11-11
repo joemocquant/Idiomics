@@ -23,4 +23,9 @@
     return [UIFont fontWithName:@"Helvetica" size:20];
 }
 
++ (UIFont *)helveticaNeueLight20
+{
+    return [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
+}
+
 @end

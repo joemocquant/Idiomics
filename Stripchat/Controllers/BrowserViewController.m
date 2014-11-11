@@ -110,8 +110,8 @@
         }
     };
     
-    [[APIClient sharedConnection] getAllPanelsWithSuccessHandler:successHandler
-                                                    errorHandler:errorHandler];
+    [[APIClient sharedConnection] getSingleBalloonPanelsWithSuccessHandler:successHandler
+                                                              errorHandler:errorHandler];
 }
 
 
@@ -132,7 +132,6 @@
 
 - (float)collectionView:(UICollectionView *)collectionView relativeHeightForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     //Base relative height for simple layout type. This is 1.0 (height equals to width)
     float retVal = 1.0;
     
@@ -260,10 +259,12 @@
         return;
     }
     
+    Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row];
+    
     MosaicCell *selectedCell = (MosaicCell *)[collectionView cellForItemAtIndexPath:indexPath];
     UIImageView *cellImageView = selectedCell.imageView;
     
-    PanelView *panelView = [[PanelView alloc] initWithCell:cellImageView];
+    PanelView *panelView = [[PanelView alloc] initWithPanel:panel fromCellImageView:cellImageView];
     [self.view addSubview:panelView];
     [panelView becomeFirstResponder];
     

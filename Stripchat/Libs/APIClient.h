@@ -19,4 +19,7 @@ typedef void (^ErrorHandler) (NSURLSessionDataTask *, NSError *);
 - (void)getAllPanelsWithSuccessHandler:(SuccessHandler)successHandler
                           errorHandler:(ErrorHandler)errorHandler;
 
+- (void)getSingleBalloonPanelsWithSuccessHandler:(SuccessHandler)successHandler
+                                    errorHandler:(ErrorHandler)errorHandler;
+
 @end

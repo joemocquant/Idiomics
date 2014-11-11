@@ -16,11 +16,12 @@
 
 #pragma mark - Initialization
 
-- (id)init
+- (instancetype)initWithPanelView:(PanelView *)pv
 {
     self = [super init];
     
     if (self) {
+        panelView = pv;
         [self setBackgroundColor:[Colors white]];
         [self setAlpha:0.85];
         
@@ -42,9 +43,9 @@
     speechTextField = [[UITextView alloc] init];
     [speechTextField setDelegate:self];
     [speechTextField setBackgroundColor:[Colors clear]];
-    //[speechTextField setPlaceholder:NSLocalizedStringFromTable(@"SPEECHPLACEHOLDER", @"Stripchat", nil)];
+    [speechTextField setText:NSLocalizedStringFromTable(@"SPEECHPLACEHOLDER", @"Stripchat", nil)];
     [speechTextField setTextColor:[Colors gray4]];
-    [speechTextField setFont:[Fonts helvetica20]];
+    [speechTextField setFont:[Fonts helveticaNeueLight20]];
     speechTextField.returnKeyType = UIReturnKeyNext;
     
     [self addSubview:speechTextField];
@@ -144,6 +145,12 @@
 - (void)textViewDidChange:(UITextView *)textView
 {
     NSLog(@"%@", textView.text);
+}
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    textView.text = @"";
+    return YES;
 }
 
 @end
