@@ -95,4 +95,10 @@
     [self GET:@"all" parameters:nil success:successHandler failure:errorHandler];
 }
 
+- (void)getSingleBalloonPanelsWithSuccessHandler:(SuccessHandler)successHandler
+                                    errorHandler:(ErrorHandler)errorHandler
+{
+    [self GET:@"single_balloon" parameters:nil success:successHandler failure:errorHandler];
+}
+
 @end

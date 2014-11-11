@@ -13,13 +13,9 @@
 @interface BrowserViewController : UIViewController <PanelImageStoreDelegate,
                                                      MosaicLayoutDelegate,
                                                      UICollectionViewDelegate,
-                                                     UICollectionViewDataSource,
-                                                     UIScrollViewDelegate>
+                                                     UICollectionViewDataSource>
 {
     UICollectionView *cv;
-    UIImageView *cellImageView;
-    UIImageView *panelImageView;
-    UIScrollView *panelScrollView;
 }
 
 @end

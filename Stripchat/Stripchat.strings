@@ -9,3 +9,7 @@
 //Errors
 "CONNECTION_ERROR" = "Please check your connection and start again!";
 "STRIPCHAT_ERROR" = "Error: Connecting Stripchat";
+
+//Strings
+"SPEECHPLACEHOLDER" = "Type message here...";
+"NEXTBUTTONTITLE" = "Next";
