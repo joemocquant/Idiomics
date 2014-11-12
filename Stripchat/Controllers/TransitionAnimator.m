@@ -43,10 +43,10 @@
                                                        fromViewController.view.bounds.size.width,
                                                        fromViewController.view.bounds.size.height)];
             
-            [panelViewController.panelScrollView setFrame:CGRectMake(0,
-                                                                     0,
-                                                                     fromViewController.view.bounds.size.width,
-                                                                     fromViewController.view.bounds.size.height)];
+            [panelViewController.view.subviews[0] setFrame:CGRectMake(0,
+                                                                      0,
+                                                                      fromViewController.view.bounds.size.width,
+                                                                      fromViewController.view.bounds.size.height)];
         } completion:^(BOOL finished) {
             [transitionContext completeTransition:YES];
         }];
@@ -56,17 +56,15 @@
         toViewController.view.userInteractionEnabled = YES;
         
         PanelViewController *panelViewController = (PanelViewController *)fromViewController;
-        UIImageView *panelImage = panelViewController.panelScrollView.subviews[0];
+        UIImageView *panelImage = ((UIView *)panelViewController.view.subviews[0]).subviews[0];
         
-        CGRect point = [panelViewController.panelScrollView convertRect:self.selectedCell.imageView.bounds
-                                                               fromView:self.selectedCell.imageView];
-        
-
+        CGRect point = [panelViewController.view.subviews[0] convertRect:self.selectedCell.imageView.bounds
+                                                                fromView:self.selectedCell.imageView];
         
         [transitionContext.containerView addSubview:fromViewController.view];
         
         [fromViewController resignFirstResponder];
-        [panelViewController.panelScrollView setBackgroundColor:[Colors clear]];
+        [panelViewController.view.subviews[0] setBackgroundColor:[Colors clear]];
         
         [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
             

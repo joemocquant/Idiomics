@@ -1,17 +1,17 @@
 //
-//  SpeechBar.m
+//  MessageBar.m
 //  Stripchat
 //
 //  Created by Joe Mocquant on 11/10/14.
 //  Copyright (c) 2014 Stripchat. All rights reserved.
 //
 
-#import "SpeechBar.h"
+#import "MessageBar.h"
 #import "Colors.h"
 #import "Fonts.h"
 #import <UIView+AutoLayout.h>
 
-@implementation SpeechBar
+@implementation MessageBar
 
 
 #pragma mark - Initialization
@@ -136,7 +136,7 @@
 
 - (void)next
 {
-    NSLog(@"next");
+    [self.delegate didPressNext];
 }
 
 
@@ -144,7 +144,7 @@
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    NSLog(@"%@", textView.text);
+    [self.delegate messageDidChange:textView.text];
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView

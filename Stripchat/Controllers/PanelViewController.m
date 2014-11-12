@@ -7,9 +7,10 @@
 //
 
 #import "PanelViewController.h"
-#import "SpeechBar.h"
+#import "MessageBar.h"
 #import "Colors.h"
 #import "PanelImageStore.h"
+#import "MMSViewController.h"
 #import <UIView+AutoLayout.h>
 
 @interface PanelViewController ()
@@ -28,7 +29,10 @@
 - (UIView *)inputAccessoryView
 {
     if (!_inputAccessoryView) {
-        _inputAccessoryView = [SpeechBar new];
+        MessageBar *messageBar = [MessageBar new];
+        [messageBar setDelegate:self];
+        
+        _inputAccessoryView = messageBar;
     }
     
     return _inputAccessoryView;
@@ -58,7 +62,7 @@
     [panelScrollView setBackgroundColor:[[Colors gray3] colorWithAlphaComponent:0.8f]];
     
     //should be calculated instead of setting 10.0
-    [self.panelScrollView setMaximumZoomScale:10.0];
+    [panelScrollView setMaximumZoomScale:10.0];
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                 action:@selector(PanelScrollViewTapped:)];
@@ -67,7 +71,7 @@
     
     [panelScrollView addGestureRecognizer:singleTap];
     [panelScrollView setUserInteractionEnabled:YES];
-    
+
     [self.view addSubview:panelScrollView];
     
     [panelScrollView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -80,7 +84,6 @@
     [panelScrollView addSubview:panelImageView];
 
     [panelImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
-
     [panelImageView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:panelScrollView];
     [panelImageView centerInView:panelScrollView];
     
@@ -88,16 +91,7 @@
         || (self.panel.dimensions.height / [[UIScreen mainScreen] scale] > self.view.bounds.size.height)) {
         
         [panelImageView setContentMode:UIViewContentModeScaleAspectFit];
-        
-        [panelScrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[panelImageView]|"
-                                                                                options:NSLayoutFormatAlignAllCenterY
-                                                                                metrics:nil
-                                                                                  views:NSDictionaryOfVariableBindings(panelImageView)]];
-        
-        [panelScrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panelImageView]|"
-                                                                                options:NSLayoutFormatAlignAllCenterX
-                                                                                metrics:nil
-                                                                                  views:NSDictionaryOfVariableBindings(panelImageView)]];
+
     } else {
         [panelImageView setContentMode:UIViewContentModeCenter];
     }
@@ -114,24 +108,36 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(UIRectEdge)edgesForExtendedLayout {
-    return UIRectEdgeNone;
-}
-
-
-#pragma mark - Instance methods
-
-- (UIScrollView *)panelScrollView
-{
-    return panelScrollView;
-}
-
 
 #pragma mark - UIScrollViewDelegate
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
     return panelImageView;
+}
+
+
+#pragma mark - MessageBarDelegate
+
+- (void)didPressNext
+{
+    UIImage *imagePanel = [[PanelImageStore sharedStore] panelImageForKey:self.panel.imageUrl];
+    
+    MMSViewController *mmsvc = [[MMSViewController alloc] initWithEditedPanel:imagePanel];
+
+    [mmsvc setModalTransitionStyle:UIModalTransitionStylePartialCurl];
+    [self presentViewController:mmsvc animated:YES completion:nil];
+}
+
+- (void)messageDidChange:(NSString *)text
+{
+    NSLog(@"%@", text);
+}
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    textView.text = @"";
+    return YES;
 }
 
 @end

@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "Panel.h"
+#import "MessageBar.h"
+#import <MessageUI/MessageUI.h>
 
-@interface PanelViewController : UIViewController <UIScrollViewDelegate>
+@interface PanelViewController : UIViewController <UIScrollViewDelegate, MessageBarDelegate>
 {
     UIScrollView *panelScrollView;
     UIImageView *panelImageView;
@@ -18,6 +20,5 @@
 @property (nonatomic, strong, readonly) Panel *panel;
 
 - (instancetype)initWithPanel:(Panel *)p;
-- (UIScrollView *)panelScrollView;
 
 @end
