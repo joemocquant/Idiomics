@@ -28,6 +28,7 @@
     if (self.presenting) {
         fromViewController.view.userInteractionEnabled = NO;
         
+        PanelViewController *panelViewController = (PanelViewController *)toViewController;
         CGRect tempPoint = CGRectMake(self.selectedCell.imageView.center.x, self.selectedCell.imageView.center.y, 0, 0);
         CGRect startingPoint = [fromViewController.view convertRect:tempPoint fromView:self.selectedCell];
         
@@ -42,10 +43,10 @@
                                                        fromViewController.view.bounds.size.width,
                                                        fromViewController.view.bounds.size.height)];
             
-            [((PanelViewController *)toViewController).panelScrollView setFrame:CGRectMake(0,
-                                                                                           0,
-                                                                                           fromViewController.view.bounds.size.width,
-                                                                                           fromViewController.view.bounds.size.height)];
+            [panelViewController.panelScrollView setFrame:CGRectMake(0,
+                                                                     0,
+                                                                     fromViewController.view.bounds.size.width,
+                                                                     fromViewController.view.bounds.size.height)];
         } completion:^(BOOL finished) {
             [transitionContext completeTransition:YES];
         }];
@@ -54,16 +55,23 @@
         
         toViewController.view.userInteractionEnabled = YES;
         
-        CGRect point = [((PanelViewController *)fromViewController).view convertRect:self.selectedCell.imageView.bounds
-                                                                            fromView:self.selectedCell.imageView];
+        PanelViewController *panelViewController = (PanelViewController *)fromViewController;
+        UIImageView *panelImage = panelViewController.panelScrollView.subviews[0];
+        
+        CGRect point = [panelViewController.panelScrollView convertRect:self.selectedCell.imageView.bounds
+                                                               fromView:self.selectedCell.imageView];
+        
+
         
         [transitionContext.containerView addSubview:fromViewController.view];
         
+        [fromViewController resignFirstResponder];
+        [panelViewController.panelScrollView setBackgroundColor:[Colors clear]];
+        
         [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
             
-            [fromViewController resignFirstResponder];
-            [((PanelViewController *)fromViewController).panelScrollView setBackgroundColor:[Colors clear]];
-            [((PanelViewController *)fromViewController).panelScrollView.subviews[0] setFrame:point];
+            [panelImage setAlpha:0];
+            [panelImage setFrame:point];
 
         } completion:^(BOOL finished) {
             [transitionContext completeTransition:YES];

@@ -12,6 +12,12 @@
 #import "PanelImageStore.h"
 #import <UIView+AutoLayout.h>
 
+@interface PanelViewController ()
+
+@property (nonatomic, readwrite, retain) UIView *inputAccessoryView;
+
+@end
+
 @implementation PanelViewController
 
 - (BOOL)canBecomeFirstResponder
@@ -21,7 +27,11 @@
 
 - (UIView *)inputAccessoryView
 {
-    return [SpeechBar new];
+    if (!_inputAccessoryView) {
+        _inputAccessoryView = [SpeechBar new];
+    }
+    
+    return _inputAccessoryView;
 }
 
 
@@ -66,24 +76,31 @@
     [panelScrollView pinAttribute:NSLayoutAttributeBottom toSameAttributeOfItem:self.view withConstant:-60];
     
     panelImageView = [UIImageView new];
-    
     [panelImageView setImage:[((UIImage *)[[PanelImageStore sharedStore] panelImageForKey:self.panel.imageUrl]) copy]];
-    [panelImageView setContentMode:UIViewContentModeScaleAspectFit];
     [panelScrollView addSubview:panelImageView];
-    
+
     [panelImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
+
+    [panelImageView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:panelScrollView];
     [panelImageView centerInView:panelScrollView];
     
-    [panelScrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[panelImageView]|"
-                                                                            options:NSLayoutFormatAlignAllCenterY
-                                                                            metrics:nil
-                                                                              views:NSDictionaryOfVariableBindings(panelImageView)]];
-    
-    [panelScrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panelImageView]|"
-                                                                            options:NSLayoutFormatAlignAllCenterX
-                                                                            metrics:nil
-                                                                              views:NSDictionaryOfVariableBindings(panelImageView)]];
+    if ((self.panel.dimensions.width / [[UIScreen mainScreen] scale] > self.view.bounds.size.width)
+        || (self.panel.dimensions.height / [[UIScreen mainScreen] scale] > self.view.bounds.size.height)) {
+        
+        [panelImageView setContentMode:UIViewContentModeScaleAspectFit];
+        
+        [panelScrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[panelImageView]|"
+                                                                                options:NSLayoutFormatAlignAllCenterY
+                                                                                metrics:nil
+                                                                                  views:NSDictionaryOfVariableBindings(panelImageView)]];
+        
+        [panelScrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panelImageView]|"
+                                                                                options:NSLayoutFormatAlignAllCenterX
+                                                                                metrics:nil
+                                                                                  views:NSDictionaryOfVariableBindings(panelImageView)]];
+    } else {
+        [panelImageView setContentMode:UIViewContentModeCenter];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -95,6 +112,10 @@
 - (void)PanelScrollViewTapped:(UIGestureRecognizer *)gestureRecognizer
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(UIRectEdge)edgesForExtendedLayout {
+    return UIRectEdgeNone;
 }
 
 
