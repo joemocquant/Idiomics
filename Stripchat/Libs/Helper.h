@@ -13,5 +13,6 @@
 
 + (void)showWarningWithMsg:(NSString *)msg delegate:(id<UIAlertViewDelegate>)delegate;
 + (void)showErrorWithMsg:(NSString *)msg delegate:(id<UIAlertViewDelegate>)delegate;
++ (void)showValidationWithMsg:(NSString *)msg delegate:(id<UIAlertViewDelegate>)delegate;
 
 @end

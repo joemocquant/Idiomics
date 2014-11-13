@@ -34,7 +34,7 @@
 - (NSMutableArray *)allPanels
 {
     if (!allPanels) {
-        allPanels = [[NSMutableArray alloc] init];
+        allPanels = [NSMutableArray array];
     }
 
     return allPanels;

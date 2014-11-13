@@ -38,7 +38,7 @@
 - (NSMutableDictionary *)panelImageDictionary
 {
     if (!panelImageDictionary) {
-        panelImageDictionary = [[NSMutableDictionary alloc] init];
+        panelImageDictionary = [NSMutableDictionary dictionary];
     }
     
     return panelImageDictionary;
