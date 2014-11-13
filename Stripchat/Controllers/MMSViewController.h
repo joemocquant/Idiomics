@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 
-@interface MMSViewController : MFMessageComposeViewController <MFMessageComposeViewControllerDelegate>
+@interface MMSViewController : MFMessageComposeViewController <MFMessageComposeViewControllerDelegate,
+                                                               UIAlertViewDelegate>
 
 - (instancetype)initWithEditedPanel:(UIImage *)imagePanel;
 

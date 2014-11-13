@@ -58,16 +58,16 @@
 
     panelScrollView = [UIScrollView new];
     [panelScrollView setDelegate:self];
-    [panelScrollView setMinimumZoomScale:1.0];
     [panelScrollView setBackgroundColor:[[Colors gray3] colorWithAlphaComponent:0.8f]];
     
+    [panelScrollView setMinimumZoomScale:1.0];
     //should be calculated instead of setting 10.0
     [panelScrollView setMaximumZoomScale:10.0];
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                 action:@selector(PanelScrollViewTapped:)];
-    singleTap.numberOfTapsRequired = 1;
-    singleTap.numberOfTouchesRequired = 1;
+    [singleTap setNumberOfTapsRequired:1];
+    [singleTap setNumberOfTouchesRequired:1];
     
     [panelScrollView addGestureRecognizer:singleTap];
     [panelScrollView setUserInteractionEnabled:YES];
@@ -77,7 +77,9 @@
     [panelScrollView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [panelScrollView pinEdges:JRTViewPinLeftEdge | JRTViewPinTopEdge | JRTViewPinRightEdge
             toSameEdgesOfView:self.view];
-    [panelScrollView pinAttribute:NSLayoutAttributeBottom toSameAttributeOfItem:self.view withConstant:-60];
+    [panelScrollView pinAttribute:NSLayoutAttributeBottom
+            toSameAttributeOfItem:self.view
+                     withConstant:-MessageBarHeight];
     
     panelImageView = [UIImageView new];
     [panelImageView setImage:[((UIImage *)[[PanelImageStore sharedStore] panelImageForKey:self.panel.imageUrl]) copy]];

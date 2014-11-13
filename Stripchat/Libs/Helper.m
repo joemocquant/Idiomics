@@ -31,4 +31,13 @@
                       otherButtonTitles:nil] show];
 }
 
++ (void)showValidationWithMsg:(NSString *)msg delegate:(id<UIAlertViewDelegate>)delegate
+{
+    [[[UIAlertView alloc] initWithTitle:@"Stripchat"
+                                message:msg
+                               delegate:delegate
+                      cancelButtonTitle:@"Ok"
+                      otherButtonTitles:nil] show];
+}
+
 @end

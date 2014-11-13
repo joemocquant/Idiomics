@@ -23,13 +23,12 @@
     if (self) {
 
         [self setBackgroundColor:[Colors white]];
-        [self setAlpha:0.85];
         
         CGRect screen = [[UIScreen mainScreen] bounds];
-        CGRect frame = CGRectMake(0,0, CGRectGetWidth(screen), 60);
+        CGRect frame = CGRectMake(0,0, CGRectGetWidth(screen), MessageBarHeight);
         [self setFrame:frame];
         
-        [self setupSpeechTextView];
+        [self setupMessageTextView];
         [self setupButtonNext];
         [self setupHorizontalDash];
         [self setupVerticalDash];
@@ -38,22 +37,20 @@
     return self;
 }
 
-- (void)setupSpeechTextView
+- (void)setupMessageTextView
 {
-    UITextView *speechTextField = [UITextView new];
-    [speechTextField setDelegate:self];
-    [speechTextField setBackgroundColor:[Colors clear]];
-    [speechTextField setText:NSLocalizedStringFromTable(@"SPEECHPLACEHOLDER", @"Stripchat", nil)];
-    [speechTextField setTextColor:[Colors gray4]];
-    [speechTextField setFont:[Fonts helveticaNeueLight20]];
-    speechTextField.returnKeyType = UIReturnKeyNext;
+    UITextView *messageTextField = [UITextView new];
+    [messageTextField setDelegate:self];
+    [messageTextField setText:NSLocalizedStringFromTable(@"MESSAGEPLACEHOLDER", @"Stripchat", nil)];
+    [messageTextField setTextColor:[Colors gray4]];
+    [messageTextField setFont:[Fonts helveticaNeueLight20]];
+    messageTextField.returnKeyType = UIReturnKeyNext;
+    [self addSubview:messageTextField];
     
-    [self addSubview:speechTextField];
-    
-    [speechTextField setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [speechTextField pinEdges:JRTViewPinTopEdge | JRTViewPinBottomEdge toSameEdgesOfView:self];
-    [speechTextField pinEdges:JRTViewPinLeftEdge toSameEdgesOfView:self inset:5];
-    [speechTextField pinEdges:JRTViewPinRightEdge toSameEdgesOfView:self inset:80];
+    [messageTextField setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [messageTextField pinEdges:JRTViewPinTopEdge | JRTViewPinBottomEdge toSameEdgesOfView:self];
+    [messageTextField pinEdges:JRTViewPinLeftEdge toSameEdgesOfView:self inset:MessageTextInset];
+    [messageTextField pinEdges:JRTViewPinRightEdge toSameEdgesOfView:self inset:NextButtonWidth];
 }
 
 - (void)setupButtonNext
@@ -68,16 +65,13 @@
     [nextButton setTitleColor:disabledColor forState:UIControlStateDisabled];
     [nextButton setTitleColor:[Colors black] forState:UIControlStateHighlighted];
     [nextButton setBackgroundColor:[Colors black]];
-    [nextButton setAlpha:0.8];
     [nextButton addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:nextButton];
     
     [nextButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
     [nextButton pinEdges:JRTViewPinTopEdge | JRTViewPinRightEdge | JRTViewPinBottomEdge
        toSameEdgesOfView:self];
-    
-    [nextButton constrainToWidth:80];
+    [nextButton constrainToWidth:NextButtonWidth];
 }
 
 - (void)setupHorizontalDash
@@ -86,52 +80,23 @@
     [horizontalDash setBackgroundColor:[Colors gray4]];
     [self addSubview:horizontalDash];
     
-    CGFloat horizontalDashHeight = 2;
-    
     [horizontalDash setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
     [horizontalDash pinEdges:JRTViewPinLeftEdge | JRTViewPinTopEdge | JRTViewPinRightEdge
            toSameEdgesOfView:self];
-    
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:horizontalDash
-                                                     attribute:NSLayoutAttributeHeight
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:nil
-                                                     attribute:NSLayoutAttributeNotAnAttribute
-                                                    multiplier:1.0
-                                                      constant:horizontalDashHeight]];
+    [horizontalDash constrainToHeight:HorizontalDashHeight];
 }
 
 - (void)setupVerticalDash
 {
     UIView *verticalDash = [UIView new];
     [verticalDash setBackgroundColor:[Colors gray4]];
-    [verticalDash setAlpha:0.7];
     [self addSubview:verticalDash];
     
-    CGFloat verticalDashWidth = 1;
-    CGFloat verticalDashHeight = 1;
-    
     [verticalDash setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
     [verticalDash pinAttribute:NSLayoutAttributeCenterY toSameAttributeOfItem:self];
-    [verticalDash pinAttribute:NSLayoutAttributeRight toSameAttributeOfItem:self withConstant:-80];
-    
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:verticalDash
-                                                     attribute:NSLayoutAttributeWidth
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:nil
-                                                     attribute:NSLayoutAttributeNotAnAttribute
-                                                    multiplier:1.0
-                                                      constant:verticalDashWidth]];
-    
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:verticalDash
-                                                     attribute:NSLayoutAttributeHeight
-                                                     relatedBy:NSLayoutRelationEqual
-                                                        toItem:self
-                                                     attribute:NSLayoutAttributeHeight
-                                                    multiplier:verticalDashHeight
-                                                      constant:0]];
+    [verticalDash pinAttribute:NSLayoutAttributeRight toSameAttributeOfItem:self
+                  withConstant:-NextButtonWidth];
+    [verticalDash constrainToWidth:VerticalDashWidth];
 }
 
 - (void)next

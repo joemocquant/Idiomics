@@ -7,6 +7,7 @@
 //
 
 #import "MMSViewController.h"
+#import "Helper.h"
 
 @implementation MMSViewController
 
@@ -38,22 +39,33 @@
 #pragma mark - FMessageComposeViewControllerDelegate
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller
-                 didFinishWithResult:(MessageComposeResult) result
+                 didFinishWithResult:(MessageComposeResult)result
 {
     switch (result) {
         case MessageComposeResultCancelled:
             break;
             
         case MessageComposeResultFailed:
+            [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"MESSAGE_ERROR", @"Stripchat" , nil)
+                            delegate:self];
             break;
             
         case MessageComposeResultSent:
+            [Helper showValidationWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT", @"Stripchat" , nil)
+                                 delegate:self];
             break;
             
         default:
+            [self dismissViewControllerAnimated:YES completion:nil];
             break;
     }
-    
+}
+
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

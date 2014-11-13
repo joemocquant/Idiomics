@@ -120,12 +120,16 @@
 
 - (void)didLoadPanelWithPanelKey:(NSString *)key
 {
+#ifdef __DEBUG__
     NSLog(@"Panel id:%@ loaded", key);
+#endif
 }
 
 - (void)didLoadAllPanels
 {
+#ifdef __DEBUG__
     NSLog(@"did load all panels!");
+#endif
 }
 
 

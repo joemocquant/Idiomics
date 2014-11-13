@@ -28,6 +28,7 @@
 		013EDEA01A12A47B009F16BD /* TransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDE9F1A12A47B009F16BD /* TransitionAnimator.m */; };
 		013EDEA31A130DFC009F16BD /* MMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDEA21A130DFC009F16BD /* MMSViewController.m */; };
 		013EDEA51A13126D009F16BD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013EDEA41A13126D009F16BD /* MessageUI.framework */; };
+		013EDEA81A1541FF009F16BD /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDEA61A1541FF009F16BD /* Config.m */; };
 		F71D691C3C6E3B98D3A23B9D /* libPods-Stripchat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A50F5B1916834E0A51F71EB /* libPods-Stripchat.a */; };
 /* End PBXBuildFile section */
 
@@ -85,6 +86,8 @@
 		013EDEA11A130DFC009F16BD /* MMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMSViewController.h; sourceTree = "<group>"; };
 		013EDEA21A130DFC009F16BD /* MMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMSViewController.m; sourceTree = "<group>"; };
 		013EDEA41A13126D009F16BD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		013EDEA61A1541FF009F16BD /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
+		013EDEA71A1541FF009F16BD /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		4DF84BD531092FC632B67E6A /* Pods-Stripchat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stripchat.release.xcconfig"; path = "Pods/Target Support Files/Pods-Stripchat/Pods-Stripchat.release.xcconfig"; sourceTree = "<group>"; };
 		7A50F5B1916834E0A51F71EB /* libPods-Stripchat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Stripchat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9BDF3792F0F3144E7EEC4AE /* Pods-Stripchat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stripchat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Stripchat/Pods-Stripchat.debug.xcconfig"; sourceTree = "<group>"; };
@@ -219,6 +222,8 @@
 				010EBE471A0C33CD0051EEBE /* Helper.m */,
 				013EDE9E1A12A47B009F16BD /* TransitionAnimator.h */,
 				013EDE9F1A12A47B009F16BD /* TransitionAnimator.m */,
+				013EDEA71A1541FF009F16BD /* Config.h */,
+				013EDEA61A1541FF009F16BD /* Config.m */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -443,6 +448,7 @@
 				010EBEA81A0E98270051EEBE /* MosaicLayout.m in Sources */,
 				013EDEA31A130DFC009F16BD /* MMSViewController.m in Sources */,
 				010EBE0E1A0C07FB0051EEBE /* main.m in Sources */,
+				013EDEA81A1541FF009F16BD /* Config.m in Sources */,
 				010EBEBA1A1144BC0051EEBE /* Fonts.m in Sources */,
 				010EBE4D1A0C5B580051EEBE /* PanelStore.m in Sources */,
 				010EBE481A0C33CD0051EEBE /* Helper.m in Sources */,
