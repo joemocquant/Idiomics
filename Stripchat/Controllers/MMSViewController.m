@@ -19,7 +19,7 @@
     if (self) {
         [self setMessageComposeDelegate:self];
         
-        NSData *data = UIImageJPEGRepresentation(imagePanel, 1);
+        NSData *data = UIImageJPEGRepresentation(imagePanel, 1.0);
         [self addAttachmentData:data  typeIdentifier:@"public.data" filename:@"name.jpg"];
     }
     

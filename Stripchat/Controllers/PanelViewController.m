@@ -125,6 +125,7 @@
         [ballonLabel setNumberOfLines:0];
         [ballonLabel setAdjustsFontSizeToFitWidth:YES];
         [ballonLabel setTextAlignment:NSTextAlignmentCenter];
+        [ballonLabel setFont:[Fonts laffayetteComicPro14]];
         [speechBalloons addObject:ballonLabel];
     }
 }
@@ -196,22 +197,26 @@
 
 - (void)didPressNext
 {
-    UIImage *imagePanel = [[PanelImageStore sharedStore] panelImageForKey:panel.imageUrl];
+    UIGraphicsBeginImageContext(panelImageView.image.size);
     
-    MMSViewController *mmsvc = [[MMSViewController alloc] initWithEditedPanel:imagePanel];
+    UIGraphicsBeginImageContextWithOptions(panelImageView.image.size, YES, 0);
+    [panelImageView drawViewHierarchyInRect:panelImageView.bounds afterScreenUpdates:YES];
+    
+    UIImage *editedPanel = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    MMSViewController *mmsvc = [[MMSViewController alloc] initWithEditedPanel:editedPanel];
     
     if ([mmsvc canSendPanel]) {
         
         [mmsvc setModalTransitionStyle:UIModalTransitionStylePartialCurl];
         [self presentViewController:mmsvc animated:YES completion:nil];
-        
     }
 }
 
 - (void)messageDidChange:(NSString *)text
 {
     UILabel *currentBallon = speechBalloons[0];
-    currentBallon.font = [Fonts laffayetteComicPro14];
     [currentBallon setText:text];
 }
 
