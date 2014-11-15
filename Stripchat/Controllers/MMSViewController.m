@@ -43,6 +43,7 @@
 {
     switch (result) {
         case MessageComposeResultCancelled:
+            [self dismissViewControllerAnimated:YES completion:nil];
             break;
             
         case MessageComposeResultFailed:

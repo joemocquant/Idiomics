@@ -28,4 +28,9 @@
     return [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
 }
 
++ (UIFont *)laffayetteComicPro14
+{
+    return [UIFont fontWithName:@"LaffayetteComicPro" size:14];
+}
+
 @end

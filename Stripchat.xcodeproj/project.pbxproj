@@ -24,6 +24,7 @@
 		010EBEB31A1143530051EEBE /* MessageBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEB21A1143530051EEBE /* MessageBar.m */; };
 		010EBEB91A1144BC0051EEBE /* Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEB61A1144BC0051EEBE /* Colors.m */; };
 		010EBEBA1A1144BC0051EEBE /* Fonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEB81A1144BC0051EEBE /* Fonts.m */; };
+		0124B8551A1598720076251E /* Laffayette_Comic_Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0124B8541A1598720076251E /* Laffayette_Comic_Pro.ttf */; };
 		013EDE9D1A1297D3009F16BD /* PanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDE9C1A1297D3009F16BD /* PanelViewController.m */; };
 		013EDEA01A12A47B009F16BD /* TransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDE9F1A12A47B009F16BD /* TransitionAnimator.m */; };
 		013EDEA31A130DFC009F16BD /* MMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDEA21A130DFC009F16BD /* MMSViewController.m */; };
@@ -79,6 +80,7 @@
 		010EBEB61A1144BC0051EEBE /* Colors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colors.m; sourceTree = "<group>"; };
 		010EBEB71A1144BC0051EEBE /* Fonts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fonts.h; sourceTree = "<group>"; };
 		010EBEB81A1144BC0051EEBE /* Fonts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fonts.m; sourceTree = "<group>"; };
+		0124B8541A1598720076251E /* Laffayette_Comic_Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Laffayette_Comic_Pro.ttf; sourceTree = "<group>"; };
 		013EDE9B1A1297D3009F16BD /* PanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanelViewController.h; sourceTree = "<group>"; };
 		013EDE9C1A1297D3009F16BD /* PanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanelViewController.m; sourceTree = "<group>"; };
 		013EDE9E1A12A47B009F16BD /* TransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransitionAnimator.h; path = ../Controllers/TransitionAnimator.h; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 		010EBE0B1A0C07FB0051EEBE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0124B8541A1598720076251E /* Laffayette_Comic_Pro.ttf */,
 				010EBE0C1A0C07FB0051EEBE /* Info.plist */,
 				010EBE0D1A0C07FB0051EEBE /* main.m */,
 				010EBE421A0C27F20051EEBE /* PrefixHeader.pch */,
@@ -387,6 +390,7 @@
 			files = (
 				010EBE191A0C07FB0051EEBE /* Images.xcassets in Resources */,
 				010EBE4A1A0C34930051EEBE /* Stripchat.strings in Resources */,
+				0124B8551A1598720076251E /* Laffayette_Comic_Pro.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

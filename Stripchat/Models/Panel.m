@@ -50,10 +50,10 @@
         
         NSArray *result = [[[balloons rac_sequence] map:^id(NSArray *balloon) {
             
-            return [NSValue valueWithCGRect:CGRectMake([balloon[0] floatValue],
-                                                       [balloon[1] floatValue],
-                                                       [balloon[2] floatValue],
-                                                       [balloon[3] floatValue])];
+            return [NSValue valueWithCGRect:CGRectMake([balloon[0] floatValue] / [[UIScreen mainScreen] scale],
+                                                       [balloon[1] floatValue] / [[UIScreen mainScreen] scale],
+                                                       [balloon[2] floatValue] / [[UIScreen mainScreen] scale],
+                                                       [balloon[3] floatValue] / [[UIScreen mainScreen] scale])];
             
         }] array];
         
@@ -64,7 +64,10 @@
         NSArray *result = [[[balloons rac_sequence] map:^id(NSValue *balloon) {
             
             CGRect res = [balloon CGRectValue];
-            return @[@(res.origin.x), @(res.origin.y), @(res.size.width), @(res.size.height)];
+            return @[@(res.origin.x * [[UIScreen mainScreen] scale]),
+                     @(res.origin.y * [[UIScreen mainScreen] scale]),
+                     @(res.size.width * [[UIScreen mainScreen] scale]),
+                     @(res.size.height * [[UIScreen mainScreen] scale])];
             
         }] array];
         

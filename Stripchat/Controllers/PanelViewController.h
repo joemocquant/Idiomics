@@ -13,11 +13,11 @@
 
 @interface PanelViewController : UIViewController <UIScrollViewDelegate, MessageBarDelegate>
 {
+    Panel *panel;
     UIScrollView *panelScrollView;
     UIImageView *panelImageView;
+    NSMutableArray *speechBalloons;
 }
-
-@property (nonatomic, strong, readonly) Panel *panel;
 
 - (instancetype)initWithPanel:(Panel *)p;
 
