@@ -252,8 +252,7 @@
     MosaicData *data = [[MosaicData alloc] initWithDictionary:dictionary];
     cell.mosaicData = data;
     
-    float randomWhite = (arc4random() % 40 + 10) / 255.0;
-    cell.backgroundColor = [UIColor colorWithWhite:randomWhite alpha:1];
+    cell.backgroundColor = panel.averageColor;
     
     return cell;
 }

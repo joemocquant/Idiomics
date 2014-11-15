@@ -11,9 +11,9 @@
 
 @interface MosaicCell : UICollectionViewCell
 {
+    UIView *_borderView;
     UIImageView *_imageView;
     MosaicData *_mosaicData;
-    UILabel *_titleLabel;
 }
 
 @property (strong) UIImage *image;

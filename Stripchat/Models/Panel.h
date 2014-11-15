@@ -16,5 +16,6 @@
 @property (nonatomic, assign, readonly) CGSize dimensions;
 @property (nonatomic, copy, readonly) NSString *imageUrl;
 @property (nonatomic, copy, readonly) NSArray *balloons;
+@property (nonatomic, copy, readonly) UIColor *averageColor;
 
 @end

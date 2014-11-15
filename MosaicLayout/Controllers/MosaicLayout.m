@@ -27,7 +27,7 @@
     NSUInteger retVal = 0;
     CGFloat shortestValue = MAXFLOAT;
     
-    NSUInteger i=0;
+    NSUInteger i = 0;
     for (NSNumber *heightValue in _columns){
         if ([heightValue floatValue] < shortestValue){
             shortestValue = [heightValue floatValue];
@@ -43,7 +43,7 @@
     NSUInteger retVal = 0;
     CGFloat longestValue = 0;
     
-    NSUInteger i=0;
+    NSUInteger i = 0;
     for (NSNumber *heightValue in _columns){
         if ([heightValue floatValue] > longestValue){
             longestValue = [heightValue floatValue];

@@ -59,14 +59,21 @@
     
     panelScrollView = [UIScrollView new];
     [panelScrollView setDelegate:self];
-    [panelScrollView setBackgroundColor:[[Colors gray3] colorWithAlphaComponent:0.8f]];
+    [panelScrollView setBackgroundColor:[panel.averageColor colorWithAlphaComponent:0.85f]];
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                action:@selector(PanelScrollViewTapped:)];
+                                                                                action:@selector(PanelScrollViewTappedOnce:)];
     [singleTap setNumberOfTapsRequired:1];
     [singleTap setNumberOfTouchesRequired:1];
     
     [panelScrollView addGestureRecognizer:singleTap];
+    
+    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                action:@selector(PanelScrollViewTappedTwice:)];
+    [doubleTap setNumberOfTapsRequired:2];
+    [doubleTap setNumberOfTouchesRequired:1];
+    
+    [panelScrollView addGestureRecognizer:doubleTap];
     [panelScrollView setUserInteractionEnabled:YES];
     
     CGRect screen = [[UIScreen mainScreen] bounds];
@@ -135,11 +142,15 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)PanelScrollViewTapped:(UIGestureRecognizer *)gestureRecognizer
+- (void)PanelScrollViewTappedOnce:(UIGestureRecognizer *)gestureRecognizer
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)PanelScrollViewTappedTwice:(UIGestureRecognizer *)gestureRecognizer
+{
+    NSLog(@"twice");
+}
 
 #pragma mark - Rotation
 

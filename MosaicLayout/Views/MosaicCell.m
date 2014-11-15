@@ -77,17 +77,6 @@
     self.layer.borderWidth = 1;
     self.layer.borderColor = [UIColor blackColor].CGColor;
     self.clipsToBounds = YES;
-    
-    //  UILabel for title    
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    _titleLabel.textAlignment = NSTextAlignmentRight;
-    _titleLabel.backgroundColor = [UIColor clearColor];
-    _titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:15];
-    _titleLabel.textColor = [UIColor whiteColor];
-    _titleLabel.shadowColor = [UIColor blackColor];
-    _titleLabel.shadowOffset = CGSizeMake(0, 1);
-    _titleLabel.numberOfLines = 1;
-    [self addSubview:_titleLabel];
 }
 
 
@@ -132,24 +121,12 @@
         }];        
     }
     
-    [super setHighlighted:highlighted];    
+    [super setHighlighted:highlighted];
 }
 
 - (void)setMosaicData:(MosaicData *)newMosaicData
 {
     _mosaicData = newMosaicData;
-    
-    //  Image set
-    //if ([_mosaicData.imageFilename hasPrefix:@"http://"] ||
-    //    [_mosaicData.imageFilename hasPrefix:@"https://"]){
-        //  Download image from the web
-//        void (^imageSuccess)(UIImage *downloadedImage) = ^(UIImage *downloadedImage){
-//            
-//            //  This check is to avoid wrong images on reused cells
-//            if ([newMosaicData.title isEqualToString:_mosaicData.title]){
-//                self.image = downloadedImage;
-//            }
-//        };
     
     UIImage *cached = [[PanelImageStore sharedStore] panelImageForKey:_mosaicData.imageFilename];
     
@@ -176,10 +153,6 @@
     }else{
         self.image = cached;
     }
-    
-    
-    //  Title set
-    _titleLabel.text = _mosaicData.title;
 }
 
 
@@ -206,15 +179,6 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
-    _titleLabel.frame = CGRectMake(kLabelMargin,
-                                  self.bounds.size.height - kLabelHeight - kLabelMargin,
-                                  self.bounds.size.width - kLabelMargin * 2,
-                                  kLabelHeight);
-    
-    _imageView.layer.shadowOffset = CGSizeMake(8, 8);
-    _imageView.layer.shadowColor = [UIColor redColor].CGColor;
-    _imageView.layer.shadowOpacity = 1;
 }
 
 - (void)prepareForReuse

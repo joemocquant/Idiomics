@@ -15,6 +15,7 @@
 @property (nonatomic, assign, readwrite) CGSize dimensions;
 @property (nonatomic, copy, readwrite) NSString *imageUrl;
 @property (nonatomic, copy, readwrite) NSArray *balloons;
+@property (nonatomic, copy, readwrite) UIColor *averageColor;
 
 @end
 
@@ -28,7 +29,8 @@
     return @{@"panelId": @"_id",
              @"dimensions": @"dimensions",
              @"imageUrl": @"image_url",
-             @"balloons": @"balloons"
+             @"balloons": @"balloons",
+             @"averageColor": @"avg_color"
              };
 }
 
@@ -73,6 +75,31 @@
         
         return result;
 
+    }];
+}
+
++ (NSValueTransformer *)averageColorJSONTransformer
+{
+    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSString *rgb) {
+        
+        NSScanner *scanner = [NSScanner scannerWithString:rgb];
+        NSString *junk, *red, *green, *blue;
+        [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&junk];
+        [scanner scanUpToCharactersFromSet:[NSCharacterSet punctuationCharacterSet] intoString:&red];
+        [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&junk];
+        [scanner scanUpToCharactersFromSet:[NSCharacterSet punctuationCharacterSet] intoString:&green];
+        [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&junk];
+        [scanner scanUpToCharactersFromSet:[NSCharacterSet punctuationCharacterSet] intoString:&blue];
+        
+        UIColor *averageColor = [UIColor colorWithRed:red.intValue/255.0 green:green.intValue/255.0 blue:blue.intValue/255.0 alpha:1.0];
+        return averageColor;
+        
+    } reverseBlock:^id(UIColor *averageColor) {
+        
+        CGFloat red, green, blue, alpha;
+        [averageColor getRed: &red green: &green blue: &blue alpha: &alpha];
+        
+        return [NSString stringWithFormat:@"rgb(%d, %d, %d)", (unsigned int)red, (unsigned int)green, (unsigned int)blue];
     }];
 }
 
