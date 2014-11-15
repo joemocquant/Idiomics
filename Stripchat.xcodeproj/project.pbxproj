@@ -24,11 +24,37 @@
 		010EBEB31A1143530051EEBE /* MessageBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEB21A1143530051EEBE /* MessageBar.m */; };
 		010EBEB91A1144BC0051EEBE /* Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEB61A1144BC0051EEBE /* Colors.m */; };
 		010EBEBA1A1144BC0051EEBE /* Fonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEB81A1144BC0051EEBE /* Fonts.m */; };
+		0124B8551A1598720076251E /* Laffayette_Comic_Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0124B8541A1598720076251E /* Laffayette_Comic_Pro.ttf */; };
 		013EDE9D1A1297D3009F16BD /* PanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDE9C1A1297D3009F16BD /* PanelViewController.m */; };
 		013EDEA01A12A47B009F16BD /* TransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDE9F1A12A47B009F16BD /* TransitionAnimator.m */; };
 		013EDEA31A130DFC009F16BD /* MMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDEA21A130DFC009F16BD /* MMSViewController.m */; };
 		013EDEA51A13126D009F16BD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013EDEA41A13126D009F16BD /* MessageUI.framework */; };
 		013EDEA81A1541FF009F16BD /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDEA61A1541FF009F16BD /* Config.m */; };
+		01D7BDD61A17E3E500C30CE2 /* Panel.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE401A0C0E910051EEBE /* Panel.m */; };
+		01D7BDD71A17E3E500C30CE2 /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE441A0C31C90051EEBE /* APIClient.m */; };
+		01D7BDD81A17E3E500C30CE2 /* MosaicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEA71A0E98270051EEBE /* MosaicCell.m */; };
+		01D7BDD91A17E3E500C30CE2 /* Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEB61A1144BC0051EEBE /* Colors.m */; };
+		01D7BDDA1A17E3E500C30CE2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE101A0C07FB0051EEBE /* AppDelegate.m */; };
+		01D7BDDB1A17E3E500C30CE2 /* TransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDE9F1A12A47B009F16BD /* TransitionAnimator.m */; };
+		01D7BDDC1A17E3E500C30CE2 /* MosaicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEA21A0E98270051EEBE /* MosaicData.m */; };
+		01D7BDDD1A17E3E500C30CE2 /* MessageBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEB21A1143530051EEBE /* MessageBar.m */; };
+		01D7BDDE1A17E3E500C30CE2 /* MosaicLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE9F1A0E98270051EEBE /* MosaicLayout.m */; };
+		01D7BDDF1A17E3E500C30CE2 /* MMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDEA21A130DFC009F16BD /* MMSViewController.m */; };
+		01D7BDE01A17E3E500C30CE2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE0D1A0C07FB0051EEBE /* main.m */; };
+		01D7BDE11A17E3E500C30CE2 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDEA61A1541FF009F16BD /* Config.m */; };
+		01D7BDE21A17E3E500C30CE2 /* Fonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEB81A1144BC0051EEBE /* Fonts.m */; };
+		01D7BDE31A17E3E500C30CE2 /* PanelStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE4C1A0C5B580051EEBE /* PanelStore.m */; };
+		01D7BDE41A17E3E500C30CE2 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE471A0C33CD0051EEBE /* Helper.m */; };
+		01D7BDE51A17E3E500C30CE2 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE371A0C0D530051EEBE /* BrowserViewController.m */; };
+		01D7BDE61A17E3E500C30CE2 /* PanelImageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE3C1A0C0DDE0051EEBE /* PanelImageStore.m */; };
+		01D7BDE71A17E3E500C30CE2 /* PanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDE9C1A1297D3009F16BD /* PanelViewController.m */; };
+		01D7BDE91A17E3E500C30CE2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013EDEA41A13126D009F16BD /* MessageUI.framework */; };
+		01D7BDEA1A17E3E500C30CE2 /* libPods-Stripchat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A50F5B1916834E0A51F71EB /* libPods-Stripchat.a */; };
+		01D7BDEC1A17E3E500C30CE2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 010EBE181A0C07FB0051EEBE /* Images.xcassets */; };
+		01D7BDED1A17E3E500C30CE2 /* Stripchat.strings in Resources */ = {isa = PBXBuildFile; fileRef = 010EBE491A0C34930051EEBE /* Stripchat.strings */; };
+		01D7BDEE1A17E3E500C30CE2 /* Laffayette_Comic_Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0124B8541A1598720076251E /* Laffayette_Comic_Pro.ttf */; };
+		01D7BDF61A17E56500C30CE2 /* Stripchat_Local-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01D7BDF51A17E56500C30CE2 /* Stripchat_Local-Info.plist */; };
+		01D7BDF71A17E57300C30CE2 /* Stripchat-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 010EBE0C1A0C07FB0051EEBE /* Stripchat-Info.plist */; };
 		F71D691C3C6E3B98D3A23B9D /* libPods-Stripchat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A50F5B1916834E0A51F71EB /* libPods-Stripchat.a */; };
 /* End PBXBuildFile section */
 
@@ -44,7 +70,7 @@
 
 /* Begin PBXFileReference section */
 		010EBE081A0C07FB0051EEBE /* Stripchat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stripchat.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		010EBE0C1A0C07FB0051EEBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		010EBE0C1A0C07FB0051EEBE /* Stripchat-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Stripchat-Info.plist"; sourceTree = "<group>"; };
 		010EBE0D1A0C07FB0051EEBE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		010EBE0F1A0C07FB0051EEBE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		010EBE101A0C07FB0051EEBE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -79,6 +105,7 @@
 		010EBEB61A1144BC0051EEBE /* Colors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colors.m; sourceTree = "<group>"; };
 		010EBEB71A1144BC0051EEBE /* Fonts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fonts.h; sourceTree = "<group>"; };
 		010EBEB81A1144BC0051EEBE /* Fonts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fonts.m; sourceTree = "<group>"; };
+		0124B8541A1598720076251E /* Laffayette_Comic_Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Laffayette_Comic_Pro.ttf; sourceTree = "<group>"; };
 		013EDE9B1A1297D3009F16BD /* PanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanelViewController.h; sourceTree = "<group>"; };
 		013EDE9C1A1297D3009F16BD /* PanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanelViewController.m; sourceTree = "<group>"; };
 		013EDE9E1A12A47B009F16BD /* TransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransitionAnimator.h; path = ../Controllers/TransitionAnimator.h; sourceTree = "<group>"; };
@@ -88,6 +115,9 @@
 		013EDEA41A13126D009F16BD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		013EDEA61A1541FF009F16BD /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
 		013EDEA71A1541FF009F16BD /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
+		01D7BDF31A17E3E500C30CE2 /* Stripchat_Local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stripchat_Local.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		01D7BDF41A17E3E600C30CE2 /* Stripchat copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Stripchat copy-Info.plist"; path = "/Users/jocelyn/stripchat/Stripchat/Stripchat copy-Info.plist"; sourceTree = "<absolute>"; };
+		01D7BDF51A17E56500C30CE2 /* Stripchat_Local-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Stripchat_Local-Info.plist"; sourceTree = "<group>"; };
 		4DF84BD531092FC632B67E6A /* Pods-Stripchat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stripchat.release.xcconfig"; path = "Pods/Target Support Files/Pods-Stripchat/Pods-Stripchat.release.xcconfig"; sourceTree = "<group>"; };
 		7A50F5B1916834E0A51F71EB /* libPods-Stripchat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Stripchat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9BDF3792F0F3144E7EEC4AE /* Pods-Stripchat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stripchat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Stripchat/Pods-Stripchat.debug.xcconfig"; sourceTree = "<group>"; };
@@ -110,6 +140,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		01D7BDE81A17E3E500C30CE2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01D7BDE91A17E3E500C30CE2 /* MessageUI.framework in Frameworks */,
+				01D7BDEA1A17E3E500C30CE2 /* libPods-Stripchat.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -122,6 +161,7 @@
 				010EBE091A0C07FB0051EEBE /* Products */,
 				FD69EDC324BD24993A69A423 /* Pods */,
 				5A44181D8CDD5F553EB4E18C /* Frameworks */,
+				01D7BDF41A17E3E600C30CE2 /* Stripchat copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,6 +170,7 @@
 			children = (
 				010EBE081A0C07FB0051EEBE /* Stripchat.app */,
 				010EBE211A0C07FB0051EEBE /* StripchatTests.xctest */,
+				01D7BDF31A17E3E500C30CE2 /* Stripchat_Local.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -153,7 +194,9 @@
 		010EBE0B1A0C07FB0051EEBE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				010EBE0C1A0C07FB0051EEBE /* Info.plist */,
+				0124B8541A1598720076251E /* Laffayette_Comic_Pro.ttf */,
+				010EBE0C1A0C07FB0051EEBE /* Stripchat-Info.plist */,
+				01D7BDF51A17E56500C30CE2 /* Stripchat_Local-Info.plist */,
 				010EBE0D1A0C07FB0051EEBE /* main.m */,
 				010EBE421A0C27F20051EEBE /* PrefixHeader.pch */,
 				010EBE491A0C34930051EEBE /* Stripchat.strings */,
@@ -343,6 +386,25 @@
 			productReference = 010EBE211A0C07FB0051EEBE /* StripchatTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		01D7BDD31A17E3E500C30CE2 /* Stripchat_local */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01D7BDF01A17E3E500C30CE2 /* Build configuration list for PBXNativeTarget "Stripchat_local" */;
+			buildPhases = (
+				01D7BDD41A17E3E500C30CE2 /* Check Pods Manifest.lock */,
+				01D7BDD51A17E3E500C30CE2 /* Sources */,
+				01D7BDE81A17E3E500C30CE2 /* Frameworks */,
+				01D7BDEB1A17E3E500C30CE2 /* Resources */,
+				01D7BDEF1A17E3E500C30CE2 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Stripchat_local;
+			productName = Stripchat;
+			productReference = 01D7BDF31A17E3E500C30CE2 /* Stripchat_Local.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -376,6 +438,7 @@
 			targets = (
 				010EBE071A0C07FB0051EEBE /* Stripchat */,
 				010EBE201A0C07FB0051EEBE /* StripchatTests */,
+				01D7BDD31A17E3E500C30CE2 /* Stripchat_local */,
 			);
 		};
 /* End PBXProject section */
@@ -386,7 +449,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				010EBE191A0C07FB0051EEBE /* Images.xcassets in Resources */,
+				01D7BDF71A17E57300C30CE2 /* Stripchat-Info.plist in Resources */,
 				010EBE4A1A0C34930051EEBE /* Stripchat.strings in Resources */,
+				0124B8551A1598720076251E /* Laffayette_Comic_Pro.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,9 +462,50 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		01D7BDEB1A17E3E500C30CE2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01D7BDEC1A17E3E500C30CE2 /* Images.xcassets in Resources */,
+				01D7BDF61A17E56500C30CE2 /* Stripchat_Local-Info.plist in Resources */,
+				01D7BDED1A17E3E500C30CE2 /* Stripchat.strings in Resources */,
+				01D7BDEE1A17E3E500C30CE2 /* Laffayette_Comic_Pro.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		01D7BDD41A17E3E500C30CE2 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		01D7BDEF1A17E3E500C30CE2 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Stripchat/Pods-Stripchat-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		E726A19BE2E6AF2986F985D8 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -463,6 +569,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				010EBE281A0C07FB0051EEBE /* StripchatTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01D7BDD51A17E3E500C30CE2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01D7BDD61A17E3E500C30CE2 /* Panel.m in Sources */,
+				01D7BDD71A17E3E500C30CE2 /* APIClient.m in Sources */,
+				01D7BDD81A17E3E500C30CE2 /* MosaicCell.m in Sources */,
+				01D7BDD91A17E3E500C30CE2 /* Colors.m in Sources */,
+				01D7BDDA1A17E3E500C30CE2 /* AppDelegate.m in Sources */,
+				01D7BDDB1A17E3E500C30CE2 /* TransitionAnimator.m in Sources */,
+				01D7BDDC1A17E3E500C30CE2 /* MosaicData.m in Sources */,
+				01D7BDDD1A17E3E500C30CE2 /* MessageBar.m in Sources */,
+				01D7BDDE1A17E3E500C30CE2 /* MosaicLayout.m in Sources */,
+				01D7BDDF1A17E3E500C30CE2 /* MMSViewController.m in Sources */,
+				01D7BDE01A17E3E500C30CE2 /* main.m in Sources */,
+				01D7BDE11A17E3E500C30CE2 /* Config.m in Sources */,
+				01D7BDE21A17E3E500C30CE2 /* Fonts.m in Sources */,
+				01D7BDE31A17E3E500C30CE2 /* PanelStore.m in Sources */,
+				01D7BDE41A17E3E500C30CE2 /* Helper.m in Sources */,
+				01D7BDE51A17E3E500C30CE2 /* BrowserViewController.m in Sources */,
+				01D7BDE61A17E3E500C30CE2 /* PanelImageStore.m in Sources */,
+				01D7BDE71A17E3E500C30CE2 /* PanelViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -559,7 +690,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				GCC_PREFIX_HEADER = Stripchat/PrefixHeader.pch;
-				INFOPLIST_FILE = Stripchat/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Stripchat/Stripchat-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -572,7 +703,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				GCC_PREFIX_HEADER = Stripchat/PrefixHeader.pch;
-				INFOPLIST_FILE = Stripchat/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Stripchat/Stripchat-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -613,6 +744,32 @@
 			};
 			name = Release;
 		};
+		01D7BDF11A17E3E500C30CE2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B9BDF3792F0F3144E7EEC4AE /* Pods-Stripchat.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = Stripchat/PrefixHeader.pch;
+				INFOPLIST_FILE = "$(SRCROOT)/Stripchat/Stripchat_Local-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = Stripchat_Local;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		01D7BDF21A17E3E500C30CE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DF84BD531092FC632B67E6A /* Pods-Stripchat.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = Stripchat/PrefixHeader.pch;
+				INFOPLIST_FILE = "$(SRCROOT)/Stripchat/Stripchat_Local-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = Stripchat_Local;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -639,6 +796,15 @@
 			buildConfigurations = (
 				010EBE2F1A0C07FB0051EEBE /* Debug */,
 				010EBE301A0C07FB0051EEBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		01D7BDF01A17E3E500C30CE2 /* Build configuration list for PBXNativeTarget "Stripchat_local" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01D7BDF11A17E3E500C30CE2 /* Debug */,
+				01D7BDF21A17E3E500C30CE2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

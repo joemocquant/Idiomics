@@ -47,7 +47,7 @@
         AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
         [self setRequestSerializer:requestSerializer];
         [self setResponseSerializer:[AFJSONResponseSerializer serializer]];
-        [[self responseSerializer] setAcceptableContentTypes:[NSSet setWithObjects:@"text/plain", nil]];
+        [[self responseSerializer] setAcceptableContentTypes:[NSSet setWithObjects:@"application/json", @"text/plain", nil]];
         
         [self startMonitoringAPI];
         
@@ -98,7 +98,7 @@
 - (void)getSingleBalloonPanelsWithSuccessHandler:(SuccessHandler)successHandler
                                     errorHandler:(ErrorHandler)errorHandler
 {
-    [self GET:@"single_balloon" parameters:nil success:successHandler failure:errorHandler];
+    [self GET:@"up_to_one_balloon" parameters:nil success:successHandler failure:errorHandler];
 }
 
 @end

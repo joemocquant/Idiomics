@@ -14,5 +14,6 @@
 + (UIFont *)helvetica10;
 + (UIFont *)helvetica20;
 + (UIFont *)helveticaNeueLight20;
++ (UIFont *)laffayetteComicPro14;
 
 @end
