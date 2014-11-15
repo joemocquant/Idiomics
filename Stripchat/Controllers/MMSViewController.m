@@ -8,6 +8,7 @@
 
 #import "MMSViewController.h"
 #import "Helper.h"
+#import <MessageUI/MFMessageComposeViewController.h>
 
 @implementation MMSViewController
 
@@ -47,12 +48,12 @@
             break;
             
         case MessageComposeResultFailed:
-            [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"MESSAGE_ERROR", @"Stripchat" , nil)
+            [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT_ERROR", @"Stripchat" , nil)
                             delegate:self];
             break;
             
         case MessageComposeResultSent:
-            [Helper showValidationWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT", @"Stripchat" , nil)
+            [Helper showValidationWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT_SUCCESS", @"Stripchat" , nil)
                                  delegate:self];
             break;
             
@@ -68,6 +69,18 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+#pragma mark - Instance methods
+
+- (BOOL)canSendPanel
+{
+    if ([MFMessageComposeViewController canSendText] && [MFMessageComposeViewController canSendAttachments]) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 @end

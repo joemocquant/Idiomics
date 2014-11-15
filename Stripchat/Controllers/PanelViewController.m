@@ -144,11 +144,9 @@
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context)
-     {
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
          [self centerScrollViewContents];
-     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context)
-     {
+     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 
      }];
     
@@ -193,6 +191,7 @@
     panelImageView.frame = contentsFrame;
 }
 
+
 #pragma mark - MessageBarDelegate
 
 - (void)didPressNext
@@ -200,9 +199,13 @@
     UIImage *imagePanel = [[PanelImageStore sharedStore] panelImageForKey:panel.imageUrl];
     
     MMSViewController *mmsvc = [[MMSViewController alloc] initWithEditedPanel:imagePanel];
-
-    [mmsvc setModalTransitionStyle:UIModalTransitionStylePartialCurl];
-    [self presentViewController:mmsvc animated:YES completion:nil];
+    
+    if ([mmsvc canSendPanel]) {
+        
+        [mmsvc setModalTransitionStyle:UIModalTransitionStylePartialCurl];
+        [self presentViewController:mmsvc animated:YES completion:nil];
+        
+    }
 }
 
 - (void)messageDidChange:(NSString *)text

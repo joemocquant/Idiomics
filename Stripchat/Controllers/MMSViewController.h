@@ -13,5 +13,6 @@
                                                                UIAlertViewDelegate>
 
 - (instancetype)initWithEditedPanel:(UIImage *)imagePanel;
+- (BOOL)canSendPanel;
 
 @end
