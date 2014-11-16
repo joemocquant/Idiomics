@@ -32,16 +32,11 @@
         CGRect tempPoint = CGRectMake(self.selectedCell.imageView.center.x, self.selectedCell.imageView.center.y, 0, 0);
         CGRect startingPoint = [fromViewController.view convertRect:tempPoint fromView:self.selectedCell];
         
-        [toViewController.view setFrame:startingPoint];
+        [panelViewController.view.subviews[0] setFrame:startingPoint];
         
         [transitionContext.containerView addSubview:toViewController.view];
         
         [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
-            
-            [toViewController.view setFrame:CGRectMake(0,
-                                                       0,
-                                                       fromViewController.view.bounds.size.width,
-                                                       fromViewController.view.bounds.size.height)];
             
             [panelViewController.view.subviews[0] setFrame:CGRectMake(0,
                                                                       0,
