@@ -53,7 +53,8 @@
     return self;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
@@ -74,7 +75,9 @@
     [doubleTap setNumberOfTouchesRequired:1];
     
     [panelScrollView addGestureRecognizer:doubleTap];
+    [singleTap requireGestureRecognizerToFail:doubleTap];
     [panelScrollView setUserInteractionEnabled:YES];
+    
     
     CGRect screen = [[UIScreen mainScreen] bounds];
     [panelScrollView setFrame:CGRectMake(0, 0, CGRectGetWidth(screen), CGRectGetHeight(screen) - MessageBarHeight)];
@@ -89,17 +92,18 @@
 
     [self setupSpeechBalloons];
     [self setupScales];
+    [panelScrollView setZoomScale:minScale];
 }
 
--(void)setupScales {
+-(void)setupScales
+{
     // Set up the minimum & maximum zoom scales
     
-    CGFloat minScale;
     CGRect scrollViewFrame = panelScrollView.frame;
     
     CGFloat scaleWidth = scrollViewFrame.size.width / panelScrollView.contentSize.width;
     CGFloat scaleHeight = scrollViewFrame.size.height / panelScrollView.contentSize.height;
-    CGFloat screenScale = MIN(scaleWidth, scaleHeight);
+    screenScale = MIN(scaleWidth, scaleHeight);
     
     if (screenScale >= 1) {
         //panel smaller than scrollview
@@ -111,7 +115,6 @@
     
     [panelScrollView setMinimumZoomScale:minScale];
     [panelScrollView setMaximumZoomScale:minScale * 4.0];
-    [panelScrollView setZoomScale:minScale];
 }
 
 - (void)setupSpeechBalloons
@@ -137,10 +140,14 @@
     }
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+#pragma mark - Gestures
 
 - (void)PanelScrollViewTappedOnce:(UIGestureRecognizer *)gestureRecognizer
 {
@@ -149,17 +156,35 @@
 
 - (void)PanelScrollViewTappedTwice:(UIGestureRecognizer *)gestureRecognizer
 {
-    NSLog(@"twice");
+    [UIView animateWithDuration:0.2 animations:^{
+        if ([panelScrollView zoomScale] < screenScale) {
+            [panelScrollView setZoomScale:screenScale];
+        } else if (([panelScrollView zoomScale] == screenScale) && (screenScale == minScale)) {
+                [panelScrollView setZoomScale:screenScale * 3];
+            } else {
+                [panelScrollView setZoomScale:minScale];
+            }
+        }];
 }
+
 
 #pragma mark - Rotation
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-         [self centerScrollViewContents];
+        panelScrollView.contentSize = panelImageView.image.size;
+        [self centerScrollViewContents];
+        [self setupScales];
+        
+        if (panelScrollView.zoomScale < minScale) {
+            [panelScrollView setZoomScale:minScale];
+        } else {
+            [panelScrollView setZoomScale:panelScrollView.zoomScale];
+        }
+        
      } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-
+         
      }];
     
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
