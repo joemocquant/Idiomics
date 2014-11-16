@@ -11,9 +11,7 @@
 #import <AFNetworking.h>
 #import "PanelImageStore.h"
 
-#define kLabelHeight 20
-#define kLabelMargin 10
-#define kImageViewMargin 0
+#define kImageViewMargin -5
 
 @interface MosaicCell ()
 
@@ -74,7 +72,7 @@
     [self addConstraints:constraints];
     
     //  Added black stroke
-    self.layer.borderWidth = 1;
+    self.layer.borderWidth = 0.8;
     self.layer.borderColor = [UIColor blackColor].CGColor;
     self.clipsToBounds = YES;
 }
@@ -97,7 +95,7 @@
         _imageView.alpha = 0.0;
         
         //  Random delay to avoid all animations happen at once
-        float millisecondsDelay = (arc4random() % 700) / 1000.0f;
+        float millisecondsDelay = (arc4random() % 700) / 2000.0f;
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, millisecondsDelay * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
             [UIView animateWithDuration:0.3 animations:^{
@@ -107,21 +105,9 @@
     }
 }
 
-- (MosaicData *)mosaicData{
-    return _mosaicData;
-}
-
-- (void)setHighlighted:(BOOL)highlighted
+- (MosaicData *)mosaicData
 {
-    //  This avoids the animation runs every time the cell is reused
-    if (self.isHighlighted != highlighted){
-        _imageView.alpha = 0.0;
-        [UIView animateWithDuration:0.3 animations:^{
-            _imageView.alpha = 1.0;
-        }];        
-    }
-    
-    [super setHighlighted:highlighted];
+    return _mosaicData;
 }
 
 - (void)setMosaicData:(MosaicData *)newMosaicData
@@ -140,13 +126,12 @@
         [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
             
             //  This check is to avoid wrong images on reused cells
-            if ([newMosaicData.title isEqualToString:_mosaicData.title]){
+            if ([newMosaicData.title isEqualToString:_mosaicData.title]) {
                 self.image = responseObject;
                 [[PanelImageStore sharedStore] addPanelImage:responseObject forKey:_mosaicData.imageFilename];
             }
             
-        }
-                                         failure:nil];
+        } failure:nil];
         
         [operation start];
         
