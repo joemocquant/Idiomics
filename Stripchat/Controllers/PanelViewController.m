@@ -136,6 +136,7 @@
         [ballonLabel setAdjustsFontSizeToFitWidth:YES];
         [ballonLabel setTextAlignment:NSTextAlignmentCenter];
         [ballonLabel setFont:[Fonts laffayetteComicPro14]];
+        [ballonLabel setTextColor:[Colors gray5]];
         [speechBalloons addObject:ballonLabel];
     }
 }

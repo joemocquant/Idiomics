@@ -15,6 +15,7 @@
 + (UIColor *)gray2;
 + (UIColor *)gray3;
 + (UIColor *)gray4;
++ (UIColor *)gray5;
 + (UIColor *)white;
 + (UIColor *)black;
 + (UIColor *)clear;
