@@ -26,7 +26,6 @@
     UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     
     if (self.presenting) {
-        fromViewController.view.userInteractionEnabled = NO;
         
         PanelViewController *panelViewController = (PanelViewController *)toViewController;
         CGRect tempPoint = CGRectMake(self.selectedCell.imageView.center.x, self.selectedCell.imageView.center.y, 0, 0);
@@ -47,8 +46,6 @@
         }];
         
     } else {
-        
-        toViewController.view.userInteractionEnabled = YES;
         
         PanelViewController *panelViewController = (PanelViewController *)fromViewController;
         UIImageView *panelImage = ((UIView *)panelViewController.view.subviews[0]).subviews[0];
