@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PanelImageStore.h"
 #import "MosaicCell.h"
-#import "MosaicLayoutDelegate.h"
+#import "MosaicLayout.h"
 
 @interface BrowserViewController : UIViewController <PanelImageStoreDelegate,
                                                      MosaicLayoutDelegate,

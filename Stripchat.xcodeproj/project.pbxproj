@@ -53,8 +53,6 @@
 		01D7BDEC1A17E3E500C30CE2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 010EBE181A0C07FB0051EEBE /* Images.xcassets */; };
 		01D7BDED1A17E3E500C30CE2 /* Stripchat.strings in Resources */ = {isa = PBXBuildFile; fileRef = 010EBE491A0C34930051EEBE /* Stripchat.strings */; };
 		01D7BDEE1A17E3E500C30CE2 /* Laffayette_Comic_Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0124B8541A1598720076251E /* Laffayette_Comic_Pro.ttf */; };
-		01D7BDF61A17E56500C30CE2 /* Stripchat_Local-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01D7BDF51A17E56500C30CE2 /* Stripchat_Local-Info.plist */; };
-		01D7BDF71A17E57300C30CE2 /* Stripchat-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 010EBE0C1A0C07FB0051EEBE /* Stripchat-Info.plist */; };
 		F71D691C3C6E3B98D3A23B9D /* libPods-Stripchat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A50F5B1916834E0A51F71EB /* libPods-Stripchat.a */; };
 /* End PBXBuildFile section */
 
@@ -96,7 +94,6 @@
 		010EBE9F1A0E98270051EEBE /* MosaicLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicLayout.m; sourceTree = "<group>"; };
 		010EBEA11A0E98270051EEBE /* MosaicData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicData.h; sourceTree = "<group>"; };
 		010EBEA21A0E98270051EEBE /* MosaicData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicData.m; sourceTree = "<group>"; };
-		010EBEA41A0E98270051EEBE /* MosaicLayoutDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicLayoutDelegate.h; sourceTree = "<group>"; };
 		010EBEA61A0E98270051EEBE /* MosaicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicCell.h; sourceTree = "<group>"; };
 		010EBEA71A0E98270051EEBE /* MosaicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicCell.m; sourceTree = "<group>"; };
 		010EBEB11A1143530051EEBE /* MessageBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBar.h; sourceTree = "<group>"; };
@@ -276,7 +273,6 @@
 			children = (
 				010EBE9D1A0E98270051EEBE /* Controllers */,
 				010EBEA01A0E98270051EEBE /* Entities */,
-				010EBEA31A0E98270051EEBE /* Protocols */,
 				010EBEA51A0E98270051EEBE /* Views */,
 			);
 			path = MosaicLayout;
@@ -298,14 +294,6 @@
 				010EBEA21A0E98270051EEBE /* MosaicData.m */,
 			);
 			path = Entities;
-			sourceTree = "<group>";
-		};
-		010EBEA31A0E98270051EEBE /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				010EBEA41A0E98270051EEBE /* MosaicLayoutDelegate.h */,
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 		010EBEA51A0E98270051EEBE /* Views */ = {
@@ -449,7 +437,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				010EBE191A0C07FB0051EEBE /* Images.xcassets in Resources */,
-				01D7BDF71A17E57300C30CE2 /* Stripchat-Info.plist in Resources */,
 				010EBE4A1A0C34930051EEBE /* Stripchat.strings in Resources */,
 				0124B8551A1598720076251E /* Laffayette_Comic_Pro.ttf in Resources */,
 			);
@@ -467,7 +454,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				01D7BDEC1A17E3E500C30CE2 /* Images.xcassets in Resources */,
-				01D7BDF61A17E56500C30CE2 /* Stripchat_Local-Info.plist in Resources */,
 				01D7BDED1A17E3E500C30CE2 /* Stripchat.strings in Resources */,
 				01D7BDEE1A17E3E500C30CE2 /* Laffayette_Comic_Pro.ttf in Resources */,
 			);

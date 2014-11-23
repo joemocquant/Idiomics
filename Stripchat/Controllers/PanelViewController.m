@@ -61,7 +61,6 @@
     panelScrollView = [UIScrollView new];
     [panelScrollView setDelegate:self];
     [panelScrollView setBackgroundColor:[panel.averageColor colorWithAlphaComponent:0.85f]];
-    
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                 action:@selector(PanelScrollViewTappedOnce:)];
     [singleTap setNumberOfTapsRequired:1];
@@ -77,7 +76,6 @@
     [panelScrollView addGestureRecognizer:doubleTap];
     [singleTap requireGestureRecognizerToFail:doubleTap];
     [panelScrollView setUserInteractionEnabled:YES];
-    
     
     CGRect screen = [[UIScreen mainScreen] bounds];
     [panelScrollView setFrame:CGRectMake(0, 0, CGRectGetWidth(screen), CGRectGetHeight(screen) - MessageBarHeight)];

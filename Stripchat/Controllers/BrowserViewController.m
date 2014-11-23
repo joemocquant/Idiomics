@@ -144,35 +144,25 @@
     float retVal = 1.0;
     
     Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row];
-    NSDictionary *dictionary = @{@"imageFilename": panel.imageUrl,
-                                 @"title": @""};
     
-    MosaicData *aMosaicModule = [[MosaicData alloc] initWithDictionary:dictionary];
-    
-    if (aMosaicModule.relativeHeight != 0){
+    MosaicData *aMosaicModule = [[MosaicData alloc] initWithImageId:panel.imageUrl];
         
-        //If the relative height was set before, return it
-        retVal = aMosaicModule.relativeHeight;
-        
-    } else {
-        
-        BOOL isDoubleColumn = [self collectionView:collectionView isDoubleColumnAtIndexPath:indexPath];
-        if (isDoubleColumn) {
-            //Base relative height for double layout type. This is 0.75 (height equals to 75% width)
-            retVal = 0.75;
-        }
-        
-        /*  Relative height random modifier. The max height of relative height is 25% more than
-         *  the base relative height */
-        
-        float extraRandomHeight = arc4random() % 25;
-        retVal = retVal + (extraRandomHeight / 100);
-        
-        /*  Persist the relative height on MosaicData so the value will be the same every time
-         *  the mosaic layout invalidates */
-        
-        aMosaicModule.relativeHeight = retVal;
+    BOOL isDoubleColumn = [self collectionView:collectionView isDoubleColumnAtIndexPath:indexPath];
+    if (isDoubleColumn) {
+        //Base relative height for double layout type. This is 0.75 (height equals to 75% width)
+        retVal = 0.75;
     }
+        
+    /*  Relative height random modifier. The max height of relative height is 25% more than
+     *  the base relative height */
+        
+    float extraRandomHeight = arc4random() % 25;
+    retVal = retVal + (extraRandomHeight / 100);
+    
+    /*  Persist the relative height on MosaicData so the value will be the same every time
+     *  the mosaic layout invalidates */
+        
+    aMosaicModule.relativeHeight = retVal;
     
     return retVal;
 }
@@ -180,10 +170,8 @@
 - (BOOL)collectionView:(UICollectionView *)collectionView isDoubleColumnAtIndexPath:(NSIndexPath *)indexPath
 {
     Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row];
-    NSDictionary *dictionary = @{@"imageFilename": panel.imageUrl,
-                                 @"title": @""};
     
-    MosaicData *aMosaicModule = [[MosaicData alloc] initWithDictionary:dictionary];
+    MosaicData *aMosaicModule = [[MosaicData alloc] initWithImageId:panel.imageUrl];
     
     if (aMosaicModule.layoutType == kMosaicLayoutTypeUndefined) {
         
@@ -246,10 +234,8 @@
                                                                  forIndexPath:indexPath];
     
     Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row];
-    NSDictionary *dictionary = @{@"imageFilename": panel.imageUrl,
-                                 @"title": @""};
     
-    MosaicData *data = [[MosaicData alloc] initWithDictionary:dictionary];
+    MosaicData *data = [[MosaicData alloc] initWithImageId:panel.imageUrl];
     cell.mosaicData = data;
     
     cell.backgroundColor = panel.averageColor;

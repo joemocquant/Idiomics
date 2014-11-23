@@ -3,6 +3,7 @@
 //  MosaicCollectionView
 //
 //  Created by Ezequiel A Becerra on 2/16/13.
+//  Modified by Joe Mocquant on 11/23/14.
 //  Copyright (c) 2013 Betzerra. All rights reserved.
 //
 
@@ -10,15 +11,8 @@
 #import "MosaicData.h"
 
 @interface MosaicCell : UICollectionViewCell
-{
-    UIView *_borderView;
-    UIImageView *_imageView;
-    MosaicData *_mosaicData;
-}
 
-@property (strong) UIImage *image;
-@property (strong) MosaicData *mosaicData;
-
-- (UIImageView *)imageView;
+@property (nonatomic, strong, readonly) UIImageView *imageView;
+@property (nonatomic, strong) MosaicData *mosaicData;
 
 @end
