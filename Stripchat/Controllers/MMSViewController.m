@@ -45,6 +45,7 @@
     switch (result) {
         case MessageComposeResultCancelled:
             [self dismissViewControllerAnimated:YES completion:nil];
+            
             break;
             
         case MessageComposeResultFailed:
@@ -68,8 +69,9 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.presentingViewController.presentingViewController dismissViewControllerAnimated:NO completion:nil];
 }
+
 
 
 #pragma mark - Instance methods

@@ -3,6 +3,7 @@
 //  MosaicCollectionView
 //
 //  Created by Ezequiel A Becerra on 2/17/13.
+//  Modified by Joe Mocquant on 11/23/14.
 //  Copyright (c) 2013 Betzerra. All rights reserved.
 //
 
@@ -16,12 +17,11 @@ typedef enum {
 
 @interface MosaicData : NSObject
 
-- (instancetype)initWithDictionary:(NSDictionary *)aDict;
+@property (nonatomic, copy, readonly) NSString *imageId;
+@property (nonatomic, assign) BOOL firstTimeShown;
+@property (nonatomic, assign) MosaicLayoutType layoutType;
+@property (nonatomic, assign) float relativeHeight;
 
-@property (strong) NSString *imageFilename;
-@property (strong) NSString *title;
-@property (assign) BOOL firstTimeShown;
-@property (assign) MosaicLayoutType layoutType;
-@property (assign) float relativeHeight;
+- (instancetype)initWithImageId:(NSString *)imageId;
 
 @end

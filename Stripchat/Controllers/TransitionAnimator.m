@@ -26,22 +26,16 @@
     UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     
     if (self.presenting) {
-        fromViewController.view.userInteractionEnabled = NO;
         
         PanelViewController *panelViewController = (PanelViewController *)toViewController;
         CGRect tempPoint = CGRectMake(self.selectedCell.imageView.center.x, self.selectedCell.imageView.center.y, 0, 0);
         CGRect startingPoint = [fromViewController.view convertRect:tempPoint fromView:self.selectedCell];
         
-        [toViewController.view setFrame:startingPoint];
+        [panelViewController.view.subviews[0] setFrame:startingPoint];
         
         [transitionContext.containerView addSubview:toViewController.view];
         
         [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
-            
-            [toViewController.view setFrame:CGRectMake(0,
-                                                       0,
-                                                       fromViewController.view.bounds.size.width,
-                                                       fromViewController.view.bounds.size.height)];
             
             [panelViewController.view.subviews[0] setFrame:CGRectMake(0,
                                                                       0,
@@ -52,8 +46,6 @@
         }];
         
     } else {
-        
-        toViewController.view.userInteractionEnabled = YES;
         
         PanelViewController *panelViewController = (PanelViewController *)fromViewController;
         UIImageView *panelImage = ((UIView *)panelViewController.view.subviews[0]).subviews[0];

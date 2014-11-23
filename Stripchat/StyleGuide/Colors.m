@@ -39,6 +39,11 @@
     return [UIColor grayColor];
 }
 
++ (UIColor *)gray5
+{
+    return [UIColor darkGrayColor];
+}
+
 + (UIColor *)white
 {
     return [UIColor whiteColor];

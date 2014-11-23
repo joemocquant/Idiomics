@@ -17,6 +17,8 @@
     UIScrollView *panelScrollView;
     UIImageView *panelImageView;
     NSMutableArray *speechBalloons;
+    CGFloat minScale;
+    CGFloat screenScale;
 }
 
 - (instancetype)initWithPanel:(Panel *)p;

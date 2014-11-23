@@ -21,7 +21,7 @@
     dispatch_once(&once, ^{
         
         if (!sharedStore) {
-            sharedStore = [[self alloc] init];
+            sharedStore = [self new];
         }
     });
     
