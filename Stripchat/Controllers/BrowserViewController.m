@@ -13,17 +13,13 @@
 #import "PanelStore.h"
 #import "MosaicLayout.h"
 #import "MosaicCell.h"
+#import "MosaicData.h"
 #import "PanelViewController.h"
+#import "ResizedPanelDownloader.h"
 #import "TransitionAnimator.h"
 #import <ReactiveCocoa.h>
 #import <Mantle.h>
 #import <UIView+AutoLayout.h>
-
-#define kColumnsiPadLandscape 5
-#define kColumnsiPadPortrait 4
-#define kColumnsiPhoneLandscape 3
-#define kColumnsiPhonePortrait 2
-#define kDoubleColumnProbability 40
 
 @implementation BrowserViewController
 
@@ -35,7 +31,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [[PanelImageStore sharedStore] setDelegate:self];
+    _pendingOperations = [PendingOperations new];
+    mosaicDatas = [NSMutableArray new];
+    
     [self loadAllPannels];
 
     cv = [[UICollectionView alloc] initWithFrame:CGRectZero
@@ -86,10 +84,9 @@
                 for (NSDictionary *panel in panels) {
                     
                     Panel *p = [MTLJSONAdapter modelOfClass:Panel.class fromJSONDictionary:panel error:nil];
+                    [mosaicDatas addObject:[[MosaicData alloc] initWithImageId:p.imageUrl]];
                     [[PanelStore sharedStore] addPanel:p];
                 };
-                
-                [[PanelImageStore sharedStore] setAllPanelImages];
                 [cv reloadData];
                 break;
             }
@@ -119,23 +116,6 @@
 }
 
 
-#pragma mark - PanelImageStoreDelegate
-
-- (void)didLoadPanelWithPanelKey:(NSString *)key
-{
-#ifdef __DEBUG__
-    NSLog(@"Panel id:%@ loaded", key);
-#endif
-}
-
-- (void)didLoadAllPanels
-{
-#ifdef __DEBUG__
-    NSLog(@"did load all panels!");
-#endif
-}
-
-
 #pragma mark - MosaicLayoutDelegate
 
 - (float)collectionView:(UICollectionView *)collectionView relativeHeightForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -143,10 +123,12 @@
     //Base relative height for simple layout type. This is 1.0 (height equals to width)
     float retVal = 1.0;
     
-    Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row];
+    MosaicData *aMosaicModule = [mosaicDatas objectAtIndex:indexPath.item];
     
-    MosaicData *aMosaicModule = [[MosaicData alloc] initWithImageId:panel.imageUrl];
-        
+    if (aMosaicModule.relativeHeight != 0) {
+        return aMosaicModule.relativeHeight;
+    }
+    
     BOOL isDoubleColumn = [self collectionView:collectionView isDoubleColumnAtIndexPath:indexPath];
     if (isDoubleColumn) {
         //Base relative height for double layout type. This is 0.75 (height equals to 75% width)
@@ -163,15 +145,13 @@
      *  the mosaic layout invalidates */
         
     aMosaicModule.relativeHeight = retVal;
-    
+
     return retVal;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView isDoubleColumnAtIndexPath:(NSIndexPath *)indexPath
 {
-    Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row];
-    
-    MosaicData *aMosaicModule = [[MosaicData alloc] initWithImageId:panel.imageUrl];
+    MosaicData *aMosaicModule = [mosaicDatas objectAtIndex:indexPath.item];
     
     if (aMosaicModule.layoutType == kMosaicLayoutTypeUndefined) {
         
@@ -220,27 +200,40 @@
 
 #pragma mark - UICollectionViewDataSource
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView
-     numberOfItemsInSection:(NSInteger)section
-{
-    return [[[PanelStore sharedStore] allPanels] count];
-}
-
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"cell";
     MosaicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier
                                                                  forIndexPath:indexPath];
-    
-    Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row];
-    
-    MosaicData *data = [[MosaicData alloc] initWithImageId:panel.imageUrl];
-    cell.mosaicData = data;
+
+    Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.item];
     
     cell.backgroundColor = panel.averageColor;
     
+    
+    if ([panel hasImage]) {
+        cell.mosaicData = [mosaicDatas objectAtIndex:indexPath.item];
+        
+    } else if ([panel isFailed]) {
+
+        //better to remove the panel than putting a placeholder
+        //add to implement a remove method on PanelStore and call it here
+        
+    } else {
+        if (!collectionView.dragging && !collectionView.decelerating) {
+
+            [self startOperationsForPanel:panel atIndexPath:indexPath];
+        }
+    }
+    
     return cell;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section
+{
+    return [[[PanelStore sharedStore] allPanels] count];
 }
 
 
@@ -248,11 +241,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.view subviews].count == 2) {
-        return;
-    }
-    
-    Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row];
+    Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.item];
     selectedCell = (MosaicCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
     PanelViewController *pvc = [[PanelViewController alloc] initWithPanel:panel];
@@ -261,6 +250,105 @@
     [pvc setModalPresentationStyle:UIModalPresentationCustom];
     
     [self presentViewController:pvc animated:YES completion:nil];
+}
+
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self suspendAllOperations];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate) {
+        [self loadPanelsForOnScreenItems];
+        [self resumeAllOperations];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self loadPanelsForOnScreenItems];
+    [self resumeAllOperations];
+}
+
+
+#pragma mark - Operations
+
+- (void)startOperationsForPanel:(Panel *)panel atIndexPath:(NSIndexPath *)indexPath
+{
+    if (!panel.hasImage) {
+        if (![self.pendingOperations.resizedPanelDownloadsInProgress.allKeys containsObject:indexPath]) {
+            
+            ResizedPanelDownloader *rpd = [[ResizedPanelDownloader alloc] initWithPanel:panel
+                                                                            atIndexPath:indexPath
+                                                                               delegate:self];
+            
+            [self.pendingOperations.resizedPanelDownloadsInProgress setObject:rpd forKey:indexPath];
+            [self.pendingOperations.resizedPanelDownloadsQueue addOperation:rpd];
+        }
+    }
+    
+    if (!panel.hasFullSizeImage) {
+        //[self startImageFiltrationForRecord:record atIndexPath:indexPath];
+    }
+}
+
+- (void)suspendAllOperations
+{
+    [self.pendingOperations.resizedPanelDownloadsQueue setSuspended:YES];
+}
+
+
+- (void)resumeAllOperations
+{
+    [self.pendingOperations.resizedPanelDownloadsQueue setSuspended:NO];
+}
+
+
+- (void)cancelAllOperations
+{
+    [self.pendingOperations.resizedPanelDownloadsQueue cancelAllOperations];
+}
+
+- (void)loadPanelsForOnScreenItems
+{
+    NSSet *visibleItems = [NSSet setWithArray:[cv indexPathsForVisibleItems]];
+    
+    NSMutableSet *pendingOperations = [NSMutableSet setWithArray:[self.pendingOperations.resizedPanelDownloadsInProgress allKeys]];
+    
+    NSMutableSet *toBeCancelled = [pendingOperations mutableCopy];
+    NSMutableSet *toBeStarted = [visibleItems mutableCopy];
+    
+    [toBeStarted minusSet:pendingOperations];
+    [toBeCancelled minusSet:visibleItems];
+    
+    for (NSIndexPath *anIndexPath in toBeCancelled) {
+        
+        ResizedPanelDownloader *pendingDownload = [self.pendingOperations.resizedPanelDownloadsInProgress objectForKey:anIndexPath];
+        [pendingDownload cancel];
+        [self.pendingOperations.resizedPanelDownloadsInProgress removeObjectForKey:anIndexPath];
+    }
+    toBeCancelled = nil;
+    
+    for (NSIndexPath *anIndexPath in toBeStarted) {
+
+        Panel *panelToProcess = [[[PanelStore sharedStore] allPanels] objectAtIndex:anIndexPath.item];
+        [self startOperationsForPanel:panelToProcess atIndexPath:anIndexPath];
+    }
+    toBeStarted = nil;
+}
+
+#pragma mark - ResizedPanelDownloaderDelegate
+
+- (void)resizedPanelDownloaderDidFinish:(ResizedPanelDownloader *)downloader
+{
+    NSIndexPath *indexPath = downloader.indexPath;
+
+    [cv reloadItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+    [self.pendingOperations.resizedPanelDownloadsInProgress removeObjectForKey:indexPath];
 }
 
 

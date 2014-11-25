@@ -24,6 +24,10 @@
 		010EBEB31A1143530051EEBE /* MessageBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEB21A1143530051EEBE /* MessageBar.m */; };
 		010EBEB91A1144BC0051EEBE /* Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEB61A1144BC0051EEBE /* Colors.m */; };
 		010EBEBA1A1144BC0051EEBE /* Fonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEB81A1144BC0051EEBE /* Fonts.m */; };
+		011C2AA91A23A98F0083C5C7 /* PendingOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 011C2AA41A23A98F0083C5C7 /* PendingOperations.m */; };
+		011C2AAA1A23A98F0083C5C7 /* PendingOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 011C2AA41A23A98F0083C5C7 /* PendingOperations.m */; };
+		011C2AAB1A23A98F0083C5C7 /* ResizedPanelDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 011C2AA61A23A98F0083C5C7 /* ResizedPanelDownloader.m */; };
+		011C2AAC1A23A98F0083C5C7 /* ResizedPanelDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 011C2AA61A23A98F0083C5C7 /* ResizedPanelDownloader.m */; };
 		0124B8551A1598720076251E /* Laffayette_Comic_Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0124B8541A1598720076251E /* Laffayette_Comic_Pro.ttf */; };
 		013EDE9D1A1297D3009F16BD /* PanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDE9C1A1297D3009F16BD /* PanelViewController.m */; };
 		013EDEA01A12A47B009F16BD /* TransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDE9F1A12A47B009F16BD /* TransitionAnimator.m */; };
@@ -102,6 +106,10 @@
 		010EBEB61A1144BC0051EEBE /* Colors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colors.m; sourceTree = "<group>"; };
 		010EBEB71A1144BC0051EEBE /* Fonts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fonts.h; sourceTree = "<group>"; };
 		010EBEB81A1144BC0051EEBE /* Fonts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fonts.m; sourceTree = "<group>"; };
+		011C2AA31A23A98F0083C5C7 /* PendingOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingOperations.h; sourceTree = "<group>"; };
+		011C2AA41A23A98F0083C5C7 /* PendingOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingOperations.m; sourceTree = "<group>"; };
+		011C2AA51A23A98F0083C5C7 /* ResizedPanelDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizedPanelDownloader.h; sourceTree = "<group>"; };
+		011C2AA61A23A98F0083C5C7 /* ResizedPanelDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizedPanelDownloader.m; sourceTree = "<group>"; };
 		0124B8541A1598720076251E /* Laffayette_Comic_Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Laffayette_Comic_Pro.ttf; sourceTree = "<group>"; };
 		013EDE9B1A1297D3009F16BD /* PanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanelViewController.h; sourceTree = "<group>"; };
 		013EDE9C1A1297D3009F16BD /* PanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanelViewController.m; sourceTree = "<group>"; };
@@ -264,6 +272,10 @@
 				013EDE9F1A12A47B009F16BD /* TransitionAnimator.m */,
 				013EDEA71A1541FF009F16BD /* Config.h */,
 				013EDEA61A1541FF009F16BD /* Config.m */,
+				011C2AA31A23A98F0083C5C7 /* PendingOperations.h */,
+				011C2AA41A23A98F0083C5C7 /* PendingOperations.m */,
+				011C2AA51A23A98F0083C5C7 /* ResizedPanelDownloader.h */,
+				011C2AA61A23A98F0083C5C7 /* ResizedPanelDownloader.m */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -538,7 +550,9 @@
 				010EBEA91A0E98270051EEBE /* MosaicData.m in Sources */,
 				010EBEB31A1143530051EEBE /* MessageBar.m in Sources */,
 				010EBEA81A0E98270051EEBE /* MosaicLayout.m in Sources */,
+				011C2AAB1A23A98F0083C5C7 /* ResizedPanelDownloader.m in Sources */,
 				013EDEA31A130DFC009F16BD /* MMSViewController.m in Sources */,
+				011C2AA91A23A98F0083C5C7 /* PendingOperations.m in Sources */,
 				010EBE0E1A0C07FB0051EEBE /* main.m in Sources */,
 				013EDEA81A1541FF009F16BD /* Config.m in Sources */,
 				010EBEBA1A1144BC0051EEBE /* Fonts.m in Sources */,
@@ -571,7 +585,9 @@
 				01D7BDDC1A17E3E500C30CE2 /* MosaicData.m in Sources */,
 				01D7BDDD1A17E3E500C30CE2 /* MessageBar.m in Sources */,
 				01D7BDDE1A17E3E500C30CE2 /* MosaicLayout.m in Sources */,
+				011C2AAC1A23A98F0083C5C7 /* ResizedPanelDownloader.m in Sources */,
 				01D7BDDF1A17E3E500C30CE2 /* MMSViewController.m in Sources */,
+				011C2AAA1A23A98F0083C5C7 /* PendingOperations.m in Sources */,
 				01D7BDE01A17E3E500C30CE2 /* main.m in Sources */,
 				01D7BDE11A17E3E500C30CE2 /* Config.m in Sources */,
 				01D7BDE21A17E3E500C30CE2 /* Fonts.m in Sources */,

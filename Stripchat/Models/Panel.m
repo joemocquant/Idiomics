@@ -7,6 +7,7 @@
 //
 
 #import "Panel.h"
+#import "PanelImageStore.h"
 #import <ReactiveCocoa.h>
 
 @interface Panel ()
@@ -101,6 +102,19 @@
         
         return [NSString stringWithFormat:@"rgb(%d, %d, %d)", (unsigned int)red, (unsigned int)green, (unsigned int)blue];
     }];
+}
+
+
+#pragma mark - Getters/setters
+
+- (BOOL)hasImage
+{
+    return [[PanelImageStore sharedStore] panelImageForKey:self.imageUrl] != nil;
+}
+
+- (BOOL)isFailed
+{
+    return _failed;
 }
 
 @end

@@ -7,18 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PanelImageStore.h"
 #import "MosaicCell.h"
 #import "MosaicLayout.h"
+#import "PendingOperations.h"
+#import "ResizedPanelDownloader.h"
 
-@interface BrowserViewController : UIViewController <PanelImageStoreDelegate,
-                                                     MosaicLayoutDelegate,
+@interface BrowserViewController : UIViewController <MosaicLayoutDelegate,
                                                      UICollectionViewDelegate,
                                                      UICollectionViewDataSource,
-                                                     UIViewControllerTransitioningDelegate>
+                                                     UIViewControllerTransitioningDelegate,
+                                                     ResizedPanelDownloaderDelegate>
 {
     UICollectionView *cv;
     MosaicCell *selectedCell;
+    NSMutableArray *mosaicDatas;
 }
+
+@property (nonatomic, strong) PendingOperations *pendingOperations;
 
 @end

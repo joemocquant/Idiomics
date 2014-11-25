@@ -17,5 +17,8 @@
 @property (nonatomic, copy, readonly) NSString *imageUrl;
 @property (nonatomic, copy, readonly) NSArray *balloons;
 @property (nonatomic, copy, readonly) UIColor *averageColor;
+@property (nonatomic, assign, readonly) BOOL hasImage;
+@property (nonatomic, assign, readonly) BOOL hasFullSizeImage;
+@property (nonatomic, getter = isFailed) BOOL failed;
 
 @end
