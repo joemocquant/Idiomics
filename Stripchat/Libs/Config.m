@@ -19,6 +19,7 @@ const NSTimeInterval TransitionDuration = 0.2;
 NSString *const CellIdentifier = @"cell";
 CGFloat TimeDiff = 0.1;
 CGFloat ScrollSpeedThreshold = 1.0;
+CGFloat VelocityThreshold = 3.0;
 
 //Panel
 const CGFloat AlphaBackground = 0.85;

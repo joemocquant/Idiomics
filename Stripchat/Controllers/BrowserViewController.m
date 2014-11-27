@@ -273,7 +273,7 @@
     
     NSTimeInterval timeDiff = currentTime - lastOffsetTime;
     
-    if (timeDiff > timeDiff) {
+    if (timeDiff > TimeDiff) {
         CGFloat distance = currentOffset.y - lastOffset.y;
 
         CGFloat scrollSpeed = fabsf(distance * 10 / 1000); //per millisecond
@@ -297,9 +297,19 @@
     [pendingOperations resumeAllOperations];
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset
 {
-    [pendingOperations suspendAllOperations];
+    if (velocity.x >= VelocityThreshold) {
+        [pendingOperations suspendAllOperations];
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [pendingOperations loadPanelsForIndexPaths:[cv indexPathsForVisibleItems]];
+    [pendingOperations resumeAllOperations];
 }
 
 

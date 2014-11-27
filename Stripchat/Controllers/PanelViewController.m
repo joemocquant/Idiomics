@@ -237,13 +237,44 @@
 
 - (void)didPressNext
 {
-    UIGraphicsBeginImageContext(panelImageView.image.size);
+    CGSize imageSize = CGSizeMake(panelImageView.image.size.width / [[UIScreen mainScreen] scale],
+                                  panelImageView.image.size.height / [[UIScreen mainScreen] scale]);
     
-    UIGraphicsBeginImageContextWithOptions(panelImageView.image.size, YES, 0);
+    CGFloat ratio;
+    CGSize newSize;
+    CGFloat finalRatio = 4/3;
+    
+    if (imageSize.width <= imageSize.height) {
+        
+        ratio = imageSize.height / imageSize.width;
+        
+        if (ratio >= finalRatio) { //add vertical band
+            newSize = CGSizeMake(imageSize.width * ratio / finalRatio, imageSize.height);
+        } else { //add horizontal band
+            newSize = CGSizeMake(imageSize.width, imageSize.height * finalRatio / ratio);
+        }
+        
+    } else {
+        ratio = imageSize.width / imageSize.height;
+        
+        if (ratio >= finalRatio) { //add horizontal band
+            newSize = CGSizeMake(imageSize.width, imageSize.height * ratio / finalRatio);
+        } else { //add vertical band
+            newSize = CGSizeMake(imageSize.width * finalRatio / ratio, imageSize.height);
+        }
+    }
+    
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0);
+    
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextTranslateCTM(ctx, (newSize.width - imageSize.width) / 2, (newSize.height - imageSize.height) / 2);
+    
     [panelImageView drawViewHierarchyInRect:panelImageView.bounds afterScreenUpdates:YES];
     
     UIImage *editedPanel = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+
+    
 
     MMSViewController *mmsvc = [[MMSViewController alloc] initWithEditedPanel:editedPanel];
     
