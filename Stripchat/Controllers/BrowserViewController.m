@@ -42,7 +42,7 @@
     [(MosaicLayout *)cv.collectionViewLayout setDelegate:self];
     [cv setDelegate:self];
     [cv setDataSource:self];
-    [cv registerClass:[MosaicCell class] forCellWithReuseIdentifier:@"cell"];
+    [cv registerClass:[MosaicCell class] forCellWithReuseIdentifier:CellIdentifier];
     
     [self.view addSubview:cv];
     
@@ -176,7 +176,7 @@
     UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
     
     //  Set the quantity of columns according of the device and interface orientation
-    NSUInteger retVal = 0;
+    NSUInteger retVal;
     if (UIInterfaceOrientationIsLandscape(orientation)) {
         
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
@@ -203,8 +203,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"cell";
-    MosaicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier
+    MosaicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier
                                                                  forIndexPath:indexPath];
 
     Panel *panel = [[PanelStore sharedStore] panelAtIndex:indexPath.item];
@@ -265,12 +264,12 @@
     
     NSTimeInterval timeDiff = currentTime - lastOffsetTime;
     
-    if (timeDiff > 0.1) {
+    if (timeDiff > timeDiff) {
         CGFloat distance = currentOffset.y - lastOffset.y;
 
         CGFloat scrollSpeed = fabsf(distance * 10 / 1000); //per millisecond
         
-        if (scrollSpeed > 1.0) {
+        if (scrollSpeed > ScrollSpeedThreshold) {
             isScrollingFast = YES;
         } else {
             isScrollingFast = NO;

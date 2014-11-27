@@ -61,7 +61,7 @@
     
     panelScrollView = [UIScrollView new];
     [panelScrollView setDelegate:self];
-    [panelScrollView setBackgroundColor:[panel.averageColor colorWithAlphaComponent:0.85f]];
+    [panelScrollView setBackgroundColor:[panel.averageColor colorWithAlphaComponent:AlphaBackground]];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                 action:@selector(PanelScrollViewTappedOnce:)];
     [singleTap setNumberOfTapsRequired:1];
@@ -117,7 +117,7 @@
     }
     
     [panelScrollView setMinimumZoomScale:minScale];
-    [panelScrollView setMaximumZoomScale:minScale * 4.0];
+    [panelScrollView setMaximumZoomScale:minScale * MaxZoomScaleFactor];
 }
 
 - (void)setupSpeechBalloons
@@ -160,11 +160,11 @@
 
 - (void)PanelScrollViewTappedTwice:(UIGestureRecognizer *)gestureRecognizer
 {
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:ZoomDuration animations:^{
         if ([panelScrollView zoomScale] < screenScale) {
             [panelScrollView setZoomScale:screenScale];
         } else if (([panelScrollView zoomScale] == screenScale) && (screenScale == minScale)) {
-                [panelScrollView setZoomScale:screenScale * 3];
+                [panelScrollView setZoomScale:screenScale * ZoomScaleFactor];
             } else {
                 [panelScrollView setZoomScale:minScale];
             }
@@ -258,12 +258,6 @@
 {
     UILabel *currentBallon = speechBalloons[0];
     [currentBallon setText:text];
-}
-
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
-{
-    textView.text = @"";
-    return YES;
 }
 
 @end

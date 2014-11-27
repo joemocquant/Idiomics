@@ -47,7 +47,8 @@
         AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
         [self setRequestSerializer:requestSerializer];
         [self setResponseSerializer:[AFJSONResponseSerializer serializer]];
-        [[self responseSerializer] setAcceptableContentTypes:[NSSet setWithObjects:@"application/json", @"text/plain", nil]];
+        [[self responseSerializer] setAcceptableContentTypes:[NSSet setWithObjects:@"application/json",
+                                                                                   @"text/plain", nil]];
         
         [self startMonitoringAPI];
         
