@@ -8,12 +8,11 @@
 //
 
 #import "MosaicCell.h"
+#import "MosaicData.h"
 #import <QuartzCore/QuartzCore.h>
 #import <AFNetworking.h>
 #import "PanelImageStore.h"
 #import <UIView+AutoLayout.h>
-
-#define kImageViewMargin -5
 
 @interface MosaicCell ()
 
@@ -41,7 +40,7 @@
         [_imageView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self inset:kImageViewMargin];
         
         //Added black stroke
-        self.layer.borderWidth = 0.8;
+        self.layer.borderWidth = MosaicBorderWidth;
         self.layer.borderColor = [UIColor blackColor].CGColor;
         self.clipsToBounds = YES;
     }
@@ -57,30 +56,7 @@
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-    [self setImage:nil];
-}
-
-
-#pragma mark - Private methods
-
-- (void)setImage:(UIImage *)newImage
-{
-    self.imageView.image = newImage;
-    
-    if (self.mosaicData.firstTimeShown) {
-        self.mosaicData.firstTimeShown = NO;
-        
-        self.imageView.alpha = 0.0;
-        
-        //  Random delay to avoid all animations happen at once
-        float millisecondsDelay = (arc4random() % 700) / 2000.0f;
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, millisecondsDelay * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [UIView animateWithDuration:0.3 animations:^{
-                self.imageView.alpha = 1.0;
-            }];
-        });
-    }
+    self.imageView.image = nil;
 }
 
 
@@ -90,26 +66,22 @@
 {
     _mosaicData = newMosaicData;
     
-    UIImage *cached = [[PanelImageStore sharedStore] panelImageForKey:self.mosaicData.imageId];
+    UIImage *cached = [[PanelImageStore sharedStore] panelThumbImageForKey:self.mosaicData.imageId];
+    self.imageView.image = cached;
     
-    if (!cached) {
-        NSURL *anURL = [NSURL URLWithString:self.mosaicData.imageId];
-        NSURLRequest *anURLRequest = [NSURLRequest requestWithURL:anURL];
+    if (self.mosaicData.firstTimeShown) {
+        //self.mosaicData.firstTimeShown = NO;
         
-        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:anURLRequest];
-        [operation setResponseSerializer:[AFImageResponseSerializer serializer]];
+        self.imageView.alpha = 0;
         
-        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-            [self setImage:responseObject];
-            [[PanelImageStore sharedStore] addPanelImage:responseObject forKey:self.mosaicData.imageId];
-            
-        } failure:nil];
+        //  Random delay to avoid all animations happen at once
+        float millisecondsDelay = (arc4random() % 700) / 2000.0f;
         
-        [operation start];
-        
-    } else {
-        [self setImage:cached];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, millisecondsDelay * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:AlphaTransitionDuration animations:^{
+                self.imageView.alpha = 1.0;
+            }];
+        });
     }
 }
 

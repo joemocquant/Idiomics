@@ -40,4 +40,22 @@
                       otherButtonTitles:nil] show];
 }
 
++ (NSString *)getImageWithUrl:(NSString *)url witdh:(NSUInteger)width height:(NSUInteger)height
+{
+    NSUInteger scaleFactor = 1;
+    
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
+        scaleFactor = [[UIScreen mainScreen] scale];
+    }
+    
+    NSString *imageProxyServerUrl = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"ImageProxy-Server-URL"];
+    NSString *result = [NSString stringWithFormat:@"%@/resize/%ux%u/%@",
+                        imageProxyServerUrl,
+                        width * scaleFactor,
+                        height * scaleFactor,
+                        url];
+    
+    return result;
+}
+
 @end

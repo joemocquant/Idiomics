@@ -7,9 +7,6 @@
 //
 
 #import "PanelImageStore.h"
-#import "PanelStore.h"
-#import "Panel.h"
-#import <AFNetworking.h>
 #import <ReactiveCocoa.h>
 
 @implementation PanelImageStore
@@ -47,55 +44,27 @@
 
 #pragma mark - Instance methods
 
-- (void)setAllPanelImages
+- (UIImage *)panelThumbImageForKey:(NSString *)s
 {
-    NSMutableArray *requestOperations = [NSMutableArray array];
-    
-    for (Panel *panel in [[PanelStore sharedStore] allPanels]) {
-        
-        NSURLRequest *request = [[AFHTTPRequestSerializer serializer] requestWithMethod:@"GET"
-                                                                              URLString:panel.imageUrl
-                                                                             parameters:nil
-                                                                                  error:nil];
-        
-        AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-        [requestOperation setResponseSerializer:[AFImageResponseSerializer serializer]];
-
-        [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-            [self addPanelImage:responseObject forKey:panel.imageUrl];
-            [self.delegate didLoadPanelWithPanelKey:panel.imageUrl];
-        }
-                                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                    
-                                                    [self addPanelImage:nil forKey:panel.imageUrl];
-                                                    [self.delegate didLoadPanelWithPanelKey:panel.imageUrl];
-                                                }];
-        
-     
-        [requestOperations addObject:requestOperation];
-    };
-    
-    NSArray *operations = [AFURLConnectionOperation batchOfRequestOperations:requestOperations
-                                                               progressBlock:^(NSUInteger numberOfFinishedOperations,
-                                                                               NSUInteger totalNumberOfOperations) {
-                                                                   
-                                                               } completionBlock:^(NSArray *operations) {
-                                                                   
-                                                                   [self.delegate didLoadAllPanels];
-                                                               }];
-    
-    [[NSOperationQueue mainQueue] addOperations:operations waitUntilFinished:NO];
+    return [[self.panelImageDictionary objectForKey:s] objectForKey:@"thumb"];
 }
 
-- (UIImage *)panelImageForKey:(NSString *)s
+- (void)addPanelThumbImage:(UIImage *)panelImage forKey:(NSString *)key
 {
-    return [self.panelImageDictionary objectForKey:s];
+    [self.panelImageDictionary setValue:@{@"thumb": panelImage} forKey:key];
 }
 
-- (void)addPanelImage:(UIImage *)panelImage forKey:(NSString *)key
+- (UIImage *)panelFullSizeImageForKey:(NSString *)s
 {
-    [self.panelImageDictionary setValue:panelImage forKey:key];
+    return [[self.panelImageDictionary objectForKey:s] objectForKey:@"fullSize"];
+}
+
+- (void)addPanelFullSizeImage:(UIImage *)panelImage forKey:(NSString *)key
+{
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:[self.panelImageDictionary objectForKey:key]];
+    [dictionary setObject:panelImage forKey:@"fullSize"];
+
+    [self.panelImageDictionary setValue:dictionary forKey:key];
 }
 
 - (void)deletePanelImageForKey:(NSString *)s

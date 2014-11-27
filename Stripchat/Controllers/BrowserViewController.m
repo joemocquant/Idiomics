@@ -13,17 +13,11 @@
 #import "PanelStore.h"
 #import "MosaicLayout.h"
 #import "MosaicCell.h"
+#import "MosaicData.h"
 #import "PanelViewController.h"
 #import "TransitionAnimator.h"
-#import <ReactiveCocoa.h>
 #import <Mantle.h>
 #import <UIView+AutoLayout.h>
-
-#define kColumnsiPadLandscape 5
-#define kColumnsiPadPortrait 4
-#define kColumnsiPhoneLandscape 3
-#define kColumnsiPhonePortrait 2
-#define kDoubleColumnProbability 40
 
 @implementation BrowserViewController
 
@@ -35,7 +29,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [[PanelImageStore sharedStore] setDelegate:self];
+    pendingOperations = [PendingOperations new];
+    [pendingOperations setDelegate:self];
+    
+    mosaicDatas = [NSMutableArray new];
+    
     [self loadAllPannels];
 
     cv = [[UICollectionView alloc] initWithFrame:CGRectZero
@@ -44,7 +42,7 @@
     [(MosaicLayout *)cv.collectionViewLayout setDelegate:self];
     [cv setDelegate:self];
     [cv setDataSource:self];
-    [cv registerClass:[MosaicCell class] forCellWithReuseIdentifier:@"cell"];
+    [cv registerClass:[MosaicCell class] forCellWithReuseIdentifier:CellIdentifier];
     
     [self.view addSubview:cv];
     
@@ -86,10 +84,9 @@
                 for (NSDictionary *panel in panels) {
                     
                     Panel *p = [MTLJSONAdapter modelOfClass:Panel.class fromJSONDictionary:panel error:nil];
+                    [mosaicDatas addObject:[[MosaicData alloc] initWithImageId:p.imageUrl]];
                     [[PanelStore sharedStore] addPanel:p];
                 };
-                
-                [[PanelImageStore sharedStore] setAllPanelImages];
                 [cv reloadData];
                 break;
             }
@@ -119,23 +116,6 @@
 }
 
 
-#pragma mark - PanelImageStoreDelegate
-
-- (void)didLoadPanelWithPanelKey:(NSString *)key
-{
-#ifdef __DEBUG__
-    NSLog(@"Panel id:%@ loaded", key);
-#endif
-}
-
-- (void)didLoadAllPanels
-{
-#ifdef __DEBUG__
-    NSLog(@"did load all panels!");
-#endif
-}
-
-
 #pragma mark - MosaicLayoutDelegate
 
 - (float)collectionView:(UICollectionView *)collectionView relativeHeightForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -143,10 +123,12 @@
     //Base relative height for simple layout type. This is 1.0 (height equals to width)
     float retVal = 1.0;
     
-    Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row];
+    MosaicData *aMosaicModule = [mosaicDatas objectAtIndex:indexPath.item];
     
-    MosaicData *aMosaicModule = [[MosaicData alloc] initWithImageId:panel.imageUrl];
-        
+    if (aMosaicModule.relativeHeight != 0) {
+        return aMosaicModule.relativeHeight;
+    }
+    
     BOOL isDoubleColumn = [self collectionView:collectionView isDoubleColumnAtIndexPath:indexPath];
     if (isDoubleColumn) {
         //Base relative height for double layout type. This is 0.75 (height equals to 75% width)
@@ -163,15 +145,13 @@
      *  the mosaic layout invalidates */
         
     aMosaicModule.relativeHeight = retVal;
-    
+
     return retVal;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView isDoubleColumnAtIndexPath:(NSIndexPath *)indexPath
 {
-    Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row];
-    
-    MosaicData *aMosaicModule = [[MosaicData alloc] initWithImageId:panel.imageUrl];
+    MosaicData *aMosaicModule = [mosaicDatas objectAtIndex:indexPath.item];
     
     if (aMosaicModule.layoutType == kMosaicLayoutTypeUndefined) {
         
@@ -196,7 +176,7 @@
     UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
     
     //  Set the quantity of columns according of the device and interface orientation
-    NSUInteger retVal = 0;
+    NSUInteger retVal;
     if (UIInterfaceOrientationIsLandscape(orientation)) {
         
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
@@ -220,27 +200,37 @@
 
 #pragma mark - UICollectionViewDataSource
 
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    MosaicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier
+                                                                 forIndexPath:indexPath];
+
+    Panel *panel = [[PanelStore sharedStore] panelAtIndex:indexPath.item];
+    
+    cell.backgroundColor = panel.averageColor;
+    
+    if ([panel hasThumbImage]) {
+        cell.mosaicData = [mosaicDatas objectAtIndex:indexPath.item];
+        
+    } else if ([panel isFailed]) {
+
+        //better to remove the panel than putting a placeholder
+        //add to implement a remove method on PanelStore and call it here
+        
+    } else {
+        if (!collectionView.dragging) {
+            [pendingOperations startOperationsForPanel:panel atIndexPath:indexPath];
+        }
+    }
+
+    return cell;
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
     return [[[PanelStore sharedStore] allPanels] count];
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *cellIdentifier = @"cell";
-    MosaicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier
-                                                                 forIndexPath:indexPath];
-    
-    Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row];
-    
-    MosaicData *data = [[MosaicData alloc] initWithImageId:panel.imageUrl];
-    cell.mosaicData = data;
-    
-    cell.backgroundColor = panel.averageColor;
-    
-    return cell;
 }
 
 
@@ -248,11 +238,12 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.view subviews].count == 2) {
+    Panel *panel = [[PanelStore sharedStore] panelAtIndex:indexPath.item];
+    
+    if (!panel.hasFullSizeImage) {
         return;
     }
     
-    Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.row];
     selectedCell = (MosaicCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
     PanelViewController *pvc = [[PanelViewController alloc] initWithPanel:panel];
@@ -261,6 +252,53 @@
     [pvc setModalPresentationStyle:UIModalPresentationCustom];
     
     [self presentViewController:pvc animated:YES completion:nil];
+}
+
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGPoint currentOffset = scrollView.contentOffset;
+    NSTimeInterval currentTime = [NSDate timeIntervalSinceReferenceDate];
+    
+    NSTimeInterval timeDiff = currentTime - lastOffsetTime;
+    
+    if (timeDiff > timeDiff) {
+        CGFloat distance = currentOffset.y - lastOffset.y;
+
+        CGFloat scrollSpeed = fabsf(distance * 10 / 1000); //per millisecond
+        
+        if (scrollSpeed > ScrollSpeedThreshold) {
+            isScrollingFast = YES;
+        } else {
+            isScrollingFast = NO;
+            [pendingOperations loadPanelsForIndexPaths:[cv indexPathsForVisibleItems]];
+            [pendingOperations resumeAllOperations];
+        }
+        
+        lastOffset = currentOffset;
+        lastOffsetTime = currentTime;
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [pendingOperations loadPanelsForIndexPaths:[cv indexPathsForVisibleItems]];
+    [pendingOperations resumeAllOperations];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [pendingOperations suspendAllOperations];
+}
+
+
+#pragma mark - PendingOperationsDelegate
+
+- (void)reloadItemsAtIndexPaths:(NSArray *)indexPaths
+{
+    [cv reloadItemsAtIndexPaths:indexPaths];
 }
 
 

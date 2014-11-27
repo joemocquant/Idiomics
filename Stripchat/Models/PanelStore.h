@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+
 @class Panel;
 
 @interface PanelStore : NSObject
@@ -17,5 +18,6 @@
 + (instancetype)sharedStore;
 - (NSMutableArray *)allPanels;
 - (void)addPanel:(Panel *)panel;
+- (Panel *)panelAtIndex:(NSUInteger)index;
 
 @end

@@ -7,18 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PanelImageStore.h"
-#import "MosaicCell.h"
 #import "MosaicLayout.h"
+#import "PendingOperations.h"
 
-@interface BrowserViewController : UIViewController <PanelImageStoreDelegate,
-                                                     MosaicLayoutDelegate,
+@class MosaicCell;
+
+@interface BrowserViewController : UIViewController <MosaicLayoutDelegate,
                                                      UICollectionViewDelegate,
                                                      UICollectionViewDataSource,
+                                                     PendingOperationsDelegate,
                                                      UIViewControllerTransitioningDelegate>
 {
+    PendingOperations *pendingOperations;
+    
     UICollectionView *cv;
     MosaicCell *selectedCell;
+    NSMutableArray *mosaicDatas;
+    
+    CGPoint lastOffset;
+    NSTimeInterval lastOffsetTime;
+    BOOL isScrollingFast;
 }
 
 @end

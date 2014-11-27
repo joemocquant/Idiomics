@@ -8,7 +8,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MosaicData.h"
+
+@class MosaicData;
 
 @interface MosaicCell : UICollectionViewCell
 

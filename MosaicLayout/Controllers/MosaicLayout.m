@@ -8,8 +8,8 @@
 //
 
 #import "MosaicLayout.h"
-
-#define kHeightModule 40
+#import "PanelStore.h"
+#import "Panel.h"
 
 @implementation MosaicLayout
 
@@ -124,12 +124,14 @@
             //  Set column height
             columnHeights[columnIndex] = @(yOffset + itemHeight);
         }
-        
+
         /*  Assign all those values to an UICollectionViewLayoutAttributes instance
          *  and save it on an array */
         UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
         attributes.frame = CGRectMake(xOffset, yOffset, itemWidth, itemHeight);
         [itemsAttributes addObject:attributes];
+        
+        [[[PanelStore sharedStore] panelAtIndex:indexPath.item] setThumbSize:CGSizeMake(itemWidth, itemHeight)];
     }
 }
 
@@ -148,7 +150,7 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewLayoutAttributes *retVal = [itemsAttributes objectAtIndex:indexPath.row];
+    UICollectionViewLayoutAttributes *retVal = [itemsAttributes objectAtIndex:indexPath.item];
     
     return retVal;
 }

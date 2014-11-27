@@ -9,26 +9,16 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@protocol PanelImageStoreDelegate <NSObject>
-
-@optional
-
-- (void)didLoadPanelWithPanelKey:(NSString *)key;
-- (void)didLoadAllPanels;
-
-@end
-
 @interface PanelImageStore : NSObject
 {
     NSMutableDictionary *panelImageDictionary;
 }
 
-@property (nonatomic, weak) id<PanelImageStoreDelegate> delegate;
-
 + (instancetype)sharedStore;
-- (void)setAllPanelImages;
-- (UIImage *)panelImageForKey:(NSString *)s;
-- (void)addPanelImage:(UIImage *)panelImage forKey:(NSString *)key;
+- (UIImage *)panelThumbImageForKey:(NSString *)s;
+- (void)addPanelThumbImage:(UIImage *)panelImage forKey:(NSString *)key;
+- (UIImage *)panelFullSizeImageForKey:(NSString *)s;
+- (void)addPanelFullSizeImage:(UIImage *)panelImage forKey:(NSString *)key;
 - (void)deletePanelImageForKey:(NSString *)s;
 - (void)deletePanelImageDicitonary;
 

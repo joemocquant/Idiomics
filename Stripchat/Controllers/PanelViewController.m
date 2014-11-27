@@ -10,6 +10,7 @@
 #import "MessageBar.h"
 #import "Colors.h"
 #import "Fonts.h"
+#import "Panel.h"
 #import "PanelImageStore.h"
 #import "MMSViewController.h"
 #import <UIView+AutoLayout.h>
@@ -60,7 +61,7 @@
     
     panelScrollView = [UIScrollView new];
     [panelScrollView setDelegate:self];
-    [panelScrollView setBackgroundColor:[panel.averageColor colorWithAlphaComponent:0.85f]];
+    [panelScrollView setBackgroundColor:[panel.averageColor colorWithAlphaComponent:AlphaBackground]];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                 action:@selector(PanelScrollViewTappedOnce:)];
     [singleTap setNumberOfTapsRequired:1];
@@ -82,10 +83,14 @@
     [self.view addSubview:panelScrollView];
     
     panelImageView = [UIImageView new];
-    [panelImageView setImage:[((UIImage *)[[PanelImageStore sharedStore] panelImageForKey:panel.imageUrl]) copy]];
-    [panelImageView setFrame:CGRectMake(0, 0, panelImageView.image.size.width, panelImageView.image.size.height)];
+    [panelImageView setImage:[((UIImage *)[[PanelImageStore sharedStore] panelFullSizeImageForKey:panel.imageUrl]) copy]];
+    
+    //panelImageView size is in pixels!
+    CGSize imageSize = CGSizeMake(panelImageView.image.size.width / [[UIScreen mainScreen] scale],
+                                  panelImageView.image.size.height / [[UIScreen mainScreen] scale]);
+    [panelImageView setFrame:CGRectMake(0, 0, imageSize.width, imageSize.height)];
     [panelImageView setCenter:panelScrollView.center];
-    [panelScrollView setContentSize:panelImageView.image.size];
+    [panelScrollView setContentSize:imageSize];
     [panelScrollView addSubview:panelImageView];
 
     [self setupSpeechBalloons];
@@ -112,7 +117,7 @@
     }
     
     [panelScrollView setMinimumZoomScale:minScale];
-    [panelScrollView setMaximumZoomScale:minScale * 4.0];
+    [panelScrollView setMaximumZoomScale:minScale * MaxZoomScaleFactor];
 }
 
 - (void)setupSpeechBalloons
@@ -155,11 +160,11 @@
 
 - (void)PanelScrollViewTappedTwice:(UIGestureRecognizer *)gestureRecognizer
 {
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:ZoomDuration animations:^{
         if ([panelScrollView zoomScale] < screenScale) {
             [panelScrollView setZoomScale:screenScale];
         } else if (([panelScrollView zoomScale] == screenScale) && (screenScale == minScale)) {
-                [panelScrollView setZoomScale:screenScale * 3];
+                [panelScrollView setZoomScale:screenScale * ZoomScaleFactor];
             } else {
                 [panelScrollView setZoomScale:minScale];
             }
@@ -253,12 +258,6 @@
 {
     UILabel *currentBallon = speechBalloons[0];
     [currentBallon setText:text];
-}
-
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
-{
-    textView.text = @"";
-    return YES;
 }
 
 @end

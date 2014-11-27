@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "MosaicCell.h"
+
+@class MosaicCell;
 
 @interface TransitionAnimator : NSObject <UIViewControllerAnimatedTransitioning>
 
