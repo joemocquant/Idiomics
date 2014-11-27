@@ -7,9 +7,6 @@
 //
 
 #import "PanelImageStore.h"
-#import "PanelStore.h"
-#import "Panel.h"
-#import <AFNetworking.h>
 #import <ReactiveCocoa.h>
 
 @implementation PanelImageStore
@@ -64,7 +61,10 @@
 
 - (void)addPanelFullSizeImage:(UIImage *)panelImage forKey:(NSString *)key
 {
-    [self.panelImageDictionary setValue:@{@"fullSize": panelImage} forKey:key];
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:[self.panelImageDictionary objectForKey:key]];
+    [dictionary setObject:panelImage forKey:@"fullSize"];
+
+    [self.panelImageDictionary setValue:dictionary forKey:key];
 }
 
 - (void)deletePanelImageForKey:(NSString *)s

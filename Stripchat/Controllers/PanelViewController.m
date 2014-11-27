@@ -10,6 +10,7 @@
 #import "MessageBar.h"
 #import "Colors.h"
 #import "Fonts.h"
+#import "Panel.h"
 #import "PanelImageStore.h"
 #import "MMSViewController.h"
 #import <UIView+AutoLayout.h>

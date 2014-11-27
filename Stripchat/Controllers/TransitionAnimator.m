@@ -7,6 +7,7 @@
 //
 
 #import "TransitionAnimator.h"
+#import "MosaicCell.h"
 #import "PanelViewController.h"
 #import "Colors.h"
 

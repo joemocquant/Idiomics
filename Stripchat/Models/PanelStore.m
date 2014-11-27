@@ -45,4 +45,9 @@
     [self.allPanels addObject:panel];
 }
 
+- (Panel *)panelAtIndex:(NSUInteger)index
+{
+    return [self.allPanels objectAtIndex:index];
+}
+
 @end

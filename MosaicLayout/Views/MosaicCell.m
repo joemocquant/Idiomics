@@ -8,6 +8,7 @@
 //
 
 #import "MosaicCell.h"
+#import "MosaicData.h"
 #import <QuartzCore/QuartzCore.h>
 #import <AFNetworking.h>
 #import "PanelImageStore.h"

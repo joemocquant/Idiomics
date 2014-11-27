@@ -7,19 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MosaicCell.h"
 #import "MosaicLayout.h"
 #import "PendingOperations.h"
-#import "ResizedPanelDownloader.h"
-#import "FullSizePanelDownloader.h"
+
+@class MosaicCell;
 
 @interface BrowserViewController : UIViewController <MosaicLayoutDelegate,
                                                      UICollectionViewDelegate,
                                                      UICollectionViewDataSource,
-                                                     UIViewControllerTransitioningDelegate,
-                                                     ResizedPanelDownloaderDelegate,
-                                                     FullSizePanelDownloaderDelegate>
+                                                     PendingOperationsDelegate,
+                                                     UIViewControllerTransitioningDelegate>
 {
+    PendingOperations *pendingOperations;
+    
     UICollectionView *cv;
     MosaicCell *selectedCell;
     NSMutableArray *mosaicDatas;
@@ -28,7 +28,5 @@
     NSTimeInterval lastOffsetTime;
     BOOL isScrollingFast;
 }
-
-@property (nonatomic, strong) PendingOperations *pendingOperations;
 
 @end

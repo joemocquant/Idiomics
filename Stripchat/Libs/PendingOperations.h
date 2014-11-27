@@ -7,13 +7,32 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ResizedPanelDownloader.h"
+#import "FullSizePanelDownloader.h"
 
-@interface PendingOperations : NSObject
+@protocol PendingOperationsDelegate;
 
-@property (nonatomic, strong) NSMutableDictionary *resizedPanelDownloadsInProgress;
-@property (nonatomic, strong) NSOperationQueue *resizedPanelDownloadsQueue;
+@interface PendingOperations : NSObject <ResizedPanelDownloaderDelegate,
+                                         FullSizePanelDownloaderDelegate>
+{
+    NSMutableDictionary *resizedPanelDownloadsInProgress;
+    NSOperationQueue *resizedPanelDownloadsQueue;
+    NSMutableDictionary *fullSizePanelDownloadsInProgress;
+    NSOperationQueue *fullSizePanelDownloadsQueue;
+}
 
-@property (nonatomic, strong) NSMutableDictionary *fullSizePanelDownloadsInProgress;
-@property (nonatomic, strong) NSOperationQueue *fullSizePanelDownloadsQueue;
+@property (nonatomic, weak) id<PendingOperationsDelegate> delegate;
+
+- (void)startOperationsForPanel:(Panel *)panel atIndexPath:(NSIndexPath *)indexPath;
+- (void)loadPanelsForIndexPaths:(NSArray *)indexPaths;
+- (void)suspendAllOperations;
+- (void)resumeAllOperations;
+- (void)cancelAllOperations;
+
+@end
+
+@protocol PendingOperationsDelegate <NSObject>
+
+- (void)reloadItemsAtIndexPaths:(NSArray *)indexPaths;
 
 @end

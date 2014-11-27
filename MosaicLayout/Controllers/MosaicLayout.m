@@ -131,7 +131,7 @@
         attributes.frame = CGRectMake(xOffset, yOffset, itemWidth, itemHeight);
         [itemsAttributes addObject:attributes];
         
-        [[[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.item] setThumbSize:CGSizeMake(itemWidth, itemHeight)];
+        [[[PanelStore sharedStore] panelAtIndex:indexPath.item] setThumbSize:CGSizeMake(itemWidth, itemHeight)];
     }
 }
 

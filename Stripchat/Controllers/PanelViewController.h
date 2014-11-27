@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Panel.h"
 #import "MessageBar.h"
-#import <MessageUI/MessageUI.h>
+
+@class Panel;
 
 @interface PanelViewController : UIViewController <UIScrollViewDelegate, MessageBarDelegate>
 {
