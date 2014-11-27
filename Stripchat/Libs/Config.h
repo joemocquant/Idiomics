@@ -23,6 +23,7 @@ extern const NSTimeInterval TransitionDuration;
 extern NSString *const CellIdentifier;
 extern CGFloat TimeDiff;
 extern CGFloat ScrollSpeedThreshold;
+extern CGFloat VelocityThreshold;
 #define kDoubleColumnProbability 40
 #define kColumnsiPadLandscape 4
 #define kColumnsiPadPortrait 3
