@@ -13,4 +13,7 @@
 @property (nonatomic, strong) NSMutableDictionary *resizedPanelDownloadsInProgress;
 @property (nonatomic, strong) NSOperationQueue *resizedPanelDownloadsQueue;
 
+@property (nonatomic, strong) NSMutableDictionary *fullSizePanelDownloadsInProgress;
+@property (nonatomic, strong) NSOperationQueue *fullSizePanelDownloadsQueue;
+
 @end

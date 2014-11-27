@@ -45,6 +45,6 @@
 	<key>Stripchat-API-URL</key>
 	<string>http://cfb54a30-6c6c-11e4-9803-0800200c9a66.s3.eu-central-1.amazonaws.com</string>
 	<key>ImageProxy-Server-URL</key>
-	<string>http://ec2-54-84-182-12.compute-1.amazonaws.com</string>
+	<string>http://ec2-54-174-82-157.compute-1.amazonaws.com</string>
 </dict>
 </plist>

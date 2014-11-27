@@ -14,7 +14,7 @@
 @implementation ResizedPanelDownloader
 
 
-#pragma mark - Life Cycle
+#pragma mark - Lifecycle
 
 - (id)initWithPanel:(Panel *)panel
         atIndexPath:(NSIndexPath *)indexPath
@@ -26,7 +26,6 @@
         _delegate = delegate;
         _indexPath = indexPath;
         _panel = panel;
-        minSize = [Helper getMinPanelSize];
     }
     
     return self;
@@ -37,22 +36,23 @@
 
 - (void)main
 {
+    
+#ifdef __DEBUG__
+    NSLog(@"Starting resizing task %ld", (long)self.indexPath.item);
+#endif
+    
     @autoreleasepool {
 
         if (self.isCancelled) {
             return;
         }
-        
-        //Should include resized optimizisation here (based on network connectivity)
 
-//        CGSize adaptedSize = [self getAdaptedSize];
-//        NSURL *url = [NSURL URLWithString:[Helper getImageWithUrl:self.panel.imageUrl
-//                                                            witdh:adaptedSize.width
-//                                                           height:adaptedSize.height]];
-        
-//        NSData *imageData = [[NSData alloc] initWithContentsOfURL:url];
-        
-        NSData *imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:self.panel.imageUrl]];
+        CGSize adaptedSize = [self getAdaptedSize];
+        NSURL *url = [NSURL URLWithString:[Helper getImageWithUrl:self.panel.imageUrl
+                                                            witdh:adaptedSize.width
+                                                           height:adaptedSize.height]];
+
+        NSData *imageData = [[NSData alloc] initWithContentsOfURL:url];
         
         if (self.isCancelled) {
             imageData = nil;
@@ -61,7 +61,7 @@
         
         if (imageData) {
             UIImage *downloadedImage = [UIImage imageWithData:imageData];
-            [[PanelImageStore sharedStore] addPanelImage:downloadedImage forKey:self.panel.imageUrl];
+            [[PanelImageStore sharedStore] addPanelThumbImage:downloadedImage forKey:self.panel.imageUrl];
             
         } else {
             self.panel.failed = YES;
@@ -81,7 +81,13 @@
 
 - (CGSize)getAdaptedSize
 {
-    return CGSizeZero;
+    CGFloat scaleWidth = self.panel.dimensions.width / self.panel.thumbSize.width;
+    CGFloat scaleHeight = self.panel.dimensions.height / self.panel.thumbSize.height;
+    
+    CGFloat scale = MIN(scaleWidth, scaleHeight);
+    
+    return CGSizeMake(roundf(self.panel.dimensions.width / scale),
+                      roundf(self.panel.dimensions.height / scale));
 }
 
 @end

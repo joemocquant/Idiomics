@@ -32,4 +32,23 @@
     return _resizedPanelDownloadsQueue;
 }
 
+- (NSMutableDictionary *)fullSizePanelDownloadsInProgress
+{
+    if (!_fullSizePanelDownloadsInProgress) {
+        _fullSizePanelDownloadsInProgress = [NSMutableDictionary dictionary];
+    }
+    
+    return _fullSizePanelDownloadsInProgress;
+}
+
+- (NSOperationQueue *)fullSizePanelDownloadsQueue
+{
+    if (!_fullSizePanelDownloadsQueue) {
+        _fullSizePanelDownloadsQueue = [NSOperationQueue new];
+        _fullSizePanelDownloadsQueue.name = @"Resized Panel Downloads Queue";
+    }
+    
+    return _fullSizePanelDownloadsQueue;
+}
+
 @end

@@ -15,8 +15,10 @@
 }
 
 + (instancetype)sharedStore;
-- (UIImage *)panelImageForKey:(NSString *)s;
-- (void)addPanelImage:(UIImage *)panelImage forKey:(NSString *)key;
+- (UIImage *)panelThumbImageForKey:(NSString *)s;
+- (void)addPanelThumbImage:(UIImage *)panelImage forKey:(NSString *)key;
+- (UIImage *)panelFullSizeImageForKey:(NSString *)s;
+- (void)addPanelFullSizeImage:(UIImage *)panelImage forKey:(NSString *)key;
 - (void)deletePanelImageForKey:(NSString *)s;
 - (void)deletePanelImageDicitonary;
 

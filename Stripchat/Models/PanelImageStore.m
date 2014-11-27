@@ -47,14 +47,24 @@
 
 #pragma mark - Instance methods
 
-- (UIImage *)panelImageForKey:(NSString *)s
+- (UIImage *)panelThumbImageForKey:(NSString *)s
 {
-    return [self.panelImageDictionary objectForKey:s];
+    return [[self.panelImageDictionary objectForKey:s] objectForKey:@"thumb"];
 }
 
-- (void)addPanelImage:(UIImage *)panelImage forKey:(NSString *)key
+- (void)addPanelThumbImage:(UIImage *)panelImage forKey:(NSString *)key
 {
-    [self.panelImageDictionary setValue:panelImage forKey:key];
+    [self.panelImageDictionary setValue:@{@"thumb": panelImage} forKey:key];
+}
+
+- (UIImage *)panelFullSizeImageForKey:(NSString *)s
+{
+    return [[self.panelImageDictionary objectForKey:s] objectForKey:@"fullSize"];
+}
+
+- (void)addPanelFullSizeImage:(UIImage *)panelImage forKey:(NSString *)key
+{
+    [self.panelImageDictionary setValue:@{@"fullSize": panelImage} forKey:key];
 }
 
 - (void)deletePanelImageForKey:(NSString *)s

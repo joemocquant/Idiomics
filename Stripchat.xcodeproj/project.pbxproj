@@ -57,6 +57,7 @@
 		01D7BDEC1A17E3E500C30CE2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 010EBE181A0C07FB0051EEBE /* Images.xcassets */; };
 		01D7BDED1A17E3E500C30CE2 /* Stripchat.strings in Resources */ = {isa = PBXBuildFile; fileRef = 010EBE491A0C34930051EEBE /* Stripchat.strings */; };
 		01D7BDEE1A17E3E500C30CE2 /* Laffayette_Comic_Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0124B8541A1598720076251E /* Laffayette_Comic_Pro.ttf */; };
+		01E10ADB1A268CFA00E164AC /* FullSizePanelDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E10ADA1A268CFA00E164AC /* FullSizePanelDownloader.m */; };
 		F71D691C3C6E3B98D3A23B9D /* libPods-Stripchat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A50F5B1916834E0A51F71EB /* libPods-Stripchat.a */; };
 /* End PBXBuildFile section */
 
@@ -123,6 +124,8 @@
 		01D7BDF31A17E3E500C30CE2 /* Stripchat_Local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stripchat_Local.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01D7BDF41A17E3E600C30CE2 /* Stripchat copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Stripchat copy-Info.plist"; path = "/Users/jocelyn/stripchat/Stripchat/Stripchat copy-Info.plist"; sourceTree = "<absolute>"; };
 		01D7BDF51A17E56500C30CE2 /* Stripchat_Local-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Stripchat_Local-Info.plist"; sourceTree = "<group>"; };
+		01E10AD91A268CFA00E164AC /* FullSizePanelDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullSizePanelDownloader.h; sourceTree = "<group>"; };
+		01E10ADA1A268CFA00E164AC /* FullSizePanelDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullSizePanelDownloader.m; sourceTree = "<group>"; };
 		4DF84BD531092FC632B67E6A /* Pods-Stripchat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stripchat.release.xcconfig"; path = "Pods/Target Support Files/Pods-Stripchat/Pods-Stripchat.release.xcconfig"; sourceTree = "<group>"; };
 		7A50F5B1916834E0A51F71EB /* libPods-Stripchat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Stripchat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9BDF3792F0F3144E7EEC4AE /* Pods-Stripchat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stripchat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Stripchat/Pods-Stripchat.debug.xcconfig"; sourceTree = "<group>"; };
@@ -276,6 +279,8 @@
 				011C2AA41A23A98F0083C5C7 /* PendingOperations.m */,
 				011C2AA51A23A98F0083C5C7 /* ResizedPanelDownloader.h */,
 				011C2AA61A23A98F0083C5C7 /* ResizedPanelDownloader.m */,
+				01E10AD91A268CFA00E164AC /* FullSizePanelDownloader.h */,
+				01E10ADA1A268CFA00E164AC /* FullSizePanelDownloader.m */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -550,6 +555,7 @@
 				010EBEA91A0E98270051EEBE /* MosaicData.m in Sources */,
 				010EBEB31A1143530051EEBE /* MessageBar.m in Sources */,
 				010EBEA81A0E98270051EEBE /* MosaicLayout.m in Sources */,
+				01E10ADB1A268CFA00E164AC /* FullSizePanelDownloader.m in Sources */,
 				011C2AAB1A23A98F0083C5C7 /* ResizedPanelDownloader.m in Sources */,
 				013EDEA31A130DFC009F16BD /* MMSViewController.m in Sources */,
 				011C2AA91A23A98F0083C5C7 /* PendingOperations.m in Sources */,

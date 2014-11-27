@@ -40,38 +40,6 @@
                       otherButtonTitles:nil] show];
 }
 
-+ (CGSize)getMinPanelSize
-{
-    NSString *deviceType = [UIDevice currentDevice].model;
-    CGRect screen = [[UIScreen mainScreen] bounds];
-    
-    CGFloat width;
-    CGFloat height;
-    
-    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-    if (UIInterfaceOrientationIsPortrait(orientation)) {
-        width = CGRectGetWidth(screen);
-        height = CGRectGetHeight(screen);
-    } else {
-        width = CGRectGetHeight(screen);
-        height = CGRectGetWidth(screen);
-    }
-    
-    CGFloat minWidth;
-    if ([deviceType isEqualToString:@"iPhone"]) {
-        minWidth = MAX(roundf(width / kColumnsiPhonePortrait),
-                       roundf(height / kColumnsiPhoneLandscape));
-
-    } else {
-        minWidth = MAX(roundf(width / kColumnsiPadPortrait),
-                       roundf(height / kColumnsiPadLandscape));
-    }
-
-    NSUInteger scaleFactor = scaleFactor = [[UIScreen mainScreen] scale];
-    
-    return CGSizeMake(minWidth * 2 * scaleFactor, minWidth * 2 * scaleFactor);
-}
-
 + (NSString *)getImageWithUrl:(NSString *)url witdh:(NSUInteger)width height:(NSUInteger)height
 {
     NSUInteger scaleFactor = 1;
@@ -81,7 +49,7 @@
     }
     
     NSString *imageProxyServerUrl = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"ImageProxy-Server-URL"];
-    NSString *result = [NSString stringWithFormat:@"%@/resize/%lux%lu/%@",
+    NSString *result = [NSString stringWithFormat:@"%@/resize/%ux%u/%@",
                         imageProxyServerUrl,
                         width * scaleFactor,
                         height * scaleFactor,

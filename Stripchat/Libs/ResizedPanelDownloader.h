@@ -13,9 +13,6 @@
 @protocol ResizedPanelDownloaderDelegate;
 
 @interface ResizedPanelDownloader : NSOperation
-{
-    CGSize minSize;
-}
 
 @property (nonatomic, readonly, weak) id<ResizedPanelDownloaderDelegate> delegate;
 @property (nonatomic, readonly, strong) NSIndexPath *indexPath;

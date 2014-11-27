@@ -11,16 +11,22 @@
 #import "MosaicLayout.h"
 #import "PendingOperations.h"
 #import "ResizedPanelDownloader.h"
+#import "FullSizePanelDownloader.h"
 
 @interface BrowserViewController : UIViewController <MosaicLayoutDelegate,
                                                      UICollectionViewDelegate,
                                                      UICollectionViewDataSource,
                                                      UIViewControllerTransitioningDelegate,
-                                                     ResizedPanelDownloaderDelegate>
+                                                     ResizedPanelDownloaderDelegate,
+                                                     FullSizePanelDownloaderDelegate>
 {
     UICollectionView *cv;
     MosaicCell *selectedCell;
     NSMutableArray *mosaicDatas;
+    
+    CGPoint lastOffset;
+    NSTimeInterval lastOffsetTime;
+    BOOL isScrollingFast;
 }
 
 @property (nonatomic, strong) PendingOperations *pendingOperations;

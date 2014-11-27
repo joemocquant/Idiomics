@@ -38,12 +38,14 @@
 + (NSValueTransformer *)dimensionsJSONTransformer
 {
     return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSArray *dimensions) {
-        return [NSValue valueWithCGSize:CGSizeMake([dimensions[0] floatValue], [dimensions[1] floatValue])];
+        return [NSValue valueWithCGSize:CGSizeMake(roundf([dimensions[0] floatValue] / [[UIScreen mainScreen] scale]),
+                                                   roundf([dimensions[1] floatValue] / [[UIScreen mainScreen] scale]))];
         
     } reverseBlock:^id(NSValue *dimensions) {
         
         CGSize size = [dimensions CGSizeValue];
-        return @[@(size.width), @(size.height)];
+        return @[@(size.width * [[UIScreen mainScreen] scale]),
+                 @(size.height * [[UIScreen mainScreen] scale])];
     }];
 }
 
@@ -53,10 +55,10 @@
         
         NSArray *result = [[[balloons rac_sequence] map:^id(NSArray *balloon) {
             
-            return [NSValue valueWithCGRect:CGRectMake([balloon[0] floatValue] / [[UIScreen mainScreen] scale],
-                                                       [balloon[1] floatValue] / [[UIScreen mainScreen] scale],
-                                                       [balloon[2] floatValue] / [[UIScreen mainScreen] scale],
-                                                       [balloon[3] floatValue] / [[UIScreen mainScreen] scale])];
+            return [NSValue valueWithCGRect:CGRectMake(roundf([balloon[0] floatValue] / [[UIScreen mainScreen] scale]),
+                                                       roundf([balloon[1] floatValue] / [[UIScreen mainScreen] scale]),
+                                                       roundf([balloon[2] floatValue] / [[UIScreen mainScreen] scale]),
+                                                       roundf([balloon[3] floatValue] / [[UIScreen mainScreen] scale]))];
             
         }] array];
         
@@ -107,9 +109,14 @@
 
 #pragma mark - Getters/setters
 
-- (BOOL)hasImage
+- (BOOL)hasThumbImage
 {
-    return [[PanelImageStore sharedStore] panelImageForKey:self.imageUrl] != nil;
+    return [[PanelImageStore sharedStore] panelThumbImageForKey:self.imageUrl] != nil;
+}
+
+- (BOOL)hasFullSizeImage
+{
+    return [[PanelImageStore sharedStore] panelFullSizeImageForKey:self.imageUrl] != nil;
 }
 
 - (BOOL)isFailed

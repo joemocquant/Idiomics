@@ -16,6 +16,7 @@
 #import "MosaicData.h"
 #import "PanelViewController.h"
 #import "ResizedPanelDownloader.h"
+#import "FullSizePanelDownloader.h"
 #import "TransitionAnimator.h"
 #import <ReactiveCocoa.h>
 #import <Mantle.h>
@@ -211,8 +212,7 @@
     
     cell.backgroundColor = panel.averageColor;
     
-    
-    if ([panel hasImage]) {
+    if ([panel hasThumbImage]) {
         cell.mosaicData = [mosaicDatas objectAtIndex:indexPath.item];
         
     } else if ([panel isFailed]) {
@@ -221,12 +221,11 @@
         //add to implement a remove method on PanelStore and call it here
         
     } else {
-        if (!collectionView.dragging && !collectionView.decelerating) {
-
+        if (!collectionView.dragging) {
             [self startOperationsForPanel:panel atIndexPath:indexPath];
         }
     }
-    
+
     return cell;
 }
 
@@ -242,6 +241,11 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.item];
+    
+    if (!panel.hasFullSizeImage) {
+        return;
+    }
+    
     selectedCell = (MosaicCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
     PanelViewController *pvc = [[PanelViewController alloc] initWithPanel:panel];
@@ -255,16 +259,28 @@
 
 #pragma mark - UIScrollViewDelegate
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self suspendAllOperations];
-}
+    CGPoint currentOffset = scrollView.contentOffset;
+    NSTimeInterval currentTime = [NSDate timeIntervalSinceReferenceDate];
+    
+    NSTimeInterval timeDiff = currentTime - lastOffsetTime;
+    
+    if (timeDiff > 0.1) {
+        CGFloat distance = currentOffset.y - lastOffset.y;
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    if (!decelerate) {
-        [self loadPanelsForOnScreenItems];
-        [self resumeAllOperations];
+        CGFloat scrollSpeed = fabsf(distance * 10 / 1000); //per millisecond
+        
+        if (scrollSpeed > 1.0) {
+            isScrollingFast = YES;
+        } else {
+            isScrollingFast = NO;
+            [self loadPanelsForOnScreenItems];
+            [self resumeAllOperations];
+        }
+        
+        lastOffset = currentOffset;
+        lastOffsetTime = currentTime;
     }
 }
 
@@ -274,25 +290,54 @@
     [self resumeAllOperations];
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self suspendAllOperations];
+}
+
 
 #pragma mark - Operations
 
 - (void)startOperationsForPanel:(Panel *)panel atIndexPath:(NSIndexPath *)indexPath
 {
-    if (!panel.hasImage) {
-        if (![self.pendingOperations.resizedPanelDownloadsInProgress.allKeys containsObject:indexPath]) {
-            
-            ResizedPanelDownloader *rpd = [[ResizedPanelDownloader alloc] initWithPanel:panel
-                                                                            atIndexPath:indexPath
-                                                                               delegate:self];
-            
-            [self.pendingOperations.resizedPanelDownloadsInProgress setObject:rpd forKey:indexPath];
-            [self.pendingOperations.resizedPanelDownloadsQueue addOperation:rpd];
-        }
+    if (!panel.hasThumbImage) {
+        [self startResizeOperationForPanel:panel atIndexPath:indexPath];
     }
     
     if (!panel.hasFullSizeImage) {
-        //[self startImageFiltrationForRecord:record atIndexPath:indexPath];
+        [self startFullSizeOperationsForPanel:panel atIndexPath:indexPath];
+    }
+}
+
+- (void)startResizeOperationForPanel:(Panel *)panel atIndexPath:(NSIndexPath *)indexPath
+{
+    if (![self.pendingOperations.resizedPanelDownloadsInProgress.allKeys containsObject:indexPath]) {
+            
+        ResizedPanelDownloader *rpd = [[ResizedPanelDownloader alloc] initWithPanel:panel
+                                                                        atIndexPath:indexPath
+                                                                           delegate:self];
+            
+        [self.pendingOperations.resizedPanelDownloadsInProgress setObject:rpd forKey:indexPath];
+        [self.pendingOperations.resizedPanelDownloadsQueue addOperation:rpd];
+    }
+}
+
+- (void)startFullSizeOperationsForPanel:(Panel *)panel atIndexPath:(NSIndexPath *)indexPath
+{
+    if (![self.pendingOperations.fullSizePanelDownloadsInProgress.allKeys containsObject:indexPath]) {
+            
+        FullSizePanelDownloader *fspd = [[FullSizePanelDownloader alloc] initWithPanel:panel
+                                                                           atIndexPath:indexPath
+                                                                              delegate:self];
+        
+        
+        ResizedPanelDownloader *rpd = [self.pendingOperations.resizedPanelDownloadsInProgress objectForKey:indexPath];
+        if (rpd) {
+            [fspd addDependency:rpd];
+        }
+        
+        [self.pendingOperations.fullSizePanelDownloadsInProgress setObject:fspd forKey:indexPath];
+        [self.pendingOperations.fullSizePanelDownloadsQueue addOperation:fspd];
     }
 }
 
@@ -318,6 +363,7 @@
     NSSet *visibleItems = [NSSet setWithArray:[cv indexPathsForVisibleItems]];
     
     NSMutableSet *pendingOperations = [NSMutableSet setWithArray:[self.pendingOperations.resizedPanelDownloadsInProgress allKeys]];
+    [pendingOperations addObjectsFromArray:[self.pendingOperations.fullSizePanelDownloadsInProgress allKeys]];
     
     NSMutableSet *toBeCancelled = [pendingOperations mutableCopy];
     NSMutableSet *toBeStarted = [visibleItems mutableCopy];
@@ -325,30 +371,54 @@
     [toBeStarted minusSet:pendingOperations];
     [toBeCancelled minusSet:visibleItems];
     
-    for (NSIndexPath *anIndexPath in toBeCancelled) {
+    for (NSIndexPath *indexPath in toBeCancelled) {
         
-        ResizedPanelDownloader *pendingDownload = [self.pendingOperations.resizedPanelDownloadsInProgress objectForKey:anIndexPath];
-        [pendingDownload cancel];
-        [self.pendingOperations.resizedPanelDownloadsInProgress removeObjectForKey:anIndexPath];
+        //Should include a check to cancel only those below 60%
+        
+        ResizedPanelDownloader *pendingResizingDownload = [self.pendingOperations.resizedPanelDownloadsInProgress objectForKey:indexPath];
+        [pendingResizingDownload cancel];
+        [self.pendingOperations.resizedPanelDownloadsInProgress removeObjectForKey:indexPath];
+        
+        FullSizePanelDownloader *pendingFullSizeDownload = [self.pendingOperations.fullSizePanelDownloadsInProgress objectForKey:indexPath];
+        [pendingFullSizeDownload cancel];
+        [self.pendingOperations.fullSizePanelDownloadsInProgress removeObjectForKey:indexPath];
+        
+#ifdef __DEBUG__
+        NSLog(@"Canceled task %ld", (long)indexPath.item);
+#endif
+        
     }
-    toBeCancelled = nil;
     
-    for (NSIndexPath *anIndexPath in toBeStarted) {
+    for (NSIndexPath *indexPath in toBeStarted) {
 
-        Panel *panelToProcess = [[[PanelStore sharedStore] allPanels] objectAtIndex:anIndexPath.item];
-        [self startOperationsForPanel:panelToProcess atIndexPath:anIndexPath];
+        Panel *panel = [[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.item];
+        [self startOperationsForPanel:panel atIndexPath:indexPath];
     }
-    toBeStarted = nil;
 }
+
 
 #pragma mark - ResizedPanelDownloaderDelegate
 
 - (void)resizedPanelDownloaderDidFinish:(ResizedPanelDownloader *)downloader
 {
-    NSIndexPath *indexPath = downloader.indexPath;
+    [cv reloadItemsAtIndexPaths:[NSArray arrayWithObject:downloader.indexPath]];
+    //[self.pendingOperations.resizedPanelDownloadsInProgress removeObjectForKey:downloader.indexPath];
+    
+#ifdef __DEBUG__
+    NSLog(@"Finished resizing task %ld", (long)downloader.indexPath.item);
+#endif
+}
 
-    [cv reloadItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
-    [self.pendingOperations.resizedPanelDownloadsInProgress removeObjectForKey:indexPath];
+
+#pragma mark - FullSizePanelDownloaderDelegate
+
+- (void)fullSizePanelDownloaderDidFinish:(FullSizePanelDownloader *)downloader
+{
+    //[self.pendingOperations.fullSizePanelDownloadsInProgress removeObjectForKey:downloader.indexPath];
+    
+#ifdef __DEBUG__
+    NSLog(@"Finished fullSize task %ld", (long)downloader.indexPath.item);
+#endif
 }
 
 

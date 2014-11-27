@@ -82,10 +82,14 @@
     [self.view addSubview:panelScrollView];
     
     panelImageView = [UIImageView new];
-    [panelImageView setImage:[((UIImage *)[[PanelImageStore sharedStore] panelImageForKey:panel.imageUrl]) copy]];
-    [panelImageView setFrame:CGRectMake(0, 0, panelImageView.image.size.width, panelImageView.image.size.height)];
+    [panelImageView setImage:[((UIImage *)[[PanelImageStore sharedStore] panelFullSizeImageForKey:panel.imageUrl]) copy]];
+    
+    //panelImageView size is in pixels!
+    CGSize imageSize = CGSizeMake(panelImageView.image.size.width / [[UIScreen mainScreen] scale],
+                                  panelImageView.image.size.height / [[UIScreen mainScreen] scale]);
+    [panelImageView setFrame:CGRectMake(0, 0, imageSize.width, imageSize.height)];
     [panelImageView setCenter:panelScrollView.center];
-    [panelScrollView setContentSize:panelImageView.image.size];
+    [panelScrollView setContentSize:imageSize];
     [panelScrollView addSubview:panelImageView];
 
     [self setupSpeechBalloons];

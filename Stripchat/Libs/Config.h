@@ -17,8 +17,8 @@ extern const float HorizontalDashHeight;
 
 #define kImageViewMargin -5
 
-#define kColumnsiPadLandscape 5
-#define kColumnsiPadPortrait 4
+#define kColumnsiPadLandscape 4
+#define kColumnsiPadPortrait 3
 #define kColumnsiPhoneLandscape 3
 #define kColumnsiPhonePortrait 2
 #define kDoubleColumnProbability 40

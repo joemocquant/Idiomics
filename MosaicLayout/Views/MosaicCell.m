@@ -65,11 +65,11 @@
 {
     _mosaicData = newMosaicData;
     
-    UIImage *cached = [[PanelImageStore sharedStore] panelImageForKey:self.mosaicData.imageId];
+    UIImage *cached = [[PanelImageStore sharedStore] panelThumbImageForKey:self.mosaicData.imageId];
     self.imageView.image = cached;
     
     if (self.mosaicData.firstTimeShown) {
-        self.mosaicData.firstTimeShown = NO;
+        //self.mosaicData.firstTimeShown = NO;
         
         self.imageView.alpha = 0.0;
         
@@ -77,7 +77,7 @@
         float millisecondsDelay = (arc4random() % 700) / 2000.0f;
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, millisecondsDelay * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [UIView animateWithDuration:0.5 animations:^{
+            [UIView animateWithDuration:0.2 animations:^{
                 self.imageView.alpha = 1.0;
             }];
         });

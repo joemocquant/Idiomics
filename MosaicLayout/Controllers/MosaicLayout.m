@@ -8,6 +8,8 @@
 //
 
 #import "MosaicLayout.h"
+#import "PanelStore.h"
+#import "Panel.h"
 
 @implementation MosaicLayout
 
@@ -128,6 +130,8 @@
         UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
         attributes.frame = CGRectMake(xOffset, yOffset, itemWidth, itemHeight);
         [itemsAttributes addObject:attributes];
+        
+        [[[[PanelStore sharedStore] allPanels] objectAtIndex:indexPath.item] setThumbSize:CGSizeMake(itemWidth, itemHeight)];
     }
 }
 
