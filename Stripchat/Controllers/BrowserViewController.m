@@ -68,6 +68,15 @@
     [layout invalidateLayout];
 }
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+    if ([Helper isIPhoneDevice]) {
+        return UIInterfaceOrientationMaskPortrait;
+    }
+    
+    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
+}
+
 
 #pragma mark - Private methods
 
