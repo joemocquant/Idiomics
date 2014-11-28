@@ -15,6 +15,7 @@
 {
     Panel *panel;
     UIScrollView *panelScrollView;
+    UIView *panelView;
     UIImageView *panelImageView;
     NSMutableArray *speechBalloons;
     CGFloat minScale;

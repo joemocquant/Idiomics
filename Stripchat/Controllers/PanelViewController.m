@@ -15,30 +15,7 @@
 #import "MMSViewController.h"
 #import <UIView+AutoLayout.h>
 
-@interface PanelViewController ()
-
-@property (nonatomic, readwrite, retain) UIView *inputAccessoryView;
-
-@end
-
 @implementation PanelViewController
-
-- (BOOL)canBecomeFirstResponder
-{
-    return YES;
-}
-
-- (UIView *)inputAccessoryView
-{
-    if (!_inputAccessoryView) {
-        MessageBar *messageBar = [MessageBar new];
-        [messageBar setDelegate:self];
-        
-        _inputAccessoryView = messageBar;
-    }
-    
-    return _inputAccessoryView;
-}
 
 
 #pragma mark - Initialization
@@ -79,23 +56,44 @@
     [panelScrollView setUserInteractionEnabled:YES];
     
     CGRect screen = [[UIScreen mainScreen] bounds];
-    [panelScrollView setFrame:CGRectMake(0, 0, CGRectGetWidth(screen), CGRectGetHeight(screen) - MessageBarHeight)];
+    [panelScrollView setFrame:CGRectMake(0, 0, CGRectGetWidth(screen), CGRectGetHeight(screen))];
     [self.view addSubview:panelScrollView];
     
-    panelImageView = [UIImageView new];
-    [panelImageView setImage:[((UIImage *)[[PanelImageStore sharedStore] panelFullSizeImageForKey:panel.imageUrl]) copy]];
+    UIImage *image = [[[PanelImageStore sharedStore] panelFullSizeImageForKey:panel.imageUrl] copy];
+
+    //image size is in pixels! converting to points
+    CGSize imageSize = CGSizeMake(image.size.width / [[UIScreen mainScreen] scale],
+                                  image.size.height / [[UIScreen mainScreen] scale]);
     
-    //panelImageView size is in pixels!
-    CGSize imageSize = CGSizeMake(panelImageView.image.size.width / [[UIScreen mainScreen] scale],
-                                  panelImageView.image.size.height / [[UIScreen mainScreen] scale]);
+    panelView = [UIView new];
+    [panelView setBackgroundColor:[Colors white]];
+    [panelView setFrame:CGRectMake(0, 0, imageSize.width + Gutter, imageSize.height + Gutter)];
+    [panelView setCenter:panelScrollView.center];
+
+    [[panelView layer] setShadowColor:[[Colors white] CGColor]];
+    [[panelView layer] setShadowOpacity:1.0];
+    [[panelView layer] setShadowOffset:CGSizeZero];
+    [[panelView layer] setShadowRadius:0.8];
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:CGRectMake(-2,
+                                                                           -2,
+                                                                           imageSize.width + Gutter + 2 + 2,
+                                                                           imageSize.height + Gutter + 2 + 2)];
+    [[panelView layer] setShadowPath:[shadowPath CGPath]];
+    
+    
+    [panelScrollView setContentSize:panelView.frame.size];
+    [panelScrollView addSubview:panelView];
+    
+    panelImageView = [[UIImageView alloc] initWithImage:image];
+    [panelImageView setContentScaleFactor:2];
     [panelImageView setFrame:CGRectMake(0, 0, imageSize.width, imageSize.height)];
-    [panelImageView setCenter:panelScrollView.center];
-    [panelScrollView setContentSize:imageSize];
-    [panelScrollView addSubview:panelImageView];
+    [panelImageView setContentMode:UIViewContentModeCenter];
+    [panelImageView setCenter:CGPointMake((imageSize.width + Gutter) / 2, (imageSize.height + Gutter) / 2)];
+    [panelView addSubview:panelImageView];
 
     [self setupSpeechBalloons];
     [self setupScales];
-    [panelScrollView setZoomScale:minScale];
+    [panelScrollView setZoomScale:screenScale * ScaleFactor];
 }
 
 -(void)setupScales
@@ -110,10 +108,15 @@
     
     if (screenScale >= 1) {
         //panel smaller than scrollview
+        
         minScale = 1.0;
+        if (minScale < (screenScale * ScaleFactor)) {
+            minScale = screenScale * ScaleFactor;
+        }
+        
     } else {
         //panel bigger than scrollview
-        minScale = screenScale;
+        minScale = screenScale * 0.85;
     }
     
     [panelScrollView setMinimumZoomScale:minScale];
@@ -163,7 +166,7 @@
     [UIView animateWithDuration:ZoomDuration animations:^{
         if ([panelScrollView zoomScale] < screenScale) {
             [panelScrollView setZoomScale:screenScale];
-        } else if (([panelScrollView zoomScale] == screenScale) && (screenScale == minScale)) {
+        } else if ([panelScrollView zoomScale] == screenScale) {
                 [panelScrollView setZoomScale:screenScale * ZoomScaleFactor];
             } else {
                 [panelScrollView setZoomScale:minScale];
@@ -199,7 +202,7 @@
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-    return panelImageView;
+    return panelView;
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
@@ -212,10 +215,10 @@
 {
     CGRect screen = [[UIScreen mainScreen] bounds];
     
-    [panelScrollView setFrame:CGRectMake(0, 0, CGRectGetWidth(screen), CGRectGetHeight(screen) - MessageBarHeight)];
+    [panelScrollView setFrame:CGRectMake(0, 0, CGRectGetWidth(screen), CGRectGetHeight(screen))];
     CGSize boundsSize = panelScrollView.frame.size;
     
-    CGRect contentsFrame = panelImageView.frame;
+    CGRect contentsFrame = panelView.frame;
     
     if (contentsFrame.size.width < boundsSize.width) {
         contentsFrame.origin.x = (boundsSize.width - contentsFrame.size.width) / 2.0f;
@@ -229,7 +232,7 @@
         contentsFrame.origin.y = 0.0f;
     }
     
-    panelImageView.frame = contentsFrame;
+    panelView.frame = contentsFrame;
 }
 
 

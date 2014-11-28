@@ -35,6 +35,8 @@ extern const CGFloat AlphaBackground;
 extern const CGFloat MaxZoomScaleFactor;
 extern const NSTimeInterval ZoomDuration;
 extern const CGFloat ZoomScaleFactor;
+extern const CGFloat Gutter;
+extern const CGFloat ScaleFactor;
 
 //MessageBar
 extern const float MessageBarHeight;
