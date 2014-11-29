@@ -16,11 +16,11 @@
     UIScrollView *panelScrollView;
     UIView *panelView;
     UIImageView *panelImageView;
-    NSMutableDictionary *speechBalloons;
+    NSMutableArray *speechBalloons;
 
     CGFloat minScale;
     CGFloat screenScale;
-    id focus;
+    NSUInteger focus;
     CGRect keyboardBounds;
 }
 

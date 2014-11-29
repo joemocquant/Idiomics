@@ -38,6 +38,7 @@ extern const CGFloat ZoomScaleFactor;
 extern const CGFloat Gutter;
 extern const CGFloat ScaleFactor;
 extern const CGFloat KeyboardMoveDuration;
+extern const CGFloat ScrollToBottomDuration;
 
 //MessageBar
 extern const float MessageBarHeight;

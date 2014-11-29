@@ -25,6 +25,7 @@
     
     if (self) {
         panel = p;
+        focus = -1;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:)
@@ -47,6 +48,9 @@
     
     panelScrollView = [UIScrollView new];
     [panelScrollView setDelegate:self];
+    [panelScrollView setShowsHorizontalScrollIndicator:NO];
+    [panelScrollView setShowsVerticalScrollIndicator:NO];
+    
     [self.view setBackgroundColor:[panel.averageColor colorWithAlphaComponent:AlphaBackground]];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                 action:@selector(PanelScrollViewTappedOnce:)];
@@ -79,6 +83,7 @@
     
     CGSize contentSize = CGSizeMake(imageSize.width + Gutter, imageSize.height + Gutter);
     [panelView setFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)];
+    [panelView setCenter:panelScrollView.center];
     
     [[panelView layer] setShadowColor:[[Colors white] CGColor]];
     [[panelView layer] setShadowOpacity:1.0];
@@ -107,7 +112,7 @@
 
 - (void)setupSpeechBalloons
 {
-    speechBalloons = [NSMutableDictionary dictionary];
+    speechBalloons = [NSMutableArray array];
     for (NSValue *ballon in panel.balloons) {
         CGRect ballonRect = [ballon CGRectValue];
     
@@ -125,8 +130,9 @@
         [ballonTextView setTextColor:[Colors gray5]];
         [ballonTextView setTintColor:[Colors gray5]];
         [ballonTextView setBackgroundColor:[Colors clear]];
+
         [ballonTextView setDelegate:self];
-        [speechBalloons setValue:ballonTextView forKey:[NSString stringWithFormat:@"%@", ballon]];
+        [speechBalloons addObject:ballonTextView];
     }
 }
 
@@ -162,32 +168,33 @@
 - (void)PanelScrollViewTappedOnce:(UIGestureRecognizer *)gestureRecognizer
 {
     CGPoint location = [gestureRecognizer locationInView:panelImageView];
+    __block BOOL found = NO;
     
-    for (NSValue *ballonValue in panel.balloons) {
+    [panel.balloons enumerateObjectsUsingBlock:^(NSValue *ballonValue, NSUInteger idx, BOOL *stop) {
         
         if (CGRectContainsPoint([ballonValue CGRectValue], location)) {
             
-            focus = [NSString stringWithFormat:@"%@", ballonValue];
+            focus = idx;
             
-            if ([[speechBalloons objectForKey:focus] isFirstResponder]) {
-                break;
+            if ([[speechBalloons objectAtIndex:idx] isFirstResponder]) {
+                *stop = YES;
+            } else {
+                [[speechBalloons objectAtIndex:idx] setBackgroundColor:[Colors gray2]];
+                [[speechBalloons objectAtIndex:idx] becomeFirstResponder];
+                found = YES;
             }
-            
-            [[speechBalloons objectForKey:focus] setBackgroundColor:[Colors gray2]];
-            [[speechBalloons objectForKey:focus] becomeFirstResponder];
-            return;
         }
-    }
+    }];
     
-    if (focus) {
-    
-        [[speechBalloons objectForKey:focus] setBackgroundColor:[Colors clear]];
-        [[speechBalloons objectForKey:focus] resignFirstResponder];
-        focus = nil;
-
-
-    } else {
-        [self dismissViewControllerAnimated:YES completion:nil];
+    if (!found) {
+        
+        if (focus != -1) {
+            [[speechBalloons objectAtIndex:focus] setBackgroundColor:[Colors clear]];
+            [[speechBalloons objectAtIndex:focus] resignFirstResponder];
+            focus = -1;
+        } else {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
     }
 }
 
@@ -222,13 +229,43 @@
 - (void)resizeScrollView
 {
     [UIView animateWithDuration:KeyboardMoveDuration animations:^{
+        
         [self centerScrollViewContents];
-        CGSize size = CGSizeMake(panelImageView.frame.size.width + Gutter, panelImageView.frame.size.height + Gutter);
+        CGSize size = CGSizeMake(panelImageView.frame.size.width + Gutter,
+                                 panelImageView.frame.size.height + Gutter);
         [self setupScalesWithContentSize:size];
         
+        if (keyboardBounds.size.height) {
+            
+            if ([panelScrollView zoomScale] < screenScale) {
+                [panelScrollView setZoomScale:screenScale];
+            } else {
+                [panelScrollView setZoomScale:panelScrollView.zoomScale];
+            }
+        
+        }
+    } completion:^(BOOL finished) {
+        if (keyboardBounds.size.height) {
+            [UIView animateWithDuration:ScrollToBottomDuration animations:^{
+                [self focusOnBallon];
+            }];
+        }
     }];
 }
 
+- (void)focusOnBallon
+{
+    CGRect ballon = [[speechBalloons objectAtIndex:focus] frame];
+    CGFloat y = ballon.origin.y + ballon.size.height + Gutter;
+    
+    if (y > (panelScrollView.frame.size.height / 2)) {
+        
+        CGPoint bottomOffset = CGPointMake(panelScrollView.contentOffset.x,
+                                           panelScrollView.contentSize.height - panelScrollView.frame.size.height);
+        
+        [panelScrollView setContentOffset:bottomOffset animated:NO];
+    }
+}
 
 #pragma mark - Rotation
 
