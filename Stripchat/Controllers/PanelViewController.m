@@ -27,7 +27,7 @@
         panel = p;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardDidShow:)
+                                                 selector:@selector(keyboardWillShow:)
                                                      name:UIKeyboardWillShowNotification
                                                    object:nil];
         
@@ -76,32 +76,31 @@
     
     panelView = [UIView new];
     [panelView setBackgroundColor:[Colors white]];
-    [panelView setFrame:CGRectMake(0, 0, imageSize.width + Gutter, imageSize.height + Gutter)];
-    [panelView setCenter:panelScrollView.center];
-
+    
+    CGSize contentSize = CGSizeMake(imageSize.width + Gutter, imageSize.height + Gutter);
+    [panelView setFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)];
+    
     [[panelView layer] setShadowColor:[[Colors white] CGColor]];
     [[panelView layer] setShadowOpacity:1.0];
     [[panelView layer] setShadowOffset:CGSizeZero];
     [[panelView layer] setShadowRadius:0.8];
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:CGRectMake(-2,
                                                                            -2,
-                                                                           imageSize.width + Gutter + 2 + 2,
-                                                                           imageSize.height + Gutter + 2 + 2)];
+                                                                           contentSize.width + 2 + 2,
+                                                                           contentSize.height + 2 + 2)];
     [[panelView layer] setShadowPath:[shadowPath CGPath]];
     
-    
-    [panelScrollView setContentSize:panelView.frame.size];
+    [panelScrollView setContentSize:contentSize];
     [panelScrollView addSubview:panelView];
     
     panelImageView = [[UIImageView alloc] initWithImage:image];
     [panelImageView setContentScaleFactor:2];
     [panelImageView setFrame:CGRectMake(0, 0, imageSize.width, imageSize.height)];
-    [panelImageView setContentMode:UIViewContentModeCenter];
-    [panelImageView setCenter:CGPointMake((imageSize.width + Gutter) / 2, (imageSize.height + Gutter) / 2)];
+    [panelImageView setCenter:CGPointMake(contentSize.width / 2, contentSize.height / 2)];
     [panelView addSubview:panelImageView];
 
     [self setupSpeechBalloons];
-    [self setupScales];
+    [self setupScalesWithContentSize:panelScrollView.contentSize];
 
     [panelScrollView setZoomScale:screenScale * ScaleFactor];
 }
@@ -135,19 +134,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-
-#pragma mark - Keyboard notifications
-
-- (void)keyboardDidShow:(NSNotification *)notification
-{
-    [[notification.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue:&keyboardBounds];
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification
-{
-    keyboardBounds = CGRectZero;
 }
 
 
@@ -189,7 +175,6 @@
             
             [[speechBalloons objectForKey:focus] setBackgroundColor:[Colors gray2]];
             [[speechBalloons objectForKey:focus] becomeFirstResponder];
-            [self resizeScrollView];
             return;
         }
     }
@@ -199,29 +184,11 @@
         [[speechBalloons objectForKey:focus] setBackgroundColor:[Colors clear]];
         [[speechBalloons objectForKey:focus] resignFirstResponder];
         focus = nil;
-        [self resizeScrollView];
+
 
     } else {
         [self dismissViewControllerAnimated:YES completion:nil];
     }
-}
-
-- (void)resizeScrollView
-{
-    CGRect screen = [[UIScreen mainScreen] bounds];
-    
-    [UIView animateWithDuration:KeyboardMoveDuration animations:^{
-        [panelScrollView setFrame:CGRectMake(0,
-                                             0,
-                                             CGRectGetWidth(screen),
-                                             CGRectGetHeight(screen) - keyboardBounds.size.height)];
-        
-        [self centerScrollViewContents];
-        [self setupScales];
-        [panelScrollView setZoomScale:panelScrollView.zoomScale];
-    } completion:^(BOOL finished) {
-        
-    }];
 }
 
 - (void)PanelScrollViewTappedTwice:(UIGestureRecognizer *)gestureRecognizer
@@ -238,6 +205,31 @@
 }
 
 
+#pragma mark - Keyboard notifications
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    [[notification.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue:&keyboardBounds];
+    [self resizeScrollView];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    keyboardBounds = CGRectZero;
+    [self resizeScrollView];
+}
+
+- (void)resizeScrollView
+{
+    [UIView animateWithDuration:KeyboardMoveDuration animations:^{
+        [self centerScrollViewContents];
+        CGSize size = CGSizeMake(panelImageView.frame.size.width + Gutter, panelImageView.frame.size.height + Gutter);
+        [self setupScalesWithContentSize:size];
+        
+    }];
+}
+
+
 #pragma mark - Rotation
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -245,13 +237,17 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 
         [self centerScrollViewContents];
-        [self setupScales];
+        
+        [panelScrollView setContentSize:CGSizeMake(panelImageView.frame.size.width + Gutter,
+                                                   panelImageView.frame.size.height + Gutter)];
+        
+        [self setupScalesWithContentSize:panelScrollView.contentSize];
+        
         if (panelScrollView.zoomScale < minScale) {
             [panelScrollView setZoomScale:minScale];
         } else {
             [panelScrollView setZoomScale:panelScrollView.zoomScale];
         }
-        
      } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 
      }];
@@ -280,19 +276,18 @@
                                          0,
                                          CGRectGetWidth(screen),
                                          CGRectGetHeight(screen) - keyboardBounds.size.height)];
-    
-    CGSize boundsSize = panelScrollView.frame.size;
-    
+
+    CGSize frameSize = panelScrollView.frame.size;
     CGRect contentsFrame = panelView.frame;
     
-    if (contentsFrame.size.width < boundsSize.width) {
-        contentsFrame.origin.x = (boundsSize.width - contentsFrame.size.width) / 2.0f;
+    if (contentsFrame.size.width < frameSize.width) {
+        contentsFrame.origin.x = (frameSize.width - contentsFrame.size.width) / 2.0f;
     } else {
         contentsFrame.origin.x = 0.0f;
     }
     
-    if (contentsFrame.size.height < boundsSize.height) {
-        contentsFrame.origin.y = (boundsSize.height - contentsFrame.size.height) / 2.0f;
+    if (contentsFrame.size.height < frameSize.height) {
+        contentsFrame.origin.y = (frameSize.height - contentsFrame.size.height) / 2.0f;
     } else {
         contentsFrame.origin.y = 0.0f;
     }
@@ -303,16 +298,14 @@
 
 #pragma mark - Private methods
 
--(void)setupScales
+-(void)setupScalesWithContentSize:(CGSize)contentSize
 {
     // Set up the minimum & maximum zoom scales
     
     CGRect scrollViewFrame = panelScrollView.frame;
-    [panelScrollView setContentSize:CGSizeMake(panelImageView.frame.size.width + Gutter,
-                                               panelImageView.frame.size.height + Gutter)];
     
-    CGFloat scaleWidth = scrollViewFrame.size.width / panelScrollView.contentSize.width;
-    CGFloat scaleHeight = scrollViewFrame.size.height / panelScrollView.contentSize.height;
+    CGFloat scaleWidth = scrollViewFrame.size.width / contentSize.width;
+    CGFloat scaleHeight = scrollViewFrame.size.height / contentSize.height;
 
     screenScale = MIN(scaleWidth, scaleHeight);
     
