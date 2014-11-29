@@ -21,7 +21,6 @@
 		010EBEA81A0E98270051EEBE /* MosaicLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE9F1A0E98270051EEBE /* MosaicLayout.m */; };
 		010EBEA91A0E98270051EEBE /* MosaicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEA21A0E98270051EEBE /* MosaicData.m */; };
 		010EBEAA1A0E98270051EEBE /* MosaicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEA71A0E98270051EEBE /* MosaicCell.m */; };
-		010EBEB31A1143530051EEBE /* MessageBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEB21A1143530051EEBE /* MessageBar.m */; };
 		010EBEB91A1144BC0051EEBE /* Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEB61A1144BC0051EEBE /* Colors.m */; };
 		010EBEBA1A1144BC0051EEBE /* Fonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEB81A1144BC0051EEBE /* Fonts.m */; };
 		011C2AA91A23A98F0083C5C7 /* PendingOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 011C2AA41A23A98F0083C5C7 /* PendingOperations.m */; };
@@ -41,7 +40,6 @@
 		01D7BDDA1A17E3E500C30CE2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE101A0C07FB0051EEBE /* AppDelegate.m */; };
 		01D7BDDB1A17E3E500C30CE2 /* TransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDE9F1A12A47B009F16BD /* TransitionAnimator.m */; };
 		01D7BDDC1A17E3E500C30CE2 /* MosaicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEA21A0E98270051EEBE /* MosaicData.m */; };
-		01D7BDDD1A17E3E500C30CE2 /* MessageBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEB21A1143530051EEBE /* MessageBar.m */; };
 		01D7BDDE1A17E3E500C30CE2 /* MosaicLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE9F1A0E98270051EEBE /* MosaicLayout.m */; };
 		01D7BDDF1A17E3E500C30CE2 /* MMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDEA21A130DFC009F16BD /* MMSViewController.m */; };
 		01D7BDE01A17E3E500C30CE2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE0D1A0C07FB0051EEBE /* main.m */; };
@@ -101,8 +99,6 @@
 		010EBEA21A0E98270051EEBE /* MosaicData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicData.m; sourceTree = "<group>"; };
 		010EBEA61A0E98270051EEBE /* MosaicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicCell.h; sourceTree = "<group>"; };
 		010EBEA71A0E98270051EEBE /* MosaicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicCell.m; sourceTree = "<group>"; };
-		010EBEB11A1143530051EEBE /* MessageBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBar.h; sourceTree = "<group>"; };
-		010EBEB21A1143530051EEBE /* MessageBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageBar.m; sourceTree = "<group>"; };
 		010EBEB51A1144BC0051EEBE /* Colors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
 		010EBEB61A1144BC0051EEBE /* Colors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colors.m; sourceTree = "<group>"; };
 		010EBEB71A1144BC0051EEBE /* Fonts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fonts.h; sourceTree = "<group>"; };
@@ -258,8 +254,6 @@
 		010EBE3A1A0C0D6E0051EEBE /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				010EBEB11A1143530051EEBE /* MessageBar.h */,
-				010EBEB21A1143530051EEBE /* MessageBar.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -553,7 +547,6 @@
 				010EBE111A0C07FB0051EEBE /* AppDelegate.m in Sources */,
 				013EDEA01A12A47B009F16BD /* TransitionAnimator.m in Sources */,
 				010EBEA91A0E98270051EEBE /* MosaicData.m in Sources */,
-				010EBEB31A1143530051EEBE /* MessageBar.m in Sources */,
 				010EBEA81A0E98270051EEBE /* MosaicLayout.m in Sources */,
 				01E10ADB1A268CFA00E164AC /* FullSizePanelDownloader.m in Sources */,
 				011C2AAB1A23A98F0083C5C7 /* ResizedPanelDownloader.m in Sources */,
@@ -589,7 +582,6 @@
 				01D7BDDA1A17E3E500C30CE2 /* AppDelegate.m in Sources */,
 				01D7BDDB1A17E3E500C30CE2 /* TransitionAnimator.m in Sources */,
 				01D7BDDC1A17E3E500C30CE2 /* MosaicData.m in Sources */,
-				01D7BDDD1A17E3E500C30CE2 /* MessageBar.m in Sources */,
 				01D7BDDE1A17E3E500C30CE2 /* MosaicLayout.m in Sources */,
 				011C2AAC1A23A98F0083C5C7 /* ResizedPanelDownloader.m in Sources */,
 				01D7BDDF1A17E3E500C30CE2 /* MMSViewController.m in Sources */,

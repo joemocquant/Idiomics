@@ -37,6 +37,7 @@ extern const NSTimeInterval ZoomDuration;
 extern const CGFloat ZoomScaleFactor;
 extern const CGFloat Gutter;
 extern const CGFloat ScaleFactor;
+extern const CGFloat KeyboardMoveDuration;
 
 //MessageBar
 extern const float MessageBarHeight;

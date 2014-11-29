@@ -28,6 +28,7 @@ const NSTimeInterval ZoomDuration = 0.2;
 const CGFloat ZoomScaleFactor = 3.0;
 const CGFloat Gutter = 13.0;
 const CGFloat ScaleFactor = 0.85;
+const CGFloat KeyboardMoveDuration = 0.4;
 
 //MessageBar
 const float MessageBarHeight = 60.0;

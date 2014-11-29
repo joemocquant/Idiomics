@@ -7,7 +7,6 @@
 //
 
 #import "PanelViewController.h"
-#import "MessageBar.h"
 #import "Colors.h"
 #import "Fonts.h"
 #import "Panel.h"
@@ -26,6 +25,16 @@
     
     if (self) {
         panel = p;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardDidShow:)
+                                                     name:UIKeyboardWillShowNotification
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWillHide:)
+                                                     name:UIKeyboardWillHideNotification
+                                                   object:nil];
     }
     
     return self;
@@ -38,7 +47,7 @@
     
     panelScrollView = [UIScrollView new];
     [panelScrollView setDelegate:self];
-    [panelScrollView setBackgroundColor:[panel.averageColor colorWithAlphaComponent:AlphaBackground]];
+    [self.view setBackgroundColor:[panel.averageColor colorWithAlphaComponent:AlphaBackground]];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                 action:@selector(PanelScrollViewTappedOnce:)];
     [singleTap setNumberOfTapsRequired:1];
@@ -93,57 +102,32 @@
 
     [self setupSpeechBalloons];
     [self setupScales];
-    [panelScrollView setZoomScale:screenScale * ScaleFactor];
-}
 
--(void)setupScales
-{
-    // Set up the minimum & maximum zoom scales
-    
-    CGRect scrollViewFrame = panelScrollView.frame;
-    
-    CGFloat scaleWidth = scrollViewFrame.size.width / panelScrollView.contentSize.width;
-    CGFloat scaleHeight = scrollViewFrame.size.height / panelScrollView.contentSize.height;
-    screenScale = MIN(scaleWidth, scaleHeight);
-    
-    if (screenScale >= 1) {
-        //panel smaller than scrollview
-        
-        minScale = 1.0;
-        if (minScale < (screenScale * ScaleFactor)) {
-            minScale = screenScale * ScaleFactor;
-        }
-        
-    } else {
-        //panel bigger than scrollview
-        minScale = screenScale * 0.85;
-    }
-    
-    [panelScrollView setMinimumZoomScale:minScale];
-    [panelScrollView setMaximumZoomScale:minScale * MaxZoomScaleFactor];
+    [panelScrollView setZoomScale:screenScale * ScaleFactor];
 }
 
 - (void)setupSpeechBalloons
 {
-    speechBalloons = [NSMutableArray array];
+    speechBalloons = [NSMutableDictionary dictionary];
     for (NSValue *ballon in panel.balloons) {
         CGRect ballonRect = [ballon CGRectValue];
     
-        UILabel *ballonLabel = [[UILabel alloc] init];
-        [panelImageView addSubview:ballonLabel];
+        UITextView *ballonTextView = [[UITextView alloc] init];
+        [panelImageView addSubview:ballonTextView];
         
-        [ballonLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [ballonLabel constrainToSize:ballonRect.size];
+        [ballonTextView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [ballonTextView constrainToSize:ballonRect.size];
         
-        [ballonLabel pinEdges:JRTViewPinLeftEdge toSameEdgesOfView:panelImageView inset:ballonRect.origin.x];
-        [ballonLabel pinEdges:JRTViewPinTopEdge toSameEdgesOfView:panelImageView inset:ballonRect.origin.y];
+        [ballonTextView pinEdges:JRTViewPinLeftEdge toSameEdgesOfView:panelImageView inset:ballonRect.origin.x];
+        [ballonTextView pinEdges:JRTViewPinTopEdge toSameEdgesOfView:panelImageView inset:ballonRect.origin.y];
         
-        [ballonLabel setNumberOfLines:0];
-        [ballonLabel setAdjustsFontSizeToFitWidth:YES];
-        [ballonLabel setTextAlignment:NSTextAlignmentCenter];
-        [ballonLabel setFont:[Fonts laffayetteComicPro14]];
-        [ballonLabel setTextColor:[Colors gray5]];
-        [speechBalloons addObject:ballonLabel];
+        [ballonTextView setTextAlignment:NSTextAlignmentCenter];
+        [ballonTextView setFont:[Fonts laffayetteComicPro14]];
+        [ballonTextView setTextColor:[Colors gray5]];
+        [ballonTextView setTintColor:[Colors gray5]];
+        [ballonTextView setBackgroundColor:[Colors clear]];
+        [ballonTextView setDelegate:self];
+        [speechBalloons setValue:ballonTextView forKey:[NSString stringWithFormat:@"%@", ballon]];
     }
 }
 
@@ -154,11 +138,90 @@
 }
 
 
+#pragma mark - Keyboard notifications
+
+- (void)keyboardDidShow:(NSNotification *)notification
+{
+    [[notification.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue:&keyboardBounds];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    keyboardBounds = CGRectZero;
+}
+
+
+#pragma mark - UITextViewDelefate
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    NSLog(@"a");
+    return YES;
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView
+{
+    NSLog(@"b");
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    NSLog(@"range: %lu %lu with text <%@>", (unsigned long)range.location, (unsigned long)range.length, text);
+    return YES;
+}
+
+
 #pragma mark - Gestures
 
 - (void)PanelScrollViewTappedOnce:(UIGestureRecognizer *)gestureRecognizer
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    CGPoint location = [gestureRecognizer locationInView:panelImageView];
+    
+    for (NSValue *ballonValue in panel.balloons) {
+        
+        if (CGRectContainsPoint([ballonValue CGRectValue], location)) {
+            
+            focus = [NSString stringWithFormat:@"%@", ballonValue];
+            
+            if ([[speechBalloons objectForKey:focus] isFirstResponder]) {
+                break;
+            }
+            
+            [[speechBalloons objectForKey:focus] setBackgroundColor:[Colors gray2]];
+            [[speechBalloons objectForKey:focus] becomeFirstResponder];
+            [self resizeScrollView];
+            return;
+        }
+    }
+    
+    if (focus) {
+    
+        [[speechBalloons objectForKey:focus] setBackgroundColor:[Colors clear]];
+        [[speechBalloons objectForKey:focus] resignFirstResponder];
+        focus = nil;
+        [self resizeScrollView];
+
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (void)resizeScrollView
+{
+    CGRect screen = [[UIScreen mainScreen] bounds];
+    
+    [UIView animateWithDuration:KeyboardMoveDuration animations:^{
+        [panelScrollView setFrame:CGRectMake(0,
+                                             0,
+                                             CGRectGetWidth(screen),
+                                             CGRectGetHeight(screen) - keyboardBounds.size.height)];
+        
+        [self centerScrollViewContents];
+        [self setupScales];
+        [panelScrollView setZoomScale:panelScrollView.zoomScale];
+    } completion:^(BOOL finished) {
+        
+    }];
 }
 
 - (void)PanelScrollViewTappedTwice:(UIGestureRecognizer *)gestureRecognizer
@@ -180,10 +243,9 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        panelScrollView.contentSize = panelImageView.image.size;
+
         [self centerScrollViewContents];
         [self setupScales];
-        
         if (panelScrollView.zoomScale < minScale) {
             [panelScrollView setZoomScale:minScale];
         } else {
@@ -191,7 +253,7 @@
         }
         
      } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-         
+
      }];
     
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
@@ -214,8 +276,11 @@
 - (void)centerScrollViewContents
 {
     CGRect screen = [[UIScreen mainScreen] bounds];
+    [panelScrollView setFrame:CGRectMake(0,
+                                         0,
+                                         CGRectGetWidth(screen),
+                                         CGRectGetHeight(screen) - keyboardBounds.size.height)];
     
-    [panelScrollView setFrame:CGRectMake(0, 0, CGRectGetWidth(screen), CGRectGetHeight(screen))];
     CGSize boundsSize = panelScrollView.frame.size;
     
     CGRect contentsFrame = panelView.frame;
@@ -236,9 +301,39 @@
 }
 
 
-#pragma mark - MessageBarDelegate
+#pragma mark - Private methods
 
-- (void)didPressNext
+-(void)setupScales
+{
+    // Set up the minimum & maximum zoom scales
+    
+    CGRect scrollViewFrame = panelScrollView.frame;
+    [panelScrollView setContentSize:CGSizeMake(panelImageView.frame.size.width + Gutter,
+                                               panelImageView.frame.size.height + Gutter)];
+    
+    CGFloat scaleWidth = scrollViewFrame.size.width / panelScrollView.contentSize.width;
+    CGFloat scaleHeight = scrollViewFrame.size.height / panelScrollView.contentSize.height;
+
+    screenScale = MIN(scaleWidth, scaleHeight);
+    
+    if (screenScale >= 1) {
+        //panel smaller than scrollview
+        
+        minScale = 1.0;
+        if (minScale < (screenScale * ScaleFactor)) {
+            minScale = screenScale * ScaleFactor;
+        }
+        
+    } else {
+        //panel bigger than scrollview
+        minScale = screenScale * ScaleFactor;
+    }
+    
+    [panelScrollView setMinimumZoomScale:minScale];
+    [panelScrollView setMaximumZoomScale:minScale * MaxZoomScaleFactor];
+}
+
+- (void)sendMessage
 {
     CGSize imageSize = CGSizeMake(panelImageView.image.size.width / [[UIScreen mainScreen] scale],
                                   panelImageView.image.size.height / [[UIScreen mainScreen] scale]);
@@ -277,8 +372,6 @@
     UIImage *editedPanel = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    
-
     MMSViewController *mmsvc = [[MMSViewController alloc] initWithEditedPanel:editedPanel];
     
     if ([mmsvc canSendPanel]) {
@@ -286,12 +379,6 @@
         [mmsvc setModalTransitionStyle:UIModalTransitionStylePartialCurl];
         [self presentViewController:mmsvc animated:YES completion:nil];
     }
-}
-
-- (void)messageDidChange:(NSString *)text
-{
-    UILabel *currentBallon = speechBalloons[0];
-    [currentBallon setText:text];
 }
 
 @end
