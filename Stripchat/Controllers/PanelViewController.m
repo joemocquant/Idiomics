@@ -266,9 +266,10 @@
         
         CGFloat offsetY = y - panelScrollView.frame.size.height;
         offsetY = offsetY + 50;
-        offsetY = MIN(offsetY, panelScrollView.contentSize.height - panelScrollView.frame.size.height);        
+        offsetY = MIN(offsetY, panelScrollView.contentSize.height - panelScrollView.frame.size.height);
         
-        CGPoint bottomOffset = CGPointMake(panelScrollView.contentOffset.x, offsetY);
+        CGPoint bottomOffset = CGPointMake(panelScrollView.contentOffset.x,
+                                           panelScrollView.contentOffset.y + offsetY);
         [panelScrollView setContentOffset:bottomOffset animated:NO];
     }
 }
