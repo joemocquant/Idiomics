@@ -179,6 +179,7 @@
             if ([[speechBalloons objectAtIndex:idx] isFirstResponder]) {
                 *stop = YES;
             } else {
+                //add overlay focus here
                 [[speechBalloons objectAtIndex:idx] setBackgroundColor:[Colors gray2]];
                 [[speechBalloons objectAtIndex:idx] becomeFirstResponder];
                 found = YES;
@@ -189,6 +190,7 @@
     if (!found) {
         
         if (focus != -1) {
+            //remove overlay focus here
             [[speechBalloons objectAtIndex:focus] setBackgroundColor:[Colors clear]];
             [[speechBalloons objectAtIndex:focus] resignFirstResponder];
             focus = -1;
@@ -247,22 +249,26 @@
     } completion:^(BOOL finished) {
         if (keyboardBounds.size.height) {
             [UIView animateWithDuration:ScrollToBottomDuration animations:^{
-                [self focusOnBallon];
+                [self focusOnBalloon];
             }];
         }
     }];
 }
 
-- (void)focusOnBallon
+- (void)focusOnBalloon
 {
-    CGRect ballon = [[speechBalloons objectAtIndex:focus] frame];
-    CGFloat y = ballon.origin.y + ballon.size.height + Gutter;
+    CGRect balloon = [[speechBalloons objectAtIndex:focus] frame];
+    CGRect balloonInView = [self.view convertRect:balloon fromView:panelImageView];
     
-    if (y > (panelScrollView.frame.size.height / 2)) {
+    CGFloat y = balloonInView.origin.y + balloonInView.size.height;
+    
+    if (y > (panelScrollView.frame.size.height)) {
         
-        CGPoint bottomOffset = CGPointMake(panelScrollView.contentOffset.x,
-                                           panelScrollView.contentSize.height - panelScrollView.frame.size.height);
+        CGFloat offsetY = y - panelScrollView.frame.size.height;
+        offsetY = offsetY + 50;
+        offsetY = MIN(offsetY, panelScrollView.contentSize.height - panelScrollView.frame.size.height);        
         
+        CGPoint bottomOffset = CGPointMake(panelScrollView.contentOffset.x, offsetY);
         [panelScrollView setContentOffset:bottomOffset animated:NO];
     }
 }
