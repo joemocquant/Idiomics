@@ -17,10 +17,12 @@
     UIView *panelView;
     UIImageView *panelImageView;
     NSMutableArray *speechBalloons;
-
+    UIView *navigationControl;
+    
     CGFloat minScale;
     CGFloat screenScale;
     NSUInteger focus;
+    NSMutableArray *focusOverlays;
     CGRect keyboardBounds;
 }
 

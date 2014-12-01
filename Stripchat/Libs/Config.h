@@ -39,10 +39,12 @@ extern const CGFloat Gutter;
 extern const CGFloat ScaleFactor;
 extern const CGFloat KeyboardMoveDuration;
 extern const CGFloat ScrollToBottomDuration;
+extern const CGFloat FocusMoveMargin;
+extern const CGFloat NavigationControlHeight;
+extern const CGFloat NavigationControlAlpha;
+extern const CGFloat NavigationControlDuration;
 
-//MessageBar
-extern const float MessageBarHeight;
-extern const float NextButtonWidth;
-extern const float MessageTextInset;
-extern const float VerticalDashWidth;
-extern const float HorizontalDashHeight;
+//FocusOverlay
+extern const CGFloat FocusInset;
+extern const CGFloat AlphaFocusForeground;
+extern const CGFloat AlphaFocusBackground;

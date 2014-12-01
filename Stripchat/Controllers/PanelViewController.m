@@ -12,6 +12,7 @@
 #import "Panel.h"
 #import "PanelImageStore.h"
 #import "MMSViewController.h"
+#import "FocusOverlayView.h"
 #import <UIView+AutoLayout.h>
 
 @implementation PanelViewController
@@ -81,7 +82,7 @@
     panelView = [UIView new];
     [panelView setBackgroundColor:[Colors white]];
     
-    CGSize contentSize = CGSizeMake(imageSize.width + Gutter, imageSize.height + Gutter);
+    CGSize contentSize = CGSizeMake(imageSize.width + 2 * Gutter, imageSize.height + 2 * Gutter);
     [panelView setFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)];
     [panelView setCenter:panelScrollView.center];
     
@@ -104,36 +105,11 @@
     [panelImageView setCenter:CGPointMake(contentSize.width / 2, contentSize.height / 2)];
     [panelView addSubview:panelImageView];
 
+    [self setupNavigationControl];
     [self setupSpeechBalloons];
     [self setupScalesWithContentSize:panelScrollView.contentSize];
 
     [panelScrollView setZoomScale:screenScale * ScaleFactor];
-}
-
-- (void)setupSpeechBalloons
-{
-    speechBalloons = [NSMutableArray array];
-    for (NSValue *ballon in panel.balloons) {
-        CGRect ballonRect = [ballon CGRectValue];
-    
-        UITextView *ballonTextView = [[UITextView alloc] init];
-        [panelImageView addSubview:ballonTextView];
-        
-        [ballonTextView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [ballonTextView constrainToSize:ballonRect.size];
-        
-        [ballonTextView pinEdges:JRTViewPinLeftEdge toSameEdgesOfView:panelImageView inset:ballonRect.origin.x];
-        [ballonTextView pinEdges:JRTViewPinTopEdge toSameEdgesOfView:panelImageView inset:ballonRect.origin.y];
-        
-        [ballonTextView setTextAlignment:NSTextAlignmentCenter];
-        [ballonTextView setFont:[Fonts laffayetteComicPro14]];
-        [ballonTextView setTextColor:[Colors gray5]];
-        [ballonTextView setTintColor:[Colors gray5]];
-        [ballonTextView setBackgroundColor:[Colors clear]];
-
-        [ballonTextView setDelegate:self];
-        [speechBalloons addObject:ballonTextView];
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -170,18 +146,18 @@
     CGPoint location = [gestureRecognizer locationInView:panelImageView];
     __block BOOL found = NO;
     
-    [panel.balloons enumerateObjectsUsingBlock:^(NSValue *ballonValue, NSUInteger idx, BOOL *stop) {
+    [panel.balloons enumerateObjectsUsingBlock:^(NSValue *balloonValue, NSUInteger idx, BOOL *stop) {
         
-        if (CGRectContainsPoint([ballonValue CGRectValue], location)) {
+        if (CGRectContainsPoint([balloonValue CGRectValue], location)) {
             
             focus = idx;
             
             if ([[speechBalloons objectAtIndex:idx] isFirstResponder]) {
                 *stop = YES;
             } else {
-                //add overlay focus here
-                [[speechBalloons objectAtIndex:idx] setBackgroundColor:[Colors gray2]];
+                [focusOverlays[focus] setAlpha:AlphaFocusForeground];
                 [[speechBalloons objectAtIndex:idx] becomeFirstResponder];
+                [navigationControl setAlpha:0.0];
                 found = YES;
             }
         }
@@ -190,12 +166,11 @@
     if (!found) {
         
         if (focus != -1) {
-            //remove overlay focus here
-            [[speechBalloons objectAtIndex:focus] setBackgroundColor:[Colors clear]];
+            [focusOverlays[focus] setAlpha:AlphaFocusBackground];
             [[speechBalloons objectAtIndex:focus] resignFirstResponder];
             focus = -1;
         } else {
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self toggleNavigationControl];
         }
     }
 }
@@ -228,51 +203,6 @@
     [self resizeScrollView];
 }
 
-- (void)resizeScrollView
-{
-    [UIView animateWithDuration:KeyboardMoveDuration animations:^{
-        
-        [self centerScrollViewContents];
-        CGSize size = CGSizeMake(panelImageView.frame.size.width + Gutter,
-                                 panelImageView.frame.size.height + Gutter);
-        [self setupScalesWithContentSize:size];
-        
-        if (keyboardBounds.size.height) {
-            
-            if ([panelScrollView zoomScale] < screenScale) {
-                [panelScrollView setZoomScale:screenScale];
-            } else {
-                [panelScrollView setZoomScale:panelScrollView.zoomScale];
-            }
-        
-        }
-    } completion:^(BOOL finished) {
-        if (keyboardBounds.size.height) {
-            [UIView animateWithDuration:ScrollToBottomDuration animations:^{
-                [self focusOnBalloon];
-            }];
-        }
-    }];
-}
-
-- (void)focusOnBalloon
-{
-    CGRect balloon = [[speechBalloons objectAtIndex:focus] frame];
-    CGRect balloonInView = [self.view convertRect:balloon fromView:panelImageView];
-    
-    CGFloat y = balloonInView.origin.y + balloonInView.size.height;
-    
-    if (y > (panelScrollView.frame.size.height)) {
-        
-        CGFloat offsetY = y - panelScrollView.frame.size.height;
-        offsetY = offsetY + 50;
-        offsetY = MIN(offsetY, panelScrollView.contentSize.height - panelScrollView.frame.size.height);
-        
-        CGPoint bottomOffset = CGPointMake(panelScrollView.contentOffset.x,
-                                           panelScrollView.contentOffset.y + offsetY);
-        [panelScrollView setContentOffset:bottomOffset animated:NO];
-    }
-}
 
 #pragma mark - Rotation
 
@@ -282,8 +212,8 @@
 
         [self centerScrollViewContents];
         
-        [panelScrollView setContentSize:CGSizeMake(panelImageView.frame.size.width + Gutter,
-                                                   panelImageView.frame.size.height + Gutter)];
+        [panelScrollView setContentSize:CGSizeMake(panelImageView.frame.size.width + 2 * Gutter,
+                                                   panelImageView.frame.size.height + 2 * Gutter)];
         
         [self setupScalesWithContentSize:panelScrollView.contentSize];
         
@@ -342,6 +272,140 @@
 
 #pragma mark - Private methods
 
+- (void)setupNavigationControl
+{
+    navigationControl = [UIView new];
+    [navigationControl setAlpha:0.0];
+    [self.view addSubview:navigationControl];
+    
+    [navigationControl setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [navigationControl pinEdges:JRTViewPinLeftEdge | JRTViewPinBottomEdge | JRTViewPinRightEdge
+              toSameEdgesOfView:self.view];
+    
+    [navigationControl constrainToHeight:NavigationControlHeight];
+    [navigationControl setBackgroundColor:[Colors black]];
+     CGSize buttonSize = CGSizeMake(NavigationControlHeight, NavigationControlHeight);
+    
+    UIButton *cancel = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cancel setImage:[UIImage imageNamed:@"close.png"] forState:UIControlStateNormal];
+    [cancel addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [navigationControl addSubview:cancel];
+    
+    [cancel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [cancel constrainToSize:buttonSize];
+    [cancel pinEdges:JRTViewPinLeftEdge | JRTViewPinBottomEdge toSameEdgesOfView:navigationControl];
+    
+    UIButton *send = [UIButton buttonWithType:UIButtonTypeCustom];
+    [send setImage:[UIImage imageNamed:@"send.png"] forState:UIControlStateNormal];
+    [send addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
+    [navigationControl addSubview:send];
+    
+    [send setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [send constrainToSize:buttonSize];
+    [send pinEdges:JRTViewPinRightEdge | JRTViewPinBottomEdge toSameEdgesOfView:navigationControl];
+}
+                                           
+- (void)back
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)toggleNavigationControl
+{
+    [UIView animateWithDuration:NavigationControlDuration animations:^{
+        if (navigationControl.alpha) {
+            [navigationControl setAlpha:0.0];
+            for (UIView *focusOverlay in focusOverlays) {
+                [focusOverlay setAlpha:AlphaFocusBackground];
+            }
+        } else {
+            [navigationControl setAlpha:NavigationControlAlpha];
+            for (UIView *focusOverlay in focusOverlays) {
+                [focusOverlay setAlpha:0.0];
+            }
+        }
+    }];
+}
+
+- (void)setupSpeechBalloons
+{
+    speechBalloons = [NSMutableArray array];
+    focusOverlays = [NSMutableArray array];
+    
+    for (NSValue *balloon in panel.balloons) {
+        CGRect balloonRect = [balloon CGRectValue];
+        
+        UITextView *ballonTextView = [[UITextView alloc] init];
+        [panelImageView addSubview:ballonTextView];
+        
+        [ballonTextView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [ballonTextView constrainToSize:balloonRect.size];
+        
+        [ballonTextView pinEdges:JRTViewPinLeftEdge toSameEdgesOfView:panelImageView inset:balloonRect.origin.x];
+        [ballonTextView pinEdges:JRTViewPinTopEdge toSameEdgesOfView:panelImageView inset:balloonRect.origin.y];
+        
+        [ballonTextView setTextAlignment:NSTextAlignmentCenter];
+        [ballonTextView setFont:[Fonts laffayetteComicPro14]];
+        [ballonTextView setTextColor:[Colors gray5]];
+        [ballonTextView setTintColor:[Colors gray5]];
+        [ballonTextView setBackgroundColor:[Colors clear]];
+        
+        [ballonTextView setDelegate:self];
+        [speechBalloons addObject:ballonTextView];
+        
+        FocusOverlayView *fov = [[FocusOverlayView alloc] init];
+        [fov setFrame:balloonRect];
+        [panelImageView addSubview:fov];
+        [focusOverlays addObject:fov];
+    }
+}
+
+- (void)resizeScrollView
+{
+    [UIView animateWithDuration:KeyboardMoveDuration animations:^{
+        
+        [self centerScrollViewContents];
+        CGSize size = CGSizeMake(panelImageView.frame.size.width + 2 * Gutter,
+                                 panelImageView.frame.size.height + 2 * Gutter);
+        [self setupScalesWithContentSize:size];
+        
+        if (keyboardBounds.size.height) {
+            
+            if ([panelScrollView zoomScale] < screenScale) {
+                [panelScrollView setZoomScale:screenScale];
+            } else {
+                [panelScrollView setZoomScale:panelScrollView.zoomScale];
+            }
+            
+        }
+    } completion:^(BOOL finished) {
+        if (keyboardBounds.size.height) {
+            [UIView animateWithDuration:ScrollToBottomDuration animations:^{
+                [self focusOnBalloon];
+            }];
+        }
+    }];
+}
+
+- (void)focusOnBalloon
+{
+    CGRect balloon = [[speechBalloons objectAtIndex:focus] frame];
+    CGRect balloonInView = [self.view convertRect:balloon fromView:panelImageView];
+    
+    CGFloat y = balloonInView.origin.y + balloonInView.size.height;
+    
+    if (y > (panelScrollView.frame.size.height)) {
+        
+        CGFloat offsetY = y - panelScrollView.frame.size.height;
+        offsetY = offsetY + FocusMoveMargin;
+        offsetY = MIN(offsetY, panelScrollView.contentSize.height - panelScrollView.frame.size.height);
+        
+        CGPoint bottomOffset = CGPointMake(panelScrollView.contentOffset.x,
+                                           panelScrollView.contentOffset.y + offsetY);
+        [panelScrollView setContentOffset:bottomOffset animated:NO];
+    }
+}
+
 -(void)setupScalesWithContentSize:(CGSize)contentSize
 {
     // Set up the minimum & maximum zoom scales
@@ -372,8 +436,8 @@
 
 - (void)sendMessage
 {
-    CGSize imageSize = CGSizeMake(panelImageView.image.size.width / [[UIScreen mainScreen] scale],
-                                  panelImageView.image.size.height / [[UIScreen mainScreen] scale]);
+    CGSize imageSize = CGSizeMake(panelImageView.image.size.width / [[UIScreen mainScreen] scale] + 2 * Gutter,
+                                  panelImageView.image.size.height / [[UIScreen mainScreen] scale] + 2 * Gutter);
     
     CGFloat ratio;
     CGSize newSize;
@@ -404,7 +468,7 @@
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextTranslateCTM(ctx, (newSize.width - imageSize.width) / 2, (newSize.height - imageSize.height) / 2);
     
-    [panelImageView drawViewHierarchyInRect:panelImageView.bounds afterScreenUpdates:YES];
+    [panelImageView drawViewHierarchyInRect:panelImageView.frame afterScreenUpdates:YES];
     
     UIImage *editedPanel = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
