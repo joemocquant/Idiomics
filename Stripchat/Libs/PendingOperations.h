@@ -16,8 +16,11 @@
                                          FullSizePanelDownloaderDelegate>
 {
     NSMutableDictionary *resizedPanelDownloadsInProgress;
+    NSMutableArray *resizedPanelDownloadsFinished;
     NSOperationQueue *resizedPanelDownloadsQueue;
+    
     NSMutableDictionary *fullSizePanelDownloadsInProgress;
+    NSMutableArray *fullSizePanelDownloadsFinished;
     NSOperationQueue *fullSizePanelDownloadsQueue;
 }
 

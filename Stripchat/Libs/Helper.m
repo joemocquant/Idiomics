@@ -7,6 +7,7 @@
 //
 
 #import "Helper.h"
+#import <Mantle.h>
 
 @implementation Helper
 
@@ -40,19 +41,19 @@
                       otherButtonTitles:nil] show];
 }
 
-+ (NSString *)getImageWithUrl:(NSString *)url witdh:(NSUInteger)width height:(NSUInteger)height
++ (NSString *)getImageWithUrl:(NSString *)url witdh:(CGFloat)width height:(CGFloat)height
 {
-    NSUInteger scaleFactor = 1;
+    CGFloat scaleFactor = 1;
     
     if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
         scaleFactor = [[UIScreen mainScreen] scale];
     }
     
     NSString *imageProxyServerUrl = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"ImageProxy-Server-URL"];
-    NSString *result = [NSString stringWithFormat:@"%@/resize/%ux%u/%@",
+    NSString *result = [NSString stringWithFormat:@"%@/resize/%lux%lu/%@",
                         imageProxyServerUrl,
-                        width * scaleFactor,
-                        height * scaleFactor,
+                        (unsigned long)(width * scaleFactor),
+                        (unsigned long)(height * scaleFactor),
                         url];
     
     return result;

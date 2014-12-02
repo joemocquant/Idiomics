@@ -17,6 +17,7 @@
     UIView *panelView;
     UIImageView *panelImageView;
     NSMutableArray *speechBalloons;
+    NSMutableArray *speechBalloonsLabel;
     UIView *navigationControl;
     
     CGFloat minScale;

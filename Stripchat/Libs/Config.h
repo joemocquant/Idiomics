@@ -41,7 +41,6 @@ extern const CGFloat KeyboardMoveDuration;
 extern const CGFloat ScrollToBottomDuration;
 extern const CGFloat FocusMoveMargin;
 extern const CGFloat NavigationControlHeight;
-extern const CGFloat NavigationControlAlpha;
 extern const CGFloat NavigationControlDuration;
 
 //FocusOverlay

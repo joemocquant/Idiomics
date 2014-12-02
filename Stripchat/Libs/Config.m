@@ -31,8 +31,7 @@ const CGFloat ScaleFactor = 0.85;
 const CGFloat KeyboardMoveDuration = 0.4;
 const CGFloat ScrollToBottomDuration = 0.2;
 const CGFloat FocusMoveMargin = 50.0;
-const CGFloat NavigationControlHeight = 50.0;
-const CGFloat NavigationControlAlpha = 0.5;
+const CGFloat NavigationControlHeight = 60.0;
 const CGFloat NavigationControlDuration = 0.2;
 
 //FocusOverlay

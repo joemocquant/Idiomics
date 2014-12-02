@@ -10,6 +10,7 @@
 #import "Colors.h"
 #import "Fonts.h"
 #import "Panel.h"
+#import "Balloon.h"
 #import "PanelImageStore.h"
 #import "MMSViewController.h"
 #import "FocusOverlayView.h"
@@ -104,7 +105,7 @@
     [panelImageView setFrame:CGRectMake(0, 0, imageSize.width, imageSize.height)];
     [panelImageView setCenter:CGPointMake(contentSize.width / 2, contentSize.height / 2)];
     [panelView addSubview:panelImageView];
-
+    
     [self setupNavigationControl];
     [self setupSpeechBalloons];
     [self setupScalesWithContentSize:panelScrollView.contentSize];
@@ -119,7 +120,7 @@
 }
 
 
-#pragma mark - UITextViewDelefate
+#pragma mark - UITextViewDelegate
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
 {
@@ -138,6 +139,12 @@
     return YES;
 }
 
+- (void)textViewDidChange:(UITextView *)textView
+{
+    UILabel *currentLabel = [speechBalloonsLabel objectAtIndex:focus];
+    [currentLabel setText:textView.text];
+}
+
 
 #pragma mark - Gestures
 
@@ -146,9 +153,9 @@
     CGPoint location = [gestureRecognizer locationInView:panelImageView];
     __block BOOL found = NO;
     
-    [panel.balloons enumerateObjectsUsingBlock:^(NSValue *balloonValue, NSUInteger idx, BOOL *stop) {
+    [panel.balloons enumerateObjectsUsingBlock:^(Balloon *balloon, NSUInteger idx, BOOL *stop) {
         
-        if (CGRectContainsPoint([balloonValue CGRectValue], location)) {
+        if (CGRectContainsPoint([balloon rect], location)) {
             
             focus = idx;
             
@@ -283,7 +290,6 @@
               toSameEdgesOfView:self.view];
     
     [navigationControl constrainToHeight:NavigationControlHeight];
-    [navigationControl setBackgroundColor:[Colors black]];
      CGSize buttonSize = CGSizeMake(NavigationControlHeight, NavigationControlHeight);
     
     UIButton *cancel = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -319,7 +325,7 @@
                 [focusOverlay setAlpha:AlphaFocusBackground];
             }
         } else {
-            [navigationControl setAlpha:NavigationControlAlpha];
+            [navigationControl setAlpha:1.0];
             for (UIView *focusOverlay in focusOverlays) {
                 [focusOverlay setAlpha:0.0];
             }
@@ -330,33 +336,56 @@
 - (void)setupSpeechBalloons
 {
     speechBalloons = [NSMutableArray array];
+    speechBalloonsLabel = [NSMutableArray array];
     focusOverlays = [NSMutableArray array];
     
-    for (NSValue *balloon in panel.balloons) {
-        CGRect balloonRect = [balloon CGRectValue];
+    for (Balloon *balloon in panel.balloons) {
+        CGRect balloonRect = [balloon rect];
         
-        UITextView *ballonTextView = [[UITextView alloc] init];
-        [panelImageView addSubview:ballonTextView];
+        UITextView *balloonTextView = [UITextView new];
+        //UITextView
+        [panelImageView addSubview:balloonTextView];
         
-        [ballonTextView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [ballonTextView constrainToSize:balloonRect.size];
+        //[balloonTextView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        //[balloonTextView constrainToSize:balloonRect.size];
         
-        [ballonTextView pinEdges:JRTViewPinLeftEdge toSameEdgesOfView:panelImageView inset:balloonRect.origin.x];
-        [ballonTextView pinEdges:JRTViewPinTopEdge toSameEdgesOfView:panelImageView inset:balloonRect.origin.y];
+        //[balloonTextView pinEdges:JRTViewPinLeftEdge toSameEdgesOfView:panelImageView inset:balloonRect.origin.x];
+        //[balloonTextView pinEdges:JRTViewPinTopEdge toSameEdgesOfView:panelImageView inset:balloonRect.origin.y];
         
-        [ballonTextView setTextAlignment:NSTextAlignmentCenter];
-        [ballonTextView setFont:[Fonts laffayetteComicPro14]];
-        [ballonTextView setTextColor:[Colors gray5]];
-        [ballonTextView setTintColor:[Colors gray5]];
-        [ballonTextView setBackgroundColor:[Colors clear]];
+        [balloonTextView setTextAlignment:NSTextAlignmentCenter];
+        [balloonTextView setFont:[Fonts laffayetteComicPro30]];
+        [balloonTextView setTextColor:[Colors gray5]];
+        [balloonTextView setTintColor:[Colors gray5]];
+        [balloonTextView setBackgroundColor:[Colors clear]];
         
-        [ballonTextView setDelegate:self];
-        [speechBalloons addObject:ballonTextView];
+        [balloonTextView setDelegate:self];
+        
+        //UILabel
+        UILabel *balloonLabel = [UILabel new];
+        [balloonLabel setAdjustsFontSizeToFitWidth:YES];
+        //
+        
+        [speechBalloons addObject:balloonTextView];
         
         FocusOverlayView *fov = [[FocusOverlayView alloc] init];
         [fov setFrame:balloonRect];
         [panelImageView addSubview:fov];
         [focusOverlays addObject:fov];
+        
+        //UILabel
+        [balloonLabel setAdjustsFontSizeToFitWidth:YES];
+        [balloonLabel setNumberOfLines:0];
+        [balloonLabel setFrame:balloonRect];
+        [panelImageView addSubview:balloonLabel];
+        [speechBalloonsLabel addObject:balloonLabel];
+        [balloonLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [balloonLabel constrainToSize:balloonRect.size];
+        
+        [balloonLabel pinEdges:JRTViewPinLeftEdge toSameEdgesOfView:panelImageView inset:balloonRect.origin.x];
+        [balloonLabel pinEdges:JRTViewPinTopEdge toSameEdgesOfView:panelImageView inset:balloonRect.origin.y];
+        [balloonLabel setTextAlignment:NSTextAlignmentCenter];
+        [balloonLabel setFont:[Fonts laffayetteComicPro30]];
+        [balloonLabel setTextColor:[Colors gray5]];
     }
 }
 

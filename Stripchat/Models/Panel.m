@@ -7,6 +7,7 @@
 //
 
 #import "Panel.h"
+#import "Balloon.h"
 #import "PanelImageStore.h"
 #import <ReactiveCocoa.h>
 
@@ -51,34 +52,7 @@
 
 + (NSValueTransformer *)balloonsJSONTransformer
 {
-    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSArray *balloons) {
-        
-        NSArray *result = [[[balloons rac_sequence] map:^id(NSArray *balloon) {
-            
-            return [NSValue valueWithCGRect:CGRectMake(roundf([balloon[0] floatValue] / [[UIScreen mainScreen] scale]),
-                                                       roundf([balloon[1] floatValue] / [[UIScreen mainScreen] scale]),
-                                                       roundf([balloon[2] floatValue] / [[UIScreen mainScreen] scale]),
-                                                       roundf([balloon[3] floatValue] / [[UIScreen mainScreen] scale]))];
-            
-        }] array];
-        
-        return result;
-        
-    } reverseBlock:^id(NSArray *balloons) {
-        
-        NSArray *result = [[[balloons rac_sequence] map:^id(NSValue *balloon) {
-            
-            CGRect res = [balloon CGRectValue];
-            return @[@(res.origin.x * [[UIScreen mainScreen] scale]),
-                     @(res.origin.y * [[UIScreen mainScreen] scale]),
-                     @(res.size.width * [[UIScreen mainScreen] scale]),
-                     @(res.size.height * [[UIScreen mainScreen] scale])];
-            
-        }] array];
-        
-        return result;
-
-    }];
+    return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:Balloon.class];
 }
 
 + (NSValueTransformer *)averageColorJSONTransformer
@@ -94,7 +68,10 @@
         [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&junk];
         [scanner scanUpToCharactersFromSet:[NSCharacterSet punctuationCharacterSet] intoString:&blue];
         
-        UIColor *averageColor = [UIColor colorWithRed:red.intValue/255.0 green:green.intValue/255.0 blue:blue.intValue/255.0 alpha:1.0];
+        UIColor *averageColor = [UIColor colorWithRed:red.intValue/255.0
+                                                green:green.intValue/255.0
+                                                 blue:blue.intValue/255.0
+                                                alpha:1.0];
         return averageColor;
         
     } reverseBlock:^id(UIColor *averageColor) {
