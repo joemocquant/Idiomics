@@ -69,20 +69,22 @@
     UIImage *cached = [[PanelImageStore sharedStore] panelThumbImageForKey:self.mosaicData.imageId];
     self.imageView.image = cached;
     
+    float millisecondsDelay;
+    
     if (self.mosaicData.firstTimeShown) {
-        //self.mosaicData.firstTimeShown = NO;
-        
-        self.imageView.alpha = 0;
-        
-        //  Random delay to avoid all animations happen at once
-        float millisecondsDelay = (arc4random() % 700) / 2000.0f;
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, millisecondsDelay * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [UIView animateWithDuration:AlphaTransitionDuration animations:^{
-                self.imageView.alpha = 1.0;
-            }];
-        });
+        self.mosaicData.firstTimeShown = NO;
+        millisecondsDelay = (arc4random() % 700) / 2000.0f;
+    } else {
+        millisecondsDelay = (arc4random() % 700) / 4000.0f;
     }
+    
+    self.imageView.alpha = 0;
+        
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, millisecondsDelay * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:AlphaTransitionDuration animations:^{
+            self.imageView.alpha = 1.0;
+        }];
+    });
 }
 
 @end

@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Stripchat. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 @class Panel;
 
 @interface PanelStore : NSObject

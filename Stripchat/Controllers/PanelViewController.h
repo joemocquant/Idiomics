@@ -7,18 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MessageBar.h"
 
 @class Panel;
 
-@interface PanelViewController : UIViewController <UIScrollViewDelegate, MessageBarDelegate>
+@interface PanelViewController : UIViewController <UIScrollViewDelegate, UITextViewDelegate>
 {
     Panel *panel;
     UIScrollView *panelScrollView;
+    UIView *panelView;
     UIImageView *panelImageView;
     NSMutableArray *speechBalloons;
+    NSMutableArray *speechBalloonsLabel;
+    UIView *navigationControl;
+    
     CGFloat minScale;
     CGFloat screenScale;
+    NSUInteger focus;
+    NSMutableArray *focusOverlays;
+    CGRect keyboardBounds;
 }
 
 - (instancetype)initWithPanel:(Panel *)p;

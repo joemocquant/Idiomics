@@ -22,10 +22,12 @@
     if (self) {
         
         resizedPanelDownloadsInProgress = [NSMutableDictionary dictionary];
+        resizedPanelDownloadsFinished = [NSMutableArray array];
         resizedPanelDownloadsQueue = [NSOperationQueue new];
         resizedPanelDownloadsQueue.name = @"Resized Panel Downloads Queue";
         
         fullSizePanelDownloadsInProgress = [NSMutableDictionary dictionary];
+        fullSizePanelDownloadsFinished = [NSMutableArray array];
         fullSizePanelDownloadsQueue = [NSOperationQueue new];
         fullSizePanelDownloadsQueue.name = @"Fullsize Panel Downloads Queue";
     }
@@ -38,7 +40,10 @@
 
 - (void)startResizeOperationForPanel:(Panel *)panel atIndexPath:(NSIndexPath *)indexPath
 {
-    if (![resizedPanelDownloadsInProgress.allKeys containsObject:indexPath]) {
+    if ((![resizedPanelDownloadsInProgress.allKeys containsObject:indexPath])
+        && (![resizedPanelDownloadsFinished containsObject:indexPath]))
+    
+    {
         
         ResizedPanelDownloader *rpd = [[ResizedPanelDownloader alloc] initWithPanel:panel
                                                                         atIndexPath:indexPath
@@ -51,7 +56,8 @@
 
 - (void)startFullSizeOperationsForPanel:(Panel *)panel atIndexPath:(NSIndexPath *)indexPath
 {
-    if (![fullSizePanelDownloadsInProgress.allKeys containsObject:indexPath]) {
+    if ((![fullSizePanelDownloadsInProgress.allKeys containsObject:indexPath])
+        && (![fullSizePanelDownloadsFinished containsObject:indexPath])) {
         
         FullSizePanelDownloader *fspd = [[FullSizePanelDownloader alloc] initWithPanel:panel
                                                                            atIndexPath:indexPath
@@ -145,7 +151,8 @@
 - (void)resizedPanelDownloaderDidFinish:(ResizedPanelDownloader *)downloader
 {
     [self.delegate reloadItemsAtIndexPaths:[NSArray arrayWithObject:downloader.indexPath]];
-    //[self.pendingOperations.resizedPanelDownloadsInProgress removeObjectForKey:downloader.indexPath];
+    [resizedPanelDownloadsInProgress removeObjectForKey:downloader.indexPath];
+    [resizedPanelDownloadsFinished addObject:downloader.indexPath];
     
 #ifdef __DEBUG__
     NSLog(@"Finished resizing task %ld", (long)downloader.indexPath.item);
@@ -157,7 +164,8 @@
 
 - (void)fullSizePanelDownloaderDidFinish:(FullSizePanelDownloader *)downloader
 {
-    //[self.pendingOperations.fullSizePanelDownloadsInProgress removeObjectForKey:downloader.indexPath];
+    [fullSizePanelDownloadsInProgress removeObjectForKey:downloader.indexPath];
+    [fullSizePanelDownloadsFinished addObject:downloader.indexPath];
     
 #ifdef __DEBUG__
     NSLog(@"Finished fullSize task %ld", (long)downloader.indexPath.item);

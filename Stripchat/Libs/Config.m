@@ -26,10 +26,15 @@ const CGFloat AlphaBackground = 0.85;
 const CGFloat MaxZoomScaleFactor = 4.0;
 const NSTimeInterval ZoomDuration = 0.2;
 const CGFloat ZoomScaleFactor = 3.0;
+const CGFloat Gutter = 7.0;
+const CGFloat ScaleFactor = 0.85;
+const CGFloat KeyboardMoveDuration = 0.4;
+const CGFloat ScrollToBottomDuration = 0.2;
+const CGFloat FocusMoveMargin = 50.0;
+const CGFloat NavigationControlHeight = 60.0;
+const CGFloat NavigationControlDuration = 0.2;
 
-//MessageBar
-const float MessageBarHeight = 60.0;
-const float NextButtonWidth = 80.0;
-const float MessageTextInset = 5.0;
-const float VerticalDashWidth = 1.0;
-const float HorizontalDashHeight = 2.0;
+//FocusOverlay
+const CGFloat FocusInset = -10.0;
+const CGFloat AlphaFocusForeground = 1.0;
+const CGFloat AlphaFocusBackground = 0.4;
