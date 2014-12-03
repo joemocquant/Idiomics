@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		010EBE0E1A0C07FB0051EEBE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE0D1A0C07FB0051EEBE /* main.m */; };
 		010EBE111A0C07FB0051EEBE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE101A0C07FB0051EEBE /* AppDelegate.m */; };
-		010EBE191A0C07FB0051EEBE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 010EBE181A0C07FB0051EEBE /* Images.xcassets */; };
 		010EBE281A0C07FB0051EEBE /* StripchatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE271A0C07FB0051EEBE /* StripchatTests.m */; };
 		010EBE381A0C0D530051EEBE /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE371A0C0D530051EEBE /* BrowserViewController.m */; };
 		010EBE3D1A0C0DDE0051EEBE /* PanelImageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE3C1A0C0DDE0051EEBE /* PanelImageStore.m */; };
@@ -33,6 +32,7 @@
 		013EDEA31A130DFC009F16BD /* MMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDEA21A130DFC009F16BD /* MMSViewController.m */; };
 		013EDEA51A13126D009F16BD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013EDEA41A13126D009F16BD /* MessageUI.framework */; };
 		013EDEA81A1541FF009F16BD /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDEA61A1541FF009F16BD /* Config.m */; };
+		019ED9AD1A30E21F004713F9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 019ED9AC1A30E21F004713F9 /* Images.xcassets */; };
 		01D7BDD61A17E3E500C30CE2 /* Panel.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE401A0C0E910051EEBE /* Panel.m */; };
 		01D7BDD71A17E3E500C30CE2 /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE441A0C31C90051EEBE /* APIClient.m */; };
 		01D7BDD81A17E3E500C30CE2 /* MosaicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEA71A0E98270051EEBE /* MosaicCell.m */; };
@@ -52,7 +52,6 @@
 		01D7BDE71A17E3E500C30CE2 /* PanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013EDE9C1A1297D3009F16BD /* PanelViewController.m */; };
 		01D7BDE91A17E3E500C30CE2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013EDEA41A13126D009F16BD /* MessageUI.framework */; };
 		01D7BDEA1A17E3E500C30CE2 /* libPods-Stripchat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A50F5B1916834E0A51F71EB /* libPods-Stripchat.a */; };
-		01D7BDEC1A17E3E500C30CE2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 010EBE181A0C07FB0051EEBE /* Images.xcassets */; };
 		01D7BDED1A17E3E500C30CE2 /* Stripchat.strings in Resources */ = {isa = PBXBuildFile; fileRef = 010EBE491A0C34930051EEBE /* Stripchat.strings */; };
 		01D7BDEE1A17E3E500C30CE2 /* Laffayette_Comic_Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0124B8541A1598720076251E /* Laffayette_Comic_Pro.ttf */; };
 		01DD89D91A2C0A23001BF7A0 /* FullSizePanelDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E10ADA1A268CFA00E164AC /* FullSizePanelDownloader.m */; };
@@ -75,7 +74,7 @@
 		01E1E51A1A2BC37C00A8289A /* focus_corner_topleft.png in Resources */ = {isa = PBXBuildFile; fileRef = 01E1E5131A2BC37B00A8289A /* focus_corner_topleft.png */; };
 		01E1E51B1A2BC37C00A8289A /* focus_corner_topright.png in Resources */ = {isa = PBXBuildFile; fileRef = 01E1E5141A2BC37B00A8289A /* focus_corner_topright.png */; };
 		01E1E51C1A2BC37C00A8289A /* focus_corner_topright.png in Resources */ = {isa = PBXBuildFile; fileRef = 01E1E5141A2BC37B00A8289A /* focus_corner_topright.png */; };
-		F71D691C3C6E3B98D3A23B9D /* libPods-Stripchat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A50F5B1916834E0A51F71EB /* libPods-Stripchat.a */; };
+		E4CDFE72B4EC90C5818FB1F6 /* libPods-Idiomics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B8F7AFF43E7B41561819C9F8 /* libPods-Idiomics.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,13 +88,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		010EBE081A0C07FB0051EEBE /* Stripchat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stripchat.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		010EBE0C1A0C07FB0051EEBE /* Stripchat-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Stripchat-Info.plist"; sourceTree = "<group>"; };
+		010EBE081A0C07FB0051EEBE /* idiomics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = idiomics.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		010EBE0C1A0C07FB0051EEBE /* Idiomics-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Idiomics-Info.plist"; sourceTree = "<group>"; };
 		010EBE0D1A0C07FB0051EEBE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		010EBE0F1A0C07FB0051EEBE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		010EBE101A0C07FB0051EEBE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		010EBE181A0C07FB0051EEBE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		010EBE211A0C07FB0051EEBE /* StripchatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StripchatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		010EBE211A0C07FB0051EEBE /* IdiomicsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IdiomicsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		010EBE261A0C07FB0051EEBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		010EBE271A0C07FB0051EEBE /* StripchatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StripchatTests.m; sourceTree = "<group>"; };
 		010EBE361A0C0D530051EEBE /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
@@ -136,9 +134,9 @@
 		013EDEA41A13126D009F16BD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		013EDEA61A1541FF009F16BD /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
 		013EDEA71A1541FF009F16BD /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
-		01D7BDF31A17E3E500C30CE2 /* Stripchat_Local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stripchat_Local.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		01D7BDF41A17E3E600C30CE2 /* Stripchat copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Stripchat copy-Info.plist"; path = "/Users/jocelyn/stripchat/Stripchat/Stripchat copy-Info.plist"; sourceTree = "<absolute>"; };
-		01D7BDF51A17E56500C30CE2 /* Stripchat_Local-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Stripchat_Local-Info.plist"; sourceTree = "<group>"; };
+		019ED9AC1A30E21F004713F9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Idiomics/Images.xcassets; sourceTree = "<group>"; };
+		01D7BDF31A17E3E500C30CE2 /* Idiomics_Local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Idiomics_Local.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		01D7BDF51A17E56500C30CE2 /* Idiomics_Local-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Idiomics_Local-Info.plist"; sourceTree = "<group>"; };
 		01DD89DA1A2CF4C0001BF7A0 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
 		01DD89DB1A2CF4C0001BF7A0 /* send@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send@2x.png"; sourceTree = "<group>"; };
 		01DD89E01A2CFA92001BF7A0 /* Balloon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Balloon.h; sourceTree = "<group>"; };
@@ -153,9 +151,10 @@
 		01E1E5121A2BC37B00A8289A /* focus_corner_bottomright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = focus_corner_bottomright.png; sourceTree = "<group>"; };
 		01E1E5131A2BC37B00A8289A /* focus_corner_topleft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = focus_corner_topleft.png; sourceTree = "<group>"; };
 		01E1E5141A2BC37B00A8289A /* focus_corner_topright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = focus_corner_topright.png; sourceTree = "<group>"; };
-		4DF84BD531092FC632B67E6A /* Pods-Stripchat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stripchat.release.xcconfig"; path = "Pods/Target Support Files/Pods-Stripchat/Pods-Stripchat.release.xcconfig"; sourceTree = "<group>"; };
+		12DEDBCAC3789A3B39E6AF5A /* Pods-Idiomics.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Idiomics.release.xcconfig"; path = "Pods/Target Support Files/Pods-Idiomics/Pods-Idiomics.release.xcconfig"; sourceTree = "<group>"; };
+		4E0220689D4F8C641C765D43 /* Pods-Idiomics.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Idiomics.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Idiomics/Pods-Idiomics.debug.xcconfig"; sourceTree = "<group>"; };
 		7A50F5B1916834E0A51F71EB /* libPods-Stripchat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Stripchat.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B9BDF3792F0F3144E7EEC4AE /* Pods-Stripchat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stripchat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Stripchat/Pods-Stripchat.debug.xcconfig"; sourceTree = "<group>"; };
+		B8F7AFF43E7B41561819C9F8 /* libPods-Idiomics.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Idiomics.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,7 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				013EDEA51A13126D009F16BD /* MessageUI.framework in Frameworks */,
-				F71D691C3C6E3B98D3A23B9D /* libPods-Stripchat.a in Frameworks */,
+				E4CDFE72B4EC90C5818FB1F6 /* libPods-Idiomics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,22 +189,22 @@
 		010EBDFF1A0C07FB0051EEBE = {
 			isa = PBXGroup;
 			children = (
+				019ED9AC1A30E21F004713F9 /* Images.xcassets */,
 				010EBE9C1A0E98270051EEBE /* MosaicLayout */,
 				010EBE0A1A0C07FB0051EEBE /* Stripchat */,
 				010EBE241A0C07FB0051EEBE /* StripchatTests */,
 				010EBE091A0C07FB0051EEBE /* Products */,
 				FD69EDC324BD24993A69A423 /* Pods */,
 				5A44181D8CDD5F553EB4E18C /* Frameworks */,
-				01D7BDF41A17E3E600C30CE2 /* Stripchat copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
 		010EBE091A0C07FB0051EEBE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				010EBE081A0C07FB0051EEBE /* Stripchat.app */,
-				010EBE211A0C07FB0051EEBE /* StripchatTests.xctest */,
-				01D7BDF31A17E3E500C30CE2 /* Stripchat_Local.app */,
+				010EBE081A0C07FB0051EEBE /* idiomics.app */,
+				010EBE211A0C07FB0051EEBE /* IdiomicsTests.xctest */,
+				01D7BDF31A17E3E500C30CE2 /* Idiomics_Local.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -220,7 +219,6 @@
 				010EBE351A0C0D530051EEBE /* Controllers */,
 				010EBE391A0C0D6E0051EEBE /* Models */,
 				01E1E50C1A2B9A5800A8289A /* Views */,
-				010EBE181A0C07FB0051EEBE /* Images.xcassets */,
 				010EBE0B1A0C07FB0051EEBE /* Supporting Files */,
 			);
 			path = Stripchat;
@@ -231,8 +229,8 @@
 			children = (
 				01E1E5041A2B995A00A8289A /* icons */,
 				0124B8541A1598720076251E /* Laffayette_Comic_Pro.ttf */,
-				010EBE0C1A0C07FB0051EEBE /* Stripchat-Info.plist */,
-				01D7BDF51A17E56500C30CE2 /* Stripchat_Local-Info.plist */,
+				010EBE0C1A0C07FB0051EEBE /* Idiomics-Info.plist */,
+				01D7BDF51A17E56500C30CE2 /* Idiomics_Local-Info.plist */,
 				010EBE0D1A0C07FB0051EEBE /* main.m */,
 				010EBE421A0C27F20051EEBE /* PrefixHeader.pch */,
 				010EBE491A0C34930051EEBE /* Stripchat.strings */,
@@ -383,6 +381,7 @@
 			children = (
 				013EDEA41A13126D009F16BD /* MessageUI.framework */,
 				7A50F5B1916834E0A51F71EB /* libPods-Stripchat.a */,
+				B8F7AFF43E7B41561819C9F8 /* libPods-Idiomics.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -390,8 +389,8 @@
 		FD69EDC324BD24993A69A423 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B9BDF3792F0F3144E7EEC4AE /* Pods-Stripchat.debug.xcconfig */,
-				4DF84BD531092FC632B67E6A /* Pods-Stripchat.release.xcconfig */,
+				4E0220689D4F8C641C765D43 /* Pods-Idiomics.debug.xcconfig */,
+				12DEDBCAC3789A3B39E6AF5A /* Pods-Idiomics.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -399,9 +398,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		010EBE071A0C07FB0051EEBE /* Stripchat */ = {
+		010EBE071A0C07FB0051EEBE /* Idiomics */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 010EBE2B1A0C07FB0051EEBE /* Build configuration list for PBXNativeTarget "Stripchat" */;
+			buildConfigurationList = 010EBE2B1A0C07FB0051EEBE /* Build configuration list for PBXNativeTarget "Idiomics" */;
 			buildPhases = (
 				E726A19BE2E6AF2986F985D8 /* Check Pods Manifest.lock */,
 				010EBE041A0C07FB0051EEBE /* Sources */,
@@ -413,14 +412,14 @@
 			);
 			dependencies = (
 			);
-			name = Stripchat;
+			name = Idiomics;
 			productName = Stripchat;
-			productReference = 010EBE081A0C07FB0051EEBE /* Stripchat.app */;
+			productReference = 010EBE081A0C07FB0051EEBE /* idiomics.app */;
 			productType = "com.apple.product-type.application";
 		};
-		010EBE201A0C07FB0051EEBE /* StripchatTests */ = {
+		010EBE201A0C07FB0051EEBE /* IdiomicsTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 010EBE2E1A0C07FB0051EEBE /* Build configuration list for PBXNativeTarget "StripchatTests" */;
+			buildConfigurationList = 010EBE2E1A0C07FB0051EEBE /* Build configuration list for PBXNativeTarget "IdiomicsTests" */;
 			buildPhases = (
 				010EBE1D1A0C07FB0051EEBE /* Sources */,
 				010EBE1E1A0C07FB0051EEBE /* Frameworks */,
@@ -431,14 +430,14 @@
 			dependencies = (
 				010EBE231A0C07FB0051EEBE /* PBXTargetDependency */,
 			);
-			name = StripchatTests;
+			name = IdiomicsTests;
 			productName = StripchatTests;
-			productReference = 010EBE211A0C07FB0051EEBE /* StripchatTests.xctest */;
+			productReference = 010EBE211A0C07FB0051EEBE /* IdiomicsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		01D7BDD31A17E3E500C30CE2 /* Stripchat_local */ = {
+		01D7BDD31A17E3E500C30CE2 /* Idiomics_local */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 01D7BDF01A17E3E500C30CE2 /* Build configuration list for PBXNativeTarget "Stripchat_local" */;
+			buildConfigurationList = 01D7BDF01A17E3E500C30CE2 /* Build configuration list for PBXNativeTarget "Idiomics_local" */;
 			buildPhases = (
 				01D7BDD41A17E3E500C30CE2 /* Check Pods Manifest.lock */,
 				01D7BDD51A17E3E500C30CE2 /* Sources */,
@@ -450,9 +449,9 @@
 			);
 			dependencies = (
 			);
-			name = Stripchat_local;
+			name = Idiomics_local;
 			productName = Stripchat;
-			productReference = 01D7BDF31A17E3E500C30CE2 /* Stripchat_Local.app */;
+			productReference = 01D7BDF31A17E3E500C30CE2 /* Idiomics_Local.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -466,6 +465,7 @@
 				TargetAttributes = {
 					010EBE071A0C07FB0051EEBE = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = 28G9YT943F;
 					};
 					010EBE201A0C07FB0051EEBE = {
 						CreatedOnToolsVersion = 6.1;
@@ -473,7 +473,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 010EBE031A0C07FB0051EEBE /* Build configuration list for PBXProject "Stripchat" */;
+			buildConfigurationList = 010EBE031A0C07FB0051EEBE /* Build configuration list for PBXProject "Idiomics" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -486,9 +486,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				010EBE071A0C07FB0051EEBE /* Stripchat */,
-				010EBE201A0C07FB0051EEBE /* StripchatTests */,
-				01D7BDD31A17E3E500C30CE2 /* Stripchat_local */,
+				010EBE071A0C07FB0051EEBE /* Idiomics */,
+				010EBE201A0C07FB0051EEBE /* IdiomicsTests */,
+				01D7BDD31A17E3E500C30CE2 /* Idiomics_local */,
 			);
 		};
 /* End PBXProject section */
@@ -498,7 +498,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				010EBE191A0C07FB0051EEBE /* Images.xcassets in Resources */,
+				019ED9AD1A30E21F004713F9 /* Images.xcassets in Resources */,
 				010EBE4A1A0C34930051EEBE /* Stripchat.strings in Resources */,
 				0124B8551A1598720076251E /* Laffayette_Comic_Pro.ttf in Resources */,
 				01DD89DE1A2CF4C0001BF7A0 /* send@2x.png in Resources */,
@@ -521,7 +521,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01D7BDEC1A17E3E500C30CE2 /* Images.xcassets in Resources */,
 				01D7BDED1A17E3E500C30CE2 /* Stripchat.strings in Resources */,
 				01D7BDEE1A17E3E500C30CE2 /* Laffayette_Comic_Pro.ttf in Resources */,
 				01DD89DF1A2CF4C0001BF7A0 /* send@2x.png in Resources */,
@@ -593,7 +592,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Stripchat/Pods-Stripchat-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Idiomics/Pods-Idiomics-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -672,7 +671,7 @@
 /* Begin PBXTargetDependency section */
 		010EBE231A0C07FB0051EEBE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 010EBE071A0C07FB0051EEBE /* Stripchat */;
+			target = 010EBE071A0C07FB0051EEBE /* Idiomics */;
 			targetProxy = 010EBE221A0C07FB0051EEBE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -756,26 +755,34 @@
 		};
 		010EBE2C1A0C07FB0051EEBE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B9BDF3792F0F3144E7EEC4AE /* Pods-Stripchat.debug.xcconfig */;
+			baseConfigurationReference = 4E0220689D4F8C641C765D43 /* Pods-Idiomics.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = Stripchat/PrefixHeader.pch;
-				INFOPLIST_FILE = "$(SRCROOT)/Stripchat/Stripchat-Info.plist";
+				INFOPLIST_FILE = "Stripchat/Idiomics-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = idiomics;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		010EBE2D1A0C07FB0051EEBE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4DF84BD531092FC632B67E6A /* Pods-Stripchat.release.xcconfig */;
+			baseConfigurationReference = 12DEDBCAC3789A3B39E6AF5A /* Pods-Idiomics.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = Stripchat/PrefixHeader.pch;
-				INFOPLIST_FILE = "$(SRCROOT)/Stripchat/Stripchat-Info.plist";
+				INFOPLIST_FILE = "Stripchat/Idiomics-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = idiomics;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -794,8 +801,8 @@
 				);
 				INFOPLIST_FILE = StripchatTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Stripchat.app/Stripchat";
+				PRODUCT_NAME = IdiomicsTests;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Idiomics.app/Idiomics";
 			};
 			name = Debug;
 		};
@@ -809,33 +816,31 @@
 				);
 				INFOPLIST_FILE = StripchatTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Stripchat.app/Stripchat";
+				PRODUCT_NAME = IdiomicsTests;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Idiomics.app/Idiomics";
 			};
 			name = Release;
 		};
 		01D7BDF11A17E3E500C30CE2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B9BDF3792F0F3144E7EEC4AE /* Pods-Stripchat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				GCC_PREFIX_HEADER = Stripchat/PrefixHeader.pch;
-				INFOPLIST_FILE = "$(SRCROOT)/Stripchat/Stripchat_Local-Info.plist";
+				INFOPLIST_FILE = "Stripchat/Idiomics_Local-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = Stripchat_Local;
+				PRODUCT_NAME = Idiomics_Local;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		01D7BDF21A17E3E500C30CE2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4DF84BD531092FC632B67E6A /* Pods-Stripchat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				GCC_PREFIX_HEADER = Stripchat/PrefixHeader.pch;
-				INFOPLIST_FILE = "$(SRCROOT)/Stripchat/Stripchat_Local-Info.plist";
+				INFOPLIST_FILE = "Stripchat/Idiomics_Local-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = Stripchat_Local;
+				PRODUCT_NAME = Idiomics_Local;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -843,7 +848,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		010EBE031A0C07FB0051EEBE /* Build configuration list for PBXProject "Stripchat" */ = {
+		010EBE031A0C07FB0051EEBE /* Build configuration list for PBXProject "Idiomics" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				010EBE291A0C07FB0051EEBE /* Debug */,
@@ -852,7 +857,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		010EBE2B1A0C07FB0051EEBE /* Build configuration list for PBXNativeTarget "Stripchat" */ = {
+		010EBE2B1A0C07FB0051EEBE /* Build configuration list for PBXNativeTarget "Idiomics" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				010EBE2C1A0C07FB0051EEBE /* Debug */,
@@ -861,7 +866,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		010EBE2E1A0C07FB0051EEBE /* Build configuration list for PBXNativeTarget "StripchatTests" */ = {
+		010EBE2E1A0C07FB0051EEBE /* Build configuration list for PBXNativeTarget "IdiomicsTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				010EBE2F1A0C07FB0051EEBE /* Debug */,
@@ -870,7 +875,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		01D7BDF01A17E3E500C30CE2 /* Build configuration list for PBXNativeTarget "Stripchat_local" */ = {
+		01D7BDF01A17E3E500C30CE2 /* Build configuration list for PBXNativeTarget "Idiomics_local" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				01D7BDF11A17E3E500C30CE2 /* Debug */,
