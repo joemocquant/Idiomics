@@ -8,7 +8,7 @@
 
 //Errors
 "CONNECTION_ERROR" = "Please check your connection and start again!";
-"STRIPCHAT_ERROR" = "Error: Connecting Stripchat";
+"STRIPCHAT_ERROR" = "Error: Connecting Idiomix";
 "MESSAGE_SENT_ERROR" = "Your message failed to be sent!";
 
 //Strings

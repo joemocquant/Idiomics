@@ -62,6 +62,8 @@
 		01DD89DF1A2CF4C0001BF7A0 /* send@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 01DD89DB1A2CF4C0001BF7A0 /* send@2x.png */; };
 		01DD89E21A2CFA92001BF7A0 /* Balloon.m in Sources */ = {isa = PBXBuildFile; fileRef = 01DD89E11A2CFA92001BF7A0 /* Balloon.m */; };
 		01DD89E31A2CFA92001BF7A0 /* Balloon.m in Sources */ = {isa = PBXBuildFile; fileRef = 01DD89E11A2CFA92001BF7A0 /* Balloon.m */; };
+		01DEFD141A2E0C7D00196C61 /* NavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01DEFD131A2E0C7D00196C61 /* NavigationView.m */; };
+		01DEFD151A2E0C7E00196C61 /* NavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01DEFD131A2E0C7D00196C61 /* NavigationView.m */; };
 		01E10ADB1A268CFA00E164AC /* FullSizePanelDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E10ADA1A268CFA00E164AC /* FullSizePanelDownloader.m */; };
 		01E1E50F1A2B9A5800A8289A /* FocusOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E1E50E1A2B9A5800A8289A /* FocusOverlayView.m */; };
 		01E1E5101A2B9A5800A8289A /* FocusOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E1E50E1A2B9A5800A8289A /* FocusOverlayView.m */; };
@@ -141,6 +143,8 @@
 		01DD89DB1A2CF4C0001BF7A0 /* send@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send@2x.png"; sourceTree = "<group>"; };
 		01DD89E01A2CFA92001BF7A0 /* Balloon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Balloon.h; sourceTree = "<group>"; };
 		01DD89E11A2CFA92001BF7A0 /* Balloon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Balloon.m; sourceTree = "<group>"; };
+		01DEFD121A2E0C7D00196C61 /* NavigationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationView.h; sourceTree = "<group>"; };
+		01DEFD131A2E0C7D00196C61 /* NavigationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationView.m; sourceTree = "<group>"; };
 		01E10AD91A268CFA00E164AC /* FullSizePanelDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullSizePanelDownloader.h; sourceTree = "<group>"; };
 		01E10ADA1A268CFA00E164AC /* FullSizePanelDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullSizePanelDownloader.m; sourceTree = "<group>"; };
 		01E1E50D1A2B9A5800A8289A /* FocusOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FocusOverlayView.h; sourceTree = "<group>"; };
@@ -368,6 +372,8 @@
 			children = (
 				01E1E50D1A2B9A5800A8289A /* FocusOverlayView.h */,
 				01E1E50E1A2B9A5800A8289A /* FocusOverlayView.m */,
+				01DEFD121A2E0C7D00196C61 /* NavigationView.h */,
+				01DEFD131A2E0C7D00196C61 /* NavigationView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -609,6 +615,7 @@
 				011C2AAB1A23A98F0083C5C7 /* ResizedPanelDownloader.m in Sources */,
 				013EDEA31A130DFC009F16BD /* MMSViewController.m in Sources */,
 				011C2AA91A23A98F0083C5C7 /* PendingOperations.m in Sources */,
+				01DEFD141A2E0C7D00196C61 /* NavigationView.m in Sources */,
 				01E1E50F1A2B9A5800A8289A /* FocusOverlayView.m in Sources */,
 				010EBE0E1A0C07FB0051EEBE /* main.m in Sources */,
 				013EDEA81A1541FF009F16BD /* Config.m in Sources */,
@@ -646,6 +653,7 @@
 				01DD89D91A2C0A23001BF7A0 /* FullSizePanelDownloader.m in Sources */,
 				011C2AAC1A23A98F0083C5C7 /* ResizedPanelDownloader.m in Sources */,
 				01D7BDDF1A17E3E500C30CE2 /* MMSViewController.m in Sources */,
+				01DEFD151A2E0C7E00196C61 /* NavigationView.m in Sources */,
 				011C2AAA1A23A98F0083C5C7 /* PendingOperations.m in Sources */,
 				01D7BDE01A17E3E500C30CE2 /* main.m in Sources */,
 				01D7BDE11A17E3E500C30CE2 /* Config.m in Sources */,

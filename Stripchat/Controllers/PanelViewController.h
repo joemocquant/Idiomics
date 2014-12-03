@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class Panel;
+@class NavigationView;
 
 @interface PanelViewController : UIViewController <UIScrollViewDelegate, UITextViewDelegate>
 {
@@ -18,7 +19,7 @@
     UIImageView *panelImageView;
     NSMutableArray *speechBalloons;
     NSMutableArray *speechBalloonsLabel;
-    UIView *navigationControl;
+    NavigationView *navigationView;
     
     CGFloat minScale;
     CGFloat screenScale;

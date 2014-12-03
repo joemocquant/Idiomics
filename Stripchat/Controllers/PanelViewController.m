@@ -12,6 +12,7 @@
 #import "Panel.h"
 #import "Balloon.h"
 #import "PanelImageStore.h"
+#import "NavigationView.h"
 #import "MMSViewController.h"
 #import "FocusOverlayView.h"
 #import <UIView+AutoLayout.h>
@@ -106,8 +107,8 @@
     [panelImageView setCenter:CGPointMake(contentSize.width / 2, contentSize.height / 2)];
     [panelView addSubview:panelImageView];
     
-    [self setupNavigationControl];
     [self setupSpeechBalloons];
+    [self setupNavigationControl];
     [self setupScalesWithContentSize:panelScrollView.contentSize];
 
     [panelScrollView setZoomScale:screenScale * ScaleFactor];
@@ -156,28 +157,55 @@
     [panel.balloons enumerateObjectsUsingBlock:^(Balloon *balloon, NSUInteger idx, BOOL *stop) {
         
         if (CGRectContainsPoint([balloon rect], location)) {
-            
+            //Balloon tapped
             focus = idx;
             
             if ([[speechBalloons objectAtIndex:idx] isFirstResponder]) {
+                //Current balloon with focus
                 *stop = YES;
+                
             } else {
+                //Other balloon
                 [focusOverlays[focus] setAlpha:AlphaFocusForeground];
                 [[speechBalloons objectAtIndex:idx] becomeFirstResponder];
-                [navigationControl setAlpha:0.0];
+
                 found = YES;
             }
         }
     }];
     
     if (!found) {
+        //Other part was tapped
         
         if (focus != -1) {
+            //during editing
+    
             [focusOverlays[focus] setAlpha:AlphaFocusBackground];
             [[speechBalloons objectAtIndex:focus] resignFirstResponder];
+            
             focus = -1;
+            
         } else {
-            [self toggleNavigationControl];
+            //during preview
+
+            if (CGRectContainsPoint(panelImageView.frame, location)) {
+                
+                if (navigationView.isEdited) {
+                if (!navigationView.alpha) {
+                    for (UIView *focusOverlay in focusOverlays) {
+                        [focusOverlay setAlpha:0.0];
+                    }
+                } else {
+                    for (UIView *focusOverlay in focusOverlays) {
+                        [focusOverlay setAlpha:AlphaFocusBackground];
+                    }
+                }
+                }
+                [navigationView toggleVisibility];
+                
+            } else {
+                [self back];
+            }
         }
     }
 }
@@ -192,7 +220,7 @@
             } else {
                 [panelScrollView setZoomScale:minScale];
             }
-        }];
+    }];
 }
 
 
@@ -206,6 +234,22 @@
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
+    navigationView.isEdited = NO;
+    [speechBalloonsLabel enumerateObjectsUsingBlock:^(UILabel *obj, NSUInteger idx, BOOL *stop) {
+        if (obj.text && ![obj.text isEqualToString:@""]) {
+            navigationView.isEdited = YES;
+            *stop = YES;
+        }
+    }];
+    
+    if (navigationView.isEdited) {
+        for (UIView *focusOverlay in focusOverlays) {
+            [focusOverlay setAlpha:0.0];
+        }
+    }
+    
+    [navigationView updateVisibility];
+    
     keyboardBounds = CGRectZero;
     [self resizeScrollView];
 }
@@ -279,53 +323,14 @@
 
 #pragma mark - Private methods
 
-- (void)setupNavigationControl
-{
-    navigationControl = [UIView new];
-    [navigationControl setAlpha:0.0];
-    [self.view addSubview:navigationControl];
-    
-    [navigationControl setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [navigationControl pinEdges:JRTViewPinLeftEdge | JRTViewPinBottomEdge | JRTViewPinRightEdge
-              toSameEdgesOfView:self.view];
-    
-    [navigationControl constrainToHeight:NavigationControlHeight];
-     CGSize buttonSize = CGSizeMake(NavigationControlHeight, NavigationControlHeight);
-    
-    UIButton *cancel = [UIButton buttonWithType:UIButtonTypeCustom];
-    [cancel setImage:[UIImage imageNamed:@"close.png"] forState:UIControlStateNormal];
-    [cancel addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    [navigationControl addSubview:cancel];
-    
-    [cancel setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [cancel constrainToSize:buttonSize];
-    [cancel pinEdges:JRTViewPinLeftEdge | JRTViewPinBottomEdge toSameEdgesOfView:navigationControl];
-    
-    UIButton *send = [UIButton buttonWithType:UIButtonTypeCustom];
-    [send setImage:[UIImage imageNamed:@"send.png"] forState:UIControlStateNormal];
-    [send addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
-    [navigationControl addSubview:send];
-    
-    [send setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [send constrainToSize:buttonSize];
-    [send pinEdges:JRTViewPinRightEdge | JRTViewPinBottomEdge toSameEdgesOfView:navigationControl];
-}
-                                           
-- (void)back
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)toggleNavigationControl
+- (void)toggleBalloonOverlays
 {
     [UIView animateWithDuration:NavigationControlDuration animations:^{
-        if (navigationControl.alpha) {
-            [navigationControl setAlpha:0.0];
+        if (navigationView.alpha) {
             for (UIView *focusOverlay in focusOverlays) {
                 [focusOverlay setAlpha:AlphaFocusBackground];
             }
         } else {
-            [navigationControl setAlpha:1.0];
             for (UIView *focusOverlay in focusOverlays) {
                 [focusOverlay setAlpha:0.0];
             }
@@ -461,6 +466,31 @@
     
     [panelScrollView setMinimumZoomScale:minScale];
     [panelScrollView setMaximumZoomScale:minScale * MaxZoomScaleFactor];
+}
+
+- (void)setupNavigationControl
+{
+    navigationView = [NavigationView new];
+    [self.view addSubview:navigationView];
+    
+    [[navigationView cancel] addTarget:self action:@selector(back)
+                             forControlEvents:UIControlEventTouchUpInside];
+    [[navigationView send] addTarget:self action:@selector(sendMessage)
+                           forControlEvents:UIControlEventTouchUpInside];
+    
+    [navigationView pinEdges:JRTViewPinLeftEdge | JRTViewPinBottomEdge | JRTViewPinRightEdge
+           toSameEdgesOfView:self.view];
+    
+    if (![speechBalloonsLabel count]) {
+        [navigationView setIsEdited:YES];
+    } else {
+        [navigationView toggleVisibility];
+    }
+}
+
+- (void)back
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)sendMessage
