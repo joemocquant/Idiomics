@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-@interface StripchatTests : XCTestCase
+@interface IdiomicsTests : XCTestCase
 
 @end
 
-@implementation StripchatTests
+@implementation IdiomicsTests
 
 - (void)setUp {
     [super setUp];
