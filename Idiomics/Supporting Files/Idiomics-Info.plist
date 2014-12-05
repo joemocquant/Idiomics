@@ -23,7 +23,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>3</string>
 	<key>ImageProxy-Server-URL</key>
 	<string>http://ec2-54-174-82-157.compute-1.amazonaws.com</string>
 	<key>LSRequiresIPhoneOS</key>
