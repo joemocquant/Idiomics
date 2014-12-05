@@ -1,6 +1,6 @@
 platform :ios, '8.1'
 
-target :Stripchat do
+target :Idiomics do
     
     pod 'AFNetworking'
     pod 'AFNetworkActivityLogger'

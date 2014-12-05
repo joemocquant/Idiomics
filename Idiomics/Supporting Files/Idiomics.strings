@@ -1,0 +1,17 @@
+/* 
+  Idiomics.strings
+  Idiomics
+
+  Created by Joe Mocquant on 11/6/14.
+  Copyright (c) 2014 Idiomics. All rights reserved.
+*/
+
+//Errors
+"CONNECTION_ERROR" = "Please check your connection and start again!";
+"IDIOMICS_ERROR" = "Error: Connecting Idiomics";
+"MESSAGE_SENT_ERROR" = "Your message failed to be sent!";
+
+//Strings
+"MESSAGEPLACEHOLDER" = "Type message here...";
+"NEXTBUTTONTITLE" = "Next";
+"MESSAGE_SENT_SUCCESS" = "Your message has been sent!";
