@@ -66,8 +66,8 @@
 		013AA3731A30F745003DED61 /* Laffayette_Comic_Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 013AA35C1A30F745003DED61 /* Laffayette_Comic_Pro.ttf */; };
 		013AA3741A30F745003DED61 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA35D1A30F745003DED61 /* main.m */; };
 		013AA3751A30F745003DED61 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA35D1A30F745003DED61 /* main.m */; };
-		013AA3761A30F745003DED61 /* Stripchat.strings in Resources */ = {isa = PBXBuildFile; fileRef = 013AA35F1A30F745003DED61 /* Stripchat.strings */; };
-		013AA3771A30F745003DED61 /* Stripchat.strings in Resources */ = {isa = PBXBuildFile; fileRef = 013AA35F1A30F745003DED61 /* Stripchat.strings */; };
+		013AA3761A30F745003DED61 /* Idiomics.strings in Resources */ = {isa = PBXBuildFile; fileRef = 013AA35F1A30F745003DED61 /* Idiomics.strings */; };
+		013AA3771A30F745003DED61 /* Idiomics.strings in Resources */ = {isa = PBXBuildFile; fileRef = 013AA35F1A30F745003DED61 /* Idiomics.strings */; };
 		013EDEA51A13126D009F16BD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013EDEA41A13126D009F16BD /* MessageUI.framework */; };
 		01D7BDD81A17E3E500C30CE2 /* MosaicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEA71A0E98270051EEBE /* MosaicCell.m */; };
 		01D7BDDC1A17E3E500C30CE2 /* MosaicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEA21A0E98270051EEBE /* MosaicData.m */; };
@@ -148,7 +148,7 @@
 		013AA35C1A30F745003DED61 /* Laffayette_Comic_Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Laffayette_Comic_Pro.ttf; sourceTree = "<group>"; };
 		013AA35D1A30F745003DED61 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		013AA35E1A30F745003DED61 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		013AA35F1A30F745003DED61 /* Stripchat.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Stripchat.strings; sourceTree = "<group>"; };
+		013AA35F1A30F745003DED61 /* Idiomics.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Idiomics.strings; sourceTree = "<group>"; };
 		013EDEA41A13126D009F16BD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		01D7BDF31A17E3E500C30CE2 /* Idiomics_Local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Idiomics_Local.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E69A209E4FC969D99F3973C /* Pods-Idiomics.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Idiomics.release.xcconfig"; path = "Pods/Target Support Files/Pods-Idiomics/Pods-Idiomics.release.xcconfig"; sourceTree = "<group>"; };
@@ -348,7 +348,7 @@
 				013AA35C1A30F745003DED61 /* Laffayette_Comic_Pro.ttf */,
 				013AA35D1A30F745003DED61 /* main.m */,
 				013AA35E1A30F745003DED61 /* PrefixHeader.pch */,
-				013AA35F1A30F745003DED61 /* Stripchat.strings */,
+				013AA35F1A30F745003DED61 /* Idiomics.strings */,
 			);
 			name = "Supporting Files";
 			path = "Idiomics/Supporting Files";
@@ -492,7 +492,7 @@
 				013AA3701A30F745003DED61 /* Images.xcassets in Resources */,
 				013AA3661A30F745003DED61 /* focus_corner_topleft.png in Resources */,
 				013AA3641A30F745003DED61 /* focus_corner_bottomright.png in Resources */,
-				013AA3761A30F745003DED61 /* Stripchat.strings in Resources */,
+				013AA3761A30F745003DED61 /* Idiomics.strings in Resources */,
 				013AA3721A30F745003DED61 /* Laffayette_Comic_Pro.ttf in Resources */,
 				013AA3601A30F745003DED61 /* close@2x.png in Resources */,
 				013AA3621A30F745003DED61 /* focus_corner_bottomleft.png in Resources */,
@@ -515,7 +515,7 @@
 				013AA3711A30F745003DED61 /* Images.xcassets in Resources */,
 				013AA3671A30F745003DED61 /* focus_corner_topleft.png in Resources */,
 				013AA3651A30F745003DED61 /* focus_corner_bottomright.png in Resources */,
-				013AA3771A30F745003DED61 /* Stripchat.strings in Resources */,
+				013AA3771A30F745003DED61 /* Idiomics.strings in Resources */,
 				013AA3731A30F745003DED61 /* Laffayette_Comic_Pro.ttf in Resources */,
 				013AA3611A30F745003DED61 /* close@2x.png in Resources */,
 				013AA3631A30F745003DED61 /* focus_corner_bottomleft.png in Resources */,

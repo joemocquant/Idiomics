@@ -1,9 +1,9 @@
 //
 //  MMSViewController.m
-//  Stripchat
+//  Idiomics
 //
 //  Created by Joe Mocquant on 11/12/14.
-//  Copyright (c) 2014 Stripchat. All rights reserved.
+//  Copyright (c) 2014 Idiomics. All rights reserved.
 //
 
 #import "MMSViewController.h"
@@ -49,12 +49,12 @@
             break;
             
         case MessageComposeResultFailed:
-            [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT_ERROR", @"Stripchat" , nil)
+            [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT_ERROR", @"Idiomics" , nil)
                             delegate:self];
             break;
             
         case MessageComposeResultSent:
-            [Helper showValidationWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT_SUCCESS", @"Stripchat" , nil)
+            [Helper showValidationWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT_SUCCESS", @"Idiomics" , nil)
                                  delegate:self];
             break;
             

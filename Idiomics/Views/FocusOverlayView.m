@@ -1,9 +1,9 @@
 //
 //  FocusOverlayView.m
-//  Stripchat
+//  Idiomics
 //
 //  Created by Joe Mocquant on 11/30/14.
-//  Copyright (c) 2014 Stripchat. All rights reserved.
+//  Copyright (c) 2014 Idiomics. All rights reserved.
 //
 
 #import "FocusOverlayView.h"

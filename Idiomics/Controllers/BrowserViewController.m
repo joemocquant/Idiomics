@@ -1,9 +1,9 @@
 //
 //  BrowserViewController.m
-//  Stripchat
+//  Idiomics
 //
 //  Created by Joe Mocquant on 11/6/14.
-//  Copyright (c) 2014 Stripchat. All rights reserved.
+//  Copyright (c) 2014 Idiomics. All rights reserved.
 //
 
 #import "BrowserViewController.h"
@@ -109,12 +109,12 @@
         switch (((NSHTTPURLResponse *)[operation response]).statusCode) {
                 
             case 404:
-                [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"STRIPCHAT_ERROR", @"Stripchat" , nil)
+                [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"IDIOMICS_ERROR", @"Idiomics" , nil)
                                 delegate:nil];
                 break;
                 
             default:
-                [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"STRIPCHAT_ERROR", @"Stripchat" , nil)
+                [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"IDIOMICS_ERROR", @"Idiomics" , nil)
                                 delegate:nil];
                 break;
         }

@@ -1,9 +1,9 @@
 //
 //  Colors.m
-//  Stripchat
+//  Idiomics
 //
 //  Created by Joe Mocquant on 11/10/14.
-//  Copyright (c) 2014 Stripchat. All rights reserved.
+//  Copyright (c) 2014 Idiomics. All rights reserved.
 //
 
 #import "Colors.h"
