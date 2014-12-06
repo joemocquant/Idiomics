@@ -25,7 +25,7 @@
     CGFloat screenScale;
     NSUInteger focus;
     NSMutableArray *focusOverlays;
-    CGRect keyboardBounds;
+    CGFloat keyboardOffset;
 }
 
 - (instancetype)initWithPanel:(Panel *)p;
