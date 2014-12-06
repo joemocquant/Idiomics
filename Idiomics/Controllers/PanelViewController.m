@@ -176,7 +176,7 @@
 - (void)PanelScrollViewTappedOnce:(UIGestureRecognizer *)gestureRecognizer
 {
     CGPoint location = [gestureRecognizer locationInView:panelImageView];
-    __block BOOL found = NO;
+    __block BOOL foundBalloon = NO;
     
     [panel.balloons enumerateObjectsUsingBlock:^(Balloon *balloon, NSUInteger idx, BOOL *stop) {
         
@@ -190,44 +190,38 @@
                 
             } else {
                 //Other balloon
+                [navigationView updateVisibility];
                 [focusOverlays[focus] setAlpha:AlphaFocusForeground];
                 [[speechBalloons objectAtIndex:idx] becomeFirstResponder];
 
-                found = YES;
+                foundBalloon = YES;
             }
         }
     }];
     
-    if (!found) {
+    if (!foundBalloon) {
         //Other part was tapped
         
         if (focus != -1) {
             //during editing
     
-            [focusOverlays[focus] setAlpha:AlphaFocusBackground];
+            [self updateBalloonOverlaysVisibility];
             [[speechBalloons objectAtIndex:focus] resignFirstResponder];
-            
             focus = -1;
             
         } else {
             //during preview
 
             if (CGRectContainsPoint(panelImageView.frame, location)) {
+                //in panel
                 
-                if (navigationView.isEdited) {
-                    if (!navigationView.alpha) {
-                        for (UIView *focusOverlay in focusOverlays) {
-                            [focusOverlay setAlpha:0.0];
-                        }
-                    } else {
-                        for (UIView *focusOverlay in focusOverlays) {
-                            [focusOverlay setAlpha:AlphaFocusBackground];
-                        }
-                    }
-                }
                 [navigationView toggleVisibility];
+                [self performSelector:@selector(updateBalloonOverlaysVisibility)
+                           withObject:nil
+                           afterDelay:NavigationControlDuration];
                 
             } else {
+                //outside
                 [self back];
             }
         }
@@ -336,16 +330,17 @@
 
 #pragma mark - Private methods
 
-- (void)toggleBalloonOverlays
+- (void)updateBalloonOverlaysVisibility
 {
     [UIView animateWithDuration:NavigationControlDuration animations:^{
-        if (navigationView.alpha) {
+        
+        if ((navigationView.alpha) && (navigationView.isEdited)) {
             for (UIView *focusOverlay in focusOverlays) {
-                [focusOverlay setAlpha:AlphaFocusBackground];
+                [focusOverlay setAlpha:0.0];
             }
         } else {
             for (UIView *focusOverlay in focusOverlays) {
-                [focusOverlay setAlpha:0.0];
+                [focusOverlay setAlpha:AlphaFocusBackground];
             }
         }
     }];
@@ -511,6 +506,15 @@
 
 - (void)sendMessage
 {
+    if (focus != -1) {
+        
+        for (UIView *focusOverlay in focusOverlays) {
+            [focusOverlay setAlpha:0.0];
+        }
+        
+        [[speechBalloons objectAtIndex:focus] resignFirstResponder];
+    }
+    
     CGSize imageSize = CGSizeMake(panelImageView.image.size.width / [[UIScreen mainScreen] scale] + 2 * Gutter,
                                   panelImageView.image.size.height / [[UIScreen mainScreen] scale] + 2 * Gutter);
     
