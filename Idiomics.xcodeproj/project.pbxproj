@@ -280,14 +280,14 @@
 				013AA2EA1A30F66B003DED61 /* APIClient.m */,
 				013AA2EB1A30F66B003DED61 /* Config.h */,
 				013AA2EC1A30F66B003DED61 /* Config.m */,
-				013AA2ED1A30F66B003DED61 /* FullSizePanelDownloader.h */,
-				013AA2EE1A30F66B003DED61 /* FullSizePanelDownloader.m */,
 				013AA2EF1A30F66B003DED61 /* Helper.h */,
 				013AA2F01A30F66B003DED61 /* Helper.m */,
 				013AA2F11A30F66B003DED61 /* PendingOperations.h */,
 				013AA2F21A30F66B003DED61 /* PendingOperations.m */,
 				013AA2F31A30F66B003DED61 /* ResizedPanelDownloader.h */,
 				013AA2F41A30F66B003DED61 /* ResizedPanelDownloader.m */,
+				013AA2ED1A30F66B003DED61 /* FullSizePanelDownloader.h */,
+				013AA2EE1A30F66B003DED61 /* FullSizePanelDownloader.m */,
 			);
 			path = Libs;
 			sourceTree = "<group>";

@@ -8,7 +8,12 @@
 
 #import "FullSizePanelDownloader.h"
 #import "Panel.h"
-#import "PanelImageStore.h"
+
+@interface FullSizePanelDownloader ()
+
+@property (nonatomic, readwrite, strong) UIImage *downloadedImage;
+
+@end
 
 @implementation FullSizePanelDownloader
 
@@ -39,35 +44,34 @@
 #ifdef __DEBUG__
     NSLog(@"Starting fullSize task %ld", (long)self.indexPath.item);
 #endif
-    
-    @autoreleasepool {
         
-        if (self.isCancelled) {
-            return;
-        }
-        
-        NSData *imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:self.panel.imageUrl]];
-        
-        if (self.isCancelled) {
-            imageData = nil;
-            return;
-        }
-        
-        if (imageData) {
-            UIImage *downloadedImage = [UIImage imageWithData:imageData];
-            [[PanelImageStore sharedStore] addPanelFullSizeImage:downloadedImage forKey:self.panel.imageUrl];
-            
-        } else {
-            self.panel.failed = YES;
-        }
-        
-        imageData = nil;
-        
-        if (self.isCancelled) {
-            return;
-        }
-        
-        [self.delegate fullSizePanelDownloaderDidFinish:self];
+    if (self.isCancelled) {
+        return;
     }
+        
+    NSData *imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:self.panel.imageUrl]];
+        
+    if (self.isCancelled) {
+        imageData = nil;
+        return;
+    }
+        
+    if (imageData) {
+        self.downloadedImage = [UIImage imageWithData:imageData];
+            
+    } else {
+        self.panel.failed = YES;
+    }
+        
+    imageData = nil;
+        
+    if (self.isCancelled) {
+        return;
+    }
+    
+    [(NSObject *)self.delegate performSelectorOnMainThread:@selector(fullSizePanelDownloaderDidFinish:)
+                                                withObject:self
+                                             waitUntilDone:NO];
 }
+
 @end
