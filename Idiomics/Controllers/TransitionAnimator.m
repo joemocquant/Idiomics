@@ -29,10 +29,10 @@
     if (self.presenting) {
         
         PanelViewController *panelViewController = (PanelViewController *)toViewController;
-        CGRect tempPoint = CGRectMake(self.selectedCell.imageView.center.x, self.selectedCell.imageView.center.y, 0, 0);
-        CGRect startingPoint = [fromViewController.view convertRect:tempPoint fromView:self.selectedCell];
+        CGRect tempRect = CGRectMake(self.selectedCell.imageView.center.x, self.selectedCell.imageView.center.y, 0, 0);
+        CGRect startingRect = [fromViewController.view convertRect:tempRect fromView:self.selectedCell];
         
-        [panelViewController.view.subviews[0] setFrame:startingPoint];
+        [panelViewController.view.subviews[0] setFrame:startingRect];
         
         [transitionContext.containerView addSubview:toViewController.view];
         
@@ -56,7 +56,6 @@
         
         [transitionContext.containerView addSubview:fromViewController.view];
         
-        [fromViewController resignFirstResponder];
         [panelViewController.view.subviews[0] setBackgroundColor:[Colors clear]];
         
         [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
