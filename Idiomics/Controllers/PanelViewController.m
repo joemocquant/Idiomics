@@ -22,6 +22,20 @@
 
 #pragma mark - Initialization
 
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
+}
+
+- (UIView *)inputAccessoryView
+{
+    if (!navigationView) {
+        [self setupNavigationView];
+    }
+    
+    return navigationView;
+}
+
 - (instancetype)initWithPanel:(Panel *)p
 {
     self = [super init];
@@ -108,7 +122,6 @@
     [panelView addSubview:panelImageView];
     
     [self setupSpeechBalloons];
-    [self setupNavigationControl];
     [self setupScalesWithContentSize:panelScrollView.contentSize];
 
     [panelScrollView setZoomScale:screenScale * ScaleFactor];
@@ -137,6 +150,7 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     NSLog(@"range: %lu %lu with text <%@>", (unsigned long)range.location, (unsigned long)range.length, text);
+    
     return YES;
 }
 
@@ -144,6 +158,16 @@
 {
     UILabel *currentLabel = [speechBalloonsLabel objectAtIndex:focus];
     [currentLabel setText:textView.text];
+    
+    navigationView.isEdited = NO;
+    [speechBalloonsLabel enumerateObjectsUsingBlock:^(UILabel *obj, NSUInteger idx, BOOL *stop) {
+        if (obj.text && ![obj.text isEqualToString:@""]) {
+            navigationView.isEdited = YES;
+            *stop = YES;
+        }
+    }];
+    
+    [navigationView updateVisibility];
 }
 
 
@@ -152,7 +176,7 @@
 - (void)PanelScrollViewTappedOnce:(UIGestureRecognizer *)gestureRecognizer
 {
     CGPoint location = [gestureRecognizer locationInView:panelImageView];
-    __block BOOL found = NO;
+    __block BOOL foundBalloon = NO;
     
     [panel.balloons enumerateObjectsUsingBlock:^(Balloon *balloon, NSUInteger idx, BOOL *stop) {
         
@@ -166,44 +190,38 @@
                 
             } else {
                 //Other balloon
+                [navigationView updateVisibility];
                 [focusOverlays[focus] setAlpha:AlphaFocusForeground];
                 [[speechBalloons objectAtIndex:idx] becomeFirstResponder];
 
-                found = YES;
+                foundBalloon = YES;
             }
         }
     }];
     
-    if (!found) {
+    if (!foundBalloon) {
         //Other part was tapped
         
         if (focus != -1) {
             //during editing
     
-            [focusOverlays[focus] setAlpha:AlphaFocusBackground];
+            [self updateBalloonOverlaysVisibility];
             [[speechBalloons objectAtIndex:focus] resignFirstResponder];
-            
             focus = -1;
             
         } else {
             //during preview
 
             if (CGRectContainsPoint(panelImageView.frame, location)) {
+                //in panel
                 
-                if (navigationView.isEdited) {
-                if (!navigationView.alpha) {
-                    for (UIView *focusOverlay in focusOverlays) {
-                        [focusOverlay setAlpha:0.0];
-                    }
-                } else {
-                    for (UIView *focusOverlay in focusOverlays) {
-                        [focusOverlay setAlpha:AlphaFocusBackground];
-                    }
-                }
-                }
                 [navigationView toggleVisibility];
+                [self performSelector:@selector(updateBalloonOverlaysVisibility)
+                           withObject:nil
+                           afterDelay:NavigationControlDuration];
                 
             } else {
+                //outside
                 [self back];
             }
         }
@@ -228,29 +246,18 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
-    [[notification.userInfo valueForKey:UIKeyboardFrameBeginUserInfoKey] getValue:&keyboardBounds];
-    [self resizeScrollView];
+    CGRect keyboardBounds;
+    [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardBounds];
+
+    if (keyboardBounds.size.height > NavigationControlHeight) {
+        keyboardOffset = keyboardBounds.size.height - NavigationControlHeight;
+        [self resizeScrollView];
+    }
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
-    navigationView.isEdited = NO;
-    [speechBalloonsLabel enumerateObjectsUsingBlock:^(UILabel *obj, NSUInteger idx, BOOL *stop) {
-        if (obj.text && ![obj.text isEqualToString:@""]) {
-            navigationView.isEdited = YES;
-            *stop = YES;
-        }
-    }];
-    
-    if (navigationView.isEdited) {
-        for (UIView *focusOverlay in focusOverlays) {
-            [focusOverlay setAlpha:0.0];
-        }
-    }
-    
-    [navigationView updateVisibility];
-    
-    keyboardBounds = CGRectZero;
+    keyboardOffset = 0.0;
     [self resizeScrollView];
 }
 
@@ -300,7 +307,7 @@
     [panelScrollView setFrame:CGRectMake(0,
                                          0,
                                          CGRectGetWidth(screen),
-                                         CGRectGetHeight(screen) - keyboardBounds.size.height)];
+                                         CGRectGetHeight(screen) - keyboardOffset)];
 
     CGSize frameSize = panelScrollView.frame.size;
     CGRect contentsFrame = panelView.frame;
@@ -323,16 +330,17 @@
 
 #pragma mark - Private methods
 
-- (void)toggleBalloonOverlays
+- (void)updateBalloonOverlaysVisibility
 {
     [UIView animateWithDuration:NavigationControlDuration animations:^{
-        if (navigationView.alpha) {
+        
+        if ((navigationView.alpha) && (navigationView.isEdited)) {
             for (UIView *focusOverlay in focusOverlays) {
-                [focusOverlay setAlpha:AlphaFocusBackground];
+                [focusOverlay setAlpha:0.0];
             }
         } else {
             for (UIView *focusOverlay in focusOverlays) {
-                [focusOverlay setAlpha:0.0];
+                [focusOverlay setAlpha:AlphaFocusBackground];
             }
         }
     }];
@@ -403,7 +411,7 @@
                                  panelImageView.frame.size.height + 2 * Gutter);
         [self setupScalesWithContentSize:size];
         
-        if (keyboardBounds.size.height) {
+        if (keyboardOffset) {
             
             if ([panelScrollView zoomScale] < screenScale) {
                 [panelScrollView setZoomScale:screenScale];
@@ -413,7 +421,7 @@
             
         }
     } completion:^(BOOL finished) {
-        if (keyboardBounds.size.height) {
+        if (keyboardOffset) {
             [UIView animateWithDuration:ScrollToBottomDuration animations:^{
                 [self focusOnBalloon];
             }];
@@ -468,33 +476,45 @@
     [panelScrollView setMaximumZoomScale:minScale * MaxZoomScaleFactor];
 }
 
-- (void)setupNavigationControl
+- (void)setupNavigationView
 {
     navigationView = [NavigationView new];
-    [self.view addSubview:navigationView];
     
     [[navigationView cancel] addTarget:self action:@selector(back)
                              forControlEvents:UIControlEventTouchUpInside];
     [[navigationView send] addTarget:self action:@selector(sendMessage)
                            forControlEvents:UIControlEventTouchUpInside];
     
-    [navigationView pinEdges:JRTViewPinLeftEdge | JRTViewPinBottomEdge | JRTViewPinRightEdge
-           toSameEdgesOfView:self.view];
-    
     if (![speechBalloonsLabel count]) {
         [navigationView setIsEdited:YES];
     } else {
-        [navigationView toggleVisibility];
+        [navigationView setAlpha:0.0];
     }
 }
 
 - (void)back
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (focus != -1) {
+        [focusOverlays[focus] setAlpha:AlphaFocusBackground];
+        [[speechBalloons objectAtIndex:focus] resignFirstResponder];
+        
+        focus = -1;
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (void)sendMessage
 {
+    if (focus != -1) {
+        
+        for (UIView *focusOverlay in focusOverlays) {
+            [focusOverlay setAlpha:0.0];
+        }
+        
+        [[speechBalloons objectAtIndex:focus] resignFirstResponder];
+    }
+    
     CGSize imageSize = CGSizeMake(panelImageView.image.size.width / [[UIScreen mainScreen] scale] + 2 * Gutter,
                                   panelImageView.image.size.height / [[UIScreen mainScreen] scale] + 2 * Gutter);
     

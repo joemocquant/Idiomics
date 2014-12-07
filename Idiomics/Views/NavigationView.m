@@ -17,8 +17,10 @@
     
     if (self) {
         
-        [self setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self constrainToHeight:NavigationControlHeight];
+        CGRect screen = [[UIScreen mainScreen] bounds];
+        CGRect frame = CGRectMake(0, 0, CGRectGetWidth(screen), NavigationControlHeight);
+        [self setFrame:frame];
+        
         CGSize buttonSize = CGSizeMake(NavigationControlHeight, NavigationControlHeight);
         
         _cancel = [UIButton buttonWithType:UIButtonTypeCustom];
