@@ -22,7 +22,7 @@
 @implementation PanelViewController
 
 
-#pragma mark - Initialization
+#pragma mark - Lifecycle
 
 - (BOOL)canBecomeFirstResponder
 {
@@ -129,12 +129,31 @@
     [panelScrollView setZoomScale:screenScale * ScaleFactor];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    trackingIntervalStart = [NSDate date];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+     NSTimeInterval elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
+    
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_action"
+                                                         interval:@(elapsed)
+                                                             name:@"panel_edition"
+                                                            label:nil] build]];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 #pragma mark - UITextViewDelegate
 
@@ -504,7 +523,7 @@
         focus = -1;
     } else {
         
-        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        id tracker = [[GAI sharedInstance] defaultTracker];
         [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                               action:@"button_press"
                                                                label:@"back"

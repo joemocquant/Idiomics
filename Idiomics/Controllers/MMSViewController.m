@@ -33,6 +33,26 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    trackingIntervalStart = [NSDate date];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    NSTimeInterval elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
+    
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_action"
+                                                         interval:@(elapsed)
+                                                             name:@"message_send"
+                                                            label:nil] build]];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -47,7 +67,7 @@
     switch (result) {
         case MessageComposeResultCancelled:
         {
-            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            id tracker = [[GAI sharedInstance] defaultTracker];
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                                   action:@"button_press"
                                                                    label:@"cancel_send"
@@ -61,7 +81,7 @@
         }
         case MessageComposeResultFailed:
         {
-            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            id tracker = [[GAI sharedInstance] defaultTracker];
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                                   action:@"button_press"
                                                                    label:@"send_error"
@@ -73,7 +93,7 @@
         }
         case MessageComposeResultSent:
         {
-            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            id tracker = [[GAI sharedInstance] defaultTracker];
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                                   action:@"button_press"
                                                                    label:@"send"
