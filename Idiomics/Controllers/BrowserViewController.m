@@ -18,6 +18,8 @@
 #import "TransitionAnimator.h"
 #import <Mantle.h>
 #import <UIView+AutoLayout.h>
+#import <GAI.h>
+#import <GAIDictionaryBuilder.h>
 
 @implementation BrowserViewController
 
@@ -247,6 +249,12 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
+                                                          action:@"button_press"
+                                                           label:@"panel_selection"
+                                                           value:nil] build]];
+    
     Panel *panel = [[PanelStore sharedStore] panelAtIndex:indexPath.item];
     
     if (!panel.hasFullSizeImage) {

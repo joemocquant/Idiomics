@@ -16,6 +16,8 @@
 #import "MMSViewController.h"
 #import "FocusOverlayView.h"
 #import <UIView+AutoLayout.h>
+#import <GAI.h>
+#import <GAIDictionaryBuilder.h>
 
 @implementation PanelViewController
 
@@ -495,11 +497,19 @@
 - (void)back
 {
     if (focus != -1) {
+        
         [focusOverlays[focus] setAlpha:AlphaFocusBackground];
         [[speechBalloons objectAtIndex:focus] resignFirstResponder];
         
         focus = -1;
     } else {
+        
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
+                                                              action:@"button_press"
+                                                               label:@"back"
+                                                               value:nil] build]];
+        
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }

@@ -9,6 +9,8 @@
 #import "MMSViewController.h"
 #import "Helper.h"
 #import <MessageUI/MFMessageComposeViewController.h>
+#import <GAI.h>
+#import <GAIDictionaryBuilder.h>
 
 @implementation MMSViewController
 
@@ -44,20 +46,43 @@
 {
     switch (result) {
         case MessageComposeResultCancelled:
+        {
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
+                                                                  action:@"button_press"
+                                                                   label:@"cancel_send"
+                                                                   value:nil] build]];
+            
+            [Helper showValidationWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT_SUCCESS", @"Idiomics" , nil)
+                                 delegate:self];
             [self dismissViewControllerAnimated:YES completion:nil];
             
             break;
-            
+        }
         case MessageComposeResultFailed:
+        {
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
+                                                                  action:@"button_press"
+                                                                   label:@"send_error"
+                                                                   value:nil] build]];
+            
             [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT_ERROR", @"Idiomics" , nil)
                             delegate:self];
             break;
-            
+        }
         case MessageComposeResultSent:
+        {
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
+                                                                  action:@"button_press"
+                                                                   label:@"send"
+                                                                   value:nil] build]];
+            
             [Helper showValidationWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT_SUCCESS", @"Idiomics" , nil)
                                  delegate:self];
-            break;
-            
+             break;
+        }
         default:
             [self dismissViewControllerAnimated:YES completion:nil];
             break;
