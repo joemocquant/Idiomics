@@ -8,5 +8,6 @@ target :Idiomics do
     pod 'Mantle'
     pod 'ReactiveCocoa'
     pod 'UIView-Autolayout'
+    pod 'GoogleAnalytics-iOS-SDK'
     
 end

@@ -18,6 +18,8 @@
 #import "TransitionAnimator.h"
 #import <Mantle.h>
 #import <UIView+AutoLayout.h>
+#import <GAI.h>
+#import <GAIDictionaryBuilder.h>
 
 @implementation BrowserViewController
 
@@ -48,6 +50,26 @@
     
     [cv setTranslatesAutoresizingMaskIntoConstraints:NO];
     [cv pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    trackingIntervalStart = [NSDate date];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    NSTimeInterval elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
+    
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_action"
+                                                         interval:@(elapsed)
+                                                             name:@"browse"
+                                                            label:nil] build]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -247,6 +269,12 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
+                                                          action:@"button_press"
+                                                           label:@"panel_selection"
+                                                           value:nil] build]];
+    
     Panel *panel = [[PanelStore sharedStore] panelAtIndex:indexPath.item];
     
     if (!panel.hasFullSizeImage) {

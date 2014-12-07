@@ -27,6 +27,8 @@
     CGPoint lastOffset;
     NSTimeInterval lastOffsetTime;
     BOOL isScrollingFast;
+
+    NSDate *trackingIntervalStart;
 }
 
 @end

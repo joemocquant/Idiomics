@@ -26,6 +26,8 @@
     NSUInteger focus;
     NSMutableArray *focusOverlays;
     CGFloat keyboardOffset;
+    
+    NSDate *trackingIntervalStart;
 }
 
 - (instancetype)initWithPanel:(Panel *)p;

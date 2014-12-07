@@ -9,6 +9,8 @@
 #import "MMSViewController.h"
 #import "Helper.h"
 #import <MessageUI/MFMessageComposeViewController.h>
+#import <GAI.h>
+#import <GAIDictionaryBuilder.h>
 
 @implementation MMSViewController
 
@@ -31,6 +33,26 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    trackingIntervalStart = [NSDate date];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    NSTimeInterval elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
+    
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_action"
+                                                         interval:@(elapsed)
+                                                             name:@"message_send"
+                                                            label:nil] build]];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -44,20 +66,43 @@
 {
     switch (result) {
         case MessageComposeResultCancelled:
+        {
+            id tracker = [[GAI sharedInstance] defaultTracker];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
+                                                                  action:@"button_press"
+                                                                   label:@"cancel_send"
+                                                                   value:nil] build]];
+            
+            [Helper showValidationWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT_SUCCESS", @"Idiomics" , nil)
+                                 delegate:self];
             [self dismissViewControllerAnimated:YES completion:nil];
             
             break;
-            
+        }
         case MessageComposeResultFailed:
+        {
+            id tracker = [[GAI sharedInstance] defaultTracker];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
+                                                                  action:@"button_press"
+                                                                   label:@"send_error"
+                                                                   value:nil] build]];
+            
             [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT_ERROR", @"Idiomics" , nil)
                             delegate:self];
             break;
-            
+        }
         case MessageComposeResultSent:
+        {
+            id tracker = [[GAI sharedInstance] defaultTracker];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
+                                                                  action:@"button_press"
+                                                                   label:@"send"
+                                                                   value:nil] build]];
+            
             [Helper showValidationWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT_SUCCESS", @"Idiomics" , nil)
                                  delegate:self];
-            break;
-            
+             break;
+        }
         default:
             [self dismissViewControllerAnimated:YES completion:nil];
             break;
