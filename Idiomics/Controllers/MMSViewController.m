@@ -74,7 +74,6 @@
                                                                    value:nil] build]];
             
             [self dismissViewControllerAnimated:YES completion:nil];
-            
             break;
         }
         case MessageComposeResultFailed:
