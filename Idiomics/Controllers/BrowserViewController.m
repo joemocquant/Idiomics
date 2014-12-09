@@ -79,8 +79,9 @@
 }
 
 
-#pragma mark - Rotation
+#pragma mark - Rotation iPad
 
+//iOS 7.x
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                duration:(NSTimeInterval)duration
 {
@@ -99,6 +100,20 @@
     return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
 }
 
+//iOS 8.x
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+  
+        MosaicLayout *layout = (MosaicLayout *)cv.collectionViewLayout;
+        [layout invalidateLayout];
+        
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
+    
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+}
 
 #pragma mark - Private methods
 
