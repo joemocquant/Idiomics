@@ -15,9 +15,16 @@
 #import "NavigationView.h"
 #import "MMSViewController.h"
 #import "FocusOverlayView.h"
+#import "Helper.h"
 #import <UIView+AutoLayout.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
+
+@interface PanelViewController ()
+
+@property (nonatomic, readwrite, strong) UIView *inputAccessoryView;
+
+@end
 
 @implementation PanelViewController
 
@@ -27,15 +34,6 @@
 - (BOOL)canBecomeFirstResponder
 {
     return YES;
-}
-
-- (UIView *)inputAccessoryView
-{
-    if (!navigationView) {
-        [self setupNavigationView];
-    }
-    
-    return navigationView;
 }
 
 - (instancetype)initWithPanel:(Panel *)p
@@ -50,11 +48,6 @@
                                                  selector:@selector(keyboardWillShow:)
                                                      name:UIKeyboardWillShowNotification
                                                    object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillHide:)
-                                                     name:UIKeyboardWillHideNotification
-                                                   object:nil];
     }
     
     return self;
@@ -65,12 +58,25 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+        
+        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+        CGRect screen = [[UIScreen mainScreen] bounds];
+        
+        if (UIInterfaceOrientationIsPortrait(orientation)) {
+            //[self.view setFrame:CGRectMake(0, 0, CGRectGetWidth(screen), CGRectGetHeight(screen))];
+        } else {
+            [self.view setFrame:CGRectMake(0, 0, CGRectGetHeight(screen), CGRectGetWidth(screen))];
+        }
+    }
+    
+    [self.view setBackgroundColor:[panel.averageColor colorWithAlphaComponent:AlphaBackground]];
+    
     panelScrollView = [UIScrollView new];
     [panelScrollView setDelegate:self];
     [panelScrollView setShowsHorizontalScrollIndicator:NO];
     [panelScrollView setShowsVerticalScrollIndicator:NO];
     
-    [self.view setBackgroundColor:[panel.averageColor colorWithAlphaComponent:AlphaBackground]];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                 action:@selector(PanelScrollViewTappedOnce:)];
     [singleTap setNumberOfTapsRequired:1];
@@ -87,8 +93,8 @@
     [singleTap requireGestureRecognizerToFail:doubleTap];
     [panelScrollView setUserInteractionEnabled:YES];
     
-    CGRect screen = [[UIScreen mainScreen] bounds];
-    [panelScrollView setFrame:CGRectMake(0, 0, CGRectGetWidth(screen), CGRectGetHeight(screen))];
+    [self panelScrollViewSetFrameBeforeRotation:NO];
+    
     [self.view addSubview:panelScrollView];
     
     UIImage *image = [[[PanelImageStore sharedStore] panelFullSizeImageForKey:panel.imageUrl] copy];
@@ -124,15 +130,16 @@
     [panelView addSubview:panelImageView];
     
     [self setupSpeechBalloons];
+    [self setupNavigationView];
     [self setupScalesWithContentSize:panelScrollView.contentSize];
-
-    [panelScrollView setZoomScale:screenScale * ScaleFactor];
+    
+    [panelScrollView setZoomScale:screenScale * ScaleFactor animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    NSLog(@"here");
     trackingIntervalStart = [NSDate date];
 }
 
@@ -226,8 +233,12 @@
         if (focus != -1) {
             //during editing
     
+            keyboardOffset = 0.0;
+            [self resizeScrollView];
+            
             [self updateBalloonOverlaysVisibility];
             [[speechBalloons objectAtIndex:focus] resignFirstResponder];
+
             focus = -1;
             
         } else {
@@ -253,53 +264,84 @@
 {
     [UIView animateWithDuration:ZoomDuration animations:^{
         if ([panelScrollView zoomScale] < screenScale) {
-            [panelScrollView setZoomScale:screenScale];
+            [panelScrollView setZoomScale:screenScale animated:YES];
         } else if ([panelScrollView zoomScale] == screenScale) {
-                [panelScrollView setZoomScale:screenScale * ZoomScaleFactor];
+                [panelScrollView setZoomScale:screenScale * ZoomScaleFactor animated:YES];
             } else {
-                [panelScrollView setZoomScale:minScale];
+                [panelScrollView setZoomScale:panelScrollView.minimumZoomScale animated:YES];
             }
     }];
 }
 
 
-#pragma mark - Keyboard notifications
+#pragma mark - Keyboard notification
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     CGRect keyboardBounds;
     [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardBounds];
 
-    if (keyboardBounds.size.height > NavigationControlHeight) {
-        keyboardOffset = keyboardBounds.size.height - NavigationControlHeight;
+    CGFloat keyboardHeight;
+    if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+        
+        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+        
+        if (UIInterfaceOrientationIsPortrait(orientation)) {
+            keyboardHeight = keyboardBounds.size.height;
+        } else {
+            keyboardHeight = keyboardBounds.size.width;
+        }
+        
+    } else {
+        keyboardHeight = keyboardBounds.size.height;
+    }
+
+    if (keyboardHeight > NavigationControlHeight) {
+        
+        keyboardOffset = keyboardHeight;
         [self resizeScrollView];
     }
 }
 
-- (void)keyboardWillHide:(NSNotification *)notification
+
+#pragma mark - Rotation iPad
+
+//iOS 7.x
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                               duration:(NSTimeInterval)duration
 {
-    keyboardOffset = 0.0;
-    [self resizeScrollView];
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    [self centerScrollViewContentsBeforeRotation:YES];
+    
+    [panelScrollView setContentSize:CGSizeMake(panelImageView.frame.size.width + 2 * Gutter,
+                                               panelImageView.frame.size.height + 2 * Gutter)];
+    
+    [self setupScalesWithContentSize:panelScrollView.contentSize];
+    
+    if (panelScrollView.zoomScale < panelScrollView.minimumZoomScale) {
+        //[panelScrollView setZoomScale:panelScrollView.minimumZoomScale animated:YES]; //screen bug
+    } else {
+        [panelScrollView setZoomScale:panelScrollView.zoomScale animated:YES];
+    }
 }
 
-
-#pragma mark - Rotation
-
+//iOS 8.x
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 
-        [self centerScrollViewContents];
+        [self centerScrollViewContentsBeforeRotation:YES];
         
         [panelScrollView setContentSize:CGSizeMake(panelImageView.frame.size.width + 2 * Gutter,
                                                    panelImageView.frame.size.height + 2 * Gutter)];
         
         [self setupScalesWithContentSize:panelScrollView.contentSize];
         
-        if (panelScrollView.zoomScale < minScale) {
-            [panelScrollView setZoomScale:minScale];
+        if (panelScrollView.zoomScale < panelScrollView.minimumZoomScale) {
+            [panelScrollView setZoomScale:panelScrollView.minimumZoomScale animated:YES];
         } else {
-            [panelScrollView setZoomScale:panelScrollView.zoomScale];
+            [panelScrollView setZoomScale:panelScrollView.zoomScale animated:YES];
         }
      } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 
@@ -319,17 +361,52 @@
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
     // The scroll view has zoomed, so we need to re-center the contents
-    [self centerScrollViewContents];
+    [self centerScrollViewContentsBeforeRotation:NO];
 }
 
-- (void)centerScrollViewContents
+- (void)panelScrollViewSetFrameBeforeRotation:(BOOL)beforeRotation
 {
     CGRect screen = [[UIScreen mainScreen] bounds];
-    [panelScrollView setFrame:CGRectMake(0,
-                                         0,
-                                         CGRectGetWidth(screen),
-                                         CGRectGetHeight(screen) - keyboardOffset)];
+    
+    CGFloat screenWidth;
+    CGFloat screenHeight;
+    
+    if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+        
+        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+        
+        if (UIInterfaceOrientationIsPortrait(orientation)) {
+            screenWidth = CGRectGetWidth(screen);
+            screenHeight = CGRectGetHeight(screen);
+        } else {
+            screenWidth = CGRectGetHeight(screen);
+            screenHeight = CGRectGetWidth(screen);
+        }
+        
+        if (beforeRotation) {
+            CGFloat temp = screenHeight;
+            screenHeight = screenWidth;
+            screenWidth = temp;
+        }
+    } else {
+        screenWidth = CGRectGetWidth(screen);
+        screenHeight = CGRectGetHeight(screen);
+    }
+    
+    if (keyboardOffset) {
+        [panelScrollView setFrame:CGRectMake(0,
+                                             0,
+                                             screenWidth,
+                                             screenHeight - keyboardOffset + NavigationControlHeight)];
+    } else {
+        [panelScrollView setFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
+    }
+}
 
+- (void)centerScrollViewContentsBeforeRotation:(BOOL)beforeRotation
+{
+    [self panelScrollViewSetFrameBeforeRotation:beforeRotation];
+    
     CGSize frameSize = panelScrollView.frame.size;
     CGRect contentsFrame = panelView.frame;
     
@@ -427,7 +504,7 @@
 {
     [UIView animateWithDuration:KeyboardMoveDuration animations:^{
         
-        [self centerScrollViewContents];
+        [self centerScrollViewContentsBeforeRotation:NO];
         CGSize size = CGSizeMake(panelImageView.frame.size.width + 2 * Gutter,
                                  panelImageView.frame.size.height + 2 * Gutter);
         [self setupScalesWithContentSize:size];
@@ -435,9 +512,9 @@
         if (keyboardOffset) {
             
             if ([panelScrollView zoomScale] < screenScale) {
-                [panelScrollView setZoomScale:screenScale];
+                [panelScrollView setZoomScale:screenScale animated:YES];
             } else {
-                [panelScrollView setZoomScale:panelScrollView.zoomScale];
+                [panelScrollView setZoomScale:panelScrollView.zoomScale animated:YES];
             }
             
         }
@@ -472,7 +549,8 @@
 -(void)setupScalesWithContentSize:(CGSize)contentSize
 {
     // Set up the minimum & maximum zoom scales
-    
+
+    CGFloat minScale;
     CGRect scrollViewFrame = panelScrollView.frame;
     
     CGFloat scaleWidth = scrollViewFrame.size.width / contentSize.width;
@@ -500,7 +578,7 @@
 - (void)setupNavigationView
 {
     navigationView = [NavigationView new];
-    
+
     [[navigationView cancel] addTarget:self action:@selector(back)
                              forControlEvents:UIControlEventTouchUpInside];
     [[navigationView send] addTarget:self action:@selector(sendMessage)
@@ -511,23 +589,34 @@
     } else {
         [navigationView setAlpha:0.0];
     }
+    
+    [self.view addSubview:navigationView];
+    [self setInputAccessoryView:navigationView];
 }
 
 - (void)back
 {
     if (focus != -1) {
+        keyboardOffset = 0.0;
+        [self resizeScrollView];
         
         [focusOverlays[focus] setAlpha:AlphaFocusBackground];
         [[speechBalloons objectAtIndex:focus] resignFirstResponder];
         
         focus = -1;
-    } else {
         
+    } else {
+
         id tracker = [[GAI sharedInstance] defaultTracker];
         [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                               action:@"button_press"
                                                                label:@"back"
                                                                value:nil] build]];
+
+        
+        if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+            [_inputAccessoryView removeFromSuperview]; //avoid a segfault
+        }
         
         [self dismissViewControllerAnimated:YES completion:nil];
     }
@@ -537,11 +626,16 @@
 {
     if (focus != -1) {
         
+        keyboardOffset = 0.0;
+        [self resizeScrollView];
+        
+        [[speechBalloons objectAtIndex:focus] resignFirstResponder];
+        
         for (UIView *focusOverlay in focusOverlays) {
             [focusOverlay setAlpha:0.0];
         }
         
-        [[speechBalloons objectAtIndex:focus] resignFirstResponder];
+        focus = -1;
     }
     
     CGSize imageSize = CGSizeMake(panelImageView.image.size.width / [[UIScreen mainScreen] scale] + 2 * Gutter,
@@ -585,8 +679,14 @@
     
     if ([mmsvc canSendPanel]) {
         
-        [mmsvc setModalTransitionStyle:UIModalTransitionStylePartialCurl];
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+            [self resignFirstResponder];
+        }
+        
         [self presentViewController:mmsvc animated:YES completion:nil];
+        
+    } else {
+        [self updateBalloonOverlaysVisibility];
     }
 }
 

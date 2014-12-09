@@ -48,10 +48,10 @@
     [UIView animateWithDuration:NavigationControlDuration animations:^{
 
         if (self.alpha) {
-            [self setAlpha:0.0];
+            [super setAlpha:0.0];
         } else {
             if ([self isEdited]) {
-                [self setAlpha:1.0];
+                [super setAlpha:1.0];
             }
         }
     }];
@@ -64,6 +64,12 @@
     } else if (self.alpha && !self.isEdited) {
         [self toggleVisibility];
     }
+}
+
+//Avoid iOS to change Alpha during rotation or other events
+- (void)setAlpha:(CGFloat)alpha
+{
+    [self updateVisibility];
 }
 
 @end

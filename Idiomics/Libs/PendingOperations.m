@@ -9,6 +9,7 @@
 #import "PendingOperations.h"
 #import "Panel.h"
 #import "PanelStore.h"
+#import "PanelImageStore.h"
 
 @implementation PendingOperations
 
@@ -150,6 +151,9 @@
 
 - (void)resizedPanelDownloaderDidFinish:(ResizedPanelDownloader *)downloader
 {
+    [[PanelImageStore sharedStore] addPanelThumbImage:downloader.downloadedImage
+                                               forKey:downloader.panel.imageUrl];
+    
     [self.delegate reloadItemsAtIndexPaths:[NSArray arrayWithObject:downloader.indexPath]];
     [resizedPanelDownloadsInProgress removeObjectForKey:downloader.indexPath];
     [resizedPanelDownloadsFinished addObject:downloader.indexPath];
@@ -164,6 +168,9 @@
 
 - (void)fullSizePanelDownloaderDidFinish:(FullSizePanelDownloader *)downloader
 {
+    [[PanelImageStore sharedStore] addPanelFullSizeImage:downloader.downloadedImage
+                                                  forKey:downloader.panel.imageUrl];
+    
     [fullSizePanelDownloadsInProgress removeObjectForKey:downloader.indexPath];
     [fullSizePanelDownloadsFinished addObject:downloader.indexPath];
     

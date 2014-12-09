@@ -21,7 +21,6 @@
     NSMutableArray *speechBalloonsLabel;
     NavigationView *navigationView;
     
-    CGFloat minScale;
     CGFloat screenScale;
     NSUInteger focus;
     NSMutableArray *focusOverlays;

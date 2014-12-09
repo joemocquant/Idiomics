@@ -73,10 +73,7 @@
                                                                    label:@"cancel_send"
                                                                    value:nil] build]];
             
-            [Helper showValidationWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT_SUCCESS", @"Idiomics" , nil)
-                                 delegate:self];
             [self dismissViewControllerAnimated:YES completion:nil];
-            
             break;
         }
         case MessageComposeResultFailed:
