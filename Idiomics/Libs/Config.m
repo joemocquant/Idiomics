@@ -38,3 +38,8 @@ const CGFloat NavigationControlDuration = 0.2;
 const CGFloat FocusInset = -10.0;
 const CGFloat AlphaFocusForeground = 1.0;
 const CGFloat AlphaFocusBackground = 0.4;
+
+
+//Transformers
+NSString *const ColorTransformerName = @"ColorTransformer";
+NSString *const RectTransformerName = @"RectTransformer";

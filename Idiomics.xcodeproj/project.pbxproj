@@ -24,14 +24,8 @@
 		013AA32A1A30F66B003DED61 /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2EA1A30F66B003DED61 /* APIClient.m */; };
 		013AA32B1A30F66B003DED61 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2EC1A30F66B003DED61 /* Config.m */; };
 		013AA32C1A30F66B003DED61 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2EC1A30F66B003DED61 /* Config.m */; };
-		013AA32D1A30F66B003DED61 /* FullSizePanelDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2EE1A30F66B003DED61 /* FullSizePanelDownloader.m */; };
-		013AA32E1A30F66B003DED61 /* FullSizePanelDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2EE1A30F66B003DED61 /* FullSizePanelDownloader.m */; };
 		013AA32F1A30F66B003DED61 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2F01A30F66B003DED61 /* Helper.m */; };
 		013AA3301A30F66B003DED61 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2F01A30F66B003DED61 /* Helper.m */; };
-		013AA3311A30F66B003DED61 /* PendingOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2F21A30F66B003DED61 /* PendingOperations.m */; };
-		013AA3321A30F66B003DED61 /* PendingOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2F21A30F66B003DED61 /* PendingOperations.m */; };
-		013AA3331A30F66B003DED61 /* ResizedPanelDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2F41A30F66B003DED61 /* ResizedPanelDownloader.m */; };
-		013AA3341A30F66B003DED61 /* ResizedPanelDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2F41A30F66B003DED61 /* ResizedPanelDownloader.m */; };
 		013AA3371A30F66B003DED61 /* Balloon.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2F81A30F66B003DED61 /* Balloon.m */; };
 		013AA3381A30F66B003DED61 /* Balloon.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2F81A30F66B003DED61 /* Balloon.m */; };
 		013AA3391A30F66B003DED61 /* Panel.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2FA1A30F66B003DED61 /* Panel.m */; };
@@ -69,6 +63,16 @@
 		013AA3761A30F745003DED61 /* Idiomics.strings in Resources */ = {isa = PBXBuildFile; fileRef = 013AA35F1A30F745003DED61 /* Idiomics.strings */; };
 		013AA3771A30F745003DED61 /* Idiomics.strings in Resources */ = {isa = PBXBuildFile; fileRef = 013AA35F1A30F745003DED61 /* Idiomics.strings */; };
 		013EDEA51A13126D009F16BD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013EDEA41A13126D009F16BD /* MessageUI.framework */; };
+		015D59DD1A37CEE50004F352 /* FullSizePanelDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59D81A37CEE50004F352 /* FullSizePanelDownloader.m */; };
+		015D59DE1A37CEE50004F352 /* FullSizePanelDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59D81A37CEE50004F352 /* FullSizePanelDownloader.m */; };
+		015D59DF1A37CEE50004F352 /* PendingOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59DA1A37CEE50004F352 /* PendingOperations.m */; };
+		015D59E01A37CEE50004F352 /* PendingOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59DA1A37CEE50004F352 /* PendingOperations.m */; };
+		015D59E11A37CEE50004F352 /* ResizedPanelDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59DC1A37CEE50004F352 /* ResizedPanelDownloader.m */; };
+		015D59E21A37CEE50004F352 /* ResizedPanelDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59DC1A37CEE50004F352 /* ResizedPanelDownloader.m */; };
+		015D59E81A37CEED0004F352 /* ColorTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59E51A37CEED0004F352 /* ColorTransformer.m */; };
+		015D59E91A37CEED0004F352 /* ColorTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59E51A37CEED0004F352 /* ColorTransformer.m */; };
+		015D59EA1A37CEED0004F352 /* RectTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59E71A37CEED0004F352 /* RectTransformer.m */; };
+		015D59EB1A37CEED0004F352 /* RectTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59E71A37CEED0004F352 /* RectTransformer.m */; };
 		01D7BDD81A17E3E500C30CE2 /* MosaicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEA71A0E98270051EEBE /* MosaicCell.m */; };
 		01D7BDDC1A17E3E500C30CE2 /* MosaicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEA21A0E98270051EEBE /* MosaicData.m */; };
 		01D7BDDE1A17E3E500C30CE2 /* MosaicLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE9F1A0E98270051EEBE /* MosaicLayout.m */; };
@@ -110,14 +114,8 @@
 		013AA2EA1A30F66B003DED61 /* APIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIClient.m; sourceTree = "<group>"; };
 		013AA2EB1A30F66B003DED61 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		013AA2EC1A30F66B003DED61 /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
-		013AA2ED1A30F66B003DED61 /* FullSizePanelDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullSizePanelDownloader.h; sourceTree = "<group>"; };
-		013AA2EE1A30F66B003DED61 /* FullSizePanelDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullSizePanelDownloader.m; sourceTree = "<group>"; };
 		013AA2EF1A30F66B003DED61 /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 		013AA2F01A30F66B003DED61 /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
-		013AA2F11A30F66B003DED61 /* PendingOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingOperations.h; sourceTree = "<group>"; };
-		013AA2F21A30F66B003DED61 /* PendingOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingOperations.m; sourceTree = "<group>"; };
-		013AA2F31A30F66B003DED61 /* ResizedPanelDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizedPanelDownloader.h; sourceTree = "<group>"; };
-		013AA2F41A30F66B003DED61 /* ResizedPanelDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizedPanelDownloader.m; sourceTree = "<group>"; };
 		013AA2F71A30F66B003DED61 /* Balloon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Balloon.h; sourceTree = "<group>"; };
 		013AA2F81A30F66B003DED61 /* Balloon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Balloon.m; sourceTree = "<group>"; };
 		013AA2F91A30F66B003DED61 /* Panel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Panel.h; sourceTree = "<group>"; };
@@ -150,6 +148,16 @@
 		013AA35E1A30F745003DED61 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		013AA35F1A30F745003DED61 /* Idiomics.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Idiomics.strings; sourceTree = "<group>"; };
 		013EDEA41A13126D009F16BD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		015D59D71A37CEE50004F352 /* FullSizePanelDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullSizePanelDownloader.h; sourceTree = "<group>"; };
+		015D59D81A37CEE50004F352 /* FullSizePanelDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullSizePanelDownloader.m; sourceTree = "<group>"; };
+		015D59D91A37CEE50004F352 /* PendingOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingOperations.h; sourceTree = "<group>"; };
+		015D59DA1A37CEE50004F352 /* PendingOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingOperations.m; sourceTree = "<group>"; };
+		015D59DB1A37CEE50004F352 /* ResizedPanelDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizedPanelDownloader.h; sourceTree = "<group>"; };
+		015D59DC1A37CEE50004F352 /* ResizedPanelDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizedPanelDownloader.m; sourceTree = "<group>"; };
+		015D59E41A37CEED0004F352 /* ColorTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorTransformer.h; sourceTree = "<group>"; };
+		015D59E51A37CEED0004F352 /* ColorTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorTransformer.m; sourceTree = "<group>"; };
+		015D59E61A37CEED0004F352 /* RectTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectTransformer.h; sourceTree = "<group>"; };
+		015D59E71A37CEED0004F352 /* RectTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectTransformer.m; sourceTree = "<group>"; };
 		01D7BDF31A17E3E500C30CE2 /* Idiomics_Local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Idiomics_Local.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E69A209E4FC969D99F3973C /* Pods-Idiomics.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Idiomics.release.xcconfig"; path = "Pods/Target Support Files/Pods-Idiomics/Pods-Idiomics.release.xcconfig"; sourceTree = "<group>"; };
 		7D5897EF81C07F7BC12EB047 /* libPods-Idiomics.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Idiomics.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -280,14 +288,10 @@
 				013AA2EC1A30F66B003DED61 /* Config.m */,
 				013AA2EF1A30F66B003DED61 /* Helper.h */,
 				013AA2F01A30F66B003DED61 /* Helper.m */,
-				013AA2F11A30F66B003DED61 /* PendingOperations.h */,
-				013AA2F21A30F66B003DED61 /* PendingOperations.m */,
-				013AA2F31A30F66B003DED61 /* ResizedPanelDownloader.h */,
-				013AA2F41A30F66B003DED61 /* ResizedPanelDownloader.m */,
-				013AA2ED1A30F66B003DED61 /* FullSizePanelDownloader.h */,
-				013AA2EE1A30F66B003DED61 /* FullSizePanelDownloader.m */,
 				013AA2DB1A30F66B003DED61 /* TransitionAnimator.h */,
 				013AA2DC1A30F66B003DED61 /* TransitionAnimator.m */,
+				015D59D61A37CEE50004F352 /* Operations */,
+				015D59E31A37CEED0004F352 /* Transformers */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -365,6 +369,30 @@
 				013AA3581A30F745003DED61 /* send@2x.png */,
 			);
 			path = icons;
+			sourceTree = "<group>";
+		};
+		015D59D61A37CEE50004F352 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				015D59D71A37CEE50004F352 /* FullSizePanelDownloader.h */,
+				015D59D81A37CEE50004F352 /* FullSizePanelDownloader.m */,
+				015D59D91A37CEE50004F352 /* PendingOperations.h */,
+				015D59DA1A37CEE50004F352 /* PendingOperations.m */,
+				015D59DB1A37CEE50004F352 /* ResizedPanelDownloader.h */,
+				015D59DC1A37CEE50004F352 /* ResizedPanelDownloader.m */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
+		015D59E31A37CEED0004F352 /* Transformers */ = {
+			isa = PBXGroup;
+			children = (
+				015D59E41A37CEED0004F352 /* ColorTransformer.h */,
+				015D59E51A37CEED0004F352 /* ColorTransformer.m */,
+				015D59E61A37CEED0004F352 /* RectTransformer.h */,
+				015D59E71A37CEED0004F352 /* RectTransformer.m */,
+			);
+			path = Transformers;
 			sourceTree = "<group>";
 		};
 		5A44181D8CDD5F553EB4E18C /* Frameworks */ = {
@@ -594,24 +622,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				013AA33B1A30F66B003DED61 /* PanelImageStore.m in Sources */,
+				015D59DF1A37CEE50004F352 /* PendingOperations.m in Sources */,
 				013AA3111A30F66B003DED61 /* PanelViewController.m in Sources */,
 				013AA30F1A30F66B003DED61 /* MMSViewController.m in Sources */,
 				013AA30B1A30F66B003DED61 /* AppDelegate.m in Sources */,
 				010EBEAA1A0E98270051EEBE /* MosaicCell.m in Sources */,
 				013AA3411A30F66B003DED61 /* Colors.m in Sources */,
+				015D59E81A37CEED0004F352 /* ColorTransformer.m in Sources */,
+				015D59EA1A37CEED0004F352 /* RectTransformer.m in Sources */,
 				013AA3291A30F66B003DED61 /* APIClient.m in Sources */,
 				013AA33D1A30F66B003DED61 /* PanelStore.m in Sources */,
 				013AA32B1A30F66B003DED61 /* Config.m in Sources */,
+				015D59DD1A37CEE50004F352 /* FullSizePanelDownloader.m in Sources */,
 				013AA30D1A30F66B003DED61 /* BrowserViewController.m in Sources */,
 				013AA32F1A30F66B003DED61 /* Helper.m in Sources */,
 				013AA3131A30F66B003DED61 /* TransitionAnimator.m in Sources */,
 				013AA3431A30F66B003DED61 /* Fonts.m in Sources */,
-				013AA3311A30F66B003DED61 /* PendingOperations.m in Sources */,
+				015D59E11A37CEE50004F352 /* ResizedPanelDownloader.m in Sources */,
 				013AA3371A30F66B003DED61 /* Balloon.m in Sources */,
 				013AA3451A30F66B003DED61 /* FocusOverlayView.m in Sources */,
 				013AA3391A30F66B003DED61 /* Panel.m in Sources */,
-				013AA3331A30F66B003DED61 /* ResizedPanelDownloader.m in Sources */,
-				013AA32D1A30F66B003DED61 /* FullSizePanelDownloader.m in Sources */,
 				013AA3471A30F66B003DED61 /* NavigationView.m in Sources */,
 				010EBEA91A0E98270051EEBE /* MosaicData.m in Sources */,
 				013AA3741A30F745003DED61 /* main.m in Sources */,
@@ -632,24 +662,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				013AA33C1A30F66B003DED61 /* PanelImageStore.m in Sources */,
+				015D59E01A37CEE50004F352 /* PendingOperations.m in Sources */,
 				013AA3121A30F66B003DED61 /* PanelViewController.m in Sources */,
 				013AA3101A30F66B003DED61 /* MMSViewController.m in Sources */,
 				013AA30C1A30F66B003DED61 /* AppDelegate.m in Sources */,
 				01D7BDD81A17E3E500C30CE2 /* MosaicCell.m in Sources */,
 				013AA3421A30F66B003DED61 /* Colors.m in Sources */,
+				015D59E91A37CEED0004F352 /* ColorTransformer.m in Sources */,
+				015D59EB1A37CEED0004F352 /* RectTransformer.m in Sources */,
 				013AA32A1A30F66B003DED61 /* APIClient.m in Sources */,
 				013AA33E1A30F66B003DED61 /* PanelStore.m in Sources */,
 				013AA32C1A30F66B003DED61 /* Config.m in Sources */,
+				015D59DE1A37CEE50004F352 /* FullSizePanelDownloader.m in Sources */,
 				013AA30E1A30F66B003DED61 /* BrowserViewController.m in Sources */,
 				013AA3301A30F66B003DED61 /* Helper.m in Sources */,
 				013AA3141A30F66B003DED61 /* TransitionAnimator.m in Sources */,
 				013AA3441A30F66B003DED61 /* Fonts.m in Sources */,
-				013AA3321A30F66B003DED61 /* PendingOperations.m in Sources */,
+				015D59E21A37CEE50004F352 /* ResizedPanelDownloader.m in Sources */,
 				013AA3381A30F66B003DED61 /* Balloon.m in Sources */,
 				013AA3461A30F66B003DED61 /* FocusOverlayView.m in Sources */,
 				013AA33A1A30F66B003DED61 /* Panel.m in Sources */,
-				013AA3341A30F66B003DED61 /* ResizedPanelDownloader.m in Sources */,
-				013AA32E1A30F66B003DED61 /* FullSizePanelDownloader.m in Sources */,
 				013AA3481A30F66B003DED61 /* NavigationView.m in Sources */,
 				01D7BDDC1A17E3E500C30CE2 /* MosaicData.m in Sources */,
 				013AA3751A30F745003DED61 /* main.m in Sources */,

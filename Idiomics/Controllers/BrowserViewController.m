@@ -115,6 +115,7 @@
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
+
 #pragma mark - Private methods
 
 - (void)loadAllPannels

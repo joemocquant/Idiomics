@@ -15,7 +15,6 @@
 #import "NavigationView.h"
 #import "MMSViewController.h"
 #import "FocusOverlayView.h"
-#import "Helper.h"
 #import <UIView+AutoLayout.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
