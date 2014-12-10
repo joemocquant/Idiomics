@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TrackingViewController.h"
 
 @class Panel;
 @class NavigationView;
 
-@interface PanelViewController : UIViewController <UIScrollViewDelegate, UITextViewDelegate>
+@interface PanelViewController : TrackingViewController <UIScrollViewDelegate, UITextViewDelegate>
 {
     Panel *panel;
     UIScrollView *panelScrollView;
@@ -25,8 +26,6 @@
     NSUInteger focus;
     NSMutableArray *focusOverlays;
     CGFloat keyboardOffset;
-    
-    NSDate *trackingIntervalStart;
 }
 
 - (instancetype)initWithPanel:(Panel *)p;

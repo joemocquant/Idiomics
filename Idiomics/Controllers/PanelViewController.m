@@ -135,26 +135,6 @@
     [panelScrollView setZoomScale:screenScale * ScaleFactor animated:YES];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    NSLog(@"here");
-    trackingIntervalStart = [NSDate date];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-     NSTimeInterval elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
-    
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_action"
-                                                         interval:@(elapsed)
-                                                             name:@"panel_edition"
-                                                            label:nil] build]];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

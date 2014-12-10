@@ -73,6 +73,8 @@
 		015D59E91A37CEED0004F352 /* ColorTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59E51A37CEED0004F352 /* ColorTransformer.m */; };
 		015D59EA1A37CEED0004F352 /* RectTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59E71A37CEED0004F352 /* RectTransformer.m */; };
 		015D59EB1A37CEED0004F352 /* RectTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59E71A37CEED0004F352 /* RectTransformer.m */; };
+		015D59EE1A37D2380004F352 /* TrackingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59ED1A37D2380004F352 /* TrackingViewController.m */; };
+		015D59EF1A37D2380004F352 /* TrackingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59ED1A37D2380004F352 /* TrackingViewController.m */; };
 		01D7BDD81A17E3E500C30CE2 /* MosaicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEA71A0E98270051EEBE /* MosaicCell.m */; };
 		01D7BDDC1A17E3E500C30CE2 /* MosaicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEA21A0E98270051EEBE /* MosaicData.m */; };
 		01D7BDDE1A17E3E500C30CE2 /* MosaicLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE9F1A0E98270051EEBE /* MosaicLayout.m */; };
@@ -158,6 +160,8 @@
 		015D59E51A37CEED0004F352 /* ColorTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorTransformer.m; sourceTree = "<group>"; };
 		015D59E61A37CEED0004F352 /* RectTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectTransformer.h; sourceTree = "<group>"; };
 		015D59E71A37CEED0004F352 /* RectTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectTransformer.m; sourceTree = "<group>"; };
+		015D59EC1A37D2380004F352 /* TrackingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingViewController.h; sourceTree = "<group>"; };
+		015D59ED1A37D2380004F352 /* TrackingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingViewController.m; sourceTree = "<group>"; };
 		01D7BDF31A17E3E500C30CE2 /* Idiomics_Local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Idiomics_Local.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E69A209E4FC969D99F3973C /* Pods-Idiomics.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Idiomics.release.xcconfig"; path = "Pods/Target Support Files/Pods-Idiomics/Pods-Idiomics.release.xcconfig"; sourceTree = "<group>"; };
 		7D5897EF81C07F7BC12EB047 /* libPods-Idiomics.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Idiomics.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -269,6 +273,8 @@
 		013AA2D41A30F66B003DED61 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				015D59EC1A37D2380004F352 /* TrackingViewController.h */,
+				015D59ED1A37D2380004F352 /* TrackingViewController.m */,
 				013AA2D51A30F66B003DED61 /* BrowserViewController.h */,
 				013AA2D61A30F66B003DED61 /* BrowserViewController.m */,
 				013AA2D91A30F66B003DED61 /* PanelViewController.h */,
@@ -478,8 +484,9 @@
 		010EBE001A0C07FB0051EEBE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = "";
 				LastUpgradeCheck = 0610;
-				ORGANIZATIONNAME = Stripchat;
+				ORGANIZATIONNAME = Idiomics;
 				TargetAttributes = {
 					010EBE071A0C07FB0051EEBE = {
 						CreatedOnToolsVersion = 6.1;
@@ -624,6 +631,7 @@
 				013AA33B1A30F66B003DED61 /* PanelImageStore.m in Sources */,
 				015D59DF1A37CEE50004F352 /* PendingOperations.m in Sources */,
 				013AA3111A30F66B003DED61 /* PanelViewController.m in Sources */,
+				015D59EE1A37D2380004F352 /* TrackingViewController.m in Sources */,
 				013AA30F1A30F66B003DED61 /* MMSViewController.m in Sources */,
 				013AA30B1A30F66B003DED61 /* AppDelegate.m in Sources */,
 				010EBEAA1A0E98270051EEBE /* MosaicCell.m in Sources */,
@@ -664,6 +672,7 @@
 				013AA33C1A30F66B003DED61 /* PanelImageStore.m in Sources */,
 				015D59E01A37CEE50004F352 /* PendingOperations.m in Sources */,
 				013AA3121A30F66B003DED61 /* PanelViewController.m in Sources */,
+				015D59EF1A37D2380004F352 /* TrackingViewController.m in Sources */,
 				013AA3101A30F66B003DED61 /* MMSViewController.m in Sources */,
 				013AA30C1A30F66B003DED61 /* AppDelegate.m in Sources */,
 				01D7BDD81A17E3E500C30CE2 /* MosaicCell.m in Sources */,

@@ -52,26 +52,6 @@
     [cv pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    trackingIntervalStart = [NSDate date];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    NSTimeInterval elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
-    
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_action"
-                                                         interval:@(elapsed)
-                                                             name:@"browse"
-                                                            label:nil] build]];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
