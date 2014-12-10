@@ -75,6 +75,8 @@
 		015D59EB1A37CEED0004F352 /* RectTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59E71A37CEED0004F352 /* RectTransformer.m */; };
 		015D59EE1A37D2380004F352 /* TrackingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59ED1A37D2380004F352 /* TrackingViewController.m */; };
 		015D59EF1A37D2380004F352 /* TrackingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59ED1A37D2380004F352 /* TrackingViewController.m */; };
+		015D59F21A37E42A0004F352 /* BalloonsOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59F11A37E42A0004F352 /* BalloonsOverlay.m */; };
+		015D59F31A37E42A0004F352 /* BalloonsOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59F11A37E42A0004F352 /* BalloonsOverlay.m */; };
 		01D7BDD81A17E3E500C30CE2 /* MosaicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEA71A0E98270051EEBE /* MosaicCell.m */; };
 		01D7BDDC1A17E3E500C30CE2 /* MosaicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBEA21A0E98270051EEBE /* MosaicData.m */; };
 		01D7BDDE1A17E3E500C30CE2 /* MosaicLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EBE9F1A0E98270051EEBE /* MosaicLayout.m */; };
@@ -94,7 +96,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		010EBE081A0C07FB0051EEBE /* idiomics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = idiomics.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		010EBE081A0C07FB0051EEBE /* Idiomics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Idiomics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		010EBE211A0C07FB0051EEBE /* IdiomicsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IdiomicsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		010EBE9E1A0E98270051EEBE /* MosaicLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicLayout.h; sourceTree = "<group>"; };
 		010EBE9F1A0E98270051EEBE /* MosaicLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicLayout.m; sourceTree = "<group>"; };
@@ -162,10 +164,12 @@
 		015D59E71A37CEED0004F352 /* RectTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RectTransformer.m; sourceTree = "<group>"; };
 		015D59EC1A37D2380004F352 /* TrackingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingViewController.h; sourceTree = "<group>"; };
 		015D59ED1A37D2380004F352 /* TrackingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingViewController.m; sourceTree = "<group>"; };
+		015D59F01A37E42A0004F352 /* BalloonsOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalloonsOverlay.h; sourceTree = "<group>"; };
+		015D59F11A37E42A0004F352 /* BalloonsOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BalloonsOverlay.m; sourceTree = "<group>"; };
 		01D7BDF31A17E3E500C30CE2 /* Idiomics_Local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Idiomics_Local.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3E69A209E4FC969D99F3973C /* Pods-Idiomics.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Idiomics.release.xcconfig"; path = "Pods/Target Support Files/Pods-Idiomics/Pods-Idiomics.release.xcconfig"; sourceTree = "<group>"; };
+		6C396B74B2D02B54D222D227 /* Pods-Idiomics.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Idiomics.release.xcconfig"; path = "Pods/Target Support Files/Pods-Idiomics/Pods-Idiomics.release.xcconfig"; sourceTree = "<group>"; };
 		7D5897EF81C07F7BC12EB047 /* libPods-Idiomics.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Idiomics.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F3EF9390006C94F0D2952F9 /* Pods-Idiomics.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Idiomics.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Idiomics/Pods-Idiomics.debug.xcconfig"; sourceTree = "<group>"; };
+		9E337EF48D37EFBB00672C43 /* Pods-Idiomics.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Idiomics.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Idiomics/Pods-Idiomics.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,7 +203,6 @@
 		010EBDFF1A0C07FB0051EEBE = {
 			isa = PBXGroup;
 			children = (
-				010EBE9C1A0E98270051EEBE /* MosaicLayout */,
 				013AA2D11A30F66B003DED61 /* Idiomics */,
 				013AA3511A30F745003DED61 /* Supporting Files */,
 				013AA3491A30F67A003DED61 /* IdiomicsTests */,
@@ -212,7 +215,7 @@
 		010EBE091A0C07FB0051EEBE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				010EBE081A0C07FB0051EEBE /* idiomics.app */,
+				010EBE081A0C07FB0051EEBE /* Idiomics.app */,
 				010EBE211A0C07FB0051EEBE /* IdiomicsTests.xctest */,
 				01D7BDF31A17E3E500C30CE2 /* Idiomics_Local.app */,
 			);
@@ -226,7 +229,8 @@
 				010EBEA01A0E98270051EEBE /* Entities */,
 				010EBEA51A0E98270051EEBE /* Views */,
 			);
-			path = MosaicLayout;
+			name = MosaicLayout;
+			path = ../../MosaicLayout;
 			sourceTree = "<group>";
 		};
 		010EBE9D1A0E98270051EEBE /* Controllers */ = {
@@ -259,10 +263,9 @@
 		013AA2D11A30F66B003DED61 /* Idiomics */ = {
 			isa = PBXGroup;
 			children = (
-				013AA3011A30F66B003DED61 /* StyleGuide */,
-				013AA2E81A30F66B003DED61 /* Libs */,
 				013AA2D21A30F66B003DED61 /* AppDelegate.h */,
 				013AA2D31A30F66B003DED61 /* AppDelegate.m */,
+				013AA2E81A30F66B003DED61 /* Libs */,
 				013AA2D41A30F66B003DED61 /* Controllers */,
 				013AA2F61A30F66B003DED61 /* Models */,
 				013AA3061A30F66B003DED61 /* Views */,
@@ -288,6 +291,10 @@
 		013AA2E81A30F66B003DED61 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				010EBE9C1A0E98270051EEBE /* MosaicLayout */,
+				013AA3011A30F66B003DED61 /* StyleGuide */,
+				015D59D61A37CEE50004F352 /* Operations */,
+				015D59E31A37CEED0004F352 /* Transformers */,
 				013AA2E91A30F66B003DED61 /* APIClient.h */,
 				013AA2EA1A30F66B003DED61 /* APIClient.m */,
 				013AA2EB1A30F66B003DED61 /* Config.h */,
@@ -296,8 +303,6 @@
 				013AA2F01A30F66B003DED61 /* Helper.m */,
 				013AA2DB1A30F66B003DED61 /* TransitionAnimator.h */,
 				013AA2DC1A30F66B003DED61 /* TransitionAnimator.m */,
-				015D59D61A37CEE50004F352 /* Operations */,
-				015D59E31A37CEED0004F352 /* Transformers */,
 			);
 			path = Libs;
 			sourceTree = "<group>";
@@ -325,7 +330,8 @@
 				013AA3041A30F66B003DED61 /* Fonts.h */,
 				013AA3051A30F66B003DED61 /* Fonts.m */,
 			);
-			path = StyleGuide;
+			name = StyleGuide;
+			path = ../StyleGuide;
 			sourceTree = "<group>";
 		};
 		013AA3061A30F66B003DED61 /* Views */ = {
@@ -333,6 +339,8 @@
 			children = (
 				013AA3071A30F66B003DED61 /* FocusOverlayView.h */,
 				013AA3081A30F66B003DED61 /* FocusOverlayView.m */,
+				015D59F01A37E42A0004F352 /* BalloonsOverlay.h */,
+				015D59F11A37E42A0004F352 /* BalloonsOverlay.m */,
 				013AA3091A30F66B003DED61 /* NavigationView.h */,
 				013AA30A1A30F66B003DED61 /* NavigationView.m */,
 			);
@@ -413,8 +421,8 @@
 		FD69EDC324BD24993A69A423 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				8F3EF9390006C94F0D2952F9 /* Pods-Idiomics.debug.xcconfig */,
-				3E69A209E4FC969D99F3973C /* Pods-Idiomics.release.xcconfig */,
+				9E337EF48D37EFBB00672C43 /* Pods-Idiomics.debug.xcconfig */,
+				6C396B74B2D02B54D222D227 /* Pods-Idiomics.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -438,7 +446,7 @@
 			);
 			name = Idiomics;
 			productName = Stripchat;
-			productReference = 010EBE081A0C07FB0051EEBE /* idiomics.app */;
+			productReference = 010EBE081A0C07FB0051EEBE /* Idiomics.app */;
 			productType = "com.apple.product-type.application";
 		};
 		010EBE201A0C07FB0051EEBE /* IdiomicsTests */ = {
@@ -641,6 +649,7 @@
 				013AA3291A30F66B003DED61 /* APIClient.m in Sources */,
 				013AA33D1A30F66B003DED61 /* PanelStore.m in Sources */,
 				013AA32B1A30F66B003DED61 /* Config.m in Sources */,
+				015D59F21A37E42A0004F352 /* BalloonsOverlay.m in Sources */,
 				015D59DD1A37CEE50004F352 /* FullSizePanelDownloader.m in Sources */,
 				013AA30D1A30F66B003DED61 /* BrowserViewController.m in Sources */,
 				013AA32F1A30F66B003DED61 /* Helper.m in Sources */,
@@ -682,6 +691,7 @@
 				013AA32A1A30F66B003DED61 /* APIClient.m in Sources */,
 				013AA33E1A30F66B003DED61 /* PanelStore.m in Sources */,
 				013AA32C1A30F66B003DED61 /* Config.m in Sources */,
+				015D59F31A37E42A0004F352 /* BalloonsOverlay.m in Sources */,
 				015D59DE1A37CEE50004F352 /* FullSizePanelDownloader.m in Sources */,
 				013AA30E1A30F66B003DED61 /* BrowserViewController.m in Sources */,
 				013AA3301A30F66B003DED61 /* Helper.m in Sources */,
@@ -743,7 +753,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -778,7 +788,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -787,7 +797,7 @@
 		};
 		010EBE2C1A0C07FB0051EEBE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8F3EF9390006C94F0D2952F9 /* Pods-Idiomics.debug.xcconfig */;
+			baseConfigurationReference = 9E337EF48D37EFBB00672C43 /* Pods-Idiomics.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -795,9 +805,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = "Idiomics/Supporting Files/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Idiomics/Supporting Files/Idiomics-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = idiomics;
+				PRODUCT_NAME = Idiomics;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -805,7 +815,7 @@
 		};
 		010EBE2D1A0C07FB0051EEBE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3E69A209E4FC969D99F3973C /* Pods-Idiomics.release.xcconfig */;
+			baseConfigurationReference = 6C396B74B2D02B54D222D227 /* Pods-Idiomics.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -813,9 +823,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = "Idiomics/Supporting Files/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Idiomics/Supporting Files/Idiomics-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = idiomics;
+				PRODUCT_NAME = Idiomics;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -861,6 +871,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				GCC_PREFIX_HEADER = Stripchat/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Idiomics/Supporting Files/Idiomics_Local-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Idiomics_Local;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -873,6 +884,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				GCC_PREFIX_HEADER = Stripchat/PrefixHeader.pch;
 				INFOPLIST_FILE = "$(SRCROOT)/Idiomics/Supporting Files/Idiomics_Local-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Idiomics_Local;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -8,7 +8,6 @@
 
 #import "PanelViewController.h"
 #import "Colors.h"
-#import "Fonts.h"
 #import "Panel.h"
 #import "Balloon.h"
 #import "PanelImageStore.h"
@@ -63,7 +62,7 @@
         CGRect screen = [[UIScreen mainScreen] bounds];
         
         if (UIInterfaceOrientationIsPortrait(orientation)) {
-            //[self.view setFrame:CGRectMake(0, 0, CGRectGetWidth(screen), CGRectGetHeight(screen))];
+            [self.view setFrame:CGRectMake(0, 0, CGRectGetWidth(screen), CGRectGetHeight(screen))];
         } else {
             [self.view setFrame:CGRectMake(0, 0, CGRectGetHeight(screen), CGRectGetWidth(screen))];
         }
@@ -128,53 +127,40 @@
     [panelImageView setCenter:CGPointMake(contentSize.width / 2, contentSize.height / 2)];
     [panelView addSubview:panelImageView];
     
-    [self setupSpeechBalloons];
+    balloonsOverlay = [[BalloonsOverlay alloc] initWithBalloons:panel.balloons];
+    [balloonsOverlay setFrame:panelImageView.frame];
+    [balloonsOverlay setDelegate:self];
+    [panelView addSubview:balloonsOverlay];
+    
     [self setupNavigationView];
-    [self setupScalesWithContentSize:panelScrollView.contentSize];
+    [self updateScalesWithContentSize:panelScrollView.contentSize];
     
     [panelScrollView setZoomScale:screenScale * ScaleFactor animated:YES];
+}
+
+- (void)setupNavigationView
+{
+    navigationView = [NavigationView new];
+    
+    [[navigationView cancel] addTarget:self action:@selector(back)
+                      forControlEvents:UIControlEventTouchUpInside];
+    [[navigationView send] addTarget:self action:@selector(sendMessage)
+                    forControlEvents:UIControlEventTouchUpInside];
+    
+    if (![balloonsOverlay.speechBalloonsLabel count]) {
+        [navigationView setIsEdited:YES];
+    } else {
+        [navigationView setAlpha:0.0];
+    }
+    
+    [self.view addSubview:navigationView];
+    [self setInputAccessoryView:navigationView];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - UITextViewDelegate
-
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
-{
-    NSLog(@"a");
-    return YES;
-}
-
-- (void)textViewDidBeginEditing:(UITextView *)textView
-{
-    NSLog(@"b");
-}
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    NSLog(@"range: %lu %lu with text <%@>", (unsigned long)range.location, (unsigned long)range.length, text);
-    
-    return YES;
-}
-
-- (void)textViewDidChange:(UITextView *)textView
-{
-    UILabel *currentLabel = [speechBalloonsLabel objectAtIndex:focus];
-    [currentLabel setText:textView.text];
-    
-    navigationView.isEdited = NO;
-    [speechBalloonsLabel enumerateObjectsUsingBlock:^(UILabel *obj, NSUInteger idx, BOOL *stop) {
-        if (obj.text && ![obj.text isEqualToString:@""]) {
-            navigationView.isEdited = YES;
-            *stop = YES;
-        }
-    }];
-    
-    [navigationView updateVisibility];
 }
 
 
@@ -190,16 +176,16 @@
         if (CGRectContainsPoint([balloon rect], location)) {
             //Balloon tapped
             focus = idx;
-            
-            if ([[speechBalloons objectAtIndex:idx] isFirstResponder]) {
+
+            if ([[balloonsOverlay.speechBalloons objectAtIndex:idx] isFirstResponder]) {
                 //Current balloon with focus
                 *stop = YES;
                 
             } else {
                 //Other balloon
                 [navigationView updateVisibility];
-                [focusOverlays[focus] setAlpha:AlphaFocusForeground];
-                [[speechBalloons objectAtIndex:idx] becomeFirstResponder];
+                [balloonsOverlay.focusOverlays[focus] setAlpha:AlphaFocusForeground];
+                [[balloonsOverlay.speechBalloons objectAtIndex:idx] becomeFirstResponder];
 
                 foundBalloon = YES;
             }
@@ -216,7 +202,7 @@
             [self resizeScrollView];
             
             [self updateBalloonOverlaysVisibility];
-            [[speechBalloons objectAtIndex:focus] resignFirstResponder];
+            [[balloonsOverlay.speechBalloons objectAtIndex:focus] resignFirstResponder];
 
             focus = -1;
             
@@ -296,7 +282,7 @@
     [panelScrollView setContentSize:CGSizeMake(panelImageView.frame.size.width + 2 * Gutter,
                                                panelImageView.frame.size.height + 2 * Gutter)];
     
-    [self setupScalesWithContentSize:panelScrollView.contentSize];
+    [self updateScalesWithContentSize:panelScrollView.contentSize];
     
     if (panelScrollView.zoomScale < panelScrollView.minimumZoomScale) {
         //[panelScrollView setZoomScale:panelScrollView.minimumZoomScale animated:YES]; //screen bug
@@ -315,7 +301,7 @@
         [panelScrollView setContentSize:CGSizeMake(panelImageView.frame.size.width + 2 * Gutter,
                                                    panelImageView.frame.size.height + 2 * Gutter)];
         
-        [self setupScalesWithContentSize:panelScrollView.contentSize];
+        [self updateScalesWithContentSize:panelScrollView.contentSize];
         
         if (panelScrollView.zoomScale < panelScrollView.minimumZoomScale) {
             [panelScrollView setZoomScale:panelScrollView.minimumZoomScale animated:YES];
@@ -405,6 +391,25 @@
 }
 
 
+#pragma mark - BalloonOverlayDelegate
+
+- (void)balloonContentDidChangedWithText:(NSString *)text
+{
+    UILabel *currentLabel = [balloonsOverlay.speechBalloonsLabel objectAtIndex:focus];
+    [currentLabel setText:text];
+    
+    navigationView.isEdited = NO;
+    [balloonsOverlay.speechBalloonsLabel enumerateObjectsUsingBlock:^(UILabel *obj, NSUInteger idx, BOOL *stop) {
+        if (obj.text && ![obj.text isEqualToString:@""]) {
+            navigationView.isEdited = YES;
+            *stop = YES;
+        }
+    }];
+    
+    [navigationView updateVisibility];
+}
+
+
 #pragma mark - Private methods
 
 - (void)updateBalloonOverlaysVisibility
@@ -412,71 +417,15 @@
     [UIView animateWithDuration:NavigationControlDuration animations:^{
         
         if ((navigationView.alpha) && (navigationView.isEdited)) {
-            for (UIView *focusOverlay in focusOverlays) {
+            for (UIView *focusOverlay in balloonsOverlay.focusOverlays) {
                 [focusOverlay setAlpha:0.0];
             }
         } else {
-            for (UIView *focusOverlay in focusOverlays) {
+            for (UIView *focusOverlay in balloonsOverlay.focusOverlays) {
                 [focusOverlay setAlpha:AlphaFocusBackground];
             }
         }
     }];
-}
-
-- (void)setupSpeechBalloons
-{
-    speechBalloons = [NSMutableArray array];
-    speechBalloonsLabel = [NSMutableArray array];
-    focusOverlays = [NSMutableArray array];
-    
-    for (Balloon *balloon in panel.balloons) {
-        CGRect balloonRect = [balloon rect];
-        
-        UITextView *balloonTextView = [UITextView new];
-        //UITextView
-        [panelImageView addSubview:balloonTextView];
-        
-        //[balloonTextView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        //[balloonTextView constrainToSize:balloonRect.size];
-        
-        //[balloonTextView pinEdges:JRTViewPinLeftEdge toSameEdgesOfView:panelImageView inset:balloonRect.origin.x];
-        //[balloonTextView pinEdges:JRTViewPinTopEdge toSameEdgesOfView:panelImageView inset:balloonRect.origin.y];
-        
-        [balloonTextView setTextAlignment:NSTextAlignmentCenter];
-        [balloonTextView setFont:[Fonts laffayetteComicPro30]];
-        [balloonTextView setTextColor:[Colors gray5]];
-        [balloonTextView setTintColor:[Colors gray5]];
-        [balloonTextView setBackgroundColor:[Colors clear]];
-        
-        [balloonTextView setDelegate:self];
-        
-        //UILabel
-        UILabel *balloonLabel = [UILabel new];
-        [balloonLabel setAdjustsFontSizeToFitWidth:YES];
-        //
-        
-        [speechBalloons addObject:balloonTextView];
-        
-        FocusOverlayView *fov = [[FocusOverlayView alloc] init];
-        [fov setFrame:balloonRect];
-        [panelImageView addSubview:fov];
-        [focusOverlays addObject:fov];
-        
-        //UILabel
-        [balloonLabel setAdjustsFontSizeToFitWidth:YES];
-        [balloonLabel setNumberOfLines:0];
-        [balloonLabel setFrame:balloonRect];
-        [panelImageView addSubview:balloonLabel];
-        [speechBalloonsLabel addObject:balloonLabel];
-        [balloonLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [balloonLabel constrainToSize:balloonRect.size];
-        
-        [balloonLabel pinEdges:JRTViewPinLeftEdge toSameEdgesOfView:panelImageView inset:balloonRect.origin.x];
-        [balloonLabel pinEdges:JRTViewPinTopEdge toSameEdgesOfView:panelImageView inset:balloonRect.origin.y];
-        [balloonLabel setTextAlignment:NSTextAlignmentCenter];
-        [balloonLabel setFont:[Fonts laffayetteComicPro30]];
-        [balloonLabel setTextColor:[Colors gray5]];
-    }
 }
 
 - (void)resizeScrollView
@@ -486,7 +435,7 @@
         [self centerScrollViewContentsBeforeRotation:NO];
         CGSize size = CGSizeMake(panelImageView.frame.size.width + 2 * Gutter,
                                  panelImageView.frame.size.height + 2 * Gutter);
-        [self setupScalesWithContentSize:size];
+        [self updateScalesWithContentSize:size];
         
         if (keyboardOffset) {
             
@@ -508,7 +457,7 @@
 
 - (void)focusOnBalloon
 {
-    CGRect balloon = [[speechBalloons objectAtIndex:focus] frame];
+    CGRect balloon = [[balloonsOverlay.speechBalloons objectAtIndex:focus] frame];
     CGRect balloonInView = [self.view convertRect:balloon fromView:panelImageView];
     
     CGFloat y = balloonInView.origin.y + balloonInView.size.height;
@@ -525,7 +474,7 @@
     }
 }
 
--(void)setupScalesWithContentSize:(CGSize)contentSize
+-(void)updateScalesWithContentSize:(CGSize)contentSize
 {
     // Set up the minimum & maximum zoom scales
 
@@ -554,33 +503,14 @@
     [panelScrollView setMaximumZoomScale:minScale * MaxZoomScaleFactor];
 }
 
-- (void)setupNavigationView
-{
-    navigationView = [NavigationView new];
-
-    [[navigationView cancel] addTarget:self action:@selector(back)
-                             forControlEvents:UIControlEventTouchUpInside];
-    [[navigationView send] addTarget:self action:@selector(sendMessage)
-                           forControlEvents:UIControlEventTouchUpInside];
-    
-    if (![speechBalloonsLabel count]) {
-        [navigationView setIsEdited:YES];
-    } else {
-        [navigationView setAlpha:0.0];
-    }
-    
-    [self.view addSubview:navigationView];
-    [self setInputAccessoryView:navigationView];
-}
-
 - (void)back
 {
     if (focus != -1) {
         keyboardOffset = 0.0;
         [self resizeScrollView];
         
-        [focusOverlays[focus] setAlpha:AlphaFocusBackground];
-        [[speechBalloons objectAtIndex:focus] resignFirstResponder];
+        [balloonsOverlay.focusOverlays[focus] setAlpha:AlphaFocusBackground];
+        [[balloonsOverlay.speechBalloons objectAtIndex:focus] resignFirstResponder];
         
         focus = -1;
         
@@ -608,9 +538,9 @@
         keyboardOffset = 0.0;
         [self resizeScrollView];
         
-        [[speechBalloons objectAtIndex:focus] resignFirstResponder];
+        [[balloonsOverlay.speechBalloons objectAtIndex:focus] resignFirstResponder];
         
-        for (UIView *focusOverlay in focusOverlays) {
+        for (UIView *focusOverlay in balloonsOverlay.focusOverlays) {
             [focusOverlay setAlpha:0.0];
         }
         
