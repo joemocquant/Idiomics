@@ -12,9 +12,8 @@
 
 @property (nonatomic, strong) UIButton *cancel;
 @property (nonatomic, strong) UIButton *send;
-@property (nonatomic, assign) BOOL isEdited;
 
-- (void)toggleVisibility;
-- (void)updateVisibility;
+- (void)toggleVisibilityWithEdited:(BOOL)edited;
+- (void)updateVisibilityWithEdited:(BOOL)edited;
 
 @end

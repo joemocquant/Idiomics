@@ -43,33 +43,32 @@
     return self;
 }
 
-- (void)toggleVisibility
+- (void)toggleVisibilityWithEdited:(BOOL)edited
 {
     [UIView animateWithDuration:NavigationControlDuration animations:^{
-
+        
         if (self.alpha) {
             [super setAlpha:0.0];
         } else {
-            if ([self isEdited]) {
+            if (edited) {
                 [super setAlpha:1.0];
             }
         }
     }];
 }
 
-- (void)updateVisibility
+- (void)updateVisibilityWithEdited:(BOOL)edited
 {
-    if (!self.alpha && self.isEdited) {
-        [self toggleVisibility];
-    } else if (self.alpha && !self.isEdited) {
-        [self toggleVisibility];
+    if (!self.alpha && edited) {
+        [self toggleVisibilityWithEdited:edited];
+    } else if (self.alpha && !edited) {
+        [self toggleVisibilityWithEdited:edited];
     }
 }
 
 //Avoid iOS to change Alpha during rotation or other events
 - (void)setAlpha:(CGFloat)alpha
 {
-    [self updateVisibility];
 }
 
 @end

@@ -9,6 +9,7 @@
 #import "Panel.h"
 #import "Balloon.h"
 #import "PanelImageStore.h"
+#import "ColorTransformer.h"
 #import <ReactiveCocoa.h>
 
 @interface Panel ()
@@ -23,6 +24,16 @@
 
 @implementation Panel
 
+
+#pragma mark - Lifecycle
+
++ (void)initialize
+{
+    if (self == Panel.class) {
+        ColorTransformer *transformer = [ColorTransformer new];
+        [NSValueTransformer setValueTransformer:transformer forName:ColorTransformerName];
+    }
+}
 
 #pragma mark - MTLJSONSerializing
 
@@ -57,30 +68,7 @@
 
 + (NSValueTransformer *)averageColorJSONTransformer
 {
-    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSString *rgb) {
-        
-        NSScanner *scanner = [NSScanner scannerWithString:rgb];
-        NSString *junk, *red, *green, *blue;
-        [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&junk];
-        [scanner scanUpToCharactersFromSet:[NSCharacterSet punctuationCharacterSet] intoString:&red];
-        [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&junk];
-        [scanner scanUpToCharactersFromSet:[NSCharacterSet punctuationCharacterSet] intoString:&green];
-        [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&junk];
-        [scanner scanUpToCharactersFromSet:[NSCharacterSet punctuationCharacterSet] intoString:&blue];
-        
-        UIColor *averageColor = [UIColor colorWithRed:red.intValue/255.0
-                                                green:green.intValue/255.0
-                                                 blue:blue.intValue/255.0
-                                                alpha:1.0];
-        return averageColor;
-        
-    } reverseBlock:^id(UIColor *averageColor) {
-        
-        CGFloat red, green, blue, alpha;
-        [averageColor getRed: &red green: &green blue: &blue alpha: &alpha];
-        
-        return [NSString stringWithFormat:@"rgb(%d, %d, %d)", (unsigned int)red, (unsigned int)green, (unsigned int)blue];
-    }];
+    return [MTLValueTransformer valueTransformerForName:ColorTransformerName];
 }
 
 

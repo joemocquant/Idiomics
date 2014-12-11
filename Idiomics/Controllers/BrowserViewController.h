@@ -7,16 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TrackingViewController.h"
 #import "MosaicLayout.h"
 #import "PendingOperations.h"
 
 @class MosaicCell;
 
-@interface BrowserViewController : UIViewController <MosaicLayoutDelegate,
-                                                     UICollectionViewDelegate,
-                                                     UICollectionViewDataSource,
-                                                     PendingOperationsDelegate,
-                                                     UIViewControllerTransitioningDelegate>
+@interface BrowserViewController : TrackingViewController <MosaicLayoutDelegate,
+                                                           UICollectionViewDelegate,
+                                                           UICollectionViewDataSource,
+                                                           PendingOperationsDelegate,
+                                                           UIViewControllerTransitioningDelegate>
 {
     PendingOperations *pendingOperations;
     
@@ -27,8 +28,6 @@
     CGPoint lastOffset;
     NSTimeInterval lastOffsetTime;
     BOOL isScrollingFast;
-
-    NSDate *trackingIntervalStart;
 }
 
 @end

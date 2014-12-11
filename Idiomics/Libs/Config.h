@@ -48,6 +48,10 @@ extern const CGFloat FocusInset;
 extern const CGFloat AlphaFocusForeground;
 extern const CGFloat AlphaFocusBackground;
 
+//Transformers
+extern NSString *const ColorTransformerName;
+extern NSString *const RectTransformerName;
+
 //Versions
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
 #define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
