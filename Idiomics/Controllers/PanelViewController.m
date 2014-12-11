@@ -10,10 +10,10 @@
 #import "Colors.h"
 #import "Panel.h"
 #import "Balloon.h"
+#import "BalloonsOverlay.h"
 #import "PanelImageStore.h"
 #import "NavigationView.h"
 #import "MMSViewController.h"
-#import "FocusOverlayView.h"
 #import <UIView+AutoLayout.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
@@ -40,11 +40,15 @@
     
     if (self) {
         panel = p;
-        focus = -1;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:)
                                                      name:UIKeyboardWillShowNotification
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWillHide:)
+                                                     name:UIKeyboardWillHideNotification
                                                    object:nil];
     }
     
@@ -75,20 +79,12 @@
     [panelScrollView setShowsHorizontalScrollIndicator:NO];
     [panelScrollView setShowsVerticalScrollIndicator:NO];
     
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                action:@selector(PanelScrollViewTappedOnce:)];
-    [singleTap setNumberOfTapsRequired:1];
-    [singleTap setNumberOfTouchesRequired:1];
-    
-    [panelScrollView addGestureRecognizer:singleTap];
-    
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                action:@selector(PanelScrollViewTappedTwice:)];
+                                                                                action:@selector(panelScrollViewTappedTwice:)];
     [doubleTap setNumberOfTapsRequired:2];
     [doubleTap setNumberOfTouchesRequired:1];
     
     [panelScrollView addGestureRecognizer:doubleTap];
-    [singleTap requireGestureRecognizerToFail:doubleTap];
     [panelScrollView setUserInteractionEnabled:YES];
     
     [self panelScrollViewSetFrameBeforeRotation:NO];
@@ -129,8 +125,14 @@
     
     balloonsOverlay = [[BalloonsOverlay alloc] initWithBalloons:panel.balloons];
     [balloonsOverlay setFrame:panelImageView.frame];
-    [balloonsOverlay setDelegate:self];
     [panelView addSubview:balloonsOverlay];
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:balloonsOverlay
+                                                                                action:@selector(balloonsOverlayTappedOnce:)];
+    [singleTap setNumberOfTapsRequired:1];
+    [singleTap setNumberOfTouchesRequired:1];
+    [singleTap requireGestureRecognizerToFail:doubleTap];
+    [panelScrollView addGestureRecognizer:singleTap];
     
     [self setupNavigationView];
     [self updateScalesWithContentSize:panelScrollView.contentSize];
@@ -140,21 +142,16 @@
 
 - (void)setupNavigationView
 {
-    navigationView = [NavigationView new];
+    NavigationView *navigationView = [NavigationView new];
     
     [[navigationView cancel] addTarget:self action:@selector(back)
                       forControlEvents:UIControlEventTouchUpInside];
     [[navigationView send] addTarget:self action:@selector(sendMessage)
                     forControlEvents:UIControlEventTouchUpInside];
     
-    if (![balloonsOverlay.speechBalloonsLabel count]) {
-        [navigationView setIsEdited:YES];
-    } else {
-        [navigationView setAlpha:0.0];
-    }
-    
     [self.view addSubview:navigationView];
     [self setInputAccessoryView:navigationView];
+    [balloonsOverlay setNavigationView:navigationView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -166,66 +163,7 @@
 
 #pragma mark - Gestures
 
-- (void)PanelScrollViewTappedOnce:(UIGestureRecognizer *)gestureRecognizer
-{
-    CGPoint location = [gestureRecognizer locationInView:panelImageView];
-    __block BOOL foundBalloon = NO;
-    
-    [panel.balloons enumerateObjectsUsingBlock:^(Balloon *balloon, NSUInteger idx, BOOL *stop) {
-        
-        if (CGRectContainsPoint([balloon rect], location)) {
-            //Balloon tapped
-            focus = idx;
-
-            if ([[balloonsOverlay.speechBalloons objectAtIndex:idx] isFirstResponder]) {
-                //Current balloon with focus
-                *stop = YES;
-                
-            } else {
-                //Other balloon
-                [navigationView updateVisibility];
-                [balloonsOverlay.focusOverlays[focus] setAlpha:AlphaFocusForeground];
-                [[balloonsOverlay.speechBalloons objectAtIndex:idx] becomeFirstResponder];
-
-                foundBalloon = YES;
-            }
-        }
-    }];
-    
-    if (!foundBalloon) {
-        //Other part was tapped
-        
-        if (focus != -1) {
-            //during editing
-    
-            keyboardOffset = 0.0;
-            [self resizeScrollView];
-            
-            [self updateBalloonOverlaysVisibility];
-            [[balloonsOverlay.speechBalloons objectAtIndex:focus] resignFirstResponder];
-
-            focus = -1;
-            
-        } else {
-            //during preview
-
-            if (CGRectContainsPoint(panelImageView.frame, location)) {
-                //in panel
-                
-                [navigationView toggleVisibility];
-                [self performSelector:@selector(updateBalloonOverlaysVisibility)
-                           withObject:nil
-                           afterDelay:NavigationControlDuration];
-                
-            } else {
-                //outside
-                [self back];
-            }
-        }
-    }
-}
-
-- (void)PanelScrollViewTappedTwice:(UIGestureRecognizer *)gestureRecognizer
+- (void)panelScrollViewTappedTwice:(UIGestureRecognizer *)gestureRecognizer
 {
     [UIView animateWithDuration:ZoomDuration animations:^{
         if ([panelScrollView zoomScale] < screenScale) {
@@ -240,6 +178,12 @@
 
 
 #pragma mark - Keyboard notification
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    keyboardOffset = 0.0;
+    [self resizeScrollView];
+}
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
@@ -391,42 +335,7 @@
 }
 
 
-#pragma mark - BalloonOverlayDelegate
-
-- (void)balloonContentDidChangedWithText:(NSString *)text
-{
-    UILabel *currentLabel = [balloonsOverlay.speechBalloonsLabel objectAtIndex:focus];
-    [currentLabel setText:text];
-    
-    navigationView.isEdited = NO;
-    [balloonsOverlay.speechBalloonsLabel enumerateObjectsUsingBlock:^(UILabel *obj, NSUInteger idx, BOOL *stop) {
-        if (obj.text && ![obj.text isEqualToString:@""]) {
-            navigationView.isEdited = YES;
-            *stop = YES;
-        }
-    }];
-    
-    [navigationView updateVisibility];
-}
-
-
 #pragma mark - Private methods
-
-- (void)updateBalloonOverlaysVisibility
-{
-    [UIView animateWithDuration:NavigationControlDuration animations:^{
-        
-        if ((navigationView.alpha) && (navigationView.isEdited)) {
-            for (UIView *focusOverlay in balloonsOverlay.focusOverlays) {
-                [focusOverlay setAlpha:0.0];
-            }
-        } else {
-            for (UIView *focusOverlay in balloonsOverlay.focusOverlays) {
-                [focusOverlay setAlpha:AlphaFocusBackground];
-            }
-        }
-    }];
-}
 
 - (void)resizeScrollView
 {
@@ -457,7 +366,7 @@
 
 - (void)focusOnBalloon
 {
-    CGRect balloon = [[balloonsOverlay.speechBalloons objectAtIndex:focus] frame];
+    CGRect balloon = [panel.balloons[balloonsOverlay.focus] rect];
     CGRect balloonInView = [self.view convertRect:balloon fromView:panelImageView];
     
     CGFloat y = balloonInView.origin.y + balloonInView.size.height;
@@ -505,14 +414,11 @@
 
 - (void)back
 {
-    if (focus != -1) {
+    if (balloonsOverlay.focus != -1) {
         keyboardOffset = 0.0;
         [self resizeScrollView];
-        
-        [balloonsOverlay.focusOverlays[focus] setAlpha:AlphaFocusBackground];
-        [[balloonsOverlay.speechBalloons objectAtIndex:focus] resignFirstResponder];
-        
-        focus = -1;
+
+        [balloonsOverlay updateVisibilityWithNewFocus:-1];
         
     } else {
 
@@ -521,7 +427,6 @@
                                                               action:@"button_press"
                                                                label:@"back"
                                                                value:nil] build]];
-
         
         if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
             [_inputAccessoryView removeFromSuperview]; //avoid a segfault
@@ -533,18 +438,13 @@
 
 - (void)sendMessage
 {
-    if (focus != -1) {
+    if (balloonsOverlay.focus != -1) {
         
         keyboardOffset = 0.0;
         [self resizeScrollView];
         
-        [[balloonsOverlay.speechBalloons objectAtIndex:focus] resignFirstResponder];
-        
-        for (UIView *focusOverlay in balloonsOverlay.focusOverlays) {
-            [focusOverlay setAlpha:0.0];
-        }
-        
-        focus = -1;
+        [balloonsOverlay updateVisibilityWithNewFocus:-1];
+        [balloonsOverlay hideFocusOverlayView];
     }
     
     CGSize imageSize = CGSizeMake(panelImageView.image.size.width / [[UIScreen mainScreen] scale] + 2 * Gutter,
@@ -579,7 +479,7 @@
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextTranslateCTM(ctx, (newSize.width - imageSize.width) / 2, (newSize.height - imageSize.height) / 2);
     
-    [panelImageView drawViewHierarchyInRect:panelImageView.frame afterScreenUpdates:YES];
+    [panelView drawViewHierarchyInRect:panelImageView.frame afterScreenUpdates:YES];
     
     UIImage *editedPanel = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -595,7 +495,7 @@
         [self presentViewController:mmsvc animated:YES completion:nil];
         
     } else {
-        [self updateBalloonOverlaysVisibility];
+        [balloonsOverlay toogleVisibility];
     }
 }
 

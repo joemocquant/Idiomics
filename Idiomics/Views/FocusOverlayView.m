@@ -59,4 +59,16 @@
     return self;
 }
 
+
+#pragma mark - Getters/setters
+
+- (void)setAlpha:(CGFloat)alpha
+{
+    [UIView animateWithDuration:NavigationControlDuration animations:^{
+        [super setAlpha:alpha];
+    }];
+}
+
+
+
 @end

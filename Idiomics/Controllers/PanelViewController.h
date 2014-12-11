@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "TrackingViewController.h"
-#import "BalloonsOverlay.h"
+
+@class BalloonsOverlay;
 
 @class Panel;
-@class NavigationView;
 
-@interface PanelViewController : TrackingViewController <UIScrollViewDelegate, BalloonOverlayDelegate>
+@interface PanelViewController : TrackingViewController <UIScrollViewDelegate>
 {
     Panel *panel;
     UIScrollView *panelScrollView;
@@ -21,10 +21,7 @@
     UIImageView *panelImageView;
     BalloonsOverlay *balloonsOverlay;
     
-    NavigationView *navigationView;
-    
     CGFloat screenScale;
-    NSUInteger focus;
     CGFloat keyboardOffset;
 }
 

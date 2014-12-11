@@ -8,21 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol BalloonOverlayDelegate;
+@class NavigationView;
 
 @interface BalloonsOverlay : UIView <UITextViewDelegate>
+{
+    NSMutableArray *focusOverlays;
+    NSMutableArray *speechBalloonsLabel;
+    NSMutableArray *speechBalloons;
+    UIView *focusOverlayView;
+    BOOL edited;
+}
 
-@property (nonatomic, readwrite, weak) id<BalloonOverlayDelegate> delegate;
-@property (nonatomic, readonly, strong) NSMutableArray *focusOverlays;
-@property (nonatomic, readonly, strong) NSMutableArray *speechBalloonsLabel;
-@property (nonatomic, readonly, strong) NSMutableArray *speechBalloons;
+@property (nonatomic, readwrite, strong) NavigationView *navigationView;
+@property (nonatomic, readonly, assign) NSInteger focus;
 
 - (instancetype)initWithBalloons:(NSArray *)balloons;
-
-@end
-
-@protocol BalloonOverlayDelegate <NSObject>
-
-- (void)balloonContentDidChangedWithText:(NSString *)text;
+- (void)updateVisibilityWithNewFocus:(NSInteger)newFocus;
+- (void)toogleVisibility;
+- (void)balloonsOverlayTappedOnce:(UIGestureRecognizer *)gestureRecognizer;
+- (void)hideFocusOverlayView;
 
 @end
