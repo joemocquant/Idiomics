@@ -71,15 +71,6 @@
     [layout invalidateLayout];
 }
 
-- (NSUInteger)supportedInterfaceOrientations
-{
-    if ([Helper isIPhoneDevice]) {
-        return UIInterfaceOrientationMaskPortrait;
-    }
-    
-    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
-}
-
 //iOS 8.x
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {

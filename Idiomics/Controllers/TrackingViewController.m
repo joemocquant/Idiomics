@@ -9,6 +9,7 @@
 #import "TrackingViewController.h"
 #import "BrowserViewController.h"
 #import "PanelViewController.h"
+#import "Helper.h"
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
 
@@ -43,6 +44,15 @@
                                                          interval:@(elapsed)
                                                              name:name
                                                             label:nil] build]];
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    if ([Helper isIPhoneDevice]) {
+        return UIInterfaceOrientationMaskPortrait;
+    }
+    
+    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
 }
 
 @end

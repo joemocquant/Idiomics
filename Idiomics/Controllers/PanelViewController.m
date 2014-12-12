@@ -366,7 +366,7 @@
 
 - (void)focusOnBalloon
 {
-    CGRect balloon = [panel.balloons[balloonsOverlay.focus] rect];
+    CGRect balloon = [panel.balloons[balloonsOverlay.focus] boundsRect];
     CGRect balloonInView = [self.view convertRect:balloon fromView:panelImageView];
     
     CGFloat y = balloonInView.origin.y + balloonInView.size.height;
@@ -380,6 +380,10 @@
         CGPoint bottomOffset = CGPointMake(panelScrollView.contentOffset.x,
                                            panelScrollView.contentOffset.y + offsetY);
         [panelScrollView setContentOffset:bottomOffset animated:NO];
+    }
+    
+    if (panelScrollView.zoomScale < 0.5) {
+        [panelScrollView zoomToRect:balloon animated:YES];
     }
 }
 
