@@ -74,7 +74,9 @@
 		01E4B47A1A3A84540070506E /* Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E4B4761A3A84540070506E /* Colors.m */; };
 		01E4B47B1A3A84540070506E /* Fonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E4B4781A3A84540070506E /* Fonts.m */; };
 		01E4B47C1A3A84540070506E /* Fonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E4B4781A3A84540070506E /* Fonts.m */; };
-		68A1573C5818B5920DE3091F /* libPods-Idiomics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D5897EF81C07F7BC12EB047 /* libPods-Idiomics.a */; };
+		209DEEE605AF4694B0518342 /* libPods-Idiomics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D5897EF81C07F7BC12EB047 /* libPods-Idiomics.a */; };
+		4E06B94C41B9FD88DD398384 /* libPods-Idiomics_Local.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A64E611414B217167AB2BAA /* libPods-Idiomics_Local.a */; };
+		93A197DD17577202A45E9781 /* libPods-Idiomics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D5897EF81C07F7BC12EB047 /* libPods-Idiomics.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +157,7 @@
 		01E4B4761A3A84540070506E /* Colors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colors.m; sourceTree = "<group>"; };
 		01E4B4771A3A84540070506E /* Fonts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fonts.h; sourceTree = "<group>"; };
 		01E4B4781A3A84540070506E /* Fonts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fonts.m; sourceTree = "<group>"; };
+		1A64E611414B217167AB2BAA /* libPods-Idiomics_Local.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Idiomics_Local.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C396B74B2D02B54D222D227 /* Pods-Idiomics.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Idiomics.release.xcconfig"; path = "Pods/Target Support Files/Pods-Idiomics/Pods-Idiomics.release.xcconfig"; sourceTree = "<group>"; };
 		7D5897EF81C07F7BC12EB047 /* libPods-Idiomics.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Idiomics.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E337EF48D37EFBB00672C43 /* Pods-Idiomics.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Idiomics.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Idiomics/Pods-Idiomics.debug.xcconfig"; sourceTree = "<group>"; };
@@ -166,7 +169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				013EDEA51A13126D009F16BD /* MessageUI.framework in Frameworks */,
-				68A1573C5818B5920DE3091F /* libPods-Idiomics.a in Frameworks */,
+				209DEEE605AF4694B0518342 /* libPods-Idiomics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,6 +185,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				01D7BDE91A17E3E500C30CE2 /* MessageUI.framework in Frameworks */,
+				93A197DD17577202A45E9781 /* libPods-Idiomics.a in Frameworks */,
+				4E06B94C41B9FD88DD398384 /* libPods-Idiomics_Local.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +401,7 @@
 			children = (
 				013EDEA41A13126D009F16BD /* MessageUI.framework */,
 				7D5897EF81C07F7BC12EB047 /* libPods-Idiomics.a */,
+				1A64E611414B217167AB2BAA /* libPods-Idiomics_Local.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -449,9 +455,9 @@
 			productReference = 010EBE211A0C07FB0051EEBE /* IdiomicsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		01D7BDD31A17E3E500C30CE2 /* Idiomics_local */ = {
+		01D7BDD31A17E3E500C30CE2 /* Idiomics_Local */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 01D7BDF01A17E3E500C30CE2 /* Build configuration list for PBXNativeTarget "Idiomics_local" */;
+			buildConfigurationList = 01D7BDF01A17E3E500C30CE2 /* Build configuration list for PBXNativeTarget "Idiomics_Local" */;
 			buildPhases = (
 				01D7BDD41A17E3E500C30CE2 /* Check Pods Manifest.lock */,
 				01D7BDD51A17E3E500C30CE2 /* Sources */,
@@ -463,7 +469,7 @@
 			);
 			dependencies = (
 			);
-			name = Idiomics_local;
+			name = Idiomics_Local;
 			productName = Stripchat;
 			productReference = 01D7BDF31A17E3E500C30CE2 /* Idiomics_Local.app */;
 			productType = "com.apple.product-type.application";
@@ -503,7 +509,7 @@
 			targets = (
 				010EBE071A0C07FB0051EEBE /* Idiomics */,
 				010EBE201A0C07FB0051EEBE /* IdiomicsTests */,
-				01D7BDD31A17E3E500C30CE2 /* Idiomics_local */,
+				01D7BDD31A17E3E500C30CE2 /* Idiomics_Local */,
 			);
 		};
 /* End PBXProject section */
@@ -570,7 +576,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Stripchat/Pods-Stripchat-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Idiomics_Local/Pods-Idiomics_Local-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E726A19BE2E6AF2986F985D8 /* Check Pods Manifest.lock */ = {
@@ -841,9 +847,10 @@
 		};
 		01D7BDF11A17E3E500C30CE2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9E337EF48D37EFBB00672C43 /* Pods-Idiomics.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				GCC_PREFIX_HEADER = Stripchat/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = "Idiomics/Supporting Files/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Idiomics/Supporting Files/Idiomics_Local-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -854,9 +861,10 @@
 		};
 		01D7BDF21A17E3E500C30CE2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6C396B74B2D02B54D222D227 /* Pods-Idiomics.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				GCC_PREFIX_HEADER = Stripchat/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = "Idiomics/Supporting Files/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Idiomics/Supporting Files/Idiomics_Local-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -895,7 +903,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		01D7BDF01A17E3E500C30CE2 /* Build configuration list for PBXNativeTarget "Idiomics_local" */ = {
+		01D7BDF01A17E3E500C30CE2 /* Build configuration list for PBXNativeTarget "Idiomics_Local" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				01D7BDF11A17E3E500C30CE2 /* Debug */,
