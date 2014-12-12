@@ -39,7 +39,7 @@
     return @{@"backgroundColor": @"bg_color",
              @"rect": @"rect",
              @"boundsRect": @"bound_rect",
-             @"polygon": NSNull.null
+             @"polygon": @"polygon"
              };
 }
 
@@ -56,6 +56,33 @@
 + (NSValueTransformer *)boundsRectJSONTransformer
 {
     return [NSValueTransformer valueTransformerForName:RectTransformerName];
+}
+
++ (NSValueTransformer *)polygonJSONTransformer
+{
+    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSArray *polygon) {
+        
+        NSMutableArray *res = [NSMutableArray array];
+        for(NSArray *p in polygon) {
+            CGPoint point = CGPointMake(roundf([p[0] floatValue] / [[UIScreen mainScreen] scale]),
+                                        roundf([p[1] floatValue] / [[UIScreen mainScreen] scale]));
+            [res addObject:[NSValue valueWithCGPoint:point]];
+        }
+        
+        return res;
+        
+    } reverseBlock:^id(NSArray *polygon) {
+
+        NSMutableArray *res = [NSMutableArray array];
+        for (NSValue *point in polygon) {
+            NSArray *p = [NSArray arrayWithObjects:@([point CGPointValue].x * [[UIScreen mainScreen] scale]),
+                                                   @([point CGPointValue].y * [[UIScreen mainScreen] scale]),
+                                                   nil];
+            [res addObject:p];
+        }
+        
+        return res;
+    }];
 }
 
 @end

@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class Balloon;
+
 @interface FocusOverlayView : UIView
 
+- (instancetype)initWithBalloon:(Balloon *)balloon color:(UIColor *)averageColor;
 
 @end

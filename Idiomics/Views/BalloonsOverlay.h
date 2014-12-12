@@ -9,23 +9,23 @@
 #import <UIKit/UIKit.h>
 
 @class NavigationView;
+@class Panel;
 
 @interface BalloonsOverlay : UIView <UITextViewDelegate>
 {
-    NSMutableArray *focusOverlays;
+    NSMutableArray *overlays;
     NSMutableArray *speechBalloonsLabel;
     NSMutableArray *speechBalloons;
-    UIView *focusOverlayView;
-    BOOL edited;
+    UIView *focusOverlaysView;
+    BOOL panelEdited;
+    NSMutableArray *balloonsEdited;
 }
 
 @property (nonatomic, readwrite, strong) NavigationView *navigationView;
 @property (nonatomic, readonly, assign) NSInteger focus;
 
-- (instancetype)initWithBalloons:(NSArray *)balloons;
+- (instancetype)initWithPanel:(Panel *)panel;
 - (void)updateVisibilityWithNewFocus:(NSInteger)newFocus;
-- (void)toogleVisibility;
 - (void)balloonsOverlayTappedOnce:(UIGestureRecognizer *)gestureRecognizer;
-- (void)hideFocusOverlayView;
 
 @end

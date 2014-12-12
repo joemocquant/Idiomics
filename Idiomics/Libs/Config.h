@@ -43,11 +43,6 @@ extern const CGFloat FocusMoveMargin;
 extern const CGFloat NavigationControlHeight;
 extern const CGFloat NavigationControlDuration;
 
-//FocusOverlay
-extern const CGFloat FocusInset;
-extern const CGFloat AlphaFocusForeground;
-extern const CGFloat AlphaFocusBackground;
-
 //Transformers
 extern NSString *const ColorTransformerName;
 extern NSString *const RectTransformerName;

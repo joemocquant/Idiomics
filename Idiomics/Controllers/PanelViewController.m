@@ -66,7 +66,7 @@
         CGRect screen = [[UIScreen mainScreen] bounds];
         
         if (UIInterfaceOrientationIsPortrait(orientation)) {
-            [self.view setFrame:CGRectMake(0, 0, CGRectGetWidth(screen), CGRectGetHeight(screen))];
+            //[self.view setFrame:CGRectMake(0, 0, CGRectGetWidth(screen), CGRectGetHeight(screen))];
         } else {
             [self.view setFrame:CGRectMake(0, 0, CGRectGetHeight(screen), CGRectGetWidth(screen))];
         }
@@ -123,7 +123,7 @@
     [panelImageView setCenter:CGPointMake(contentSize.width / 2, contentSize.height / 2)];
     [panelView addSubview:panelImageView];
     
-    balloonsOverlay = [[BalloonsOverlay alloc] initWithBalloons:panel.balloons];
+    balloonsOverlay = [[BalloonsOverlay alloc] initWithPanel:panel];
     [balloonsOverlay setFrame:panelImageView.frame];
     [panelView addSubview:balloonsOverlay];
     
@@ -444,7 +444,6 @@
         [self resizeScrollView];
         
         [balloonsOverlay updateVisibilityWithNewFocus:-1];
-        [balloonsOverlay hideFocusOverlayView];
     }
     
     CGSize imageSize = CGSizeMake(panelImageView.image.size.width / [[UIScreen mainScreen] scale] + 2 * Gutter,
@@ -493,9 +492,6 @@
         }
         
         [self presentViewController:mmsvc animated:YES completion:nil];
-        
-    } else {
-        [balloonsOverlay toogleVisibility];
     }
 }
 
