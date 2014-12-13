@@ -12,10 +12,12 @@
 @interface MMSViewController : MFMessageComposeViewController <MFMessageComposeViewControllerDelegate,
                                                                UIAlertViewDelegate>
 {
+    NSString *panelId;
     NSDate *trackingIntervalStart;
 }
 
-- (instancetype)initWithEditedPanel:(UIImage *)imagePanel;
+- (instancetype)initWithEditedPanel:(UIImage *)imagePanel
+                            panelId:(NSString *)panelId;
 - (BOOL)canSendPanel;
 
 @end

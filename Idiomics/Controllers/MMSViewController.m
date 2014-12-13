@@ -16,10 +16,13 @@
 @implementation MMSViewController
 
 - (instancetype)initWithEditedPanel:(UIImage *)imagePanel
+                            panelId:(NSString *)pId
 {
     self = [super init];
     
     if (self) {
+        
+        panelId = pId;
         [self setMessageComposeDelegate:self];
         
         NSData *data = UIImageJPEGRepresentation(imagePanel, 1.0);
@@ -48,10 +51,10 @@
     NSTimeInterval elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
     
     id tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_action"
+    [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_time_spent"
                                                          interval:@(elapsed)
-                                                             name:@"message_send"
-                                                            label:nil] build]];
+                                                             name:@"message_send_view"
+                                                            label:panelId] build]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -65,13 +68,14 @@
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller
                  didFinishWithResult:(MessageComposeResult)result
 {
+    
     switch (result) {
         case MessageComposeResultCancelled:
         {
             id tracker = [[GAI sharedInstance] defaultTracker];
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
-                                                                  action:@"button_press"
-                                                                   label:@"cancel_send"
+                                                                  action:@"message_cancel"
+                                                                   label:panelId
                                                                    value:nil] build]];
             
             [self dismissViewControllerAnimated:YES completion:nil];
@@ -81,8 +85,8 @@
         {
             id tracker = [[GAI sharedInstance] defaultTracker];
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
-                                                                  action:@"button_press"
-                                                                   label:@"send_error"
+                                                                  action:@"message_send_error"
+                                                                   label:panelId
                                                                    value:nil] build]];
             
             [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT_ERROR", @"Idiomics" , nil)
@@ -93,8 +97,8 @@
         {
             id tracker = [[GAI sharedInstance] defaultTracker];
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
-                                                                  action:@"button_press"
-                                                                   label:@"send"
+                                                                  action:@"message_send_success"
+                                                                   label:panelId
                                                                    value:nil] build]];
             
             PanelViewController *pvc = (PanelViewController *)self.presentingViewController;

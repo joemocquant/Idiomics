@@ -40,6 +40,7 @@
     
     if (self) {
         panel = p;
+        panelId = panel.panelId;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:)
@@ -428,8 +429,8 @@
 
         id tracker = [[GAI sharedInstance] defaultTracker];
         [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
-                                                              action:@"button_press"
-                                                               label:@"back"
+                                                              action:@"panel_edition_cancel"
+                                                               label:panelId
                                                                value:nil] build]];
         
         if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
@@ -487,7 +488,7 @@
     UIImage *editedPanel = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    MMSViewController *mmsvc = [[MMSViewController alloc] initWithEditedPanel:editedPanel];
+    MMSViewController *mmsvc = [[MMSViewController alloc] initWithEditedPanel:editedPanel panelId:panelId];
     
     if ([mmsvc canSendPanel]) {
         
@@ -500,7 +501,7 @@
 }
 
 - (void)messageSentAnimation
-{
+{    
     [UIView animateWithDuration:TransitionDuration * 2 animations:^{
         [panelView setAlpha:0];
         [panelView setCenter:CGPointMake(self.view.center.x, -panelView.center.y)];
