@@ -98,7 +98,7 @@
                                   image.size.height / [[UIScreen mainScreen] scale]);
     
     panelView = [UIView new];
-    [panelView setBackgroundColor:[Colors white]];
+    [panelView setBackgroundColor:[Colors clear]];
     
     CGSize contentSize = CGSizeMake(imageSize.width + 2 * Gutter, imageSize.height + 2 * Gutter);
     [panelView setFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)];
@@ -418,6 +418,8 @@
 
 - (void)back
 {
+    [self messageSentAnimation];
+    return;
     if (balloonsOverlay.focus != -1) {
         keyboardOffset = 0.0;
         [self resizeScrollView];
@@ -497,6 +499,17 @@
         
         [self presentViewController:mmsvc animated:YES completion:nil];
     }
+}
+
+- (void)messageSentAnimation
+{
+    [UIView animateWithDuration:TransitionDuration * 2 animations:^{
+        [panelView setAlpha:0];
+        [panelView setCenter:CGPointMake(self.view.center.x, -panelView.center.y)];
+        
+    } completion:^(BOOL finished) {
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }];
 }
 
 @end

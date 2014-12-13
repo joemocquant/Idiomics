@@ -8,6 +8,7 @@
 
 #import "MMSViewController.h"
 #import "Helper.h"
+#import "PanelViewController.h"
 #import <MessageUI/MFMessageComposeViewController.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
@@ -96,9 +97,11 @@
                                                                    label:@"send"
                                                                    value:nil] build]];
             
-            [Helper showValidationWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT_SUCCESS", @"Idiomics" , nil)
-                                 delegate:self];
-             break;
+            PanelViewController *pvc = (PanelViewController *)self.presentingViewController;
+            [self dismissViewControllerAnimated:YES completion:^{
+                [pvc messageSentAnimation];
+            }];
+            break;
         }
         default:
             [self dismissViewControllerAnimated:YES completion:nil];
@@ -115,13 +118,13 @@
     return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
 }
 
+
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     [self.presentingViewController.presentingViewController dismissViewControllerAnimated:NO completion:nil];
 }
-
 
 
 #pragma mark - Instance methods

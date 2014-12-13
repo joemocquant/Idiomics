@@ -191,24 +191,18 @@
 
 - (NSUInteger)numberOfColumnsInCollectionView:(UICollectionView *)collectionView
 {
-    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+     NSUInteger retVal;
     
-    //  Set the quantity of columns according of the device and interface orientation
-    NSUInteger retVal;
-    if (UIInterfaceOrientationIsLandscape(orientation)) {
-        
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            retVal = kColumnsiPadLandscape;
-        } else {
-            retVal = kColumnsiPhoneLandscape;
-        }
-        
+    if ([Helper isIPhoneDevice]) {
+        retVal = kColumnsiPhonePortrait;
     } else {
         
-        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-            retVal = kColumnsiPadPortrait;
+        UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+        
+        if (UIInterfaceOrientationIsLandscape(orientation)) {
+            retVal = kColumnsiPadLandscape;
         } else {
-            retVal = kColumnsiPhonePortrait;
+            retVal = kColumnsiPadPortrait;
         }
     }
     
