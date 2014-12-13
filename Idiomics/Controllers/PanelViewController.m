@@ -418,8 +418,6 @@
 
 - (void)back
 {
-    [self messageSentAnimation];
-    return;
     if (balloonsOverlay.focus != -1) {
         keyboardOffset = 0.0;
         [self resizeScrollView];
