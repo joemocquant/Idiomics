@@ -11,7 +11,7 @@
 	<key>CFBundleIcons~ipad</key>
 	<dict/>
 	<key>CFBundleIdentifier</key>
-	<string>com.idiomics.$(PRODUCT_NAME:rfc1034identifier)</string>
+	<string>com.idiomicsapp.$(PRODUCT_NAME:rfc1034identifier)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -23,13 +23,13 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>4</string>
+	<key>Idiomics-API-URL</key>
+	<string>http://api.content.idiomicsapp.com</string>
 	<key>ImageProxy-Server-URL</key>
-	<string>http://ec2-54-174-82-157.compute-1.amazonaws.com</string>
+	<string>http://images.idiomicsapp.com</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>Stripchat-API-URL</key>
-	<string>http://cfb54a30-6c6c-11e4-9803-0800200c9a66.s3.eu-central-1.amazonaws.com</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Laffayette_Comic_Pro.ttf</string>

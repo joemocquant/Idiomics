@@ -49,19 +49,17 @@
     } else {
         
         PanelViewController *panelViewController = (PanelViewController *)fromViewController;
-        UIImageView *panelImage = ((UIView *)panelViewController.view.subviews[0]).subviews[0];
+        UIImageView *panelView = ((UIView *)panelViewController.view.subviews[0]).subviews[0];
         
         CGRect point = [panelViewController.view.subviews[0] convertRect:self.selectedCell.imageView.bounds
                                                                 fromView:self.selectedCell.imageView];
         
         [transitionContext.containerView addSubview:fromViewController.view];
         
-        [panelViewController.view.subviews[0] setBackgroundColor:[Colors clear]];
-        
         [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
             
-            [panelImage setAlpha:0];
-            [panelImage setFrame:point];
+            [panelView setAlpha:0];
+            [panelView setFrame:point];
 
         } completion:^(BOOL finished) {
             [transitionContext completeTransition:YES];

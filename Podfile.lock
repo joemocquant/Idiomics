@@ -29,6 +29,7 @@ PODS:
   - Mantle (1.5.1):
     - Mantle/extobjc (= 1.5.1)
   - Mantle/extobjc (1.5.1)
+  - PulsingHalo (0.0.4)
   - ReactiveCocoa (2.3.1):
     - ReactiveCocoa/UI (= 2.3.1)
   - ReactiveCocoa/Core (2.3.1):
@@ -43,14 +44,25 @@ DEPENDENCIES:
   - AFNetworking
   - GoogleAnalytics-iOS-SDK
   - Mantle
+  - PulsingHalo (from `https://github.com/shu223/PulsingHalo.git`)
   - ReactiveCocoa
   - UIView-Autolayout
+
+EXTERNAL SOURCES:
+  PulsingHalo:
+    :git: https://github.com/shu223/PulsingHalo.git
+
+CHECKOUT OPTIONS:
+  PulsingHalo:
+    :commit: ebea8ca6098ead43cbb07a54cf357bf3120048a0
+    :git: https://github.com/shu223/PulsingHalo.git
 
 SPEC CHECKSUMS:
   AFNetworkActivityLogger: d6a2d2755fada3a1fbf1f490ec0dd92224e092a4
   AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
   GoogleAnalytics-iOS-SDK: f422062075d9ccb1ea8d783fc5ba3829461e9502
   Mantle: d7c5ac734579ec751c58fecbf56189853056c58c
+  PulsingHalo: 91a96da0e0008202039f0faf7368ed9b8b575222
   ReactiveCocoa: dca75777b9d18990c8714a3a6f2149f29b4d1462
   UIView-Autolayout: 7c05eb666738eba682f686c2da236578177e2ebb
 

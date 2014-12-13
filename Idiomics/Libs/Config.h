@@ -25,10 +25,9 @@ extern CGFloat TimeDiff;
 extern CGFloat ScrollSpeedThreshold;
 extern CGFloat VelocityThreshold;
 #define kDoubleColumnProbability 40
-#define kColumnsiPadLandscape 4
-#define kColumnsiPadPortrait 3
-#define kColumnsiPhoneLandscape 3
 #define kColumnsiPhonePortrait 2
+#define kColumnsiPadPortrait 3
+#define kColumnsiPadLandscape 4
 
 //Panel
 extern const CGFloat AlphaBackground;
@@ -42,11 +41,6 @@ extern const CGFloat ScrollToBottomDuration;
 extern const CGFloat FocusMoveMargin;
 extern const CGFloat NavigationControlHeight;
 extern const CGFloat NavigationControlDuration;
-
-//FocusOverlay
-extern const CGFloat FocusInset;
-extern const CGFloat AlphaFocusForeground;
-extern const CGFloat AlphaFocusBackground;
 
 //Transformers
 extern NSString *const ColorTransformerName;

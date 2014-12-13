@@ -26,5 +26,6 @@
 }
 
 - (instancetype)initWithPanel:(Panel *)p;
+- (void)messageSentAnimation;
 
 @end

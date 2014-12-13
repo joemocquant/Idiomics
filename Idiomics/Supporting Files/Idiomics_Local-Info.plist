@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.idiomics.$(PRODUCT_NAME:rfc1034identifier)</string>
+	<string>com.idiomicsapp.$(PRODUCT_NAME:rfc1034identifier)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -20,12 +20,12 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>Idiomics-API-URL</key>
+	<string>http://10.0.0.9:5984/content/_design/panels/_view</string>
 	<key>ImageProxy-Server-URL</key>
-	<string>http://tariks-air:8181</string>
+	<string>http://10.0.0.9:8181</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>Stripchat-API-URL</key>
-	<string>http://tariks-air:5984/content/_design/panels/_view</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Laffayette_Comic_Pro.ttf</string>

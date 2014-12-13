@@ -40,6 +40,7 @@
     
     if (self) {
         panel = p;
+        panelId = panel.panelId;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillShow:)
@@ -66,7 +67,7 @@
         CGRect screen = [[UIScreen mainScreen] bounds];
         
         if (UIInterfaceOrientationIsPortrait(orientation)) {
-            [self.view setFrame:CGRectMake(0, 0, CGRectGetWidth(screen), CGRectGetHeight(screen))];
+            //[self.view setFrame:CGRectMake(0, 0, CGRectGetWidth(screen), CGRectGetHeight(screen))];
         } else {
             [self.view setFrame:CGRectMake(0, 0, CGRectGetHeight(screen), CGRectGetWidth(screen))];
         }
@@ -98,7 +99,7 @@
                                   image.size.height / [[UIScreen mainScreen] scale]);
     
     panelView = [UIView new];
-    [panelView setBackgroundColor:[Colors white]];
+    [panelView setBackgroundColor:[Colors clear]];
     
     CGSize contentSize = CGSizeMake(imageSize.width + 2 * Gutter, imageSize.height + 2 * Gutter);
     [panelView setFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)];
@@ -123,7 +124,7 @@
     [panelImageView setCenter:CGPointMake(contentSize.width / 2, contentSize.height / 2)];
     [panelView addSubview:panelImageView];
     
-    balloonsOverlay = [[BalloonsOverlay alloc] initWithBalloons:panel.balloons];
+    balloonsOverlay = [[BalloonsOverlay alloc] initWithPanel:panel];
     [balloonsOverlay setFrame:panelImageView.frame];
     [panelView addSubview:balloonsOverlay];
     
@@ -366,7 +367,7 @@
 
 - (void)focusOnBalloon
 {
-    CGRect balloon = [panel.balloons[balloonsOverlay.focus] rect];
+    CGRect balloon = [panel.balloons[balloonsOverlay.focus] boundsRect];
     CGRect balloonInView = [self.view convertRect:balloon fromView:panelImageView];
     
     CGFloat y = balloonInView.origin.y + balloonInView.size.height;
@@ -380,6 +381,10 @@
         CGPoint bottomOffset = CGPointMake(panelScrollView.contentOffset.x,
                                            panelScrollView.contentOffset.y + offsetY);
         [panelScrollView setContentOffset:bottomOffset animated:NO];
+    }
+    
+    if (panelScrollView.zoomScale < 0.5) {
+        [panelScrollView zoomToRect:balloon animated:YES];
     }
 }
 
@@ -424,8 +429,8 @@
 
         id tracker = [[GAI sharedInstance] defaultTracker];
         [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
-                                                              action:@"button_press"
-                                                               label:@"back"
+                                                              action:@"panel_edition_cancel"
+                                                               label:panelId
                                                                value:nil] build]];
         
         if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
@@ -444,7 +449,6 @@
         [self resizeScrollView];
         
         [balloonsOverlay updateVisibilityWithNewFocus:-1];
-        [balloonsOverlay hideFocusOverlayView];
     }
     
     CGSize imageSize = CGSizeMake(panelImageView.image.size.width / [[UIScreen mainScreen] scale] + 2 * Gutter,
@@ -484,7 +488,7 @@
     UIImage *editedPanel = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    MMSViewController *mmsvc = [[MMSViewController alloc] initWithEditedPanel:editedPanel];
+    MMSViewController *mmsvc = [[MMSViewController alloc] initWithEditedPanel:editedPanel panelId:panelId];
     
     if ([mmsvc canSendPanel]) {
         
@@ -493,10 +497,18 @@
         }
         
         [self presentViewController:mmsvc animated:YES completion:nil];
-        
-    } else {
-        [balloonsOverlay toogleVisibility];
     }
+}
+
+- (void)messageSentAnimation
+{    
+    [UIView animateWithDuration:TransitionDuration * 2 animations:^{
+        [panelView setAlpha:0];
+        [panelView setCenter:CGPointMake(self.view.center.x, -panelView.center.y)];
+        
+    } completion:^(BOOL finished) {
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }];
 }
 
 @end

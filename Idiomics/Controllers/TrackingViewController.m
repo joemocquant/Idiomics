@@ -9,6 +9,7 @@
 #import "TrackingViewController.h"
 #import "BrowserViewController.h"
 #import "PanelViewController.h"
+#import "Helper.h"
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
 
@@ -29,20 +30,29 @@
     [super viewWillDisappear:animated];
     
     NSTimeInterval elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
-    
-    NSString *name;
+    id tracker = [[GAI sharedInstance] defaultTracker];
     
     if ([self isKindOfClass:BrowserViewController.class]) {
-        name = @"browse";
+        [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_time_spent"
+                                                             interval:@(elapsed)
+                                                                 name:@"browse"
+                                                                label:nil] build]];
+        
     } else if ([self isKindOfClass:PanelViewController.class]) {
-        name = @"panel_edition";
+        [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_time_spent"
+                                                             interval:@(elapsed)
+                                                                 name:@"panel_edition"
+                                                                label:panelId] build]];
     }
+}
 
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_action"
-                                                         interval:@(elapsed)
-                                                             name:name
-                                                            label:nil] build]];
+- (NSUInteger)supportedInterfaceOrientations
+{
+    if ([Helper isIPhoneDevice]) {
+        return UIInterfaceOrientationMaskPortrait;
+    }
+    
+    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
 }
 
 @end

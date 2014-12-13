@@ -10,6 +10,7 @@
 #import "Fonts.h"
 #import "Colors.h"
 #import "FocusOverlayView.h"
+#import "Panel.h"
 #import "Balloon.h"
 #import "NavigationView.h"
 #import <UIView+AutoLayout.h>
@@ -25,7 +26,7 @@
 
 #pragma mark - Lifecycle
 
-- (instancetype)initWithBalloons:(NSArray *)balloons
+- (instancetype)initWithPanel:(Panel *)panel
 {
     self = [super init];
     
@@ -33,16 +34,19 @@
         
         _focus = -1;
         
-        focusOverlayView = [UIView new];
-        [self addSubview:focusOverlayView];
-        [focusOverlayView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [focusOverlayView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self];
+        focusOverlaysView = [UIView new];
+        [self addSubview:focusOverlaysView];
+        [focusOverlaysView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [focusOverlaysView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self];
         
         speechBalloons = [NSMutableArray array];
         speechBalloonsLabel = [NSMutableArray array];
-        focusOverlays = [NSMutableArray array];
+        overlays = [NSMutableArray array];
+        balloonsEdited = [NSMutableArray array];
         
-        for (Balloon *balloon in balloons) {
+        for (Balloon *balloon in panel.balloons) {
+            
+            [balloonsEdited addObject:@NO];
             CGRect balloonRect = [balloon rect];
             
             UITextView *balloonTextView = [UITextView new];
@@ -70,10 +74,9 @@
             
             [speechBalloons addObject:balloonTextView];
             
-            FocusOverlayView *fov = [[FocusOverlayView alloc] init];
-            [fov setFrame:balloonRect];
-            [focusOverlayView addSubview:fov];
-            [focusOverlays addObject:fov];
+            FocusOverlayView *fov = [[FocusOverlayView alloc] initWithBalloon:balloon color:panel.averageColor];
+            [focusOverlaysView addSubview:fov];
+            [overlays addObject:fov];
             
             //UILabel
             [balloonLabel setAdjustsFontSizeToFitWidth:YES];
@@ -103,10 +106,10 @@
     _navigationView = navigationView;
     
     if (![speechBalloonsLabel count]) {
-        edited = YES;
+        panelEdited = YES;
     }
     
-    [navigationView updateVisibilityWithEdited:edited];
+    [navigationView updateVisibilityWithEdited:panelEdited];
 }
 
 
@@ -119,14 +122,13 @@
         if (newFocus == -1) {
      
             if (self.focus != -1) {
-                [focusOverlays[self.focus] setAlpha:AlphaFocusBackground];
+                
+                if (![balloonsEdited[self.focus] boolValue]) {
+                    [overlays[self.focus] setAlpha:1.0];
+                }
                 [speechBalloons[self.focus] resignFirstResponder];
             }
-        
-            if (focusOverlayView.alpha == 0.0) {
-                [focusOverlayView setAlpha:1.0];
-            }
-        
+
             self.focus = -1;
         
         } else {
@@ -134,35 +136,19 @@
             if (self.focus != newFocus) {
             
                 if (self.focus != -1) {
-                    [focusOverlays[self.focus] setAlpha:AlphaFocusBackground];
+                    
+                    if (![balloonsEdited[self.focus] boolValue]) {
+                        [overlays[self.focus] setAlpha:1.0];
+                    }
                     //[self.speechBalloons[focus] resignFirstResponder];
                 }
-                [focusOverlays[newFocus] setAlpha:AlphaFocusForeground];
+                [overlays[newFocus] setAlpha:0.0];
                 [speechBalloons[newFocus] becomeFirstResponder];
             
                 self.focus = newFocus;
             }
         }
     }];
-}
-
--(void)hideFocusOverlayView
-{
-    [focusOverlayView setAlpha:0.0];
-}
-
-- (void)toogleVisibility
-{
-    if ((self.navigationView.alpha) && (edited)) {
-        
-        [UIView animateWithDuration:NavigationControlDuration animations:^{
-            [focusOverlayView setAlpha:0.0];
-        }];
-        
-    } else {
-        
-        [self updateVisibilityWithNewFocus:-1];
-    }
 }
 
 
@@ -189,19 +175,21 @@
     
     if (foundNewBalloon) {
         
-        [self.navigationView updateVisibilityWithEdited:edited];
+        [self.navigationView updateVisibilityWithEdited:panelEdited];
         [self updateVisibilityWithNewFocus:focus];
         
     } else { //Other part was tapped
         if (self.focus != -1) { //during editing
             
-            [self toogleVisibility];
-            [self updateVisibilityWithNewFocus:-1];
+            if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+                [[self.navigationView cancel] sendActionsForControlEvents:UIControlEventTouchUpInside];
+            } else {
+                [self updateVisibilityWithNewFocus:-1];
+            }
             
         } else { //during preview
             if (CGRectContainsPoint(self.frame, location)) { //in panel
-                [self.navigationView toggleVisibilityWithEdited:edited];
-                [self toogleVisibility];
+                [self.navigationView toggleVisibilityWithEdited:panelEdited];
                 
             } else { //outside
                 [[self.navigationView cancel] sendActionsForControlEvents:UIControlEventTouchUpInside];
@@ -236,15 +224,23 @@
     UILabel *currentLabel = speechBalloonsLabel[self.focus];
     [currentLabel setText:textView.text];
     
-    edited = NO;
-    [speechBalloonsLabel enumerateObjectsUsingBlock:^(UILabel *obj, NSUInteger idx, BOOL *stop) {
-        if (obj.text && ![obj.text isEqualToString:@""]) {
-            edited = YES;
-            *stop = YES;
-        }
-    }];
+    if ([textView.text isEqualToString:@""]) {
+        balloonsEdited[self.focus] = @NO;
+
+        panelEdited = NO;
+        [balloonsEdited enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            if ([obj boolValue]) {
+                panelEdited = YES;
+                *stop = YES;
+            }
+        }];
+        
+    } else {
+        balloonsEdited[self.focus] = @YES;
+        panelEdited = YES;
+    }
     
-    [self.navigationView updateVisibilityWithEdited:edited];
+    [self.navigationView updateVisibilityWithEdited:panelEdited];
 }
 
 @end

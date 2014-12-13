@@ -1,7 +1,7 @@
 platform :ios, '7.1'
 
-target :Idiomics do
-    
+target :Idiomics do 
+   
     pod 'AFNetworking'
     pod 'AFNetworkActivityLogger'
     pod 'UIView-Autolayout'
@@ -9,5 +9,19 @@ target :Idiomics do
     pod 'ReactiveCocoa'
     pod 'UIView-Autolayout'
     pod 'GoogleAnalytics-iOS-SDK'
-    
+    pod 'PulsingHalo', :git => 'https://github.com/shu223/PulsingHalo.git'
+
+end
+
+target :Idiomics_Local do
+
+    pod 'AFNetworking'
+    pod 'AFNetworkActivityLogger'
+    pod 'UIView-Autolayout'
+    pod 'Mantle'
+    pod 'ReactiveCocoa'
+    pod 'UIView-Autolayout'
+    pod 'GoogleAnalytics-iOS-SDK'
+    pod 'PulsingHalo', :git => 'https://github.com/shu223/PulsingHalo.git'
+
 end

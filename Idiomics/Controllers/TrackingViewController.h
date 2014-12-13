@@ -10,6 +10,7 @@
 
 @interface TrackingViewController : UIViewController
 {
+    NSString *panelId; //only for PanelViewController
     NSDate *trackingIntervalStart;
 }
 

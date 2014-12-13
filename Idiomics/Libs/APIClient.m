@@ -27,7 +27,7 @@
     dispatch_once(&once, ^{
         
         if (!sharedConnection) {
-            NSString *APIUrl = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"Stripchat-API-URL"];
+            NSString *APIUrl = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"Idiomics-API-URL"];
             sharedConnection = [[super alloc] initWithBaseURL:[NSURL URLWithString:APIUrl]];
         }
     });
@@ -71,7 +71,7 @@
         switch (status) {
             case AFNetworkReachabilityStatusUnknown:
             case AFNetworkReachabilityStatusNotReachable:
-                [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"CONNECTION_ERROR", @"Stripchat" , nil)
+                [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"CONNECTION_ERROR", @"Idiomics" , nil)
                                 delegate:nil];
                 break;
             case AFNetworkReachabilityStatusReachableViaWiFi:
