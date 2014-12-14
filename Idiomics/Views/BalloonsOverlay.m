@@ -243,13 +243,13 @@
     [self.navigationView updateVisibilityWithEdited:panelEdited];
 }
 
-- (NSInteger)charactersCount
+- (NSUInteger)charactersCount
 {
-    NSInteger count = 0;
+    NSUInteger count = 0;
     for (UILabel *balloon in speechBalloonsLabel) {
-        count += balloon.text.length;
+        count += [balloon.text lengthOfBytesUsingEncoding:NSUTF32StringEncoding] / 4;
     }
-    
+
     return count;
 }
 
