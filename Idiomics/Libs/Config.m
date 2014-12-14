@@ -37,3 +37,7 @@ const CGFloat NavigationControlDuration = 0.4;
 //Transformers
 NSString *const ColorTransformerName = @"ColorTransformer";
 NSString *const RectTransformerName = @"RectTransformer";
+
+//PulsingHalo
+CGFloat PercentColorKept = 75.0;
+CGFloat KeyTimeForHalfOpacity = 0.5;

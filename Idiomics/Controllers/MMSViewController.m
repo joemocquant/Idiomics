@@ -9,6 +9,7 @@
 #import "MMSViewController.h"
 #import "Helper.h"
 #import "PanelViewController.h"
+#import "Panel.h"
 #import <MessageUI/MFMessageComposeViewController.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
@@ -16,16 +17,16 @@
 
 @implementation MMSViewController
 
-- (instancetype)initWithEditedPanel:(UIImage *)imagePanel
-                            panelId:(NSString *)pId
+- (instancetype)initWithPanel:(Panel *)p
+                   imagePanel:(UIImage *)imagePanel
+
 {
     self = [super init];
     
     if (self) {
         
-        panelId = pId;
+        panel = p;
         [self setMessageComposeDelegate:self];
-        
         NSData *data = UIImageJPEGRepresentation(imagePanel, 1.0);
         [self addAttachmentData:data  typeIdentifier:@"public.data" filename:@"name.jpg"];
     }
@@ -33,7 +34,8 @@
     return self;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -60,7 +62,7 @@
     [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_time_spent"
                                                          interval:@(elapsed)
                                                              name:@"message_send"
-                                                            label:panelId] build]];
+                                                            label:panel.panelId] build]];
     
     [tracker set:kGAIScreenName value:nil];
 }
@@ -83,7 +85,7 @@
             id tracker = [[GAI sharedInstance] defaultTracker];
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                                   action:@"message_cancel"
-                                                                   label:panelId
+                                                                   label:panel.panelId
                                                                    value:nil] build]];
             
             [self dismissViewControllerAnimated:YES completion:nil];
@@ -94,7 +96,7 @@
             id tracker = [[GAI sharedInstance] defaultTracker];
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                                   action:@"message_send_error"
-                                                                   label:panelId
+                                                                   label:panel.panelId
                                                                    value:nil] build]];
             
             [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT_ERROR", @"Idiomics" , nil)

@@ -14,6 +14,7 @@
 #import "MosaicLayout.h"
 #import "MosaicCell.h"
 #import "MosaicData.h"
+#import "NSMutableArray+Shuffling.h"
 #import "PanelViewController.h"
 #import "TransitionAnimator.h"
 #import <Mantle.h>
@@ -97,7 +98,8 @@
             case 200:
                 //OK
             {
-                NSDictionary *panels = [[responseObject objectForKey:@"rows"] valueForKey:@"value"];
+                NSMutableArray *panels =  [NSMutableArray arrayWithArray:[[responseObject objectForKey:@"rows"] valueForKey:@"value"]];
+                [panels shuffle];
                 
                 for (NSDictionary *panel in panels) {
                     

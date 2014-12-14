@@ -9,15 +9,17 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 
+@class Panel;
+
 @interface MMSViewController : MFMessageComposeViewController <MFMessageComposeViewControllerDelegate,
                                                                UIAlertViewDelegate>
 {
-    NSString *panelId;
+    Panel *panel;
     NSDate *trackingIntervalStart;
 }
 
-- (instancetype)initWithEditedPanel:(UIImage *)imagePanel
-                            panelId:(NSString *)panelId;
+- (instancetype)initWithPanel:(Panel *)p
+                   imagePanel:(UIImage *)imagePanel;
 - (BOOL)canSendPanel;
 
 @end

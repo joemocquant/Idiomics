@@ -485,10 +485,10 @@
     
     [panelView drawViewHierarchyInRect:panelImageView.frame afterScreenUpdates:YES];
     
-    UIImage *editedPanel = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *editedImagePanel = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    MMSViewController *mmsvc = [[MMSViewController alloc] initWithEditedPanel:editedPanel panelId:panelId];
+    MMSViewController *mmsvc = [[MMSViewController alloc] initWithPanel:panel imagePanel:editedImagePanel];
     
     if ([mmsvc canSendPanel]) {
         
