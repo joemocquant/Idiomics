@@ -250,13 +250,13 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    Panel *panel = [[PanelStore sharedStore] panelAtIndex:indexPath.item];
+    
     id tracker = [[GAI sharedInstance] defaultTracker];
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
-                                                          action:@"button_press"
-                                                           label:@"panel_selection"
+                                                          action:@"panel_selection"
+                                                           label:panel.panelId
                                                            value:nil] build]];
-    
-    Panel *panel = [[PanelStore sharedStore] panelAtIndex:indexPath.item];
     
     if (!panel.hasFullSizeImage) {
         return;

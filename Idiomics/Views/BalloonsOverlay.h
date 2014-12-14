@@ -27,5 +27,6 @@
 - (instancetype)initWithPanel:(Panel *)panel;
 - (void)updateVisibilityWithNewFocus:(NSInteger)newFocus;
 - (void)balloonsOverlayTappedOnce:(UIGestureRecognizer *)gestureRecognizer;
+- (NSInteger)charactersCount;
 
 @end

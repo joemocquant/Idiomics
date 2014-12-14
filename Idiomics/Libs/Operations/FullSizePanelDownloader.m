@@ -8,6 +8,8 @@
 
 #import "FullSizePanelDownloader.h"
 #import "Panel.h"
+#import <GAI.h>
+#import <GAIDictionaryBuilder.h>
 
 @interface FullSizePanelDownloader ()
 
@@ -44,7 +46,9 @@
 #ifdef __DEBUG__
     NSLog(@"Starting fullSize task %ld", (long)self.indexPath.item);
 #endif
-        
+    
+    NSDate *trackingIntervalStart = [NSDate date];
+    
     if (self.isCancelled) {
         return;
     }
@@ -68,6 +72,13 @@
     if (self.isCancelled) {
         return;
     }
+    
+    NSInteger elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_loading_time"
+                                                         interval:@(elapsed)
+                                                             name:@"fullsize_panel"
+                                                            label:nil] build]];
     
     [(NSObject *)self.delegate performSelectorOnMainThread:@selector(fullSizePanelDownloaderDidFinish:)
                                                 withObject:self

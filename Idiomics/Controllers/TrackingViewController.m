@@ -18,18 +18,24 @@
 
 #pragma mark - Lifecycle
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     
     trackingIntervalStart = [NSDate date];
+    
+    if ([self isKindOfClass:BrowserViewController.class]) {
+        self.screenName = @"browse";
+    } else if ([self isKindOfClass:PanelViewController.class]) {
+        self.screenName = @"panel_edition";
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     
-    NSTimeInterval elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
+    NSInteger elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
     id tracker = [[GAI sharedInstance] defaultTracker];
     
     if ([self isKindOfClass:BrowserViewController.class]) {

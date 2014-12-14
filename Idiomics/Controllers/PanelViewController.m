@@ -501,7 +501,13 @@
 }
 
 - (void)messageSentAnimation
-{    
+{
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
+                                                          action:@"message_send_success"
+                                                           label:panelId
+                                                           value:@([balloonsOverlay charactersCount])] build]];
+    
     [UIView animateWithDuration:TransitionDuration * 2 animations:^{
         [panelView setAlpha:0];
         [panelView setCenter:CGPointMake(self.view.center.x, -panelView.center.y)];

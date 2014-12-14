@@ -9,6 +9,8 @@
 #import "ResizedPanelDownloader.h"
 #import "Panel.h"
 #import "Helper.h"
+#import <GAI.h>
+#import <GAIDictionaryBuilder.h>
 
 @interface ResizedPanelDownloader ()
 
@@ -46,6 +48,8 @@
     NSLog(@"Starting resizing task %ld", (long)self.indexPath.item);
 #endif
 
+    NSDate *trackingIntervalStart = [NSDate date];
+    
     if (self.isCancelled) {
         return;
     }
@@ -74,7 +78,14 @@
     if (self.isCancelled) {
         return;
     }
-        
+    
+    NSInteger elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_loading_time"
+                                                         interval:@(elapsed)
+                                                             name:@"resized_panel"
+                                                            label:nil] build]];
+    
     [(NSObject *)self.delegate performSelectorOnMainThread:@selector(resizedPanelDownloaderDidFinish:)
                                                 withObject:self
                                              waitUntilDone:NO];

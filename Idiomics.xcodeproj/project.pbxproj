@@ -327,12 +327,12 @@
 		015D59D61A37CEE50004F352 /* Operations */ = {
 			isa = PBXGroup;
 			children = (
-				015D59D71A37CEE50004F352 /* FullSizePanelDownloader.h */,
-				015D59D81A37CEE50004F352 /* FullSizePanelDownloader.m */,
 				015D59D91A37CEE50004F352 /* PendingOperations.h */,
 				015D59DA1A37CEE50004F352 /* PendingOperations.m */,
 				015D59DB1A37CEE50004F352 /* ResizedPanelDownloader.h */,
 				015D59DC1A37CEE50004F352 /* ResizedPanelDownloader.m */,
+				015D59D71A37CEE50004F352 /* FullSizePanelDownloader.h */,
+				015D59D81A37CEE50004F352 /* FullSizePanelDownloader.m */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
