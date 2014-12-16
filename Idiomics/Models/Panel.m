@@ -8,8 +8,7 @@
 
 #import "Panel.h"
 #import "Balloon.h"
-#import "PanelImageStore.h"
-#import "ColorTransformer.h"
+#import "ImageStore.h"
 #import <ReactiveCocoa.h>
 
 @interface Panel ()
@@ -24,16 +23,6 @@
 
 @implementation Panel
 
-
-#pragma mark - Lifecycle
-
-+ (void)initialize
-{
-    if (self == Panel.class) {
-        ColorTransformer *transformer = [ColorTransformer new];
-        [NSValueTransformer setValueTransformer:transformer forName:ColorTransformerName];
-    }
-}
 
 #pragma mark - MTLJSONSerializing
 
@@ -76,12 +65,12 @@
 
 - (BOOL)hasThumbImage
 {
-    return [[PanelImageStore sharedStore] panelThumbImageForKey:self.imageUrl] != nil;
+    return [[ImageStore sharedStore] panelThumbImageForKey:self.imageUrl] != nil;
 }
 
 - (BOOL)hasFullSizeImage
 {
-    return [[PanelImageStore sharedStore] panelFullSizeImageForKey:self.imageUrl] != nil;
+    return [[ImageStore sharedStore] panelFullSizeImageForKey:self.imageUrl] != nil;
 }
 
 - (BOOL)isFailed

@@ -18,7 +18,7 @@
 @property (nonatomic, readonly, strong) Panel *panel;
 @property (nonatomic, readonly, strong) UIImage *downloadedImage;
 
-- (id)initWithPanel:(Panel *)record
+- (id)initWithPanel:(Panel *)panel
         atIndexPath:(NSIndexPath *)indexPath
            delegate:(id<FullSizePanelDownloaderDelegate>)delegate;
 

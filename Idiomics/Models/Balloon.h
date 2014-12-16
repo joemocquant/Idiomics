@@ -15,6 +15,6 @@
 @property (nonatomic, assign, readonly) CGRect rect;
 @property (nonatomic, assign, readonly) CGRect boundsRect;
 @property (nonatomic, copy, readonly) NSArray *polygon;
-@property (nonatomic, readwrite, assign) BOOL edited;
+@property (nonatomic, assign) BOOL edited;
 
 @end

@@ -19,7 +19,11 @@ extern const NSTimeInterval AlphaTransitionDuration;
 //Transition
 extern const NSTimeInterval TransitionDuration;
 
-//Browser
+//Library
+extern NSString *const LibraryCellId;
+extern CGFloat SeparatorHeight;
+
+//Universe
 extern NSString *const CellIdentifier;
 extern CGFloat TimeDiff;
 extern CGFloat ScrollSpeedThreshold;
@@ -45,6 +49,10 @@ extern const CGFloat NavigationControlDuration;
 //Transformers
 extern NSString *const ColorTransformerName;
 extern NSString *const RectTransformerName;
+
+//PulsingHalo
+extern CGFloat PercentColorKept;
+extern CGFloat KeyTimeForHalfOpacity;
 
 //Versions
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)

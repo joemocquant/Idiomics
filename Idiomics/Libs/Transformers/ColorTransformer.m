@@ -7,6 +7,7 @@
 //
 
 #import "ColorTransformer.h"
+#import "UIColor+Tools.h"
 
 @implementation ColorTransformer
 
@@ -22,33 +23,12 @@
 
 - (id)transformedValue:(NSString *)color
 {
-    NSScanner *scanner = [NSScanner scannerWithString:color];
-    
-    NSString *junk, *red, *green, *blue;
-    
-    [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&junk];
-    [scanner scanUpToCharactersFromSet:[NSCharacterSet punctuationCharacterSet] intoString:&red];
-    [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&junk];
-    [scanner scanUpToCharactersFromSet:[NSCharacterSet punctuationCharacterSet] intoString:&green];
-    [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&junk];
-    [scanner scanUpToCharactersFromSet:[NSCharacterSet punctuationCharacterSet] intoString:&blue];
-    
-    return [UIColor colorWithRed:red.intValue/255.0
-                           green:green.intValue/255.0
-                            blue:blue.intValue/255.0
-                           alpha:1.0];
+    return [UIColor colorWithRGBString:color];
 }
 
 - (id)reverseTransformedValue:(UIColor *)color
 {
-    CGFloat red, green, blue, alpha;
-    
-    [color getRed: &red green: &green blue: &blue alpha: &alpha];
-    
-    return [NSString stringWithFormat:@"rgb(%d, %d, %d)",
-                                    (unsigned int)red,
-                                    (unsigned int)green,
-                                    (unsigned int)blue];
+    return [UIColor RGBStringFromColor:color];
 }
 
 @end

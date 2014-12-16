@@ -9,22 +9,24 @@
 #import "MMSViewController.h"
 #import "Helper.h"
 #import "PanelViewController.h"
+#import "Panel.h"
 #import <MessageUI/MFMessageComposeViewController.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
+#import <GAIFields.h>
 
 @implementation MMSViewController
 
-- (instancetype)initWithEditedPanel:(UIImage *)imagePanel
-                            panelId:(NSString *)pId
+- (instancetype)initWithPanel:(Panel *)p
+                   imagePanel:(UIImage *)imagePanel
+
 {
     self = [super init];
     
     if (self) {
         
-        panelId = pId;
+        panel = p;
         [self setMessageComposeDelegate:self];
-        
         NSData *data = UIImageJPEGRepresentation(imagePanel, 1.0);
         [self addAttachmentData:data  typeIdentifier:@"public.data" filename:@"name.jpg"];
     }
@@ -32,29 +34,37 @@
     return self;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     
     trackingIntervalStart = [NSDate date];
+    
+    id tracker = [[GAI sharedInstance] defaultTracker];
+    
+    [tracker set:kGAIScreenName value:@"message_send"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     
-    NSTimeInterval elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
+    NSInteger elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
     
     id tracker = [[GAI sharedInstance] defaultTracker];
     [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_time_spent"
                                                          interval:@(elapsed)
-                                                             name:@"message_send_view"
-                                                            label:panelId] build]];
+                                                             name:@"message_send"
+                                                            label:panel.panelId] build]];
+    
+    [tracker set:kGAIScreenName value:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -75,7 +85,7 @@
             id tracker = [[GAI sharedInstance] defaultTracker];
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                                   action:@"message_cancel"
-                                                                   label:panelId
+                                                                   label:panel.panelId
                                                                    value:nil] build]];
             
             [self dismissViewControllerAnimated:YES completion:nil];
@@ -86,7 +96,7 @@
             id tracker = [[GAI sharedInstance] defaultTracker];
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                                   action:@"message_send_error"
-                                                                   label:panelId
+                                                                   label:panel.panelId
                                                                    value:nil] build]];
             
             [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"MESSAGE_SENT_ERROR", @"Idiomics" , nil)
@@ -94,13 +104,7 @@
             break;
         }
         case MessageComposeResultSent:
-        {
-            id tracker = [[GAI sharedInstance] defaultTracker];
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
-                                                                  action:@"message_send_success"
-                                                                   label:panelId
-                                                                   value:nil] build]];
-            
+        {   
             PanelViewController *pvc = (PanelViewController *)self.presentingViewController;
             [self dismissViewControllerAnimated:YES completion:^{
                 [pvc messageSentAnimation];

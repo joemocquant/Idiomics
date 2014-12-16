@@ -1,19 +1,21 @@
 //
-//  BrowserViewController.m
+//  UniverseViewController.m
 //  Idiomics
 //
 //  Created by Joe Mocquant on 11/6/14.
 //  Copyright (c) 2014 Idiomics. All rights reserved.
 //
 
-#import "BrowserViewController.h"
+#import "UniverseViewController.h"
 #import "APIClient.h"
 #import "Helper.h"
-#import "Panel.h"
-#import "PanelStore.h"
 #import "MosaicLayout.h"
 #import "MosaicCell.h"
 #import "MosaicData.h"
+#import "Panel.h"
+#import "Universe.h"
+#import "UniverseStore.h"
+#import "NSMutableArray+Shuffling.h"
 #import "PanelViewController.h"
 #import "TransitionAnimator.h"
 #import <Mantle.h>
@@ -21,7 +23,7 @@
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
 
-@implementation BrowserViewController
+@implementation UniverseViewController
 
 
 #pragma mark - Lifecycle
@@ -31,12 +33,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    pendingOperations = [PendingOperations new];
-    [pendingOperations setDelegate:self];
+    [self.navigationController setNavigationBarHidden:YES];
+    
+    panelOperations = [PanelOperations new];
+    [panelOperations setDelegate:self];
     
     mosaicDatas = [NSMutableArray new];
-    
-    [self loadAllPannels];
 
     cv = [[UICollectionView alloc] initWithFrame:CGRectZero
                             collectionViewLayout:[MosaicLayout new]];
@@ -50,6 +52,24 @@
     
     [cv setTranslatesAutoresizingMaskIntoConstraints:NO];
     [cv pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
+    
+    back = [UIButton buttonWithType:UIButtonTypeCustom];
+    [back setImage:[UIImage imageNamed:@"close.png"] forState:UIControlStateNormal];
+    [back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:back];
+    
+    [back setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [back constrainToSize:CGSizeMake(NavigationControlHeight, NavigationControlHeight)];
+    [back pinEdges:JRTViewPinLeftEdge | JRTViewPinTopEdge toSameEdgesOfView:self.view];
+    
+    if (![[[[UniverseStore sharedStore] currentUniverse] allPanels] count]) {
+        [self loadAllPannels];
+    } else {
+        for (Panel *panel in [[[UniverseStore sharedStore] currentUniverse] allPanels]) {
+            [mosaicDatas addObject:[[MosaicData alloc] initWithImageId:panel.imageUrl]];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -89,6 +109,11 @@
 
 #pragma mark - Private methods
 
+- (void)back
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)loadAllPannels
 {
     SuccessHandler successHandler = ^(NSURLSessionDataTask *operation, id responseObject) {
@@ -97,14 +122,16 @@
             case 200:
                 //OK
             {
-                NSDictionary *panels = [[responseObject objectForKey:@"rows"] valueForKey:@"value"];
+                NSMutableArray *panels =  [NSMutableArray arrayWithArray:[[responseObject objectForKey:@"rows"] valueForKey:@"value"]];
+                [panels shuffle];
                 
                 for (NSDictionary *panel in panels) {
                     
                     Panel *p = [MTLJSONAdapter modelOfClass:Panel.class fromJSONDictionary:panel error:nil];
                     [mosaicDatas addObject:[[MosaicData alloc] initWithImageId:p.imageUrl]];
-                    [[PanelStore sharedStore] addPanel:p];
+                    [[[UniverseStore sharedStore] currentUniverse] addPanel:p];
                 };
+                
                 [cv reloadData];
                 break;
             }
@@ -129,8 +156,9 @@
         }
     };
     
-    [[APIClient sharedConnection] getSingleBalloonPanelsWithSuccessHandler:successHandler
-                                                              errorHandler:errorHandler];
+    [[APIClient sharedConnection] getAllPanelForUniverse:[[UniverseStore sharedStore] currentUniverse].universeId
+                                          successHandler:successHandler
+                                            errorHandler:errorHandler];
 }
 
 
@@ -218,7 +246,7 @@
     MosaicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier
                                                                  forIndexPath:indexPath];
 
-    Panel *panel = [[PanelStore sharedStore] panelAtIndex:indexPath.item];
+    Panel *panel = [[[UniverseStore sharedStore] currentUniverse] panelAtIndex:indexPath.item];
     
     cell.backgroundColor = panel.averageColor;
     
@@ -232,7 +260,7 @@
         
     } else {
         if (!collectionView.dragging) {
-            [pendingOperations startOperationsForPanel:panel atIndexPath:indexPath];
+            [panelOperations startOperationsForPanel:panel atIndexPath:indexPath];
         }
     }
 
@@ -242,7 +270,7 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
-    return [[[PanelStore sharedStore] allPanels] count];
+    return [[[[UniverseStore sharedStore] currentUniverse] allPanels] count];
 }
 
 
@@ -250,13 +278,13 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    Panel *panel = [[[UniverseStore sharedStore] currentUniverse] panelAtIndex:indexPath.item];
+    
     id tracker = [[GAI sharedInstance] defaultTracker];
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
-                                                          action:@"button_press"
-                                                           label:@"panel_selection"
+                                                          action:@"panel_selection"
+                                                           label:panel.panelId
                                                            value:nil] build]];
-    
-    Panel *panel = [[PanelStore sharedStore] panelAtIndex:indexPath.item];
     
     if (!panel.hasFullSizeImage) {
         return;
@@ -291,8 +319,8 @@
             isScrollingFast = YES;
         } else {
             isScrollingFast = NO;
-            [pendingOperations loadPanelsForIndexPaths:[cv indexPathsForVisibleItems]];
-            [pendingOperations resumeAllOperations];
+            [panelOperations loadPanelsForIndexPaths:[cv indexPathsForVisibleItems]];
+            [panelOperations resumeAllOperations];
         }
         
         lastOffset = currentOffset;
@@ -302,8 +330,8 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    [pendingOperations loadPanelsForIndexPaths:[cv indexPathsForVisibleItems]];
-    [pendingOperations resumeAllOperations];
+    [panelOperations loadPanelsForIndexPaths:[cv indexPathsForVisibleItems]];
+    [panelOperations resumeAllOperations];
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
@@ -311,18 +339,18 @@
               targetContentOffset:(inout CGPoint *)targetContentOffset
 {
     if (velocity.x >= VelocityThreshold) {
-        [pendingOperations suspendAllOperations];
+        [panelOperations suspendAllOperations];
     }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    [pendingOperations loadPanelsForIndexPaths:[cv indexPathsForVisibleItems]];
-    [pendingOperations resumeAllOperations];
+    [panelOperations loadPanelsForIndexPaths:[cv indexPathsForVisibleItems]];
+    [panelOperations resumeAllOperations];
 }
 
 
-#pragma mark - PendingOperationsDelegate
+#pragma mark - PanelPendingOperationsDelegate
 
 - (void)reloadItemsAtIndexPaths:(NSArray *)indexPaths
 {

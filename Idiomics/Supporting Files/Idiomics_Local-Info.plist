@@ -21,7 +21,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>Idiomics-API-URL</key>
-	<string>http://10.0.0.9:5984/content/_design/panels/_view</string>
+	<string>http://10.0.0.9:5984</string>
 	<key>ImageProxy-Server-URL</key>
 	<string>http://10.0.0.9:8181</string>
 	<key>LSRequiresIPhoneOS</key>

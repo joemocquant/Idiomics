@@ -15,7 +15,11 @@ const NSTimeInterval AlphaTransitionDuration = 0.2;
 //Transition
 const NSTimeInterval TransitionDuration = 0.2;
 
-//Browser
+//Library
+NSString *const LibraryCellId = @"LibraryCellId";
+CGFloat SeparatorHeight = 2.0;
+
+//Universe
 NSString *const CellIdentifier = @"cell";
 CGFloat TimeDiff = 0.1;
 CGFloat ScrollSpeedThreshold = 1.0;
@@ -37,3 +41,7 @@ const CGFloat NavigationControlDuration = 0.4;
 //Transformers
 NSString *const ColorTransformerName = @"ColorTransformer";
 NSString *const RectTransformerName = @"RectTransformer";
+
+//PulsingHalo
+CGFloat PercentColorKept = 75.0;
+CGFloat KeyTimeForHalfOpacity = 0.5;
