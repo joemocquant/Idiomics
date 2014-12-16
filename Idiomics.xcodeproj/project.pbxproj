@@ -60,10 +60,6 @@
 		015D59EF1A37D2380004F352 /* TrackingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59ED1A37D2380004F352 /* TrackingViewController.m */; };
 		015D59F21A37E42A0004F352 /* BalloonsOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59F11A37E42A0004F352 /* BalloonsOverlay.m */; };
 		015D59F31A37E42A0004F352 /* BalloonsOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59F11A37E42A0004F352 /* BalloonsOverlay.m */; };
-		01BF3A7A1A3D598500EF6712 /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A791A3D598500EF6712 /* NSMutableArray+Shuffling.m */; };
-		01BF3A7B1A3D598500EF6712 /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A791A3D598500EF6712 /* NSMutableArray+Shuffling.m */; };
-		01BF3A7E1A3D5DC500EF6712 /* UIColor+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A7D1A3D5DC500EF6712 /* UIColor+Tools.m */; };
-		01BF3A7F1A3D5DC500EF6712 /* UIColor+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A7D1A3D5DC500EF6712 /* UIColor+Tools.m */; };
 		01BF3A821A3E40CD00EF6712 /* Universe.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A811A3E40CD00EF6712 /* Universe.m */; };
 		01BF3A831A3E40CD00EF6712 /* Universe.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A811A3E40CD00EF6712 /* Universe.m */; };
 		01BF3A861A3E4E6B00EF6712 /* LibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A851A3E4E6B00EF6712 /* LibraryViewController.m */; };
@@ -76,6 +72,10 @@
 		01BF3A971A3FF0EE00EF6712 /* LibraryOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A951A3FF0EE00EF6712 /* LibraryOperations.m */; };
 		01BF3A9E1A3FF44600EF6712 /* UniverseCoverDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A9D1A3FF44600EF6712 /* UniverseCoverDownloader.m */; };
 		01BF3A9F1A3FF44600EF6712 /* UniverseCoverDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A9D1A3FF44600EF6712 /* UniverseCoverDownloader.m */; };
+		01BF3AA51A4027B600EF6712 /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3AA21A4027B600EF6712 /* NSMutableArray+Shuffling.m */; };
+		01BF3AA61A4027B600EF6712 /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3AA21A4027B600EF6712 /* NSMutableArray+Shuffling.m */; };
+		01BF3AA71A4027B600EF6712 /* UIColor+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3AA41A4027B600EF6712 /* UIColor+Tools.m */; };
+		01BF3AA81A4027B600EF6712 /* UIColor+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3AA41A4027B600EF6712 /* UIColor+Tools.m */; };
 		01D7BDE91A17E3E500C30CE2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013EDEA41A13126D009F16BD /* MessageUI.framework */; };
 		01DDBAED1A310A340068EB44 /* IdiomicsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA34A1A30F67A003DED61 /* IdiomicsTests.m */; };
 		01E4B46E1A3A844A0070506E /* MosaicLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E4B4671A3A844A0070506E /* MosaicLayout.m */; };
@@ -158,10 +158,6 @@
 		015D59ED1A37D2380004F352 /* TrackingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingViewController.m; sourceTree = "<group>"; };
 		015D59F01A37E42A0004F352 /* BalloonsOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalloonsOverlay.h; sourceTree = "<group>"; };
 		015D59F11A37E42A0004F352 /* BalloonsOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BalloonsOverlay.m; sourceTree = "<group>"; };
-		01BF3A781A3D598500EF6712 /* NSMutableArray+Shuffling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+Shuffling.h"; path = "../../../../../Documents/NSMutableArray+Shuffling.h"; sourceTree = "<group>"; };
-		01BF3A791A3D598500EF6712 /* NSMutableArray+Shuffling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+Shuffling.m"; path = "../../../../../Documents/NSMutableArray+Shuffling.m"; sourceTree = "<group>"; };
-		01BF3A7C1A3D5DC500EF6712 /* UIColor+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Tools.h"; path = "../../../../../Documents/UIColor+Tools.h"; sourceTree = "<group>"; };
-		01BF3A7D1A3D5DC500EF6712 /* UIColor+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Tools.m"; path = "../../../../../Documents/UIColor+Tools.m"; sourceTree = "<group>"; };
 		01BF3A801A3E40CD00EF6712 /* Universe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Universe.h; sourceTree = "<group>"; };
 		01BF3A811A3E40CD00EF6712 /* Universe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Universe.m; sourceTree = "<group>"; };
 		01BF3A841A3E4E6B00EF6712 /* LibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryViewController.h; sourceTree = "<group>"; };
@@ -174,6 +170,10 @@
 		01BF3A951A3FF0EE00EF6712 /* LibraryOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryOperations.m; sourceTree = "<group>"; };
 		01BF3A9C1A3FF44500EF6712 /* UniverseCoverDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniverseCoverDownloader.h; sourceTree = "<group>"; };
 		01BF3A9D1A3FF44600EF6712 /* UniverseCoverDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniverseCoverDownloader.m; sourceTree = "<group>"; };
+		01BF3AA11A4027B600EF6712 /* NSMutableArray+Shuffling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffling.h"; sourceTree = "<group>"; };
+		01BF3AA21A4027B600EF6712 /* NSMutableArray+Shuffling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffling.m"; sourceTree = "<group>"; };
+		01BF3AA31A4027B600EF6712 /* UIColor+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Tools.h"; sourceTree = "<group>"; };
+		01BF3AA41A4027B600EF6712 /* UIColor+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Tools.m"; sourceTree = "<group>"; };
 		01D7BDF31A17E3E500C30CE2 /* Idiomics_Local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Idiomics_Local.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01E4B4661A3A844A0070506E /* MosaicLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicLayout.h; sourceTree = "<group>"; };
 		01E4B4671A3A844A0070506E /* MosaicLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicLayout.m; sourceTree = "<group>"; };
@@ -276,8 +276,8 @@
 		013AA2E81A30F66B003DED61 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				01BF3AA01A4027B600EF6712 /* Categories */,
 				01E4B4641A3A844A0070506E /* MosaicLayout */,
-				01BF3A731A3D582A00EF6712 /* Categories */,
 				015D59D61A37CEE50004F352 /* Operations */,
 				015D59E31A37CEED0004F352 /* Transformers */,
 				01E4B4741A3A84540070506E /* StyleGuide */,
@@ -387,13 +387,13 @@
 			path = Transformers;
 			sourceTree = "<group>";
 		};
-		01BF3A731A3D582A00EF6712 /* Categories */ = {
+		01BF3AA01A4027B600EF6712 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				01BF3A781A3D598500EF6712 /* NSMutableArray+Shuffling.h */,
-				01BF3A791A3D598500EF6712 /* NSMutableArray+Shuffling.m */,
-				01BF3A7C1A3D5DC500EF6712 /* UIColor+Tools.h */,
-				01BF3A7D1A3D5DC500EF6712 /* UIColor+Tools.m */,
+				01BF3AA11A4027B600EF6712 /* NSMutableArray+Shuffling.h */,
+				01BF3AA21A4027B600EF6712 /* NSMutableArray+Shuffling.m */,
+				01BF3AA31A4027B600EF6712 /* UIColor+Tools.h */,
+				01BF3AA41A4027B600EF6712 /* UIColor+Tools.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -542,6 +542,9 @@
 						CreatedOnToolsVersion = 6.1;
 						TestTargetID = 010EBE071A0C07FB0051EEBE;
 					};
+					01D7BDD31A17E3E500C30CE2 = {
+						DevelopmentTeam = 28G9YT943F;
+					};
 				};
 			};
 			buildConfigurationList = 010EBE031A0C07FB0051EEBE /* Build configuration list for PBXProject "Idiomics" */;
@@ -669,7 +672,7 @@
 				01BF3A961A3FF0EE00EF6712 /* LibraryOperations.m in Sources */,
 				013AA33B1A30F66B003DED61 /* ImageStore.m in Sources */,
 				015D59DF1A37CEE50004F352 /* PanelOperations.m in Sources */,
-				01BF3A7E1A3D5DC500EF6712 /* UIColor+Tools.m in Sources */,
+				01BF3AA71A4027B600EF6712 /* UIColor+Tools.m in Sources */,
 				013AA3111A30F66B003DED61 /* PanelViewController.m in Sources */,
 				015D59EE1A37D2380004F352 /* TrackingViewController.m in Sources */,
 				013AA30F1A30F66B003DED61 /* MMSViewController.m in Sources */,
@@ -679,10 +682,10 @@
 				01BF3A8A1A3E7E8800EF6712 /* UniverseStore.m in Sources */,
 				015D59E81A37CEED0004F352 /* ColorTransformer.m in Sources */,
 				015D59EA1A37CEED0004F352 /* RectTransformer.m in Sources */,
+				01BF3AA51A4027B600EF6712 /* NSMutableArray+Shuffling.m in Sources */,
 				01BF3A821A3E40CD00EF6712 /* Universe.m in Sources */,
 				013AA3291A30F66B003DED61 /* APIClient.m in Sources */,
 				013AA32B1A30F66B003DED61 /* Config.m in Sources */,
-				01BF3A7A1A3D598500EF6712 /* NSMutableArray+Shuffling.m in Sources */,
 				01BF3A8E1A3E8A3900EF6712 /* UniverseViewCell.m in Sources */,
 				015D59F21A37E42A0004F352 /* BalloonsOverlay.m in Sources */,
 				01E4B4791A3A84540070506E /* Colors.m in Sources */,
@@ -718,7 +721,7 @@
 				01BF3A971A3FF0EE00EF6712 /* LibraryOperations.m in Sources */,
 				013AA33C1A30F66B003DED61 /* ImageStore.m in Sources */,
 				015D59E01A37CEE50004F352 /* PanelOperations.m in Sources */,
-				01BF3A7F1A3D5DC500EF6712 /* UIColor+Tools.m in Sources */,
+				01BF3AA81A4027B600EF6712 /* UIColor+Tools.m in Sources */,
 				013AA3121A30F66B003DED61 /* PanelViewController.m in Sources */,
 				015D59EF1A37D2380004F352 /* TrackingViewController.m in Sources */,
 				013AA3101A30F66B003DED61 /* MMSViewController.m in Sources */,
@@ -728,10 +731,10 @@
 				01BF3A8B1A3E7E8800EF6712 /* UniverseStore.m in Sources */,
 				015D59E91A37CEED0004F352 /* ColorTransformer.m in Sources */,
 				015D59EB1A37CEED0004F352 /* RectTransformer.m in Sources */,
+				01BF3AA61A4027B600EF6712 /* NSMutableArray+Shuffling.m in Sources */,
 				01BF3A831A3E40CD00EF6712 /* Universe.m in Sources */,
 				013AA32A1A30F66B003DED61 /* APIClient.m in Sources */,
 				013AA32C1A30F66B003DED61 /* Config.m in Sources */,
-				01BF3A7B1A3D598500EF6712 /* NSMutableArray+Shuffling.m in Sources */,
 				01BF3A8F1A3E8A3900EF6712 /* UniverseViewCell.m in Sources */,
 				015D59F31A37E42A0004F352 /* BalloonsOverlay.m in Sources */,
 				01E4B47A1A3A84540070506E /* Colors.m in Sources */,
@@ -914,6 +917,7 @@
 			baseConfigurationReference = 9E337EF48D37EFBB00672C43 /* Pods-Idiomics.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = "Idiomics/Supporting Files/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Idiomics/Supporting Files/Idiomics_Local-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
@@ -928,6 +932,7 @@
 			baseConfigurationReference = 6C396B74B2D02B54D222D227 /* Pods-Idiomics.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = "Idiomics/Supporting Files/PrefixHeader.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Idiomics/Supporting Files/Idiomics_Local-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
