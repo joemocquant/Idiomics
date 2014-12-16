@@ -123,6 +123,7 @@
     
     Universe *universe = [[UniverseStore sharedStore] universeAtIndex:indexPath.row];
     [cell.contentView setBackgroundColor:universe.averageColor];
+    [cell.imageCoverView setImage:nil];
     
     if ([universe hasCoverImage]) {
         [cell.imageCoverView setImage:[[ImageStore sharedStore] universeImageForKey:universe.imageUrl]];
@@ -179,24 +180,11 @@
 }
 
 
-#pragma mark - Rotation
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    if ([Helper isIPhoneDevice]) {
-        return UIInterfaceOrientationMaskPortrait;
-    }
-    
-    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
-}
-
-
 #pragma mark - LibraryOperationsDelegate
 
 - (void)reloadRowsAtIndexPaths:(NSArray *)indexPaths
 {
     [tv reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
 }
-
 
 @end

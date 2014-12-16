@@ -100,11 +100,18 @@
                 successHandler:(SuccessHandler)successHandler
                   errorHandler:(ErrorHandler)errorHandler
 {
-    NSString *uri = @"content/_design/panels/_view/by_book";
-
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [NSString stringWithFormat:@"\"%@\"", universeId], @"key",
-                            nil];
+    NSString *uri;
+    NSDictionary *params = nil;
+    
+    if ([[self.baseURL absoluteString] isEqualToString:@"http://10.0.0.9:5984"]) {
+        uri = @"content/_design/panels/_view/by_book";
+        
+        params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [NSString stringWithFormat:@"\"%@\"", universeId], @"key",
+                                nil];
+    } else {
+        uri = [NSString stringWithFormat:@"content/_design/panels/_view/by_book/%@", universeId];
+    }
     
     [self GET:uri parameters:params success:successHandler failure:errorHandler];
 }
