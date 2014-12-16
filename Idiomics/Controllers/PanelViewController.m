@@ -11,7 +11,7 @@
 #import "Panel.h"
 #import "Balloon.h"
 #import "BalloonsOverlay.h"
-#import "PanelImageStore.h"
+#import "ImageStore.h"
 #import "NavigationView.h"
 #import "MMSViewController.h"
 #import <UIView+AutoLayout.h>
@@ -92,7 +92,7 @@
     
     [self.view addSubview:panelScrollView];
     
-    UIImage *image = [[[PanelImageStore sharedStore] panelFullSizeImageForKey:panel.imageUrl] copy];
+    UIImage *image = [[[ImageStore sharedStore] panelFullSizeImageForKey:panel.imageUrl] copy];
 
     //image size is in pixels! converting to points
     CGSize imageSize = CGSizeMake(image.size.width / [[UIScreen mainScreen] scale],

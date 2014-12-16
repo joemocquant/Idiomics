@@ -19,7 +19,11 @@ extern const NSTimeInterval AlphaTransitionDuration;
 //Transition
 extern const NSTimeInterval TransitionDuration;
 
-//Browser
+//Library
+extern NSString *const LibraryCellId;
+extern CGFloat SeparatorHeight;
+
+//Universe
 extern NSString *const CellIdentifier;
 extern CGFloat TimeDiff;
 extern CGFloat ScrollSpeedThreshold;

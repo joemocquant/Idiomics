@@ -11,7 +11,7 @@
 #import "MosaicData.h"
 #import <QuartzCore/QuartzCore.h>
 #import <AFNetworking.h>
-#import "PanelImageStore.h"
+#import "ImageStore.h"
 #import <UIView+AutoLayout.h>
 
 @interface MosaicCell ()
@@ -66,7 +66,7 @@
 {
     _mosaicData = newMosaicData;
     
-    UIImage *cached = [[PanelImageStore sharedStore] panelThumbImageForKey:self.mosaicData.imageId];
+    UIImage *cached = [[ImageStore sharedStore] panelThumbImageForKey:self.mosaicData.imageId];
     self.imageView.image = cached;
     
     float millisecondsDelay;

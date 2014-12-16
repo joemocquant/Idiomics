@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		013AA30B1A30F66B003DED61 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D31A30F66B003DED61 /* AppDelegate.m */; };
 		013AA30C1A30F66B003DED61 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D31A30F66B003DED61 /* AppDelegate.m */; };
-		013AA30D1A30F66B003DED61 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D61A30F66B003DED61 /* BrowserViewController.m */; };
-		013AA30E1A30F66B003DED61 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D61A30F66B003DED61 /* BrowserViewController.m */; };
+		013AA30D1A30F66B003DED61 /* UniverseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D61A30F66B003DED61 /* UniverseViewController.m */; };
+		013AA30E1A30F66B003DED61 /* UniverseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D61A30F66B003DED61 /* UniverseViewController.m */; };
 		013AA30F1A30F66B003DED61 /* MMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D81A30F66B003DED61 /* MMSViewController.m */; };
 		013AA3101A30F66B003DED61 /* MMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D81A30F66B003DED61 /* MMSViewController.m */; };
 		013AA3111A30F66B003DED61 /* PanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2DA1A30F66B003DED61 /* PanelViewController.m */; };
@@ -27,10 +27,8 @@
 		013AA3381A30F66B003DED61 /* Balloon.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2F81A30F66B003DED61 /* Balloon.m */; };
 		013AA3391A30F66B003DED61 /* Panel.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2FA1A30F66B003DED61 /* Panel.m */; };
 		013AA33A1A30F66B003DED61 /* Panel.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2FA1A30F66B003DED61 /* Panel.m */; };
-		013AA33B1A30F66B003DED61 /* PanelImageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2FC1A30F66B003DED61 /* PanelImageStore.m */; };
-		013AA33C1A30F66B003DED61 /* PanelImageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2FC1A30F66B003DED61 /* PanelImageStore.m */; };
-		013AA33D1A30F66B003DED61 /* PanelStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2FE1A30F66B003DED61 /* PanelStore.m */; };
-		013AA33E1A30F66B003DED61 /* PanelStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2FE1A30F66B003DED61 /* PanelStore.m */; };
+		013AA33B1A30F66B003DED61 /* ImageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2FC1A30F66B003DED61 /* ImageStore.m */; };
+		013AA33C1A30F66B003DED61 /* ImageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2FC1A30F66B003DED61 /* ImageStore.m */; };
 		013AA3451A30F66B003DED61 /* FocusOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA3081A30F66B003DED61 /* FocusOverlayView.m */; };
 		013AA3461A30F66B003DED61 /* FocusOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA3081A30F66B003DED61 /* FocusOverlayView.m */; };
 		013AA3471A30F66B003DED61 /* NavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA30A1A30F66B003DED61 /* NavigationView.m */; };
@@ -50,8 +48,8 @@
 		013EDEA51A13126D009F16BD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013EDEA41A13126D009F16BD /* MessageUI.framework */; };
 		015D59DD1A37CEE50004F352 /* FullSizePanelDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59D81A37CEE50004F352 /* FullSizePanelDownloader.m */; };
 		015D59DE1A37CEE50004F352 /* FullSizePanelDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59D81A37CEE50004F352 /* FullSizePanelDownloader.m */; };
-		015D59DF1A37CEE50004F352 /* PendingOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59DA1A37CEE50004F352 /* PendingOperations.m */; };
-		015D59E01A37CEE50004F352 /* PendingOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59DA1A37CEE50004F352 /* PendingOperations.m */; };
+		015D59DF1A37CEE50004F352 /* PanelOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59DA1A37CEE50004F352 /* PanelOperations.m */; };
+		015D59E01A37CEE50004F352 /* PanelOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59DA1A37CEE50004F352 /* PanelOperations.m */; };
 		015D59E11A37CEE50004F352 /* ResizedPanelDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59DC1A37CEE50004F352 /* ResizedPanelDownloader.m */; };
 		015D59E21A37CEE50004F352 /* ResizedPanelDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59DC1A37CEE50004F352 /* ResizedPanelDownloader.m */; };
 		015D59E81A37CEED0004F352 /* ColorTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59E51A37CEED0004F352 /* ColorTransformer.m */; };
@@ -66,6 +64,18 @@
 		01BF3A7B1A3D598500EF6712 /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A791A3D598500EF6712 /* NSMutableArray+Shuffling.m */; };
 		01BF3A7E1A3D5DC500EF6712 /* UIColor+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A7D1A3D5DC500EF6712 /* UIColor+Tools.m */; };
 		01BF3A7F1A3D5DC500EF6712 /* UIColor+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A7D1A3D5DC500EF6712 /* UIColor+Tools.m */; };
+		01BF3A821A3E40CD00EF6712 /* Universe.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A811A3E40CD00EF6712 /* Universe.m */; };
+		01BF3A831A3E40CD00EF6712 /* Universe.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A811A3E40CD00EF6712 /* Universe.m */; };
+		01BF3A861A3E4E6B00EF6712 /* LibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A851A3E4E6B00EF6712 /* LibraryViewController.m */; };
+		01BF3A871A3E4E6B00EF6712 /* LibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A851A3E4E6B00EF6712 /* LibraryViewController.m */; };
+		01BF3A8A1A3E7E8800EF6712 /* UniverseStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A891A3E7E8800EF6712 /* UniverseStore.m */; };
+		01BF3A8B1A3E7E8800EF6712 /* UniverseStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A891A3E7E8800EF6712 /* UniverseStore.m */; };
+		01BF3A8E1A3E8A3900EF6712 /* UniverseViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A8D1A3E8A3900EF6712 /* UniverseViewCell.m */; };
+		01BF3A8F1A3E8A3900EF6712 /* UniverseViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A8D1A3E8A3900EF6712 /* UniverseViewCell.m */; };
+		01BF3A961A3FF0EE00EF6712 /* LibraryOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A951A3FF0EE00EF6712 /* LibraryOperations.m */; };
+		01BF3A971A3FF0EE00EF6712 /* LibraryOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A951A3FF0EE00EF6712 /* LibraryOperations.m */; };
+		01BF3A9E1A3FF44600EF6712 /* UniverseCoverDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A9D1A3FF44600EF6712 /* UniverseCoverDownloader.m */; };
+		01BF3A9F1A3FF44600EF6712 /* UniverseCoverDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A9D1A3FF44600EF6712 /* UniverseCoverDownloader.m */; };
 		01D7BDE91A17E3E500C30CE2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013EDEA41A13126D009F16BD /* MessageUI.framework */; };
 		01DDBAED1A310A340068EB44 /* IdiomicsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA34A1A30F67A003DED61 /* IdiomicsTests.m */; };
 		01E4B46E1A3A844A0070506E /* MosaicLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E4B4671A3A844A0070506E /* MosaicLayout.m */; };
@@ -98,8 +108,8 @@
 		010EBE211A0C07FB0051EEBE /* IdiomicsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IdiomicsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		013AA2D21A30F66B003DED61 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		013AA2D31A30F66B003DED61 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		013AA2D51A30F66B003DED61 /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
-		013AA2D61A30F66B003DED61 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserViewController.m; sourceTree = "<group>"; };
+		013AA2D51A30F66B003DED61 /* UniverseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniverseViewController.h; sourceTree = "<group>"; };
+		013AA2D61A30F66B003DED61 /* UniverseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniverseViewController.m; sourceTree = "<group>"; };
 		013AA2D71A30F66B003DED61 /* MMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMSViewController.h; sourceTree = "<group>"; };
 		013AA2D81A30F66B003DED61 /* MMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMSViewController.m; sourceTree = "<group>"; };
 		013AA2D91A30F66B003DED61 /* PanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanelViewController.h; sourceTree = "<group>"; };
@@ -116,10 +126,8 @@
 		013AA2F81A30F66B003DED61 /* Balloon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Balloon.m; sourceTree = "<group>"; };
 		013AA2F91A30F66B003DED61 /* Panel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Panel.h; sourceTree = "<group>"; };
 		013AA2FA1A30F66B003DED61 /* Panel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Panel.m; sourceTree = "<group>"; };
-		013AA2FB1A30F66B003DED61 /* PanelImageStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanelImageStore.h; sourceTree = "<group>"; };
-		013AA2FC1A30F66B003DED61 /* PanelImageStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanelImageStore.m; sourceTree = "<group>"; };
-		013AA2FD1A30F66B003DED61 /* PanelStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanelStore.h; sourceTree = "<group>"; };
-		013AA2FE1A30F66B003DED61 /* PanelStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanelStore.m; sourceTree = "<group>"; };
+		013AA2FB1A30F66B003DED61 /* ImageStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageStore.h; sourceTree = "<group>"; };
+		013AA2FC1A30F66B003DED61 /* ImageStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageStore.m; sourceTree = "<group>"; };
 		013AA3071A30F66B003DED61 /* FocusOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FocusOverlayView.h; sourceTree = "<group>"; };
 		013AA3081A30F66B003DED61 /* FocusOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FocusOverlayView.m; sourceTree = "<group>"; };
 		013AA3091A30F66B003DED61 /* NavigationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationView.h; sourceTree = "<group>"; };
@@ -138,8 +146,8 @@
 		013EDEA41A13126D009F16BD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		015D59D71A37CEE50004F352 /* FullSizePanelDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullSizePanelDownloader.h; sourceTree = "<group>"; };
 		015D59D81A37CEE50004F352 /* FullSizePanelDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullSizePanelDownloader.m; sourceTree = "<group>"; };
-		015D59D91A37CEE50004F352 /* PendingOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingOperations.h; sourceTree = "<group>"; };
-		015D59DA1A37CEE50004F352 /* PendingOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingOperations.m; sourceTree = "<group>"; };
+		015D59D91A37CEE50004F352 /* PanelOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanelOperations.h; sourceTree = "<group>"; };
+		015D59DA1A37CEE50004F352 /* PanelOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanelOperations.m; sourceTree = "<group>"; };
 		015D59DB1A37CEE50004F352 /* ResizedPanelDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizedPanelDownloader.h; sourceTree = "<group>"; };
 		015D59DC1A37CEE50004F352 /* ResizedPanelDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizedPanelDownloader.m; sourceTree = "<group>"; };
 		015D59E41A37CEED0004F352 /* ColorTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorTransformer.h; sourceTree = "<group>"; };
@@ -154,6 +162,18 @@
 		01BF3A791A3D598500EF6712 /* NSMutableArray+Shuffling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+Shuffling.m"; path = "../../../../../Documents/NSMutableArray+Shuffling.m"; sourceTree = "<group>"; };
 		01BF3A7C1A3D5DC500EF6712 /* UIColor+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+Tools.h"; path = "../../../../../Documents/UIColor+Tools.h"; sourceTree = "<group>"; };
 		01BF3A7D1A3D5DC500EF6712 /* UIColor+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Tools.m"; path = "../../../../../Documents/UIColor+Tools.m"; sourceTree = "<group>"; };
+		01BF3A801A3E40CD00EF6712 /* Universe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Universe.h; sourceTree = "<group>"; };
+		01BF3A811A3E40CD00EF6712 /* Universe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Universe.m; sourceTree = "<group>"; };
+		01BF3A841A3E4E6B00EF6712 /* LibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryViewController.h; sourceTree = "<group>"; };
+		01BF3A851A3E4E6B00EF6712 /* LibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryViewController.m; sourceTree = "<group>"; };
+		01BF3A881A3E7E8700EF6712 /* UniverseStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniverseStore.h; sourceTree = "<group>"; };
+		01BF3A891A3E7E8800EF6712 /* UniverseStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniverseStore.m; sourceTree = "<group>"; };
+		01BF3A8C1A3E8A3900EF6712 /* UniverseViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniverseViewCell.h; sourceTree = "<group>"; };
+		01BF3A8D1A3E8A3900EF6712 /* UniverseViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniverseViewCell.m; sourceTree = "<group>"; };
+		01BF3A941A3FF0EE00EF6712 /* LibraryOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryOperations.h; sourceTree = "<group>"; };
+		01BF3A951A3FF0EE00EF6712 /* LibraryOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryOperations.m; sourceTree = "<group>"; };
+		01BF3A9C1A3FF44500EF6712 /* UniverseCoverDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniverseCoverDownloader.h; sourceTree = "<group>"; };
+		01BF3A9D1A3FF44600EF6712 /* UniverseCoverDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniverseCoverDownloader.m; sourceTree = "<group>"; };
 		01D7BDF31A17E3E500C30CE2 /* Idiomics_Local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Idiomics_Local.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01E4B4661A3A844A0070506E /* MosaicLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicLayout.h; sourceTree = "<group>"; };
 		01E4B4671A3A844A0070506E /* MosaicLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicLayout.m; sourceTree = "<group>"; };
@@ -241,8 +261,10 @@
 			children = (
 				015D59EC1A37D2380004F352 /* TrackingViewController.h */,
 				015D59ED1A37D2380004F352 /* TrackingViewController.m */,
-				013AA2D51A30F66B003DED61 /* BrowserViewController.h */,
-				013AA2D61A30F66B003DED61 /* BrowserViewController.m */,
+				01BF3A841A3E4E6B00EF6712 /* LibraryViewController.h */,
+				01BF3A851A3E4E6B00EF6712 /* LibraryViewController.m */,
+				013AA2D51A30F66B003DED61 /* UniverseViewController.h */,
+				013AA2D61A30F66B003DED61 /* UniverseViewController.m */,
 				013AA2D91A30F66B003DED61 /* PanelViewController.h */,
 				013AA2DA1A30F66B003DED61 /* PanelViewController.m */,
 				013AA2D71A30F66B003DED61 /* MMSViewController.h */,
@@ -278,10 +300,12 @@
 				013AA2F81A30F66B003DED61 /* Balloon.m */,
 				013AA2F91A30F66B003DED61 /* Panel.h */,
 				013AA2FA1A30F66B003DED61 /* Panel.m */,
-				013AA2FB1A30F66B003DED61 /* PanelImageStore.h */,
-				013AA2FC1A30F66B003DED61 /* PanelImageStore.m */,
-				013AA2FD1A30F66B003DED61 /* PanelStore.h */,
-				013AA2FE1A30F66B003DED61 /* PanelStore.m */,
+				01BF3A801A3E40CD00EF6712 /* Universe.h */,
+				01BF3A811A3E40CD00EF6712 /* Universe.m */,
+				01BF3A881A3E7E8700EF6712 /* UniverseStore.h */,
+				01BF3A891A3E7E8800EF6712 /* UniverseStore.m */,
+				013AA2FB1A30F66B003DED61 /* ImageStore.h */,
+				013AA2FC1A30F66B003DED61 /* ImageStore.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -295,6 +319,8 @@
 				013AA3081A30F66B003DED61 /* FocusOverlayView.m */,
 				013AA3091A30F66B003DED61 /* NavigationView.h */,
 				013AA30A1A30F66B003DED61 /* NavigationView.m */,
+				01BF3A8C1A3E8A3900EF6712 /* UniverseViewCell.h */,
+				01BF3A8D1A3E8A3900EF6712 /* UniverseViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -336,12 +362,16 @@
 		015D59D61A37CEE50004F352 /* Operations */ = {
 			isa = PBXGroup;
 			children = (
-				015D59D91A37CEE50004F352 /* PendingOperations.h */,
-				015D59DA1A37CEE50004F352 /* PendingOperations.m */,
+				015D59D91A37CEE50004F352 /* PanelOperations.h */,
+				015D59DA1A37CEE50004F352 /* PanelOperations.m */,
 				015D59DB1A37CEE50004F352 /* ResizedPanelDownloader.h */,
 				015D59DC1A37CEE50004F352 /* ResizedPanelDownloader.m */,
 				015D59D71A37CEE50004F352 /* FullSizePanelDownloader.h */,
 				015D59D81A37CEE50004F352 /* FullSizePanelDownloader.m */,
+				01BF3A941A3FF0EE00EF6712 /* LibraryOperations.h */,
+				01BF3A951A3FF0EE00EF6712 /* LibraryOperations.m */,
+				01BF3A9C1A3FF44500EF6712 /* UniverseCoverDownloader.h */,
+				01BF3A9D1A3FF44600EF6712 /* UniverseCoverDownloader.m */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -636,25 +666,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				013AA33B1A30F66B003DED61 /* PanelImageStore.m in Sources */,
-				015D59DF1A37CEE50004F352 /* PendingOperations.m in Sources */,
+				01BF3A961A3FF0EE00EF6712 /* LibraryOperations.m in Sources */,
+				013AA33B1A30F66B003DED61 /* ImageStore.m in Sources */,
+				015D59DF1A37CEE50004F352 /* PanelOperations.m in Sources */,
 				01BF3A7E1A3D5DC500EF6712 /* UIColor+Tools.m in Sources */,
 				013AA3111A30F66B003DED61 /* PanelViewController.m in Sources */,
 				015D59EE1A37D2380004F352 /* TrackingViewController.m in Sources */,
 				013AA30F1A30F66B003DED61 /* MMSViewController.m in Sources */,
 				01E4B4701A3A844A0070506E /* MosaicData.m in Sources */,
 				013AA30B1A30F66B003DED61 /* AppDelegate.m in Sources */,
+				01BF3A9E1A3FF44600EF6712 /* UniverseCoverDownloader.m in Sources */,
+				01BF3A8A1A3E7E8800EF6712 /* UniverseStore.m in Sources */,
 				015D59E81A37CEED0004F352 /* ColorTransformer.m in Sources */,
 				015D59EA1A37CEED0004F352 /* RectTransformer.m in Sources */,
+				01BF3A821A3E40CD00EF6712 /* Universe.m in Sources */,
 				013AA3291A30F66B003DED61 /* APIClient.m in Sources */,
-				013AA33D1A30F66B003DED61 /* PanelStore.m in Sources */,
 				013AA32B1A30F66B003DED61 /* Config.m in Sources */,
 				01BF3A7A1A3D598500EF6712 /* NSMutableArray+Shuffling.m in Sources */,
+				01BF3A8E1A3E8A3900EF6712 /* UniverseViewCell.m in Sources */,
 				015D59F21A37E42A0004F352 /* BalloonsOverlay.m in Sources */,
 				01E4B4791A3A84540070506E /* Colors.m in Sources */,
+				01BF3A861A3E4E6B00EF6712 /* LibraryViewController.m in Sources */,
 				01E4B4721A3A844A0070506E /* MosaicCell.m in Sources */,
 				015D59DD1A37CEE50004F352 /* FullSizePanelDownloader.m in Sources */,
-				013AA30D1A30F66B003DED61 /* BrowserViewController.m in Sources */,
+				013AA30D1A30F66B003DED61 /* UniverseViewController.m in Sources */,
 				013AA32F1A30F66B003DED61 /* Helper.m in Sources */,
 				013AA3131A30F66B003DED61 /* TransitionAnimator.m in Sources */,
 				015D59E11A37CEE50004F352 /* ResizedPanelDownloader.m in Sources */,
@@ -680,25 +715,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				013AA33C1A30F66B003DED61 /* PanelImageStore.m in Sources */,
-				015D59E01A37CEE50004F352 /* PendingOperations.m in Sources */,
+				01BF3A971A3FF0EE00EF6712 /* LibraryOperations.m in Sources */,
+				013AA33C1A30F66B003DED61 /* ImageStore.m in Sources */,
+				015D59E01A37CEE50004F352 /* PanelOperations.m in Sources */,
 				01BF3A7F1A3D5DC500EF6712 /* UIColor+Tools.m in Sources */,
 				013AA3121A30F66B003DED61 /* PanelViewController.m in Sources */,
 				015D59EF1A37D2380004F352 /* TrackingViewController.m in Sources */,
 				013AA3101A30F66B003DED61 /* MMSViewController.m in Sources */,
 				01E4B4711A3A844A0070506E /* MosaicData.m in Sources */,
 				013AA30C1A30F66B003DED61 /* AppDelegate.m in Sources */,
+				01BF3A9F1A3FF44600EF6712 /* UniverseCoverDownloader.m in Sources */,
+				01BF3A8B1A3E7E8800EF6712 /* UniverseStore.m in Sources */,
 				015D59E91A37CEED0004F352 /* ColorTransformer.m in Sources */,
 				015D59EB1A37CEED0004F352 /* RectTransformer.m in Sources */,
+				01BF3A831A3E40CD00EF6712 /* Universe.m in Sources */,
 				013AA32A1A30F66B003DED61 /* APIClient.m in Sources */,
-				013AA33E1A30F66B003DED61 /* PanelStore.m in Sources */,
 				013AA32C1A30F66B003DED61 /* Config.m in Sources */,
 				01BF3A7B1A3D598500EF6712 /* NSMutableArray+Shuffling.m in Sources */,
+				01BF3A8F1A3E8A3900EF6712 /* UniverseViewCell.m in Sources */,
 				015D59F31A37E42A0004F352 /* BalloonsOverlay.m in Sources */,
 				01E4B47A1A3A84540070506E /* Colors.m in Sources */,
+				01BF3A871A3E4E6B00EF6712 /* LibraryViewController.m in Sources */,
 				01E4B4731A3A844A0070506E /* MosaicCell.m in Sources */,
 				015D59DE1A37CEE50004F352 /* FullSizePanelDownloader.m in Sources */,
-				013AA30E1A30F66B003DED61 /* BrowserViewController.m in Sources */,
+				013AA30E1A30F66B003DED61 /* UniverseViewController.m in Sources */,
 				013AA3301A30F66B003DED61 /* Helper.m in Sources */,
 				013AA3141A30F66B003DED61 /* TransitionAnimator.m in Sources */,
 				015D59E21A37CEE50004F352 /* ResizedPanelDownloader.m in Sources */,

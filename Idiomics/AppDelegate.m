@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "BrowserViewController.h"
+#import "LibraryViewController.h"
 #import <GAI.h>
 
 @interface AppDelegate ()
@@ -27,7 +27,7 @@
     [GAI sharedInstance].dispatchInterval = 20;
     
     // Optional: set Logger to VERBOSE for debug information.
-    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
+    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelNone];
     
     // Initialize tracker. Replace with your tracking ID.
     [[GAI sharedInstance] trackerWithTrackingId:@"UA-57412675-1"];
@@ -36,10 +36,13 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-
-    BrowserViewController *bvc = [[BrowserViewController alloc] init];
     
-    [[self window] setRootViewController:bvc];
+    LibraryViewController *lvc = [LibraryViewController new];
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:lvc];
+    navController.interactivePopGestureRecognizer.enabled = NO;
+    
+    [[self window] setRootViewController:navController];
     [self.window makeKeyAndVisible];
 
     return YES;

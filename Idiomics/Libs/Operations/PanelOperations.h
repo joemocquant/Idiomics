@@ -1,5 +1,5 @@
 //
-//  PendingOperations.h
+//  PanelOperations.h
 //  Idiomics
 //
 //  Created by Joe Mocquant on 11/24/14.
@@ -10,21 +10,19 @@
 #import "ResizedPanelDownloader.h"
 #import "FullSizePanelDownloader.h"
 
-@protocol PendingOperationsDelegate;
+@protocol PanelOperationsDelegate;
 
-@interface PendingOperations : NSObject <ResizedPanelDownloaderDelegate,
-                                         FullSizePanelDownloaderDelegate>
+@interface PanelOperations : NSObject <ResizedPanelDownloaderDelegate,
+                                       FullSizePanelDownloaderDelegate>
 {
     NSMutableDictionary *resizedPanelDownloadsInProgress;
-    NSMutableArray *resizedPanelDownloadsFinished;
     NSOperationQueue *resizedPanelDownloadsQueue;
     
     NSMutableDictionary *fullSizePanelDownloadsInProgress;
-    NSMutableArray *fullSizePanelDownloadsFinished;
     NSOperationQueue *fullSizePanelDownloadsQueue;
 }
 
-@property (nonatomic, weak) id<PendingOperationsDelegate> delegate;
+@property (nonatomic, weak) id<PanelOperationsDelegate> delegate;
 
 - (void)startOperationsForPanel:(Panel *)panel atIndexPath:(NSIndexPath *)indexPath;
 - (void)loadPanelsForIndexPaths:(NSArray *)indexPaths;
@@ -34,7 +32,7 @@
 
 @end
 
-@protocol PendingOperationsDelegate <NSObject>
+@protocol PanelOperationsDelegate <NSObject>
 
 - (void)reloadItemsAtIndexPaths:(NSArray *)indexPaths;
 

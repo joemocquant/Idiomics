@@ -7,7 +7,8 @@
 //
 
 #import "TrackingViewController.h"
-#import "BrowserViewController.h"
+#import "LibraryViewController.h"
+#import "UniverseViewController.h"
 #import "PanelViewController.h"
 #import "Helper.h"
 #import <GAI.h>
@@ -24,8 +25,10 @@
     
     trackingIntervalStart = [NSDate date];
     
-    if ([self isKindOfClass:BrowserViewController.class]) {
-        self.screenName = @"browse";
+    if ([self isKindOfClass:LibraryViewController.class]) {
+        self.screenName = @"library";
+    } else if ([self isKindOfClass:UniverseViewController.class]) {
+        self.screenName = @"universe";
     } else if ([self isKindOfClass:PanelViewController.class]) {
         self.screenName = @"panel_edition";
     }
@@ -38,10 +41,15 @@
     NSInteger elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
     id tracker = [[GAI sharedInstance] defaultTracker];
     
-    if ([self isKindOfClass:BrowserViewController.class]) {
+    if ([self isKindOfClass:LibraryViewController.class]) {
         [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_time_spent"
                                                              interval:@(elapsed)
-                                                                 name:@"browse"
+                                                                 name:@"library"
+                                                                label:nil] build]];
+    } else if ([self isKindOfClass:UniverseViewController.class]) {
+        [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_time_spent"
+                                                             interval:@(elapsed)
+                                                                 name:@"universe_browsing"
                                                                 label:nil] build]];
         
     } else if ([self isKindOfClass:PanelViewController.class]) {
@@ -51,6 +59,9 @@
                                                                 label:panelId] build]];
     }
 }
+
+
+#pragma mark - Rotation
 
 - (NSUInteger)supportedInterfaceOrientations
 {

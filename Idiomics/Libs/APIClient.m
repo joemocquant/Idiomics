@@ -49,9 +49,8 @@
         [self setResponseSerializer:[AFJSONResponseSerializer serializer]];
         [[self responseSerializer] setAcceptableContentTypes:[NSSet setWithObjects:@"application/json",
                                                                                    @"text/plain", nil]];
-        
         [self startMonitoringAPI];
-        
+
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
         
 #ifdef __DEBUG__
@@ -90,16 +89,38 @@
 
 #pragma mark - Instance methods
 
+- (void)getAllUniverseWithSuccessHandler:(SuccessHandler)successHandler
+                            errorHandler:(ErrorHandler)errorHandler
+{
+    NSString *uri = @"content/_design/books/_view/all";
+    [self GET:uri parameters:nil success:successHandler failure:errorHandler];
+}
+
+- (void)getAllPanelForUniverse:(NSString *)universeId
+                successHandler:(SuccessHandler)successHandler
+                  errorHandler:(ErrorHandler)errorHandler
+{
+    NSString *uri = @"content/_design/panels/_view/by_book";
+
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSString stringWithFormat:@"\"%@\"", universeId], @"key",
+                            nil];
+    
+    [self GET:uri parameters:params success:successHandler failure:errorHandler];
+}
+
 - (void)getAllPanelsWithSuccessHandler:(SuccessHandler)successHandler
                           errorHandler:(ErrorHandler)errorHandler
 {
-    [self GET:@"all" parameters:nil success:successHandler failure:errorHandler];
+    NSString *uri = @"content/_design/panels/_view/all";
+    [self GET:uri parameters:nil success:successHandler failure:errorHandler];
 }
 
 - (void)getSingleBalloonPanelsWithSuccessHandler:(SuccessHandler)successHandler
                                     errorHandler:(ErrorHandler)errorHandler
 {
-    [self GET:@"up_to_one_balloon" parameters:nil success:successHandler failure:errorHandler];
+    NSString *uri = @"content/_design/panels/_view/up_to_one_balloon";
+    [self GET:uri parameters:nil success:successHandler failure:errorHandler];
 }
 
 @end
