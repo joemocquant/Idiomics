@@ -123,6 +123,7 @@
     
     Universe *universe = [[UniverseStore sharedStore] universeAtIndex:indexPath.row];
     [cell.contentView setBackgroundColor:universe.averageColor];
+    [cell.imageCoverView setImage:nil];
     
     if ([universe hasCoverImage]) {
         [cell.imageCoverView setImage:[[ImageStore sharedStore] universeImageForKey:universe.imageUrl]];
