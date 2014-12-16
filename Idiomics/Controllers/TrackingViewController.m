@@ -60,16 +60,4 @@
     }
 }
 
-
-#pragma mark - Rotation
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    if ([Helper isIPhoneDevice]) {
-        return UIInterfaceOrientationMaskPortrait;
-    }
-    
-    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscape;
-}
-
 @end

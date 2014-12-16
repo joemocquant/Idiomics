@@ -90,7 +90,6 @@
 		01E4B47C1A3A84540070506E /* Fonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E4B4781A3A84540070506E /* Fonts.m */; };
 		209DEEE605AF4694B0518342 /* libPods-Idiomics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D5897EF81C07F7BC12EB047 /* libPods-Idiomics.a */; };
 		4E06B94C41B9FD88DD398384 /* libPods-Idiomics_Local.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A64E611414B217167AB2BAA /* libPods-Idiomics_Local.a */; };
-		93A197DD17577202A45E9781 /* libPods-Idiomics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D5897EF81C07F7BC12EB047 /* libPods-Idiomics.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -213,7 +212,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				01D7BDE91A17E3E500C30CE2 /* MessageUI.framework in Frameworks */,
-				93A197DD17577202A45E9781 /* libPods-Idiomics.a in Frameworks */,
 				4E06B94C41B9FD88DD398384 /* libPods-Idiomics_Local.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
