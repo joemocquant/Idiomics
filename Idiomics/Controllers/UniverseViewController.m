@@ -54,7 +54,7 @@
     [cv pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
     
     back = [UIButton buttonWithType:UIButtonTypeCustom];
-    [back setImage:[UIImage imageNamed:@"close.png"] forState:UIControlStateNormal];
+    [back setImage:[UIImage imageNamed:@"collections.png"] forState:UIControlStateNormal];
     [back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:back];
     
