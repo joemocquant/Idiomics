@@ -44,6 +44,7 @@
                             collectionViewLayout:[MosaicLayout new]];
     
     [(MosaicLayout *)cv.collectionViewLayout setDelegate:self];
+    [cv setShowsVerticalScrollIndicator:NO];
     [cv setDelegate:self];
     [cv setDataSource:self];
     [cv registerClass:[MosaicCell class] forCellWithReuseIdentifier:CellIdentifier];
