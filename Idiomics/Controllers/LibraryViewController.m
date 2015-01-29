@@ -41,6 +41,7 @@
     tv = [UITableView new];
     [tv setDelegate:self];
     [tv setDataSource:self];
+    [tv setShowsVerticalScrollIndicator:NO];
     [tv setBackgroundColor:[Colors black]];
     [tv setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [tv registerClass:[UniverseViewCell class] forCellReuseIdentifier:LibraryCellId];
@@ -50,6 +51,15 @@
     [tv pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
     
     [self loadAllUniverses];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    NSIndexPath *selectedIndexPath = [tv indexPathForSelectedRow];
+    UniverseViewCell *cell = (UniverseViewCell *)[tv cellForRowAtIndexPath:selectedIndexPath];
+    [cell.mashupView setAlpha:MashupAlpha];
 }
 
 - (void)didReceiveMemoryWarning
@@ -123,11 +133,12 @@
     
     Universe *universe = [[UniverseStore sharedStore] universeAtIndex:indexPath.row];
     [cell.contentView setBackgroundColor:universe.averageColor];
-    [cell.imageCoverView setImage:nil];
+    [cell.mashupView setImage:nil];
     
     if ([universe hasCoverImage]) {
-        [cell.imageCoverView setImage:[[ImageStore sharedStore] universeImageForKey:universe.imageUrl]];
-        
+        [cell.mashupView setImage:[[ImageStore sharedStore] universeImageForKey:universe.imageUrl]];
+        [cell updateMashupConstraints];
+
     } else if ([universe isFailed]) {
         
         
@@ -145,20 +156,20 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSUInteger retVal;
+    CGFloat retVal;
  
     CGRect screen = [[UIScreen mainScreen] bounds];
     
     if ([Helper isIPhoneDevice]) {
-        retVal = screen.size.height / 4;
+        retVal = screen.size.height / kRowsiPhonePortrait;
     } else {
         
         UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
         
         if (UIInterfaceOrientationIsLandscape(orientation)) {
-            retVal = screen.size.height / 3;
+            retVal = screen.size.height / kRowsiPadLandscape;
         } else {
-            retVal = screen.size.height / 4;
+            retVal = screen.size.height / kRowsiPadPortrait;
         }
     }
     
@@ -167,6 +178,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UniverseViewCell *cell = (UniverseViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [cell.mashupView setAlpha:1.0];
+    
     [[UniverseStore sharedStore] setCurrentUniverse:[[UniverseStore sharedStore] universeAtIndex:indexPath.row]];
     
     id tracker = [[GAI sharedInstance] defaultTracker];
@@ -176,6 +190,7 @@
                                                            value:nil] build]];
     
     UniverseViewController *uvc = [UniverseViewController new];
+
     [[self navigationController] pushViewController:uvc animated:YES];
 }
 
