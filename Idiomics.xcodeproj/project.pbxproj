@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0129CDA81A7AA9A100CFCAC4 /* collections@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0129CDA71A7AA9A100CFCAC4 /* collections@2x.png */; };
+		0129CDA91A7AA9A100CFCAC4 /* collections@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0129CDA71A7AA9A100CFCAC4 /* collections@2x.png */; };
 		013AA30B1A30F66B003DED61 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D31A30F66B003DED61 /* AppDelegate.m */; };
 		013AA30C1A30F66B003DED61 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D31A30F66B003DED61 /* AppDelegate.m */; };
 		013AA30D1A30F66B003DED61 /* UniverseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D61A30F66B003DED61 /* UniverseViewController.m */; };
@@ -88,8 +90,8 @@
 		01E4B47A1A3A84540070506E /* Colors.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E4B4761A3A84540070506E /* Colors.m */; };
 		01E4B47B1A3A84540070506E /* Fonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E4B4781A3A84540070506E /* Fonts.m */; };
 		01E4B47C1A3A84540070506E /* Fonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E4B4781A3A84540070506E /* Fonts.m */; };
-		209DEEE605AF4694B0518342 /* libPods-Idiomics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D5897EF81C07F7BC12EB047 /* libPods-Idiomics.a */; };
-		4E06B94C41B9FD88DD398384 /* libPods-Idiomics_Local.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A64E611414B217167AB2BAA /* libPods-Idiomics_Local.a */; };
+		630D476A89766E94F4B55B01 /* libPods-Idiomics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DD3572DAF72C89C3E0155A2 /* libPods-Idiomics.a */; };
+		94B3259E5BD4D94272C8037B /* libPods-Idiomics_Local.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B729267F366BC0D85BD08ADE /* libPods-Idiomics_Local.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +107,7 @@
 /* Begin PBXFileReference section */
 		010EBE081A0C07FB0051EEBE /* Idiomics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Idiomics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		010EBE211A0C07FB0051EEBE /* IdiomicsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IdiomicsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0129CDA71A7AA9A100CFCAC4 /* collections@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "collections@2x.png"; sourceTree = "<group>"; };
 		013AA2D21A30F66B003DED61 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		013AA2D31A30F66B003DED61 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		013AA2D51A30F66B003DED61 /* UniverseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniverseViewController.h; sourceTree = "<group>"; };
@@ -184,10 +187,10 @@
 		01E4B4761A3A84540070506E /* Colors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colors.m; sourceTree = "<group>"; };
 		01E4B4771A3A84540070506E /* Fonts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fonts.h; sourceTree = "<group>"; };
 		01E4B4781A3A84540070506E /* Fonts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fonts.m; sourceTree = "<group>"; };
-		1A64E611414B217167AB2BAA /* libPods-Idiomics_Local.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Idiomics_Local.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DD3572DAF72C89C3E0155A2 /* libPods-Idiomics.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Idiomics.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C396B74B2D02B54D222D227 /* Pods-Idiomics.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Idiomics.release.xcconfig"; path = "Pods/Target Support Files/Pods-Idiomics/Pods-Idiomics.release.xcconfig"; sourceTree = "<group>"; };
-		7D5897EF81C07F7BC12EB047 /* libPods-Idiomics.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Idiomics.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E337EF48D37EFBB00672C43 /* Pods-Idiomics.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Idiomics.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Idiomics/Pods-Idiomics.debug.xcconfig"; sourceTree = "<group>"; };
+		B729267F366BC0D85BD08ADE /* libPods-Idiomics_Local.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Idiomics_Local.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,7 +199,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				013EDEA51A13126D009F16BD /* MessageUI.framework in Frameworks */,
-				209DEEE605AF4694B0518342 /* libPods-Idiomics.a in Frameworks */,
+				630D476A89766E94F4B55B01 /* libPods-Idiomics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,7 +215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01D7BDE91A17E3E500C30CE2 /* MessageUI.framework in Frameworks */,
-				4E06B94C41B9FD88DD398384 /* libPods-Idiomics_Local.a in Frameworks */,
+				94B3259E5BD4D94272C8037B /* libPods-Idiomics_Local.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +356,7 @@
 			children = (
 				013AA3531A30F745003DED61 /* close@2x.png */,
 				013AA3581A30F745003DED61 /* send@2x.png */,
+				0129CDA71A7AA9A100CFCAC4 /* collections@2x.png */,
 			);
 			path = icons;
 			sourceTree = "<group>";
@@ -448,8 +452,8 @@
 			isa = PBXGroup;
 			children = (
 				013EDEA41A13126D009F16BD /* MessageUI.framework */,
-				7D5897EF81C07F7BC12EB047 /* libPods-Idiomics.a */,
-				1A64E611414B217167AB2BAA /* libPods-Idiomics_Local.a */,
+				5DD3572DAF72C89C3E0155A2 /* libPods-Idiomics.a */,
+				B729267F366BC0D85BD08ADE /* libPods-Idiomics_Local.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -570,6 +574,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0129CDA81A7AA9A100CFCAC4 /* collections@2x.png in Resources */,
 				013AA3701A30F745003DED61 /* Images.xcassets in Resources */,
 				013AA3761A30F745003DED61 /* Idiomics.strings in Resources */,
 				013AA3721A30F745003DED61 /* Laffayette_Comic_Pro.ttf in Resources */,
@@ -589,6 +594,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0129CDA91A7AA9A100CFCAC4 /* collections@2x.png in Resources */,
 				013AA3711A30F745003DED61 /* Images.xcassets in Resources */,
 				013AA3771A30F745003DED61 /* Idiomics.strings in Resources */,
 				013AA3731A30F745003DED61 /* Laffayette_Comic_Pro.ttf in Resources */,

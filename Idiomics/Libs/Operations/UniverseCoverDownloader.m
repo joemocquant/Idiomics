@@ -54,9 +54,10 @@
         return;
     }
     
+    CGSize adaptedSize = [self getAdaptedSize];
     NSURL *url = [NSURL URLWithString:[Helper getImageWithUrl:self.universe.imageUrl
-                                                        witdh:320
-                                                       height:150]];
+                                                        witdh:adaptedSize.width
+                                                       height:adaptedSize.height]];
     
     NSData *imageData = [[NSData alloc] initWithContentsOfURL:url];
     
@@ -89,4 +90,37 @@
                                                 withObject:self
                                              waitUntilDone:NO];
 }
+
+- (CGSize)getAdaptedSize
+{
+    CGFloat height;
+     
+    CGRect screen = [[UIScreen mainScreen] bounds];
+     
+    if ([Helper isIPhoneDevice]) {
+        height = screen.size.height / kRowsiPhonePortrait;
+    } else {
+        height = MAX(screen.size.height / kRowsiPadLandscape,
+                     screen.size.height / kRowsiPadPortrait);
+    }
+    
+    return CGSizeMake(roundf(height * kMashupRatio),
+                      roundf(height));
+}
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

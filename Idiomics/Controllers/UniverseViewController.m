@@ -44,6 +44,7 @@
                             collectionViewLayout:[MosaicLayout new]];
     
     [(MosaicLayout *)cv.collectionViewLayout setDelegate:self];
+    [cv setShowsVerticalScrollIndicator:NO];
     [cv setDelegate:self];
     [cv setDataSource:self];
     [cv registerClass:[MosaicCell class] forCellWithReuseIdentifier:CellIdentifier];
@@ -54,8 +55,8 @@
     [cv pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
     
     back = [UIButton buttonWithType:UIButtonTypeCustom];
-    [back setImage:[UIImage imageNamed:@"close.png"] forState:UIControlStateNormal];
-    [back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [back setImage:[UIImage imageNamed:@"collections.png"] forState:UIControlStateNormal];
+    [back addTarget:self action:@selector(backToLibrary) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:back];
     
     [back setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -109,7 +110,7 @@
 
 #pragma mark - Private methods
 
-- (void)back
+- (void)backToLibrary
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -368,6 +369,7 @@
     
     animator.presenting = YES;
     animator.selectedCell = selectedCell;
+    animator.back = back;
     
     return animator;
 }
@@ -377,6 +379,7 @@
     TransitionAnimator *animator = [TransitionAnimator new];
     animator.presenting = NO;
     animator.selectedCell = selectedCell;
+    animator.back = back;
     
     return animator;
 }

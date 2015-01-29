@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UniverseViewCell : UITableViewCell
+@interface UniverseViewCell : UITableViewCell <UIScrollViewDelegate>
+{
+    NSLayoutConstraint *mashupWidthConstraint;
+    NSLayoutConstraint *mashupHeightConstraint;
+}
 
-@property (nonatomic, readonly, strong) UIImageView *imageCoverView;
+@property (nonatomic, readonly, strong) UIImageView *mashupView;
+
+- (void)updateMashupConstraints;
 
 @end
