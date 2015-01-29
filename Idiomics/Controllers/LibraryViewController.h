@@ -15,7 +15,6 @@
                                                            LibraryOperationsDelegate>
 {
     LibraryOperations *libraryOperations;
-    
     UITableView *tv;
 }
 

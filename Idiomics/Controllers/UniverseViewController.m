@@ -55,7 +55,7 @@
     
     back = [UIButton buttonWithType:UIButtonTypeCustom];
     [back setImage:[UIImage imageNamed:@"collections.png"] forState:UIControlStateNormal];
-    [back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [back addTarget:self action:@selector(backToLibrary) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:back];
     
     [back setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -109,7 +109,7 @@
 
 #pragma mark - Private methods
 
-- (void)back
+- (void)backToLibrary
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -368,6 +368,7 @@
     
     animator.presenting = YES;
     animator.selectedCell = selectedCell;
+    animator.back = back;
     
     return animator;
 }
@@ -377,6 +378,7 @@
     TransitionAnimator *animator = [TransitionAnimator new];
     animator.presenting = NO;
     animator.selectedCell = selectedCell;
+    animator.back = back;
     
     return animator;
 }
