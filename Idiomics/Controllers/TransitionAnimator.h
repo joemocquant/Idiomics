@@ -15,6 +15,5 @@
 
 @property (nonatomic, assign) BOOL presenting;
 @property (nonatomic, strong) MosaicCell *selectedCell;
-@property (nonatomic, strong) UIButton *back;
 
 @end

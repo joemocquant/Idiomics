@@ -314,6 +314,26 @@
     if (timeDiff > TimeDiff) {
         CGFloat distance = currentOffset.y - lastOffset.y;
 
+        if (currentOffset.y > 0) {
+            [UIView animateWithDuration:NavigationControlDuration animations:^{
+                
+                CGPoint center = [back center];
+                if (distance < 0) { // scrolling up
+                    
+                    if (center.y < 0) {
+                        [back setAlpha:1.0];
+                        [back setCenter:CGPointMake(center.x, center.y + NavigationControlHeight)];
+                    }
+                } else { // scrolling down
+                    
+                    if (center.y > 0) {
+                        [back setAlpha:0];
+                        [back setCenter:CGPointMake(center.x, center.y - NavigationControlHeight)];
+                    }
+                }
+            }];
+        }
+
         CGFloat scrollSpeed = fabsf(distance * 10 / 1000); //per millisecond
         
         if (scrollSpeed > ScrollSpeedThreshold) {
@@ -366,10 +386,8 @@
                                                                       sourceController:(UIViewController *)source
 {
     TransitionAnimator *animator = [TransitionAnimator new];
-    
     animator.presenting = YES;
     animator.selectedCell = selectedCell;
-    animator.back = back;
     
     return animator;
 }
@@ -379,7 +397,6 @@
     TransitionAnimator *animator = [TransitionAnimator new];
     animator.presenting = NO;
     animator.selectedCell = selectedCell;
-    animator.back = back;
     
     return animator;
 }

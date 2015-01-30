@@ -44,8 +44,6 @@
                                                                       fromViewController.view.bounds.size.width,
                                                                       fromViewController.view.bounds.size.height)];
             
-            [self.back setAlpha:0];
-            
         } completion:^(BOOL finished) {
             [transitionContext completeTransition:YES];
         }];
@@ -64,7 +62,6 @@
             
             [panelView setAlpha:0];
             [panelView setFrame:point];
-            [self.back setAlpha:1.0];
             
         } completion:^(BOOL finished) {
             [transitionContext completeTransition:YES];
