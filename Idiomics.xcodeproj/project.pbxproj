@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0129CDA81A7AA9A100CFCAC4 /* collections@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0129CDA71A7AA9A100CFCAC4 /* collections@2x.png */; };
-		0129CDA91A7AA9A100CFCAC4 /* collections@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0129CDA71A7AA9A100CFCAC4 /* collections@2x.png */; };
+		0129CDAB1A7B8C8E00CFCAC4 /* collections@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0129CDAA1A7B8C8E00CFCAC4 /* collections@2x.png */; };
+		0129CDAC1A7B8C8E00CFCAC4 /* collections@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0129CDAA1A7B8C8E00CFCAC4 /* collections@2x.png */; };
 		013AA30B1A30F66B003DED61 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D31A30F66B003DED61 /* AppDelegate.m */; };
 		013AA30C1A30F66B003DED61 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D31A30F66B003DED61 /* AppDelegate.m */; };
 		013AA30D1A30F66B003DED61 /* UniverseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D61A30F66B003DED61 /* UniverseViewController.m */; };
@@ -107,7 +107,7 @@
 /* Begin PBXFileReference section */
 		010EBE081A0C07FB0051EEBE /* Idiomics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Idiomics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		010EBE211A0C07FB0051EEBE /* IdiomicsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IdiomicsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0129CDA71A7AA9A100CFCAC4 /* collections@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "collections@2x.png"; sourceTree = "<group>"; };
+		0129CDAA1A7B8C8E00CFCAC4 /* collections@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "collections@2x.png"; sourceTree = "<group>"; };
 		013AA2D21A30F66B003DED61 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		013AA2D31A30F66B003DED61 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		013AA2D51A30F66B003DED61 /* UniverseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniverseViewController.h; sourceTree = "<group>"; };
@@ -356,7 +356,7 @@
 			children = (
 				013AA3531A30F745003DED61 /* close@2x.png */,
 				013AA3581A30F745003DED61 /* send@2x.png */,
-				0129CDA71A7AA9A100CFCAC4 /* collections@2x.png */,
+				0129CDAA1A7B8C8E00CFCAC4 /* collections@2x.png */,
 			);
 			path = icons;
 			sourceTree = "<group>";
@@ -574,7 +574,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0129CDA81A7AA9A100CFCAC4 /* collections@2x.png in Resources */,
+				0129CDAB1A7B8C8E00CFCAC4 /* collections@2x.png in Resources */,
 				013AA3701A30F745003DED61 /* Images.xcassets in Resources */,
 				013AA3761A30F745003DED61 /* Idiomics.strings in Resources */,
 				013AA3721A30F745003DED61 /* Laffayette_Comic_Pro.ttf in Resources */,
@@ -594,7 +594,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0129CDA91A7AA9A100CFCAC4 /* collections@2x.png in Resources */,
+				0129CDAC1A7B8C8E00CFCAC4 /* collections@2x.png in Resources */,
 				013AA3711A30F745003DED61 /* Images.xcassets in Resources */,
 				013AA3771A30F745003DED61 /* Idiomics.strings in Resources */,
 				013AA3731A30F745003DED61 /* Laffayette_Comic_Pro.ttf in Resources */,
