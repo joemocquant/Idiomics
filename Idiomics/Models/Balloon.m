@@ -8,7 +8,6 @@
 
 #import "Balloon.h"
 #import "RectTransformer.h"
-#import <ReactiveCocoa.h>
 
 @interface Balloon ()
 

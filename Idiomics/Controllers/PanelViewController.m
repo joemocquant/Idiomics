@@ -13,26 +13,16 @@
 #import "BalloonsOverlay.h"
 #import "ImageStore.h"
 #import "NavigationView.h"
+#import "DAKeyboardControl.h"
 #import "MMSViewController.h"
 #import <UIView+AutoLayout.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
 
-@interface PanelViewController ()
-
-@property (nonatomic, readwrite, strong) UIView *inputAccessoryView;
-
-@end
-
 @implementation PanelViewController
 
 
 #pragma mark - Lifecycle
-
-- (BOOL)canBecomeFirstResponder
-{
-    return YES;
-}
 
 - (instancetype)initWithPanel:(Panel *)p
 {
@@ -132,7 +122,6 @@
                                                                                 action:@selector(balloonsOverlayTappedOnce:)];
     [singleTap setNumberOfTapsRequired:1];
     [singleTap setNumberOfTouchesRequired:1];
-    [singleTap requireGestureRecognizerToFail:doubleTap];
     [panelScrollView addGestureRecognizer:singleTap];
     
     [self setupNavigationView];
@@ -143,7 +132,7 @@
 
 - (void)setupNavigationView
 {
-    NavigationView *navigationView = [NavigationView new];
+    navigationView = [NavigationView new];
     
     [[navigationView cancel] addTarget:self action:@selector(back)
                       forControlEvents:UIControlEventTouchUpInside];
@@ -151,8 +140,49 @@
                     forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:navigationView];
-    [self setInputAccessoryView:navigationView];
+    [navigationView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [navigationView pinEdges:JRTViewPinLeftEdge | JRTViewPinRightEdge toSameEdgesOfView:self.view];
+    navigationViewConstraint = [navigationView pinAttribute:NSLayoutAttributeBottom
+                                                toAttribute:NSLayoutAttributeBottom
+                                                     ofItem:self.view];
+    
+    [navigationView constrainToHeight:NavigationControlHeight];
+    
     [balloonsOverlay setNavigationView:navigationView];
+    
+#pragma clang diagnostic ignored "-Warc-retain-cycles" 
+//Cannot be weakify/strongify. Will be deallocated on [self.view removeKeyboardControl];
+
+    [self.view addKeyboardPanningWithFrameBasedActionHandler:nil
+                                constraintBasedActionHandler:^(CGRect keyboardFrameInView,
+                                                               BOOL opening,
+                                                               BOOL closing) {
+                                    
+        CGRect screen = [[UIScreen mainScreen] bounds];
+        keyboardIsPoppingUp = NO;
+                                    
+        if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+            UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+                                        
+            if (UIInterfaceOrientationIsPortrait(orientation)) {
+                keyboardOffset = CGRectGetHeight(screen) - keyboardFrameInView.origin.y;
+            } else {
+                keyboardOffset = CGRectGetWidth(screen) - keyboardFrameInView.origin.y;
+            }
+        } else {
+            keyboardOffset = CGRectGetHeight(screen) - keyboardFrameInView.origin.y;
+        }
+                                    
+        navigationViewConstraint.constant = -keyboardOffset;
+        [navigationView layoutIfNeeded];
+                                    
+        [self resizeScrollView];
+                      
+                                    
+    }];
+    
+#pragma clang diagnostic pop
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -182,12 +212,13 @@
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
+    keyboardIsPoppingUp = NO;
     keyboardOffset = 0.0;
-    [self resizeScrollView];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
+    keyboardIsPoppingUp = YES;
     CGRect keyboardBounds;
     [[notification.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardBounds];
 
@@ -201,7 +232,7 @@
         } else {
             keyboardHeight = keyboardBounds.size.width;
         }
-        
+
     } else {
         keyboardHeight = keyboardBounds.size.height;
     }
@@ -209,7 +240,6 @@
     if (keyboardHeight > NavigationControlHeight) {
         
         keyboardOffset = keyboardHeight;
-        [self resizeScrollView];
     }
 }
 
@@ -347,17 +377,17 @@
                                  panelImageView.frame.size.height + 2 * Gutter);
         [self updateScalesWithContentSize:size];
         
-        if (keyboardOffset) {
+        if (keyboardIsPoppingUp) {
             
             if ([panelScrollView zoomScale] < screenScale) {
                 [panelScrollView setZoomScale:screenScale animated:YES];
             } else {
                 [panelScrollView setZoomScale:panelScrollView.zoomScale animated:YES];
             }
-            
+
         }
     } completion:^(BOOL finished) {
-        if (keyboardOffset) {
+        if (keyboardIsPoppingUp) {
             [UIView animateWithDuration:ScrollToBottomDuration animations:^{
                 [self focusOnBalloon];
             }];
@@ -388,7 +418,7 @@
     }
 }
 
--(void)updateScalesWithContentSize:(CGSize)contentSize
+- (void)updateScalesWithContentSize:(CGSize)contentSize
 {
     // Set up the minimum & maximum zoom scales
 
@@ -433,10 +463,7 @@
                                                                label:panelId
                                                                value:nil] build]];
         
-        if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
-            [_inputAccessoryView removeFromSuperview]; //avoid a segfault
-        }
-        
+        [self.view removeKeyboardControl];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
