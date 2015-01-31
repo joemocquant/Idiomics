@@ -156,24 +156,29 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat retVal;
- 
     CGRect screen = [[UIScreen mainScreen] bounds];
     
     if ([Helper isIPhoneDevice]) {
-        retVal = screen.size.height / kRowsiPhonePortrait;
+        return CGRectGetHeight(screen) / kRowsiPhonePortrait;
     } else {
         
-        UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+
+        if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+            
+            if (UIInterfaceOrientationIsPortrait(orientation)) {
+                return CGRectGetHeight(screen) / kRowsiPadPortrait;
+            } else {
+                return CGRectGetWidth(screen) / kRowsiPadLandscape;
+            }
+        }
         
-        if (UIInterfaceOrientationIsLandscape(orientation)) {
-            retVal = screen.size.height / kRowsiPadLandscape;
+        if (UIInterfaceOrientationIsPortrait(orientation)) {
+            return CGRectGetHeight(screen) / kRowsiPadPortrait;
         } else {
-            retVal = screen.size.height / kRowsiPadPortrait;
+            return CGRectGetHeight(screen) / kRowsiPadLandscape;
         }
     }
-    
-    return retVal;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
