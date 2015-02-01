@@ -31,6 +31,7 @@ extern CGFloat MashupAlpha;
 //Universe
 extern NSString *const CellIdentifier;
 extern CGFloat TimeDiff;
+extern CGFloat DistanceMin;
 extern CGFloat ScrollSpeedThreshold;
 extern CGFloat VelocityThreshold;
 #define kDoubleColumnProbability 40
@@ -50,6 +51,8 @@ extern const CGFloat ScrollToBottomDuration;
 extern const CGFloat FocusMoveMargin;
 extern const CGFloat NavigationControlHeight;
 extern const CGFloat NavigationControlDuration;
+extern const CGFloat MenuMoveDuration;
+extern const CGFloat WatermarkOffset;
 
 //Transformers
 extern NSString *const ColorTransformerName;

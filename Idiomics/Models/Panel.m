@@ -9,7 +9,6 @@
 #import "Panel.h"
 #import "Balloon.h"
 #import "ImageStore.h"
-#import <ReactiveCocoa.h>
 
 @interface Panel ()
 

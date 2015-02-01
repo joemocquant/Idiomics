@@ -136,8 +136,18 @@
     [cell.mashupView setImage:nil];
     
     if ([universe hasCoverImage]) {
+        
+        cell.mashupView.alpha = 0;
         [cell.mashupView setImage:[[ImageStore sharedStore] universeImageForKey:universe.imageUrl]];
         [cell updateMashupConstraints];
+        
+        float millisecondsDelay = (arc4random() % 700) / 2000.0f;
+
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, millisecondsDelay * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:AlphaTransitionDuration animations:^{
+                cell.mashupView.alpha = MashupAlpha;
+            }];
+        });
 
     } else if ([universe isFailed]) {
         
@@ -156,24 +166,29 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat retVal;
- 
     CGRect screen = [[UIScreen mainScreen] bounds];
     
     if ([Helper isIPhoneDevice]) {
-        retVal = screen.size.height / kRowsiPhonePortrait;
+        return CGRectGetHeight(screen) / kRowsiPhonePortrait;
     } else {
         
-        UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+
+        if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+            
+            if (UIInterfaceOrientationIsPortrait(orientation)) {
+                return CGRectGetHeight(screen) / kRowsiPadPortrait;
+            } else {
+                return CGRectGetWidth(screen) / kRowsiPadLandscape;
+            }
+        }
         
-        if (UIInterfaceOrientationIsLandscape(orientation)) {
-            retVal = screen.size.height / kRowsiPadLandscape;
+        if (UIInterfaceOrientationIsPortrait(orientation)) {
+            return CGRectGetHeight(screen) / kRowsiPadPortrait;
         } else {
-            retVal = screen.size.height / kRowsiPadPortrait;
+            return CGRectGetHeight(screen) / kRowsiPadLandscape;
         }
     }
-    
-    return retVal;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

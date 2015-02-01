@@ -10,6 +10,7 @@
 #import "TrackingViewController.h"
 
 @class BalloonsOverlay;
+@class NavigationView;
 
 @class Panel;
 
@@ -22,6 +23,8 @@
     BalloonsOverlay *balloonsOverlay;
     
     CGFloat screenScale;
+    NSLayoutConstraint *navigationViewConstraint;
+    BOOL keyboardIsPoppingUp;
     CGFloat keyboardOffset;
 }
 

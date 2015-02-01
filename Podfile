@@ -6,10 +6,11 @@ target :Idiomics do
     pod 'AFNetworkActivityLogger'
     pod 'UIView-Autolayout'
     pod 'Mantle'
-    pod 'ReactiveCocoa'
+    pod 'libextobjc'
     pod 'UIView-Autolayout'
     pod 'GoogleAnalytics-iOS-SDK'
     pod 'PulsingHalo', :git => 'https://github.com/shu223/PulsingHalo.git'
+    pod 'DAKeyboardControl'
 
 end
 
@@ -19,9 +20,10 @@ target :Idiomics_Local do
     pod 'AFNetworkActivityLogger'
     pod 'UIView-Autolayout'
     pod 'Mantle'
-    pod 'ReactiveCocoa'
+    pod 'libextobjc'
     pod 'UIView-Autolayout'
     pod 'GoogleAnalytics-iOS-SDK'
     pod 'PulsingHalo', :git => 'https://github.com/shu223/PulsingHalo.git'
+    pod 'DAKeyboardControl'
 
 end

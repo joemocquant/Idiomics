@@ -7,7 +7,6 @@
 //
 
 #import "ImageStore.h"
-#import <ReactiveCocoa.h>
 
 @implementation ImageStore
 
