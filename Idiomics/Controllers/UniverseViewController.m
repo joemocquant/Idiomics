@@ -314,7 +314,7 @@
     if (timeDiff > TimeDiff) {
         CGFloat distance = currentOffset.y - lastOffset.y;
 
-        if (currentOffset.y > 0) {
+        if (currentOffset.y > 0 && ABS(distance) > DistanceMin) {
             [UIView animateWithDuration:NavigationControlDuration animations:^{
                 
                 CGPoint center = [back center];

@@ -31,6 +31,7 @@ extern CGFloat MashupAlpha;
 //Universe
 extern NSString *const CellIdentifier;
 extern CGFloat TimeDiff;
+extern CGFloat DistanceMin;
 extern CGFloat ScrollSpeedThreshold;
 extern CGFloat VelocityThreshold;
 #define kDoubleColumnProbability 40

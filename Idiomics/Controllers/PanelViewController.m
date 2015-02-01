@@ -132,7 +132,7 @@
 
 - (void)setupNavigationView
 {
-    navigationView = [NavigationView new];
+    NavigationView *navigationView = [NavigationView new];
     
     [[navigationView cancel] addTarget:self action:@selector(back)
                       forControlEvents:UIControlEventTouchUpInside];
@@ -149,7 +149,7 @@
     [navigationView constrainToHeight:NavigationControlHeight];
     
     [balloonsOverlay setNavigationView:navigationView];
-    
+
 #pragma clang diagnostic ignored "-Warc-retain-cycles" 
 //Cannot be weakify/strongify. Will be deallocated on [self.view removeKeyboardControl];
 
@@ -159,7 +159,6 @@
                                                                BOOL closing) {
                                     
         CGRect screen = [[UIScreen mainScreen] bounds];
-        keyboardIsPoppingUp = NO;
                                     
         if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
             UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
@@ -177,8 +176,6 @@
         [navigationView layoutIfNeeded];
                                     
         [self resizeScrollView];
-                      
-                                    
     }];
     
 #pragma clang diagnostic pop
@@ -228,17 +225,16 @@
         UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
         
         if (UIInterfaceOrientationIsPortrait(orientation)) {
-            keyboardHeight = keyboardBounds.size.height;
+            keyboardHeight = CGRectGetHeight(keyboardBounds);
         } else {
-            keyboardHeight = keyboardBounds.size.width;
+            keyboardHeight = CGRectGetWidth(keyboardBounds);
         }
 
     } else {
-        keyboardHeight = keyboardBounds.size.height;
+        keyboardHeight = CGRectGetHeight(keyboardBounds);
     }
 
     if (keyboardHeight > NavigationControlHeight) {
-        
         keyboardOffset = keyboardHeight;
     }
 }
@@ -337,7 +333,7 @@
         [panelScrollView setFrame:CGRectMake(0,
                                              0,
                                              screenWidth,
-                                             screenHeight - keyboardOffset + NavigationControlHeight)];
+                                             screenHeight - keyboardOffset)];
     } else {
         [panelScrollView setFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
     }
@@ -388,8 +384,10 @@
         }
     } completion:^(BOOL finished) {
         if (keyboardIsPoppingUp) {
+            
             [UIView animateWithDuration:ScrollToBottomDuration animations:^{
                 [self focusOnBalloon];
+                keyboardIsPoppingUp = NO;
             }];
         }
     }];

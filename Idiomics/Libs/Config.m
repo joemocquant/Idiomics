@@ -23,6 +23,7 @@ CGFloat MashupAlpha = 0.3;
 //Universe
 NSString *const CellIdentifier = @"cell";
 CGFloat TimeDiff = 0.1;
+CGFloat DistanceMin = 20;
 CGFloat ScrollSpeedThreshold = 1.0;
 CGFloat VelocityThreshold = 3.0;
 

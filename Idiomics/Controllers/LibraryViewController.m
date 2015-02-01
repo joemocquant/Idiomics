@@ -136,8 +136,18 @@
     [cell.mashupView setImage:nil];
     
     if ([universe hasCoverImage]) {
+        
+        cell.mashupView.alpha = 0;
         [cell.mashupView setImage:[[ImageStore sharedStore] universeImageForKey:universe.imageUrl]];
         [cell updateMashupConstraints];
+        
+        float millisecondsDelay = (arc4random() % 700) / 2000.0f;
+
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, millisecondsDelay * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:AlphaTransitionDuration animations:^{
+                cell.mashupView.alpha = MashupAlpha;
+            }];
+        });
 
     } else if ([universe isFailed]) {
         

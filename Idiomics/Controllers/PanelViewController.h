@@ -21,7 +21,6 @@
     UIView *panelView;
     UIImageView *panelImageView;
     BalloonsOverlay *balloonsOverlay;
-    NavigationView *navigationView;
     
     CGFloat screenScale;
     NSLayoutConstraint *navigationViewConstraint;
