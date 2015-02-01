@@ -479,41 +479,36 @@
     CGSize imageSize = CGSizeMake(panelImageView.image.size.width / [[UIScreen mainScreen] scale] + 2 * Gutter,
                                   panelImageView.image.size.height / [[UIScreen mainScreen] scale] + 2 * Gutter);
     
-    CGFloat ratio;
     CGSize newSize;
-    CGFloat finalRatio = 4/3;
+    CGFloat ratio  = 4.0/3;
     
-    if (imageSize.width <= imageSize.height) {
-        
-        ratio = imageSize.height / imageSize.width;
-        
-        if (ratio >= finalRatio) { //add vertical band
-            newSize = CGSizeMake(imageSize.width * ratio / finalRatio, imageSize.height);
-        } else { //add horizontal band
-            newSize = CGSizeMake(imageSize.width, imageSize.height * finalRatio / ratio);
-        }
-        
+    if ((imageSize.width / imageSize.height) > ratio) {
+        newSize = CGSizeMake(imageSize.width, imageSize.width / ratio);
+    } else if ((imageSize.height / imageSize.width) > ratio) {
+        newSize = CGSizeMake(imageSize.height / ratio, imageSize.height);
     } else {
-        ratio = imageSize.width / imageSize.height;
-        
-        if (ratio >= finalRatio) { //add horizontal band
-            newSize = CGSizeMake(imageSize.width, imageSize.height * ratio / finalRatio);
-        } else { //add vertical band
-            newSize = CGSizeMake(imageSize.width * finalRatio / ratio, imageSize.height);
-        }
+        newSize = CGSizeMake(imageSize.width, imageSize.height);
     }
-    
+
     UIGraphicsBeginImageContextWithOptions(newSize, NO, 0);
-    
+
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextTranslateCTM(ctx, (newSize.width - imageSize.width) / 2, (newSize.height - imageSize.height) / 2);
     
-    [panelView drawViewHierarchyInRect:panelImageView.frame afterScreenUpdates:YES];
+    [panelView drawViewHierarchyInRect:CGRectMake(0, 0, newSize.width, newSize.height) afterScreenUpdates:YES];
     
-    UIImage *editedImagePanel = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *watermarkImage = [UIImage imageNamed:@"watermark.png"];
+    [watermarkImage drawInRect:CGRectMake(Gutter + WatermarkOffset,
+                                          newSize.height - watermarkImage.size.height - Gutter - WatermarkOffset,
+                                          watermarkImage.size.width,
+                                          watermarkImage.size.height)
+                     blendMode:kCGBlendModeNormal
+                         alpha:0.75];
+    
+    UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-
-    MMSViewController *mmsvc = [[MMSViewController alloc] initWithPanel:panel imagePanel:editedImagePanel];
+    
+    MMSViewController *mmsvc = [[MMSViewController alloc] initWithPanel:panel imagePanel:result];
     
     if ([mmsvc canSendPanel]) {
         
@@ -538,6 +533,7 @@
         [panelView setCenter:CGPointMake(self.view.center.x, -panelView.center.y)];
         
     } completion:^(BOOL finished) {
+        [self.view removeKeyboardControl];
         [self dismissViewControllerAnimated:NO completion:nil];
     }];
 }

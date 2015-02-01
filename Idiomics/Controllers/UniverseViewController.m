@@ -315,7 +315,7 @@
         CGFloat distance = currentOffset.y - lastOffset.y;
 
         if (currentOffset.y > 0 && ABS(distance) > DistanceMin) {
-            [UIView animateWithDuration:NavigationControlDuration animations:^{
+            [UIView animateWithDuration:MenuMoveDuration animations:^{
                 
                 CGPoint center = [back center];
                 if (distance < 0) { // scrolling up

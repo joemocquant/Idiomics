@@ -51,6 +51,8 @@ extern const CGFloat ScrollToBottomDuration;
 extern const CGFloat FocusMoveMargin;
 extern const CGFloat NavigationControlHeight;
 extern const CGFloat NavigationControlDuration;
+extern const CGFloat MenuMoveDuration;
+extern const CGFloat WatermarkOffset;
 
 //Transformers
 extern NSString *const ColorTransformerName;

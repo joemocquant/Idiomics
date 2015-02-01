@@ -39,6 +39,8 @@ const CGFloat ScrollToBottomDuration = 0.2;
 const CGFloat FocusMoveMargin = 50.0;
 const CGFloat NavigationControlHeight = 60.0;
 const CGFloat NavigationControlDuration = 0.4;
+const CGFloat MenuMoveDuration = 0.6;
+const CGFloat WatermarkOffset = 12.0;
 
 //Transformers
 NSString *const ColorTransformerName = @"ColorTransformer";
