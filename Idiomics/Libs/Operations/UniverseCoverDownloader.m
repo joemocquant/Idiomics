@@ -100,8 +100,8 @@
     if ([Helper isIPhoneDevice]) {
         height = screen.size.height / kRowsiPhonePortrait;
     } else {
-        height = MAX(screen.size.height / kRowsiPadLandscape,
-                     screen.size.height / kRowsiPadPortrait);
+        height = MAX(screen.size.height / kRowsiPadPortrait,
+                     screen.size.width / kRowsiPadPortrait);
     }
     
     return CGSizeMake(roundf(height * kMashupRatio),

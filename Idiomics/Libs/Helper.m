@@ -62,7 +62,6 @@
 + (BOOL)isIPhoneDevice
 {
     if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
-
         return YES;
     }
 
