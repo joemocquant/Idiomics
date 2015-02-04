@@ -184,6 +184,7 @@
         }
         
         if (UIInterfaceOrientationIsPortrait(orientation)) {
+             NSLog(@"screen height: %f", screen.size.height);
             return CGRectGetHeight(screen) / kRowsiPadPortrait;
         } else {
             return CGRectGetHeight(screen) / kRowsiPadLandscape;

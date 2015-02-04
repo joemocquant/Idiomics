@@ -38,4 +38,14 @@
     return [UIFont fontWithName:@"LaffayetteComicPro" size:30];
 }
 
++ (UIFont *)kronika18
+{
+    return [UIFont fontWithName:@"Kronika" size:18];
+}
+
++ (UIFont *)kronikaForSize:(CGFloat)size
+{
+    return [UIFont fontWithName:@"Kronika" size:size];
+}
+
 @end

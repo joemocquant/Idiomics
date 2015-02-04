@@ -16,5 +16,7 @@
 + (UIFont *)helveticaNeueLight20;
 + (UIFont *)laffayetteComicPro18;
 + (UIFont *)laffayetteComicPro30;
++ (UIFont *)kronika18;
++ (UIFont *)kronikaForSize:(CGFloat)size;
 
 @end

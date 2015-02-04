@@ -173,7 +173,6 @@
         }
                                     
         navigationViewConstraint.constant = -keyboardOffset;
-        [navigationView layoutIfNeeded];
                                     
         [self resizeScrollView];
     }];

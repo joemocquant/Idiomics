@@ -13,6 +13,7 @@
 #import "Panel.h"
 #import "Balloon.h"
 #import "NavigationView.h"
+#import "UITextView+VerticalAlignment.h"
 #import <UIView+AutoLayout.h>
 
 @interface BalloonsOverlay ()
@@ -40,59 +41,40 @@
         [focusOverlaysView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self];
         
         speechBalloons = [NSMutableArray array];
-        speechBalloonsLabel = [NSMutableArray array];
         overlays = [NSMutableArray array];
         balloonsEdited = [NSMutableArray array];
         
-        for (Balloon *balloon in panel.balloons) {
+        [panel.balloons enumerateObjectsUsingBlock:^(Balloon *balloon, NSUInteger idx, BOOL *stop) {
+            
+            FocusOverlayView *fov = [[FocusOverlayView alloc] initWithBalloon:balloon
+                                                                        color:panel.averageColor];
+            [focusOverlaysView addSubview:fov];
+            [overlays addObject:fov];
             
             [balloonsEdited addObject:@NO];
             CGRect balloonRect = [balloon rect];
             
-            UITextView *balloonTextView = [UITextView new];
-            //UITextView
+            UITextView *balloonTextView = [[UITextView alloc] initWithFrame:balloonRect];
             [self addSubview:balloonTextView];
             
-            //[balloonTextView setTranslatesAutoresizingMaskIntoConstraints:NO];
-            //[balloonTextView constrainToSize:balloonRect.size];
-            
-            //[balloonTextView pinEdges:JRTViewPinLeftEdge toSameEdgesOfView:panelImageView inset:balloonRect.origin.x];
-            //[balloonTextView pinEdges:JRTViewPinTopEdge toSameEdgesOfView:panelImageView inset:balloonRect.origin.y];
-            
             [balloonTextView setTextAlignment:NSTextAlignmentCenter];
-            [balloonTextView setFont:[Fonts laffayetteComicPro30]];
+            [balloonTextView setFont:[Fonts kronikaForSize:balloonRect.size.height * 0.6]];
+            [balloonTextView updateTextFontSize];
             [balloonTextView setTextColor:[Colors gray5]];
             [balloonTextView setTintColor:[Colors gray5]];
             [balloonTextView setBackgroundColor:[Colors clear]];
-            
             [balloonTextView setDelegate:self];
-            
-            //UILabel
-            UILabel *balloonLabel = [UILabel new];
-            [balloonLabel setAdjustsFontSizeToFitWidth:YES];
-            //
-            
+            [balloonTextView setUserInteractionEnabled:NO];
+            [balloonTextView setAutocorrectionType:UITextAutocorrectionTypeNo];
+            [balloonTextView.textContainer setLineBreakMode:NSLineBreakByWordWrapping];
+            [balloonTextView setScrollEnabled:NO];
+
+            UIBezierPath *aPath = [UIBezierPath bezierPathWithRect:balloon.boundsRect];
+            [aPath appendPath:fov.polyPath];
+
+            //[[balloonTextView textContainer] setExclusionPaths:@[aPath]];
             [speechBalloons addObject:balloonTextView];
-            
-            FocusOverlayView *fov = [[FocusOverlayView alloc] initWithBalloon:balloon color:panel.averageColor];
-            [focusOverlaysView addSubview:fov];
-            [overlays addObject:fov];
-            
-            //UILabel
-            [balloonLabel setAdjustsFontSizeToFitWidth:YES];
-            [balloonLabel setNumberOfLines:0];
-            [balloonLabel setFrame:balloonRect];
-            [self addSubview:balloonLabel];
-            [speechBalloonsLabel addObject:balloonLabel];
-            [balloonLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-            [balloonLabel constrainToSize:balloonRect.size];
-            
-            [balloonLabel pinEdges:JRTViewPinLeftEdge toSameEdgesOfView:self inset:balloonRect.origin.x];
-            [balloonLabel pinEdges:JRTViewPinTopEdge toSameEdgesOfView:self inset:balloonRect.origin.y];
-            [balloonLabel setTextAlignment:NSTextAlignmentCenter];
-            [balloonLabel setFont:[Fonts laffayetteComicPro30]];
-            [balloonLabel setTextColor:[Colors gray5]];
-        }
+        }];
     }
     
     return self;
@@ -105,7 +87,7 @@
 {
     _navigationView = navigationView;
     
-    if (![speechBalloonsLabel count]) {
+    if (![speechBalloons count]) {
         panelEdited = YES;
     }
     
@@ -127,6 +109,7 @@
                     [overlays[self.focus] setAlpha:1.0];
                 }
                 [speechBalloons[self.focus] resignFirstResponder];
+                [speechBalloons[self.focus] setUserInteractionEnabled:NO];
             }
 
             self.focus = -1;
@@ -143,6 +126,7 @@
                     //[self.speechBalloons[focus] resignFirstResponder];
                 }
                 [overlays[newFocus] setAlpha:0.0];
+                [speechBalloons[newFocus] setUserInteractionEnabled:YES];
                 [speechBalloons[newFocus] becomeFirstResponder];
             
                 self.focus = newFocus;
@@ -160,7 +144,7 @@
     __block BOOL foundNewBalloon = NO;
     __block NSInteger focus;
     
-    [speechBalloonsLabel enumerateObjectsUsingBlock:^(UILabel *balloon, NSUInteger idx, BOOL *stop) {
+    [speechBalloons enumerateObjectsUsingBlock:^(UITextView *balloon, NSUInteger idx, BOOL *stop) {
         
         if (CGRectContainsPoint([balloon frame], location)) { //A balloon tapped
             focus = idx;
@@ -201,32 +185,17 @@
 
 #pragma mark - UITextViewDelegate
 
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
-{
-    NSLog(@"a");
-    return YES;
-}
-
-- (void)textViewDidBeginEditing:(UITextView *)textView
-{
-    NSLog(@"b");
-}
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    NSLog(@"range: %lu %lu with text <%@>", (unsigned long)range.location, (unsigned long)range.length, text);
-    
-    return YES;
-}
-
 - (void)textViewDidChange:(UITextView *)textView
 {
-    UILabel *currentLabel = speechBalloonsLabel[self.focus];
-    [currentLabel setText:textView.text];
+    NSRange selectedRange = textView.selectedRange;
+    textView.text = [textView.text uppercaseString];
+    [textView setSelectedRange:selectedRange];
+    
+    [textView updateTextFontSize];
     
     if ([textView.text isEqualToString:@""]) {
         balloonsEdited[self.focus] = @NO;
-
+        
         panelEdited = NO;
         [balloonsEdited enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             if ([obj boolValue]) {
@@ -246,7 +215,7 @@
 - (NSUInteger)charactersCount
 {
     NSUInteger count = 0;
-    for (UILabel *balloon in speechBalloonsLabel) {
+    for (UITextView *balloon in speechBalloons) {
         count += [balloon.text lengthOfBytesUsingEncoding:NSUTF32StringEncoding] / 4;
     }
 

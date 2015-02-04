@@ -12,6 +12,8 @@
 
 @interface FocusOverlayView : UIView
 
+@property (nonatomic, readonly, strong) UIBezierPath *polyPath;
+
 - (instancetype)initWithBalloon:(Balloon *)balloon color:(UIColor *)averageColor;
 
 @end

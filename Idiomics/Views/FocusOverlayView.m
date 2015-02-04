@@ -25,23 +25,23 @@
 
         [self setFrame:[balloon boundsRect]];
         
-        UIBezierPath *polyPath = [UIBezierPath bezierPath];
+        _polyPath = [UIBezierPath bezierPath];
         for (int i = 0; i < balloon.polygon.count; i++) {
             
             CGPoint point = [[balloon.polygon objectAtIndex:i] CGPointValue];
             
             if (i == 0) {
-                [polyPath moveToPoint:CGPointMake(point.x - balloon.boundsRect.origin.x,
+                [self.polyPath moveToPoint:CGPointMake(point.x - balloon.boundsRect.origin.x,
                                                   point.y - balloon.boundsRect.origin.y)];
             } else {
-                [polyPath addLineToPoint:CGPointMake(point.x - balloon.boundsRect.origin.x,
-                                                     point.y - balloon.boundsRect.origin.y)];
+                [_polyPath addLineToPoint:CGPointMake(point.x - balloon.boundsRect.origin.x,
+                                                      point.y - balloon.boundsRect.origin.y)];
             } 
         }
-        [polyPath closePath];
+        [_polyPath closePath];
         
         CAShapeLayer *shapeLayer = [CAShapeLayer new];
-        [shapeLayer setPath:polyPath.CGPath];
+        [shapeLayer setPath:_polyPath.CGPath];
         
         PulsingHaloLayer *halo = [PulsingHaloLayer layer];
 

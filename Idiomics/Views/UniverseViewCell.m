@@ -54,8 +54,9 @@
         [_mashupView removeConstraints:@[mashupHeightConstraint, mashupWidthConstraint]];
     }
     
-    mashupHeightConstraint = [_mashupView constrainToHeight:[_mashupView image].size.height / 2];
-    mashupWidthConstraint = [_mashupView constrainToWidth:[_mashupView image].size.width / 2];
+    //image size is in pixels! converting to points
+    mashupHeightConstraint = [_mashupView constrainToHeight:[_mashupView image].size.height / [[UIScreen mainScreen] scale]];
+    mashupWidthConstraint = [_mashupView constrainToWidth:[_mashupView image].size.width / [[UIScreen mainScreen] scale]];
 }
 
 - (void)setupSeparators

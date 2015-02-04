@@ -14,7 +14,6 @@
 @interface BalloonsOverlay : UIView <UITextViewDelegate>
 {
     NSMutableArray *overlays;
-    NSMutableArray *speechBalloonsLabel;
     NSMutableArray *speechBalloons;
     UIView *focusOverlaysView;
     BOOL panelEdited;
