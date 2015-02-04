@@ -490,19 +490,19 @@
     }
 
     UIGraphicsBeginImageContextWithOptions(newSize, NO, 0);
-
+    
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextTranslateCTM(ctx, (newSize.width - imageSize.width) / 2, (newSize.height - imageSize.height) / 2);
     
-    [panelView drawViewHierarchyInRect:CGRectMake(0, 0, newSize.width, newSize.height) afterScreenUpdates:YES];
+    [panelView drawViewHierarchyInRect:CGRectMake(0, 0, imageSize.width, imageSize.height) afterScreenUpdates:YES];
     
     UIImage *watermarkImage = [UIImage imageNamed:@"watermark.png"];
     [watermarkImage drawInRect:CGRectMake(Gutter + WatermarkOffset,
-                                          newSize.height - watermarkImage.size.height - Gutter - WatermarkOffset,
+                                          imageSize.height - Gutter - watermarkImage.size.height - WatermarkOffset,
                                           watermarkImage.size.width,
                                           watermarkImage.size.height)
                      blendMode:kCGBlendModeNormal
-                         alpha:0.75];
+                         alpha:WatermarkAlpha];
     
     UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

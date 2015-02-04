@@ -58,7 +58,7 @@
             [self addSubview:balloonTextView];
             
             [balloonTextView setTextAlignment:NSTextAlignmentCenter];
-            [balloonTextView setFont:[Fonts kronikaForSize:balloonRect.size.height * 0.6]];
+            [balloonTextView setFont:[Fonts laffayetteComicProForSize:balloonRect.size.height * 0.4]];
             [balloonTextView updateTextFontSize];
             [balloonTextView setTextColor:[Colors gray5]];
             [balloonTextView setTintColor:[Colors gray5]];

@@ -41,6 +41,7 @@ const CGFloat NavigationControlHeight = 60.0;
 const CGFloat NavigationControlDuration = 0.4;
 const CGFloat MenuMoveDuration = 0.6;
 const CGFloat WatermarkOffset = 12.0;
+const CGFloat WatermarkAlpha = 0.75;
 
 //Transformers
 NSString *const ColorTransformerName = @"ColorTransformer";
