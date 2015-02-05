@@ -18,6 +18,7 @@
 + (UIColor *)gray5;
 + (UIColor *)white;
 + (UIColor *)black;
++ (UIColor *)oldPaperBlack;
 + (UIColor *)clear;
 
 @end

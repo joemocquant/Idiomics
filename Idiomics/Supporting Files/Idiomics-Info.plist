@@ -28,8 +28,7 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Laffayette_Comic_Pro.ttf</string>
-		<string>KRONIKA_.ttf</string>
+		<string>KMKDSP__.ttf</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

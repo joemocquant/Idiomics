@@ -537,4 +537,9 @@
     }];
 }
 
+- (void)dealloc
+{
+    NSLog(@"DEALLOCATED");
+}
+
 @end

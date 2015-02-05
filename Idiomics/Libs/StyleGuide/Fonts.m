@@ -28,14 +28,9 @@
     return [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
 }
 
-+ (UIFont *)laffayetteComicProForSize:(CGFloat)size
++ (UIFont *)komikaDisplayForSize:(CGFloat)size
 {
-    return [UIFont fontWithName:@"LaffayetteComicPro" size:size];
-}
-
-+ (UIFont *)kronikaForSize:(CGFloat)size
-{
-    return [UIFont fontWithName:@"Kronika" size:size];
+    return [UIFont fontWithName:@"KomikaDisplay" size:size];
 }
 
 @end

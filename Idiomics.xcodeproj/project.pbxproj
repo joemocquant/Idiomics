@@ -43,8 +43,6 @@
 		013AA36B1A30F745003DED61 /* send@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 013AA3581A30F745003DED61 /* send@2x.png */; };
 		013AA3701A30F745003DED61 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 013AA35B1A30F745003DED61 /* Images.xcassets */; };
 		013AA3711A30F745003DED61 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 013AA35B1A30F745003DED61 /* Images.xcassets */; };
-		013AA3721A30F745003DED61 /* Laffayette_Comic_Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 013AA35C1A30F745003DED61 /* Laffayette_Comic_Pro.ttf */; };
-		013AA3731A30F745003DED61 /* Laffayette_Comic_Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 013AA35C1A30F745003DED61 /* Laffayette_Comic_Pro.ttf */; };
 		013AA3741A30F745003DED61 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA35D1A30F745003DED61 /* main.m */; };
 		013AA3751A30F745003DED61 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA35D1A30F745003DED61 /* main.m */; };
 		013AA3761A30F745003DED61 /* Idiomics.strings in Resources */ = {isa = PBXBuildFile; fileRef = 013AA35F1A30F745003DED61 /* Idiomics.strings */; };
@@ -66,8 +64,6 @@
 		015D59F31A37E42A0004F352 /* BalloonsOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59F11A37E42A0004F352 /* BalloonsOverlay.m */; };
 		0195078F1A80FCCC004B7B30 /* UITextView+VerticalAlignment.m in Sources */ = {isa = PBXBuildFile; fileRef = 0195078E1A80FCCC004B7B30 /* UITextView+VerticalAlignment.m */; };
 		019507901A80FCCC004B7B30 /* UITextView+VerticalAlignment.m in Sources */ = {isa = PBXBuildFile; fileRef = 0195078E1A80FCCC004B7B30 /* UITextView+VerticalAlignment.m */; };
-		019507921A810193004B7B30 /* KRONIKA_.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 019507911A810193004B7B30 /* KRONIKA_.ttf */; };
-		019507931A810193004B7B30 /* KRONIKA_.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 019507911A810193004B7B30 /* KRONIKA_.ttf */; };
 		01BF3A821A3E40CD00EF6712 /* Universe.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A811A3E40CD00EF6712 /* Universe.m */; };
 		01BF3A831A3E40CD00EF6712 /* Universe.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A811A3E40CD00EF6712 /* Universe.m */; };
 		01BF3A861A3E4E6B00EF6712 /* LibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A851A3E4E6B00EF6712 /* LibraryViewController.m */; };
@@ -84,6 +80,8 @@
 		01BF3AA61A4027B600EF6712 /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3AA21A4027B600EF6712 /* NSMutableArray+Shuffling.m */; };
 		01BF3AA71A4027B600EF6712 /* UIColor+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3AA41A4027B600EF6712 /* UIColor+Tools.m */; };
 		01BF3AA81A4027B600EF6712 /* UIColor+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3AA41A4027B600EF6712 /* UIColor+Tools.m */; };
+		01D4D5131A83CB2F00169CF5 /* KMKDSP__.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 01D4D5121A83CB2F00169CF5 /* KMKDSP__.ttf */; };
+		01D4D5141A83CB2F00169CF5 /* KMKDSP__.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 01D4D5121A83CB2F00169CF5 /* KMKDSP__.ttf */; };
 		01D7BDE91A17E3E500C30CE2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013EDEA41A13126D009F16BD /* MessageUI.framework */; };
 		01DDBAED1A310A340068EB44 /* IdiomicsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA34A1A30F67A003DED61 /* IdiomicsTests.m */; };
 		01E4B46E1A3A844A0070506E /* MosaicLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E4B4671A3A844A0070506E /* MosaicLayout.m */; };
@@ -148,7 +146,6 @@
 		013AA3591A30F745003DED61 /* Idiomics-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Idiomics-Info.plist"; sourceTree = "<group>"; };
 		013AA35A1A30F745003DED61 /* Idiomics_Local-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Idiomics_Local-Info.plist"; sourceTree = "<group>"; };
 		013AA35B1A30F745003DED61 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		013AA35C1A30F745003DED61 /* Laffayette_Comic_Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Laffayette_Comic_Pro.ttf; sourceTree = "<group>"; };
 		013AA35D1A30F745003DED61 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		013AA35E1A30F745003DED61 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		013AA35F1A30F745003DED61 /* Idiomics.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Idiomics.strings; sourceTree = "<group>"; };
@@ -169,7 +166,6 @@
 		015D59F11A37E42A0004F352 /* BalloonsOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BalloonsOverlay.m; sourceTree = "<group>"; };
 		0195078D1A80FCCC004B7B30 /* UITextView+VerticalAlignment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+VerticalAlignment.h"; sourceTree = "<group>"; };
 		0195078E1A80FCCC004B7B30 /* UITextView+VerticalAlignment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+VerticalAlignment.m"; sourceTree = "<group>"; };
-		019507911A810193004B7B30 /* KRONIKA_.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = KRONIKA_.ttf; sourceTree = "<group>"; };
 		01BF3A801A3E40CD00EF6712 /* Universe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Universe.h; sourceTree = "<group>"; };
 		01BF3A811A3E40CD00EF6712 /* Universe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Universe.m; sourceTree = "<group>"; };
 		01BF3A841A3E4E6B00EF6712 /* LibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryViewController.h; sourceTree = "<group>"; };
@@ -186,6 +182,7 @@
 		01BF3AA21A4027B600EF6712 /* NSMutableArray+Shuffling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffling.m"; sourceTree = "<group>"; };
 		01BF3AA31A4027B600EF6712 /* UIColor+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Tools.h"; sourceTree = "<group>"; };
 		01BF3AA41A4027B600EF6712 /* UIColor+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Tools.m"; sourceTree = "<group>"; };
+		01D4D5121A83CB2F00169CF5 /* KMKDSP__.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = KMKDSP__.ttf; sourceTree = "<group>"; };
 		01D7BDF31A17E3E500C30CE2 /* Idiomics_Local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Idiomics_Local.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01E4B4661A3A844A0070506E /* MosaicLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicLayout.h; sourceTree = "<group>"; };
 		01E4B4671A3A844A0070506E /* MosaicLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicLayout.m; sourceTree = "<group>"; };
@@ -352,8 +349,7 @@
 				013AA3521A30F745003DED61 /* icons */,
 				013AA3591A30F745003DED61 /* Idiomics-Info.plist */,
 				013AA35A1A30F745003DED61 /* Idiomics_Local-Info.plist */,
-				019507911A810193004B7B30 /* KRONIKA_.ttf */,
-				013AA35C1A30F745003DED61 /* Laffayette_Comic_Pro.ttf */,
+				01D4D5121A83CB2F00169CF5 /* KMKDSP__.ttf */,
 				013AA35D1A30F745003DED61 /* main.m */,
 				013AA35E1A30F745003DED61 /* PrefixHeader.pch */,
 				013AA35F1A30F745003DED61 /* Idiomics.strings */,
@@ -592,9 +588,8 @@
 				013AA3701A30F745003DED61 /* Images.xcassets in Resources */,
 				013AA3761A30F745003DED61 /* Idiomics.strings in Resources */,
 				0129CDB41A7EBA2500CFCAC4 /* watermark@2x.png in Resources */,
-				013AA3721A30F745003DED61 /* Laffayette_Comic_Pro.ttf in Resources */,
 				013AA3601A30F745003DED61 /* close@2x.png in Resources */,
-				019507921A810193004B7B30 /* KRONIKA_.ttf in Resources */,
+				01D4D5131A83CB2F00169CF5 /* KMKDSP__.ttf in Resources */,
 				013AA36A1A30F745003DED61 /* send@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -614,9 +609,8 @@
 				013AA3711A30F745003DED61 /* Images.xcassets in Resources */,
 				013AA3771A30F745003DED61 /* Idiomics.strings in Resources */,
 				0129CDB51A7EBA2500CFCAC4 /* watermark@2x.png in Resources */,
-				013AA3731A30F745003DED61 /* Laffayette_Comic_Pro.ttf in Resources */,
 				013AA3611A30F745003DED61 /* close@2x.png in Resources */,
-				019507931A810193004B7B30 /* KRONIKA_.ttf in Resources */,
+				01D4D5141A83CB2F00169CF5 /* KMKDSP__.ttf in Resources */,
 				013AA36B1A30F745003DED61 /* send@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
