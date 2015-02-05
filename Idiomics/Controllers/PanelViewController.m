@@ -507,7 +507,7 @@
     UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    MMSViewController *mmsvc = [[MMSViewController alloc] initWithPanel:panel imagePanel:result];
+    mmsvc = [[MMSViewController alloc] initWithPanel:panel imagePanel:result];
     
     if ([mmsvc canSendPanel]) {
         
