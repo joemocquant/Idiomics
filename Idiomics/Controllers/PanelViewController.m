@@ -15,6 +15,7 @@
 #import "NavigationView.h"
 #import "DAKeyboardControl.h"
 #import "MMSViewController.h"
+#import <extobjc.h>
 #import <UIView+AutoLayout.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
@@ -150,35 +151,31 @@
     
     [balloonsOverlay setNavigationView:navigationView];
 
-#pragma clang diagnostic ignored "-Warc-retain-cycles" 
-//Cannot be weakify/strongify. Will be deallocated on [self.view removeKeyboardControl];
-
+    @weakify(self)
     [self.view addKeyboardPanningWithFrameBasedActionHandler:nil
                                 constraintBasedActionHandler:^(CGRect keyboardFrameInView,
                                                                BOOL opening,
                                                                BOOL closing) {
-                                    
+
+        @strongify(self)
         CGRect screen = [[UIScreen mainScreen] bounds];
                                     
         if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
             UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
                                         
             if (UIInterfaceOrientationIsPortrait(orientation)) {
-                keyboardOffset = CGRectGetHeight(screen) - keyboardFrameInView.origin.y;
+                self->keyboardOffset = CGRectGetHeight(screen) - keyboardFrameInView.origin.y;
             } else {
-                keyboardOffset = CGRectGetWidth(screen) - keyboardFrameInView.origin.y;
+                self->keyboardOffset = CGRectGetWidth(screen) - keyboardFrameInView.origin.y;
             }
         } else {
-            keyboardOffset = CGRectGetHeight(screen) - keyboardFrameInView.origin.y;
+            self->keyboardOffset = CGRectGetHeight(screen) - keyboardFrameInView.origin.y;
         }
                                     
-        navigationViewConstraint.constant = -keyboardOffset;
+        self->navigationViewConstraint.constant = -self->keyboardOffset;
                                     
         [self resizeScrollView];
     }];
-    
-#pragma clang diagnostic pop
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -535,11 +532,6 @@
         [self.view removeKeyboardControl];
         [self dismissViewControllerAnimated:NO completion:nil];
     }];
-}
-
-- (void)dealloc
-{
-    NSLog(@"DEALLOCATED");
 }
 
 @end
