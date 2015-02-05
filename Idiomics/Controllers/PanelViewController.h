@@ -11,6 +11,7 @@
 
 @class BalloonsOverlay;
 @class NavigationView;
+@class MMSViewController;
 
 @class Panel;
 
@@ -26,6 +27,7 @@
     NSLayoutConstraint *navigationViewConstraint;
     BOOL keyboardIsPoppingUp;
     CGFloat keyboardOffset;
+    MMSViewController *mmsvc;
 }
 
 - (instancetype)initWithPanel:(Panel *)p;

@@ -14,9 +14,7 @@
 + (UIFont *)helvetica10;
 + (UIFont *)helvetica20;
 + (UIFont *)helveticaNeueLight20;
-+ (UIFont *)laffayetteComicPro18;
-+ (UIFont *)laffayetteComicPro30;
-+ (UIFont *)kronika18;
++ (UIFont *)laffayetteComicProForSize:(CGFloat)size;
 + (UIFont *)kronikaForSize:(CGFloat)size;
 
 @end

@@ -53,6 +53,7 @@ extern const CGFloat NavigationControlHeight;
 extern const CGFloat NavigationControlDuration;
 extern const CGFloat MenuMoveDuration;
 extern const CGFloat WatermarkOffset;
+extern const CGFloat WatermarkAlpha;
 
 //Transformers
 extern NSString *const ColorTransformerName;

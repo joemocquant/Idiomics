@@ -16,7 +16,7 @@
     [self centerContentVertically];
     
     CGSize textViewSize = self.frame.size;
-    CGFloat maxFontSize = textViewSize.height * 0.6;
+    CGFloat maxFontSize = textViewSize.height * 0.4;
     
     UIFont *expectFont = self.font;
     if ([self calculHeight] > textViewSize.height) {
@@ -46,6 +46,8 @@
     if (topOffset < 0.0) {
         topOffset = 0.0;
     }
+    
+    topOffset += 10;
     self.textContainerInset = UIEdgeInsetsMake(topOffset, 0.0f, -topOffset, 0.0f);
 }
 
