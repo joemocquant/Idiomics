@@ -19,7 +19,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>8</string>
+	<string>9</string>
 	<key>Idiomics-API-URL</key>
 	<string>http://api.content.idiomicsapp.com</string>
 	<key>ImageProxy-Server-URL</key>
