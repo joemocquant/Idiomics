@@ -13,6 +13,7 @@
 #import "ImageStore.h"
 #import "Universe.h"
 #import "UniverseStore.h"
+#import "APIClient.h"
 
 @implementation PanelOperations
 
@@ -85,8 +86,17 @@
 {
     NSURL *url = [NSURL URLWithString:[Helper getImageWithUrl:panel.imageUrl size:dimensions]];
     
+    NSURLRequestCachePolicy cachePolicy = PanelCachePolicy;
+    
+    AFNetworkReachabilityStatus networkStatus = [[[APIClient sharedConnection] reachabilityManager] networkReachabilityStatus];
+    if ((networkStatus == AFNetworkReachabilityStatusUnknown)
+        || (networkStatus == AFNetworkReachabilityStatusNotReachable)) {
+        
+        cachePolicy = NSURLRequestReturnCacheDataDontLoad;
+    }
+    
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url
-                                                cachePolicy:PanelCachePolicy
+                                                cachePolicy:cachePolicy
                                             timeoutInterval:TimeoutInterval];
     
     return urlRequest;

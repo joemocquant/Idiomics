@@ -8,6 +8,7 @@
 
 #import "APIClient.h"
 #import "Helper.h"
+#import <extobjc.h>
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 
 #ifdef __DEBUG__
@@ -65,19 +66,20 @@
 
 - (void)startMonitoringAPI
 {
+    @weakify(self)
     [self.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        @strongify(self)
         
         switch (status) {
             case AFNetworkReachabilityStatusUnknown:
             case AFNetworkReachabilityStatusNotReachable:
-                [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"CONNECTION_ERROR", @"Idiomics" , nil)
-                                delegate:nil];
+                [self.requestSerializer setCachePolicy:NSURLRequestReturnCacheDataDontLoad];
                 break;
+                
             case AFNetworkReachabilityStatusReachableViaWiFi:
             case AFNetworkReachabilityStatusReachableViaWWAN:
-                
-                break;
             default:
+                [self.requestSerializer setCachePolicy:APICachePolicy];
                 break;
         }
         

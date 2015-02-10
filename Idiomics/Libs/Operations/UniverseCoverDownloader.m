@@ -8,7 +8,7 @@
 
 #import "UniverseCoverDownloader.h"
 #import "Universe.h"
-#import "Helper.h"
+#import "APIClient.h"
 #import <extobjc.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
@@ -22,46 +22,14 @@
 @implementation UniverseCoverDownloader
 
 
-#pragma mark - Class methods
-
-+ (NSURLRequest *)buildUrlRequestForUniverse:(Universe *)universe
-{
-    CGSize adaptedSize = [self getAdaptedSize];
-    
-    NSURL *url = [NSURL URLWithString:[Helper getImageWithUrl:universe.imageUrl size:adaptedSize]];
-    
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url
-                                                cachePolicy:LibraryCachePolicy
-                                            timeoutInterval:TimeoutInterval];
-    
-    return urlRequest;
-}
-
-+ (CGSize)getAdaptedSize
-{
-    CGFloat height;
-    
-    CGRect screen = [[UIScreen mainScreen] bounds];
-    
-    if ([Helper isIPhoneDevice]) {
-        height = screen.size.height / kRowsiPhonePortrait;
-    } else {
-        height = MAX(screen.size.height / kRowsiPadPortrait,
-                     screen.size.width / kRowsiPadPortrait);
-    }
-    
-    return CGSizeMake(roundf(height * kMashupRatio),
-                      roundf(height));
-}
-
-
 #pragma mark - Lifecycle
 
 - (id)initWithUniverse:(Universe *)universe
            atIndexPath:(NSIndexPath *)indexPath
               delegate:(id<UniverseCoverDownloaderDelegate>)delegate
+            urlRequest:(NSURLRequest *)urlRequest
 {
-    self = [super initWithRequest:[UniverseCoverDownloader buildUrlRequestForUniverse:universe]];
+    self = [super initWithRequest:urlRequest];
     
     if (self) {
         _delegate = delegate;

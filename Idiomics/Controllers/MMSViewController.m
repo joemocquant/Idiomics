@@ -25,12 +25,6 @@
     
     if (self) {
         
-        
-//        [[UINavigationBar appearance] setBackgroundImage:imageNavBar
-//                                           forBarMetrics:UIBarMetricsDefault];
-        
-        
-        
         panel = p;
         [self setMessageComposeDelegate:self];
         NSData *data = UIImageJPEGRepresentation(imagePanel, 1.0);
