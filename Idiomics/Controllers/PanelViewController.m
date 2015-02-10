@@ -75,14 +75,10 @@
     
     UIImage *image = [[[ImageStore sharedStore] panelFullSizeImageForKey:panel.imageUrl] copy];
 
-    //image size is in pixels! converting to points
-    CGSize imageSize = CGSizeMake(image.size.width / [[UIScreen mainScreen] scale],
-                                  image.size.height / [[UIScreen mainScreen] scale]);
-    
     panelView = [UIView new];
     [panelView setBackgroundColor:[Colors clear]];
     
-    CGSize contentSize = CGSizeMake(imageSize.width + 2 * Gutter, imageSize.height + 2 * Gutter);
+    CGSize contentSize = CGSizeMake(image.size.width + 2 * Gutter, image.size.height + 2 * Gutter);
     [panelView setFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)];
     [panelView setCenter:panelScrollView.center];
     
@@ -101,7 +97,7 @@
     
     panelImageView = [[UIImageView alloc] initWithImage:image];
     [panelImageView setContentScaleFactor:2];
-    [panelImageView setFrame:CGRectMake(0, 0, imageSize.width, imageSize.height)];
+    [panelImageView setFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
     [panelImageView setCenter:CGPointMake(contentSize.width / 2, contentSize.height / 2)];
     [panelView addSubview:panelImageView];
     
@@ -246,9 +242,8 @@
         keyboardHeight = CGRectGetHeight(keyboardBounds);
     }
 
-    if (keyboardHeight > NavigationControlHeight) {
-        keyboardOffset = keyboardHeight;
-    }
+    keyboardOffset = keyboardHeight;
+    [self resizeScrollView];
 }
 
 
@@ -384,9 +379,9 @@
         CGSize size = CGSizeMake(panelImageView.frame.size.width + 2 * Gutter,
                                  panelImageView.frame.size.height + 2 * Gutter);
         [self updateScalesWithContentSize:size];
-        
+
         if (keyboardIsPoppingUp) {
-            
+
             if ([panelScrollView zoomScale] < screenScale) {
                 [panelScrollView setZoomScale:screenScale animated:YES];
             } else {
@@ -398,6 +393,7 @@
         if (keyboardIsPoppingUp) {
             
             [UIView animateWithDuration:ScrollToBottomDuration animations:^{
+
                 [self focusOnBalloon];
                 keyboardIsPoppingUp = NO;
             }];
@@ -488,8 +484,8 @@
         [balloonsOverlay updateVisibilityWithNewFocus:-1];
     }
     
-    CGSize imageSize = CGSizeMake(panelImageView.image.size.width / [[UIScreen mainScreen] scale] + 2 * Gutter,
-                                  panelImageView.image.size.height / [[UIScreen mainScreen] scale] + 2 * Gutter);
+    CGSize imageSize = CGSizeMake(panelImageView.image.size.width + 2 * Gutter,
+                                  panelImageView.image.size.height + 2 * Gutter);
     
     CGSize newSize;
     CGFloat ratio  = 4.0/3;

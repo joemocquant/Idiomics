@@ -66,7 +66,7 @@
 {
     _mosaicData = newMosaicData;
     
-    UIImage *cached = [[ImageStore sharedStore] panelThumbImageForKey:self.mosaicData.imageId];
+    UIImage *cached = [[ImageStore sharedStore] panelImageForKey:self.mosaicData.imageId];
     self.imageView.image = cached;
     
     float millisecondsDelay;

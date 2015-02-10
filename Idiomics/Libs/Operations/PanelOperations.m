@@ -7,6 +7,8 @@
 //
 
 #import "PanelOperations.h"
+#import "PanelOperations+CacheManager.h"
+#import "Helper.h"
 #import "Panel.h"
 #import "ImageStore.h"
 #import "Universe.h"
@@ -26,10 +28,12 @@
         resizedPanelDownloadsInProgress = [NSMutableDictionary dictionary];
         resizedPanelDownloadsQueue = [NSOperationQueue new];
         resizedPanelDownloadsQueue.name = @"Resized Panel Downloads Queue";
+        resizedPanelDownloadsQueue.maxConcurrentOperationCount = 10;
         
         fullSizePanelDownloadsInProgress = [NSMutableDictionary dictionary];
         fullSizePanelDownloadsQueue = [NSOperationQueue new];
         fullSizePanelDownloadsQueue.name = @"Fullsize Panel Downloads Queue";
+        fullSizePanelDownloadsQueue.maxConcurrentOperationCount = 10;
     }
     
     return self;
@@ -42,9 +46,11 @@
 {
     if (![resizedPanelDownloadsInProgress.allKeys containsObject:indexPath]) {
         
+        NSURLRequest *urlRequest = [self buildUrlRequestForPanel:panel dimensions:panel.thumbSize];
         ResizedPanelDownloader *rpd = [[ResizedPanelDownloader alloc] initWithPanel:panel
                                                                         atIndexPath:indexPath
-                                                                           delegate:self];
+                                                                           delegate:self
+                                                                         urlRequest:urlRequest];
         
         [resizedPanelDownloadsInProgress setObject:rpd forKey:indexPath];
         [resizedPanelDownloadsQueue addOperation:rpd];
@@ -55,9 +61,11 @@
 {
     if (![fullSizePanelDownloadsInProgress.allKeys containsObject:indexPath]) {
         
+        NSURLRequest *urlRequest = [self buildUrlRequestForPanel:panel dimensions:panel.dimensions];
         FullSizePanelDownloader *fspd = [[FullSizePanelDownloader alloc] initWithPanel:panel
                                                                            atIndexPath:indexPath
-                                                                              delegate:self];
+                                                                              delegate:self
+                                                                            urlRequest:urlRequest];
         
         ResizedPanelDownloader *rpd = [resizedPanelDownloadsInProgress objectForKey:indexPath];
         if (rpd) {
@@ -72,14 +80,58 @@
 
 #pragma mark - Instance methods
 
+- (NSURLRequest *)buildUrlRequestForPanel:(Panel *)panel
+                               dimensions:(CGSize)dimensions
+{
+    NSURL *url = [NSURL URLWithString:[Helper getImageWithUrl:panel.imageUrl size:dimensions]];
+    
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url
+                                                cachePolicy:PanelCachePolicy
+                                            timeoutInterval:TimeoutInterval];
+    
+    return urlRequest;
+}
+
 - (void)startOperationsForPanel:(Panel *)panel atIndexPath:(NSIndexPath *)indexPath
 {
     if (!panel.hasThumbImage) {
-        [self startResizeOperationForPanel:panel atIndexPath:indexPath];
+        NSCachedURLResponse *cache = [self getCachedURLResponseForPanel:panel
+                                                         withDesiredRes:panel.thumbSize];
+        
+        if (cache) {
+            
+#ifdef __DEBUG__
+            NSLog(@"Accessing cached resource (resizing task %ld)", (long)indexPath.item);
+#endif
+            
+            [[ImageStore sharedStore] addPanelThumbImage:[UIImage imageWithData:cache.data]
+                                                  forKey:panel.imageUrl];
+            
+            [(NSObject *)self.delegate performSelectorOnMainThread:@selector(reloadItemsAtIndexPaths:)
+                                                        withObject:[NSArray arrayWithObject:indexPath]
+                                                     waitUntilDone:NO];
+            
+        } else {
+            [self startResizeOperationForPanel:panel atIndexPath:indexPath];
+        }
     }
     
     if (!panel.hasFullSizeImage) {
-        [self startFullSizeOperationsForPanel:panel atIndexPath:indexPath];
+        NSCachedURLResponse *cache = [self getCachedURLResponseForPanel:panel
+                                                         withDesiredRes:panel.dimensions];
+
+        if (cache) {
+
+#ifdef __DEBUG__
+            NSLog(@"Accessing cached resource (fullsize task %ld)", (long)indexPath.item);
+#endif
+            
+            [[ImageStore sharedStore] addPanelFullSizeImage:[UIImage imageWithData:cache.data
+                                                                             scale:[[UIScreen mainScreen] scale]]
+                                                     forKey:panel.imageUrl];
+        } else {
+            [self startFullSizeOperationsForPanel:panel atIndexPath:indexPath];
+        }
     }
 }
 

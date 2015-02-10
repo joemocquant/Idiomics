@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AFNetworking.h>
 
 @class Panel;
 @protocol FullSizePanelDownloaderDelegate;
 
-@interface FullSizePanelDownloader : NSOperation
+@interface FullSizePanelDownloader : AFHTTPRequestOperation
 
 @property (nonatomic, readonly, weak) id<FullSizePanelDownloaderDelegate> delegate;
 @property (nonatomic, readonly, strong) NSIndexPath *indexPath;
@@ -20,7 +21,8 @@
 
 - (id)initWithPanel:(Panel *)panel
         atIndexPath:(NSIndexPath *)indexPath
-           delegate:(id<FullSizePanelDownloaderDelegate>)delegate;
+           delegate:(id<FullSizePanelDownloaderDelegate>)delegate
+         urlRequest:(NSURLRequest *)urlRequest;
 
 @end
 

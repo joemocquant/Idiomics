@@ -21,5 +21,6 @@
 - (NSMutableArray *)allUniverses;
 - (void)addUniverse:(Universe *)universe;
 - (Universe *)universeAtIndex:(NSUInteger)index;
+- (void)deleteCurrentUniverse;
 
 @end

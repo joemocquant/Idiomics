@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AFNetworking.h>
 
 @class Universe;
 @protocol UniverseCoverDownloaderDelegate;
 
-@interface UniverseCoverDownloader : NSOperation
+@interface UniverseCoverDownloader : AFHTTPRequestOperation
 
 @property (nonatomic, readonly, weak) id<UniverseCoverDownloaderDelegate> delegate;
 @property (nonatomic, readonly, strong) NSIndexPath *indexPath;

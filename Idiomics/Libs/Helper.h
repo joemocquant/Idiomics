@@ -14,7 +14,7 @@
 + (void)showWarningWithMsg:(NSString *)msg delegate:(id<UIAlertViewDelegate>)delegate;
 + (void)showErrorWithMsg:(NSString *)msg delegate:(id<UIAlertViewDelegate>)delegate;
 + (void)showValidationWithMsg:(NSString *)msg delegate:(id<UIAlertViewDelegate>)delegate;
-+ (NSString *)getImageWithUrl:(NSString *)url witdh:(CGFloat)width height:(CGFloat)height;
++ (NSString *)getImageWithUrl:(NSString *)url size:(CGSize)size;
 + (BOOL)isIPhoneDevice;
 
 @end

@@ -18,6 +18,7 @@
 - (void)addPanelThumbImage:(UIImage *)image forKey:(NSString *)key;
 - (UIImage *)panelFullSizeImageForKey:(NSString *)key;
 - (void)addPanelFullSizeImage:(UIImage *)image forKey:(NSString *)key;
+- (UIImage *)panelImageForKey:(NSString *)key;
 - (UIImage *)universeImageForKey:(NSString *)key;
 - (void)addUniverseImage:(UIImage *)image forKey:(NSString *)key;
 - (void)deleteImagesForKey:(NSString *)key;

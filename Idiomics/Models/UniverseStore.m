@@ -50,4 +50,10 @@
     return [self.allUniverses objectAtIndex:index];
 }
 
+- (void)deleteCurrentUniverse
+{
+    [self.allUniverses removeObject:self.currentUniverse];
+    self.currentUniverse = nil;
+}
+
 @end

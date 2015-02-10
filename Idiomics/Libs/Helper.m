@@ -41,7 +41,7 @@
                       otherButtonTitles:nil] show];
 }
 
-+ (NSString *)getImageWithUrl:(NSString *)url witdh:(CGFloat)width height:(CGFloat)height
++ (NSString *)getImageWithUrl:(NSString *)url size:(CGSize)size
 {
     CGFloat scaleFactor = 1;
     
@@ -50,10 +50,10 @@
     }
     
     NSString *imageProxyServerUrl = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"ImageProxy-Server-URL"];
-    NSString *result = [NSString stringWithFormat:@"%@/resize/%lux%lu/%@",
+    NSString *result = [NSString stringWithFormat:@"%@/crop/%lux%lu/%@",
                         imageProxyServerUrl,
-                        (unsigned long)(width * scaleFactor),
-                        (unsigned long)(height * scaleFactor),
+                        (unsigned long)(size.width * scaleFactor),
+                        (unsigned long)(size.height * scaleFactor),
                         url];
     
     return result;

@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <AFNetworking.h>
 
 @class Panel;
 @protocol ResizedPanelDownloaderDelegate;
 
-@interface ResizedPanelDownloader : NSOperation
+@interface ResizedPanelDownloader : AFHTTPRequestOperation
 
 @property (nonatomic, readonly, weak) id<ResizedPanelDownloaderDelegate> delegate;
 @property (nonatomic, readonly, strong) NSIndexPath *indexPath;
@@ -21,7 +22,8 @@
 
 - (id)initWithPanel:(Panel *)panel
         atIndexPath:(NSIndexPath *)indexPath
-           delegate:(id<ResizedPanelDownloaderDelegate>)delegate;
+           delegate:(id<ResizedPanelDownloaderDelegate>)delegate
+         urlRequest:(NSURLRequest *)urlRequest;
 
 @end
 

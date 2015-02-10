@@ -31,7 +31,7 @@
             sharedConnection = [[super alloc] initWithBaseURL:[NSURL URLWithString:APIUrl]];
         }
     });
-    
+
     return sharedConnection;
 }
 
@@ -44,8 +44,8 @@
     self = [super initWithBaseURL:url];
     
     if (self) {
-        AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
-        [self setRequestSerializer:requestSerializer];
+        
+        [self.requestSerializer setCachePolicy:APICachePolicy];
         [self setResponseSerializer:[AFJSONResponseSerializer serializer]];
         [[self responseSerializer] setAcceptableContentTypes:[NSSet setWithObjects:@"application/json",
                                                                                    @"text/plain", nil]];
@@ -82,10 +82,9 @@
         }
         
     }];
-    
+
     [self.reachabilityManager startMonitoring];
 }
-
 
 #pragma mark - Instance methods
 

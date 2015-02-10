@@ -34,6 +34,7 @@ extern CGFloat TimeDiff;
 extern CGFloat DistanceMin;
 extern CGFloat ScrollSpeedThreshold;
 extern CGFloat VelocityThreshold;
+extern CGFloat RelativeHeightRandomModifier;
 #define kDoubleColumnProbability 40
 #define kColumnsiPhonePortrait 2
 #define kColumnsiPadPortrait 3
@@ -62,6 +63,15 @@ extern NSString *const RectTransformerName;
 //PulsingHalo
 extern CGFloat PercentColorKept;
 extern CGFloat KeyTimeForHalfOpacity;
+
+//Cache
+extern NSURLRequestCachePolicy APICachePolicy;
+extern NSURLRequestCachePolicy LibraryCachePolicy;
+extern NSURLRequestCachePolicy PanelCachePolicy;
+extern NSTimeInterval TimeoutInterval;
+extern NSUInteger NSURLCacheMemoryCapacity;
+extern NSUInteger NSURLCacheDiskCapacity;
+extern CGFloat ThresholdResolution;
 
 //Versions
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)

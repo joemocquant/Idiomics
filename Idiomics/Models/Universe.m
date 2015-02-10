@@ -9,6 +9,7 @@
 #import "Universe.h"
 #import "ColorTransformer.h"
 #import "ImageStore.h"
+#import "Panel.h"
 
 @interface Universe ()
 
@@ -95,6 +96,10 @@
 
 - (void)deleteAllPanels
 {
+    for (Panel *panel in allPanels) {
+        [[ImageStore sharedStore] deleteImagesForKey:panel.imageUrl];
+    }
+    
     [self.allPanels removeAllObjects];
 }
 

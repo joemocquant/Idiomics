@@ -116,7 +116,7 @@
             
             //  Set column height
             columnHeights[columnIndex] = @(yOffset + itemHeight);
-            columnHeights[columnIndex+1] = @(yOffset + itemHeight);
+            columnHeights[columnIndex + 1] = @(yOffset + itemHeight);
 
         } else {
             itemWidth = [self columnWidth];
@@ -134,13 +134,14 @@
         [itemsAttributes addObject:attributes];
         
         Panel *panel = [[[UniverseStore sharedStore] currentUniverse] panelAtIndex:indexPath.item];
-        [panel setThumbSize:CGSizeMake(itemWidth, itemHeight)];
+        [panel setThumbSize:CGSizeMake(itemWidth, itemWidth * (1 + RelativeHeightRandomModifier))];
     }
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
-    NSPredicate *filterPredicate = [NSPredicate predicateWithBlock:^BOOL(UICollectionViewLayoutAttributes * evaluatedObject, NSDictionary *bindings) {
+    NSPredicate *filterPredicate = [NSPredicate predicateWithBlock:^BOOL(UICollectionViewLayoutAttributes * evaluatedObject,
+                                                                         NSDictionary *bindings) {
         BOOL predicateRetVal = CGRectIntersectsRect(rect, [evaluatedObject frame]);
         
         return predicateRetVal;

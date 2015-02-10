@@ -26,6 +26,7 @@ CGFloat TimeDiff = 0.1;
 CGFloat DistanceMin = 20;
 CGFloat ScrollSpeedThreshold = 1.0;
 CGFloat VelocityThreshold = 3.0;
+CGFloat RelativeHeightRandomModifier = 0.25;
 
 //Panel
 const CGFloat AlphaBackground = 0.85;
@@ -50,3 +51,12 @@ NSString *const RectTransformerName = @"RectTransformer";
 //PulsingHalo
 CGFloat PercentColorKept = 75.0;
 CGFloat KeyTimeForHalfOpacity = 0.5;
+
+//Cache
+NSURLRequestCachePolicy APICachePolicy = NSURLRequestUseProtocolCachePolicy;
+NSURLRequestCachePolicy LibraryCachePolicy = NSURLRequestUseProtocolCachePolicy;
+NSURLRequestCachePolicy PanelCachePolicy = NSURLRequestUseProtocolCachePolicy;
+NSTimeInterval TimeoutInterval = 60;
+NSUInteger NSURLCacheMemoryCapacity = 0; //20 * 1024 * 1024; //Default is 512000
+NSUInteger NSURLCacheDiskCapacity = 250 * 1024 * 1024; //Default is 10000000
+CGFloat ThresholdResolution = 0.8;

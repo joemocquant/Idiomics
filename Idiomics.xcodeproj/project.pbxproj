@@ -82,6 +82,8 @@
 		01BF3AA81A4027B600EF6712 /* UIColor+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3AA41A4027B600EF6712 /* UIColor+Tools.m */; };
 		01D4D5131A83CB2F00169CF5 /* KMKDSP__.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 01D4D5121A83CB2F00169CF5 /* KMKDSP__.ttf */; };
 		01D4D5141A83CB2F00169CF5 /* KMKDSP__.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 01D4D5121A83CB2F00169CF5 /* KMKDSP__.ttf */; };
+		01D4D54D1A8929E500169CF5 /* PanelOperations+CacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D4D54C1A8929E500169CF5 /* PanelOperations+CacheManager.m */; };
+		01D4D54E1A8929E500169CF5 /* PanelOperations+CacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D4D54C1A8929E500169CF5 /* PanelOperations+CacheManager.m */; };
 		01D7BDE91A17E3E500C30CE2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013EDEA41A13126D009F16BD /* MessageUI.framework */; };
 		01DDBAED1A310A340068EB44 /* IdiomicsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA34A1A30F67A003DED61 /* IdiomicsTests.m */; };
 		01E4B46E1A3A844A0070506E /* MosaicLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E4B4671A3A844A0070506E /* MosaicLayout.m */; };
@@ -183,6 +185,8 @@
 		01BF3AA31A4027B600EF6712 /* UIColor+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Tools.h"; sourceTree = "<group>"; };
 		01BF3AA41A4027B600EF6712 /* UIColor+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Tools.m"; sourceTree = "<group>"; };
 		01D4D5121A83CB2F00169CF5 /* KMKDSP__.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = KMKDSP__.ttf; sourceTree = "<group>"; };
+		01D4D54B1A8929E500169CF5 /* PanelOperations+CacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PanelOperations+CacheManager.h"; sourceTree = "<group>"; };
+		01D4D54C1A8929E500169CF5 /* PanelOperations+CacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PanelOperations+CacheManager.m"; sourceTree = "<group>"; };
 		01D7BDF31A17E3E500C30CE2 /* Idiomics_Local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Idiomics_Local.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01E4B4661A3A844A0070506E /* MosaicLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicLayout.h; sourceTree = "<group>"; };
 		01E4B4671A3A844A0070506E /* MosaicLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicLayout.m; sourceTree = "<group>"; };
@@ -406,6 +410,8 @@
 				01BF3AA41A4027B600EF6712 /* UIColor+Tools.m */,
 				0195078D1A80FCCC004B7B30 /* UITextView+VerticalAlignment.h */,
 				0195078E1A80FCCC004B7B30 /* UITextView+VerticalAlignment.m */,
+				01D4D54B1A8929E500169CF5 /* PanelOperations+CacheManager.h */,
+				01D4D54C1A8929E500169CF5 /* PanelOperations+CacheManager.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -708,6 +714,7 @@
 				01E4B4791A3A84540070506E /* Colors.m in Sources */,
 				01BF3A861A3E4E6B00EF6712 /* LibraryViewController.m in Sources */,
 				01E4B4721A3A844A0070506E /* MosaicCell.m in Sources */,
+				01D4D54D1A8929E500169CF5 /* PanelOperations+CacheManager.m in Sources */,
 				015D59DD1A37CEE50004F352 /* FullSizePanelDownloader.m in Sources */,
 				013AA30D1A30F66B003DED61 /* UniverseViewController.m in Sources */,
 				013AA32F1A30F66B003DED61 /* Helper.m in Sources */,
@@ -758,6 +765,7 @@
 				01E4B47A1A3A84540070506E /* Colors.m in Sources */,
 				01BF3A871A3E4E6B00EF6712 /* LibraryViewController.m in Sources */,
 				01E4B4731A3A844A0070506E /* MosaicCell.m in Sources */,
+				01D4D54E1A8929E500169CF5 /* PanelOperations+CacheManager.m in Sources */,
 				015D59DE1A37CEE50004F352 /* FullSizePanelDownloader.m in Sources */,
 				013AA30E1A30F66B003DED61 /* UniverseViewController.m in Sources */,
 				013AA3301A30F66B003DED61 /* Helper.m in Sources */,
