@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "LibraryViewController.h"
+#import "MMSViewController.h"
 #import <GAI.h>
 
 @interface AppDelegate ()
@@ -24,7 +25,11 @@
                                                             diskCapacity:NSURLCacheDiskCapacity
                                                                 diskPath:nil];
     [NSURLCache setSharedURLCache:sharedCache];
-
+    
+    UIImage *imageNavBar = [UIImage imageNamed:@"navbar.png"];
+    imageNavBar = [imageNavBar stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    [[UINavigationBar appearance] setBackgroundImage:imageNavBar forBarMetrics:UIBarMetricsDefault];
+    
     // Optional: automatically send uncaught exceptions to Google Analytics.
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     

@@ -84,6 +84,8 @@
 		01D4D5141A83CB2F00169CF5 /* KMKDSP__.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 01D4D5121A83CB2F00169CF5 /* KMKDSP__.ttf */; };
 		01D4D54D1A8929E500169CF5 /* PanelOperations+CacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D4D54C1A8929E500169CF5 /* PanelOperations+CacheManager.m */; };
 		01D4D54E1A8929E500169CF5 /* PanelOperations+CacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D4D54C1A8929E500169CF5 /* PanelOperations+CacheManager.m */; };
+		01D4D55C1A8A802700169CF5 /* navbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 01D4D55B1A8A802700169CF5 /* navbar.png */; };
+		01D4D55D1A8A802700169CF5 /* navbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 01D4D55B1A8A802700169CF5 /* navbar.png */; };
 		01D7BDE91A17E3E500C30CE2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 013EDEA41A13126D009F16BD /* MessageUI.framework */; };
 		01DDBAED1A310A340068EB44 /* IdiomicsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA34A1A30F67A003DED61 /* IdiomicsTests.m */; };
 		01E4B46E1A3A844A0070506E /* MosaicLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E4B4671A3A844A0070506E /* MosaicLayout.m */; };
@@ -187,6 +189,7 @@
 		01D4D5121A83CB2F00169CF5 /* KMKDSP__.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = KMKDSP__.ttf; sourceTree = "<group>"; };
 		01D4D54B1A8929E500169CF5 /* PanelOperations+CacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PanelOperations+CacheManager.h"; sourceTree = "<group>"; };
 		01D4D54C1A8929E500169CF5 /* PanelOperations+CacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PanelOperations+CacheManager.m"; sourceTree = "<group>"; };
+		01D4D55B1A8A802700169CF5 /* navbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navbar.png; sourceTree = "<group>"; };
 		01D7BDF31A17E3E500C30CE2 /* Idiomics_Local.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Idiomics_Local.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01E4B4661A3A844A0070506E /* MosaicLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MosaicLayout.h; sourceTree = "<group>"; };
 		01E4B4671A3A844A0070506E /* MosaicLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MosaicLayout.m; sourceTree = "<group>"; };
@@ -365,6 +368,7 @@
 		013AA3521A30F745003DED61 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				01D4D55B1A8A802700169CF5 /* navbar.png */,
 				0129CDB31A7EBA2500CFCAC4 /* watermark@2x.png */,
 				013AA3531A30F745003DED61 /* close@2x.png */,
 				013AA3581A30F745003DED61 /* send@2x.png */,
@@ -597,6 +601,7 @@
 				013AA3601A30F745003DED61 /* close@2x.png in Resources */,
 				01D4D5131A83CB2F00169CF5 /* KMKDSP__.ttf in Resources */,
 				013AA36A1A30F745003DED61 /* send@2x.png in Resources */,
+				01D4D55C1A8A802700169CF5 /* navbar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -618,6 +623,7 @@
 				013AA3611A30F745003DED61 /* close@2x.png in Resources */,
 				01D4D5141A83CB2F00169CF5 /* KMKDSP__.ttf in Resources */,
 				013AA36B1A30F745003DED61 /* send@2x.png in Resources */,
+				01D4D55D1A8A802700169CF5 /* navbar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
