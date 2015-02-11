@@ -83,10 +83,11 @@
             NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(idx, resolutions.count - idx)];
             [resolutions enumerateObjectsAtIndexes:indexes options:0 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 
-                NSURLRequest *request = [self buildUrlRequestForPanel:panel dimensions:res];
+                NSURLRequest *request = [panel buildUrlRequestForDimensions:res];
                 cachedURLResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:request];
                 
                 if (cachedURLResponse) {
+                    
                     *stop = YES;
                 }
             }];

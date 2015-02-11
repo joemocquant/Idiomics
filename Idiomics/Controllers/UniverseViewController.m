@@ -127,7 +127,7 @@
                 for (NSDictionary *panel in panels) {
                     
                     Panel *p = [MTLJSONAdapter modelOfClass:Panel.class fromJSONDictionary:panel error:nil];
-                    [mosaicDatas addObject:[[MosaicData alloc] initWithImageId:p.imageUrl]];
+                    [mosaicDatas addObject:[[MosaicData alloc] initWithPanel:p]];
                     [[[UniverseStore sharedStore] currentUniverse] addPanel:p];
                 };
                 
@@ -247,8 +247,12 @@
     
     cell.backgroundColor = panel.averageColor;
     
-    if ([panel hasThumbImage]) {
+    if ([panel hasThumbSizeImage]) {
 
+#ifdef __DEBUG__
+        NSLog(@"Accessing in memorry resource (resized task %ld)", (long)indexPath.item);
+#endif
+        
         cell.mosaicData = [mosaicDatas objectAtIndex:indexPath.item];
 
     } else if ([panel isFailed]) {

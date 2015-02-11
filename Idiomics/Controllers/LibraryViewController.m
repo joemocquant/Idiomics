@@ -11,7 +11,6 @@
 #import "APIClient.h"
 #import "Helper.h"
 #import "Colors.h"
-#import "ImageStore.h"
 #import "Universe.h"
 #import "UniverseStore.h"
 #import "UniverseViewCell.h"
@@ -138,7 +137,7 @@
     if ([universe hasCoverImage]) {
         
         cell.mashupView.alpha = 0;
-        [cell.mashupView setImage:[[ImageStore sharedStore] universeImageForKey:universe.imageUrl]];
+        [cell.mashupView setImage:[universe coverImage]];
         
         float millisecondsDelay = (arc4random() % 700) / 2000.0f;
 

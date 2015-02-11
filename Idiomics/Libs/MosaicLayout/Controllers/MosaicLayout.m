@@ -10,7 +10,6 @@
 #import "MosaicLayout.h"
 #import "Universe.h"
 #import "UniverseStore.h"
-#import "ImageStore.h"
 #import "Panel.h"
 
 @implementation MosaicLayout

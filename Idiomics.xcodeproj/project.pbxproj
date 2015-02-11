@@ -31,8 +31,6 @@
 		013AA3381A30F66B003DED61 /* Balloon.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2F81A30F66B003DED61 /* Balloon.m */; };
 		013AA3391A30F66B003DED61 /* Panel.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2FA1A30F66B003DED61 /* Panel.m */; };
 		013AA33A1A30F66B003DED61 /* Panel.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2FA1A30F66B003DED61 /* Panel.m */; };
-		013AA33B1A30F66B003DED61 /* ImageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2FC1A30F66B003DED61 /* ImageStore.m */; };
-		013AA33C1A30F66B003DED61 /* ImageStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2FC1A30F66B003DED61 /* ImageStore.m */; };
 		013AA3451A30F66B003DED61 /* FocusOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA3081A30F66B003DED61 /* FocusOverlayView.m */; };
 		013AA3461A30F66B003DED61 /* FocusOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA3081A30F66B003DED61 /* FocusOverlayView.m */; };
 		013AA3471A30F66B003DED61 /* NavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA30A1A30F66B003DED61 /* NavigationView.m */; };
@@ -137,8 +135,6 @@
 		013AA2F81A30F66B003DED61 /* Balloon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Balloon.m; sourceTree = "<group>"; };
 		013AA2F91A30F66B003DED61 /* Panel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Panel.h; sourceTree = "<group>"; };
 		013AA2FA1A30F66B003DED61 /* Panel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Panel.m; sourceTree = "<group>"; };
-		013AA2FB1A30F66B003DED61 /* ImageStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageStore.h; sourceTree = "<group>"; };
-		013AA2FC1A30F66B003DED61 /* ImageStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageStore.m; sourceTree = "<group>"; };
 		013AA3071A30F66B003DED61 /* FocusOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FocusOverlayView.h; sourceTree = "<group>"; };
 		013AA3081A30F66B003DED61 /* FocusOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FocusOverlayView.m; sourceTree = "<group>"; };
 		013AA3091A30F66B003DED61 /* NavigationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationView.h; sourceTree = "<group>"; };
@@ -319,8 +315,6 @@
 				01BF3A811A3E40CD00EF6712 /* Universe.m */,
 				01BF3A881A3E7E8700EF6712 /* UniverseStore.h */,
 				01BF3A891A3E7E8800EF6712 /* UniverseStore.m */,
-				013AA2FB1A30F66B003DED61 /* ImageStore.h */,
-				013AA2FC1A30F66B003DED61 /* ImageStore.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -698,7 +692,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				01BF3A961A3FF0EE00EF6712 /* LibraryOperations.m in Sources */,
-				013AA33B1A30F66B003DED61 /* ImageStore.m in Sources */,
 				015D59DF1A37CEE50004F352 /* PanelOperations.m in Sources */,
 				01BF3AA71A4027B600EF6712 /* UIColor+Tools.m in Sources */,
 				013AA3111A30F66B003DED61 /* PanelViewController.m in Sources */,
@@ -749,7 +742,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				01BF3A971A3FF0EE00EF6712 /* LibraryOperations.m in Sources */,
-				013AA33C1A30F66B003DED61 /* ImageStore.m in Sources */,
 				015D59E01A37CEE50004F352 /* PanelOperations.m in Sources */,
 				01BF3AA81A4027B600EF6712 /* UIColor+Tools.m in Sources */,
 				013AA3121A30F66B003DED61 /* PanelViewController.m in Sources */,

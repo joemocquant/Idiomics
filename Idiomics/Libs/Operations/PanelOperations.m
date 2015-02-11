@@ -8,12 +8,10 @@
 
 #import "PanelOperations.h"
 #import "PanelOperations+CacheManager.h"
-#import "Helper.h"
 #import "Panel.h"
-#import "ImageStore.h"
 #import "Universe.h"
 #import "UniverseStore.h"
-#import "APIClient.h"
+#import <UIImageView+AFNetworking.h>
 
 @implementation PanelOperations
 
@@ -47,7 +45,7 @@
 {
     if (![resizedPanelDownloadsInProgress.allKeys containsObject:indexPath]) {
         
-        NSURLRequest *urlRequest = [self buildUrlRequestForPanel:panel dimensions:panel.thumbSize];
+        NSURLRequest *urlRequest = [panel buildUrlRequestForDimensions:panel.thumbSize];
         ResizedPanelDownloader *rpd = [[ResizedPanelDownloader alloc] initWithPanel:panel
                                                                         atIndexPath:indexPath
                                                                            delegate:self
@@ -62,7 +60,7 @@
 {
     if (![fullSizePanelDownloadsInProgress.allKeys containsObject:indexPath]) {
         
-        NSURLRequest *urlRequest = [self buildUrlRequestForPanel:panel dimensions:panel.dimensions];
+        NSURLRequest *urlRequest = [panel buildUrlRequestForDimensions:panel.dimensions];
         FullSizePanelDownloader *fspd = [[FullSizePanelDownloader alloc] initWithPanel:panel
                                                                            atIndexPath:indexPath
                                                                               delegate:self
@@ -81,41 +79,21 @@
 
 #pragma mark - Instance methods
 
-- (NSURLRequest *)buildUrlRequestForPanel:(Panel *)panel
-                               dimensions:(CGSize)dimensions
-{
-    NSURL *url = [NSURL URLWithString:[Helper getImageWithUrl:panel.imageUrl size:dimensions]];
-    
-    NSURLRequestCachePolicy cachePolicy = PanelCachePolicy;
-    
-    AFNetworkReachabilityStatus networkStatus = [[[APIClient sharedConnection] reachabilityManager] networkReachabilityStatus];
-    if ((networkStatus == AFNetworkReachabilityStatusUnknown)
-        || (networkStatus == AFNetworkReachabilityStatusNotReachable)) {
-        
-        cachePolicy = NSURLRequestReturnCacheDataDontLoad;
-    }
-    
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url
-                                                cachePolicy:cachePolicy
-                                            timeoutInterval:TimeoutInterval];
-    
-    return urlRequest;
-}
-
 - (void)startOperationsForPanel:(Panel *)panel atIndexPath:(NSIndexPath *)indexPath
 {
-    if (!panel.hasThumbImage) {
-        NSCachedURLResponse *cache = [self getCachedURLResponseForPanel:panel
-                                                         withDesiredRes:panel.thumbSize];
+    if (!panel.hasThumbSizeImage) {
+        NSCachedURLResponse *cachedURLResponse = [self getCachedURLResponseForPanel:panel
+                                                                     withDesiredRes:panel.thumbSize];
         
-        if (cache) {
+        if (cachedURLResponse) {
+            
+            NSURLRequest *request = [panel buildUrlRequestForDimensions:panel.thumbSize];
+            UIImage *image = [UIImage imageWithData:cachedURLResponse.data scale:[[UIScreen mainScreen] scale]];
+            [[UIImageView sharedImageCache] cacheImage:image forRequest:request];
             
 #ifdef __DEBUG__
             NSLog(@"Accessing cached resource (resizing task %ld)", (long)indexPath.item);
 #endif
-            
-            [[ImageStore sharedStore] addPanelThumbImage:[UIImage imageWithData:cache.data]
-                                                  forKey:panel.imageUrl];
             
             [(NSObject *)self.delegate performSelectorOnMainThread:@selector(reloadItemsAtIndexPaths:)
                                                         withObject:[NSArray arrayWithObject:indexPath]
@@ -127,18 +105,19 @@
     }
     
     if (!panel.hasFullSizeImage) {
-        NSCachedURLResponse *cache = [self getCachedURLResponseForPanel:panel
-                                                         withDesiredRes:panel.dimensions];
+        NSCachedURLResponse *cachedURLResponse = [self getCachedURLResponseForPanel:panel
+                                                                     withDesiredRes:panel.dimensions];
 
-        if (cache) {
+        if (cachedURLResponse) {
 
+            NSURLRequest *request = [panel buildUrlRequestForDimensions:panel.dimensions];
+            UIImage *image = [UIImage imageWithData:cachedURLResponse.data scale:[[UIScreen mainScreen] scale]];
+            [[UIImageView sharedImageCache] cacheImage:image forRequest:request];
+            
 #ifdef __DEBUG__
             NSLog(@"Accessing cached resource (fullsize task %ld)", (long)indexPath.item);
 #endif
             
-            [[ImageStore sharedStore] addPanelFullSizeImage:[UIImage imageWithData:cache.data
-                                                                             scale:[[UIScreen mainScreen] scale]]
-                                                     forKey:panel.imageUrl];
         } else {
             [self startFullSizeOperationsForPanel:panel atIndexPath:indexPath];
         }
@@ -189,7 +168,6 @@
     [fullSizePanelDownloadsQueue setSuspended:YES];
 }
 
-
 - (void)resumeAllOperations
 {
     [resizedPanelDownloadsQueue setSuspended:NO];
@@ -208,9 +186,6 @@
 
 - (void)resizedPanelDownloaderDidFinish:(ResizedPanelDownloader *)downloader
 {
-    [[ImageStore sharedStore] addPanelThumbImage:downloader.downloadedImage
-                                          forKey:downloader.panel.imageUrl];
-    
     [self.delegate reloadItemsAtIndexPaths:[NSArray arrayWithObject:downloader.indexPath]];
     [resizedPanelDownloadsInProgress removeObjectForKey:downloader.indexPath];
     
@@ -224,9 +199,6 @@
 
 - (void)fullSizePanelDownloaderDidFinish:(FullSizePanelDownloader *)downloader
 {
-    [[ImageStore sharedStore] addPanelFullSizeImage:downloader.downloadedImage
-                                             forKey:downloader.panel.imageUrl];
-    
     [fullSizePanelDownloadsInProgress removeObjectForKey:downloader.indexPath];
     
 #ifdef __DEBUG__

@@ -8,7 +8,10 @@
 
 #import "Panel.h"
 #import "Balloon.h"
-#import "ImageStore.h"
+#import "Helper.h"
+#import "APIClient.h"
+#import <UIImageView+AFNetworking.h>
+#import <AFNetworking.h>
 
 @interface Panel ()
 
@@ -60,16 +63,61 @@
 }
 
 
+#pragma mark - Instance methods
+
+-(NSURLRequest *)buildUrlRequestForDimensions:(CGSize)dimensions
+{
+    NSURL *url = [NSURL URLWithString:[Helper getImageWithUrl:self.imageUrl size:dimensions]];
+    
+    NSURLRequestCachePolicy cachePolicy = PanelCachePolicy;
+    
+    AFNetworkReachabilityStatus networkStatus = [[[APIClient sharedConnection] reachabilityManager] networkReachabilityStatus];
+    if ((networkStatus == AFNetworkReachabilityStatusUnknown)
+        || (networkStatus == AFNetworkReachabilityStatusNotReachable)) {
+        
+        cachePolicy = NSURLRequestReturnCacheDataDontLoad;
+    }
+    
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url
+                                                cachePolicy:cachePolicy
+                                            timeoutInterval:TimeoutInterval];
+    
+    return urlRequest;
+}
+
+- (UIImage *)thumbSizeImage
+{
+    NSURLRequest *urlRequest = [self buildUrlRequestForDimensions:self.thumbSize];
+    UIImage *image = [[UIImageView sharedImageCache] cachedImageForRequest:urlRequest];
+    
+    return image;
+}
+
+- (UIImage *)fullSizeImage
+{
+    NSURLRequest *urlRequest = [self buildUrlRequestForDimensions:self.dimensions];
+    UIImage *image = [[UIImageView sharedImageCache] cachedImageForRequest:urlRequest];
+    
+    return image;
+}
+
+
 #pragma mark - Getters/setters
 
-- (BOOL)hasThumbImage
+- (BOOL)hasThumbSizeImage
 {
-    return [[ImageStore sharedStore] panelThumbImageForKey:self.imageUrl] != nil;
+    NSURLRequest *urlRequest = [self buildUrlRequestForDimensions:self.thumbSize];
+    UIImage *image = [[UIImageView sharedImageCache] cachedImageForRequest:urlRequest];
+ 
+    return (image != nil);
 }
 
 - (BOOL)hasFullSizeImage
 {
-    return [[ImageStore sharedStore] panelFullSizeImageForKey:self.imageUrl] != nil;
+    NSURLRequest *urlRequest = [self buildUrlRequestForDimensions:self.dimensions];
+    UIImage *image = [[UIImageView sharedImageCache] cachedImageForRequest:urlRequest];
+    
+    return (image != nil);
 }
 
 - (BOOL)isFailed

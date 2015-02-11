@@ -9,6 +9,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class Panel;
+
 typedef enum {
     kMosaicLayoutTypeUndefined,
     kMosaicLayoutTypeSingle,
@@ -17,11 +19,11 @@ typedef enum {
 
 @interface MosaicData : NSObject
 
-@property (nonatomic, copy, readonly) NSString *imageId;
+@property (nonatomic, copy, readonly) Panel *panel;
 @property (nonatomic, assign) BOOL firstTimeShown;
 @property (nonatomic, assign) MosaicLayoutType layoutType;
 @property (nonatomic, assign) float relativeHeight;
 
-- (instancetype)initWithImageId:(NSString *)imageId;
+- (instancetype)initWithPanel:(Panel *)panel;
 
 @end

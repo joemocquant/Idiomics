@@ -11,7 +11,6 @@
 #import "Panel.h"
 #import "Balloon.h"
 #import "BalloonsOverlay.h"
-#import "ImageStore.h"
 #import "NavigationView.h"
 #import "DAKeyboardControl.h"
 #import "MMSViewController.h"
@@ -73,7 +72,7 @@
     
     [self.view addSubview:panelScrollView];
     
-    UIImage *image = [[[ImageStore sharedStore] panelFullSizeImageForKey:panel.imageUrl] copy];
+    UIImage *image = [panel fullSizeImage];
 
     panelView = [UIView new];
     [panelView setBackgroundColor:[Colors clear]];

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "LibraryViewController.h"
 #import "MMSViewController.h"
+#import <UIImageView+AFNetworking.h>
 #import <GAI.h>
 
 @interface AppDelegate ()

@@ -19,7 +19,6 @@
 
 - (instancetype)initWithPanel:(Panel *)p
                    imagePanel:(UIImage *)imagePanel
-
 {
     self = [super init];
     

@@ -57,6 +57,6 @@ NSURLRequestCachePolicy APICachePolicy = NSURLRequestUseProtocolCachePolicy;
 NSURLRequestCachePolicy LibraryCachePolicy = NSURLRequestUseProtocolCachePolicy;
 NSURLRequestCachePolicy PanelCachePolicy = NSURLRequestUseProtocolCachePolicy;
 NSTimeInterval TimeoutInterval = 60;
-NSUInteger NSURLCacheMemoryCapacity = 0; //20 * 1024 * 1024; //Default is 512000
+NSUInteger NSURLCacheMemoryCapacity = 2; //20 * 1024 * 1024; //Default is 512000
 NSUInteger NSURLCacheDiskCapacity = 250 * 1024 * 1024; //Default is 10000000
 CGFloat ThresholdResolution = 0.8;
