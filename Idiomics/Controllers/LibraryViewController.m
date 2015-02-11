@@ -139,7 +139,6 @@
         
         cell.mashupView.alpha = 0;
         [cell.mashupView setImage:[[ImageStore sharedStore] universeImageForKey:universe.imageUrl]];
-        [cell updateMashupConstraints];
         
         float millisecondsDelay = (arc4random() % 700) / 2000.0f;
 
@@ -184,7 +183,6 @@
         }
         
         if (UIInterfaceOrientationIsPortrait(orientation)) {
-             NSLog(@"screen height: %f", screen.size.height);
             return CGRectGetHeight(screen) / kRowsiPadPortrait;
         } else {
             return CGRectGetHeight(screen) / kRowsiPadLandscape;

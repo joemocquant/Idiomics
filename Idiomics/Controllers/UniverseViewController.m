@@ -32,7 +32,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+
     [self.navigationController setNavigationBarHidden:YES];
     
     panelOperations = [PanelOperations new];
@@ -64,13 +64,7 @@
     [back constrainToSize:CGSizeMake(NavigationControlHeight, NavigationControlHeight)];
     [back pinEdges:JRTViewPinLeftEdge | JRTViewPinTopEdge toSameEdgesOfView:self.view];
     
-    if (![[[[UniverseStore sharedStore] currentUniverse] allPanels] count]) {
-        [self loadAllPannels];
-    } else {
-        for (Panel *panel in [[[UniverseStore sharedStore] currentUniverse] allPanels]) {
-            [mosaicDatas addObject:[[MosaicData alloc] initWithImageId:panel.imageUrl]];
-        }
-    }
+    [self loadAllPannels];
 }
 
 - (void)didReceiveMemoryWarning
@@ -79,6 +73,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+    [[[UniverseStore sharedStore] currentUniverse] deleteAllPanels];
+}
 
 #pragma mark - Rotation iPad
 
@@ -179,13 +177,13 @@
     BOOL isDoubleColumn = [self collectionView:collectionView isDoubleColumnAtIndexPath:indexPath];
     if (isDoubleColumn) {
         //Base relative height for double layout type. This is 0.75 (height equals to 75% width)
-        retVal = 0.75;
+        retVal = 1 - RelativeHeightRandomModifier;
     }
         
     /*  Relative height random modifier. The max height of relative height is 25% more than
      *  the base relative height */
         
-    float extraRandomHeight = arc4random() % 25;
+    float extraRandomHeight = arc4random() % ((int) (RelativeHeightRandomModifier * 100));
     retVal = retVal + (extraRandomHeight / 100);
     
     /*  Persist the relative height on MosaicData so the value will be the same every time
@@ -213,9 +211,7 @@
         }
     }
     
-    BOOL retVal = aMosaicModule.layoutType == kMosaicLayoutTypeDouble;
-    
-    return retVal;
+    return aMosaicModule.layoutType == kMosaicLayoutTypeDouble;
 }
 
 - (NSUInteger)numberOfColumnsInCollectionView:(UICollectionView *)collectionView
@@ -252,8 +248,9 @@
     cell.backgroundColor = panel.averageColor;
     
     if ([panel hasThumbImage]) {
+
         cell.mosaicData = [mosaicDatas objectAtIndex:indexPath.item];
-        
+
     } else if ([panel isFailed]) {
 
         //better to remove the panel than putting a placeholder

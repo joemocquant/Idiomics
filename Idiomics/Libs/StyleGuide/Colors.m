@@ -54,6 +54,14 @@
     return [UIColor blackColor];
 }
 
++ (UIColor *)oldPaperBlack
+{
+    return [UIColor colorWithRed:42 / 255.0
+                           green:44 / 255.0
+                            blue:33 / 255.0
+                           alpha:1.0];
+}
+
 + (UIColor *)clear
 {
     return [UIColor clearColor];

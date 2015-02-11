@@ -8,7 +8,8 @@
 
 #import "UniverseCoverDownloader.h"
 #import "Universe.h"
-#import "Helper.h"
+#import "APIClient.h"
+#import <extobjc.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
 
@@ -26,101 +27,46 @@
 - (id)initWithUniverse:(Universe *)universe
            atIndexPath:(NSIndexPath *)indexPath
               delegate:(id<UniverseCoverDownloaderDelegate>)delegate
+            urlRequest:(NSURLRequest *)urlRequest
 {
-    self = [super init];
+    self = [super initWithRequest:urlRequest];
     
     if (self) {
         _delegate = delegate;
         _indexPath = indexPath;
         _universe = universe;
+        
+        [self setResponseSerializer:[AFImageResponseSerializer serializer]];
+        
+#ifdef __DEBUG__
+        NSLog(@"Starting universe cover task %ld", (long)self.indexPath.item);
+#endif
+        
+        NSDate *trackingIntervalStart = [NSDate date];
+
+        @weakify(self)
+        [self setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+            @strongify(self)
+            
+            self.downloadedImage = responseObject;
+            
+            NSInteger elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
+            id tracker = [[GAI sharedInstance] defaultTracker];
+            [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_loading_time"
+                                                                 interval:@(elapsed)
+                                                                     name:@"universe_cover"
+                                                                    label:nil] build]];
+            
+            [(NSObject *)self.delegate performSelectorOnMainThread:@selector(universeCoverDownloaderDidFinish:)
+                                                        withObject:self
+                                                     waitUntilDone:NO];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+        }];
     }
     
     return self;
 }
 
-
-#pragma mark - Downloading resized panel
-
-- (void)main
-{
-    
-#ifdef __DEBUG__
-    NSLog(@"Starting universe cover task %ld", (long)self.indexPath.item);
-#endif
-    
-    NSDate *trackingIntervalStart = [NSDate date];
-    
-    if (self.isCancelled) {
-        return;
-    }
-    
-    CGSize adaptedSize = [self getAdaptedSize];
-    NSURL *url = [NSURL URLWithString:[Helper getImageWithUrl:self.universe.imageUrl
-                                                        witdh:adaptedSize.width
-                                                       height:adaptedSize.height]];
-    
-    NSData *imageData = [[NSData alloc] initWithContentsOfURL:url];
-    
-    if (self.isCancelled) {
-        imageData = nil;
-        return;
-    }
-    
-    if (imageData) {
-        self.downloadedImage = [UIImage imageWithData:imageData];
-        
-    } else {
-        self.universe.failed = YES;
-    }
-    
-    imageData = nil;
-    
-    if (self.isCancelled) {
-        return;
-    }
-    
-    NSInteger elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_loading_time"
-                                                         interval:@(elapsed)
-                                                             name:@"universe_cover"
-                                                            label:nil] build]];
-    
-    [(NSObject *)self.delegate performSelectorOnMainThread:@selector(universeCoverDownloaderDidFinish:)
-                                                withObject:self
-                                             waitUntilDone:NO];
-}
-
-- (CGSize)getAdaptedSize
-{
-    CGFloat height;
-     
-    CGRect screen = [[UIScreen mainScreen] bounds];
-     
-    if ([Helper isIPhoneDevice]) {
-        height = screen.size.height / kRowsiPhonePortrait;
-    } else {
-        height = MAX(screen.size.height / kRowsiPadPortrait,
-                     screen.size.width / kRowsiPadPortrait);
-    }
-    
-    return CGSizeMake(roundf(height * kMashupRatio),
-                      roundf(height));
-}
-
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

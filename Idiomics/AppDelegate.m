@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "LibraryViewController.h"
+#import "MMSViewController.h"
 #import <GAI.h>
 
 @interface AppDelegate ()
@@ -20,6 +21,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 
+    NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:NSURLCacheMemoryCapacity
+                                                            diskCapacity:NSURLCacheDiskCapacity
+                                                                diskPath:nil];
+    [NSURLCache setSharedURLCache:sharedCache];
+    
+    UIImage *imageNavBar = [UIImage imageNamed:@"navbar.png"];
+    imageNavBar = [imageNavBar stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    [[UINavigationBar appearance] setBackgroundImage:imageNavBar forBarMetrics:UIBarMetricsDefault];
+    
     // Optional: automatically send uncaught exceptions to Google Analytics.
     [GAI sharedInstance].trackUncaughtExceptions = YES;
     
@@ -31,8 +41,6 @@
     
     // Initialize tracker. Replace with your tracking ID.
     [[GAI sharedInstance] trackerWithTrackingId:@"UA-57412675-1"];
-    //[GAI sharedInstance].optOut = YES;
-    
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.

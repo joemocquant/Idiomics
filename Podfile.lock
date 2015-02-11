@@ -66,6 +66,7 @@ PODS:
     - Mantle/extobjc (= 1.5.4)
   - Mantle/extobjc (1.5.4)
   - PulsingHalo (0.0.4)
+  - RXCollections (1.0)
   - UIView-Autolayout (0.2.0)
 
 DEPENDENCIES:
@@ -76,6 +77,7 @@ DEPENDENCIES:
   - libextobjc
   - Mantle
   - PulsingHalo (from `https://github.com/shu223/PulsingHalo.git`)
+  - RXCollections
   - UIView-Autolayout
 
 EXTERNAL SOURCES:
@@ -95,6 +97,7 @@ SPEC CHECKSUMS:
   libextobjc: d6146fce3ebea986b7f75fcb4c967639200b88b0
   Mantle: d5fbaf30fbc58031223af13812c060e15934a1fe
   PulsingHalo: 91a96da0e0008202039f0faf7368ed9b8b575222
+  RXCollections: 96cbe2ebea1a3b5ab8ca7a50f4296fb7fa05adc1
   UIView-Autolayout: 7c05eb666738eba682f686c2da236578177e2ebb
 
 COCOAPODS: 0.35.0

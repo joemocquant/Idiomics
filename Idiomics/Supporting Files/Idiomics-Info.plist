@@ -19,7 +19,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>9</string>
+	<string>10</string>
 	<key>Idiomics-API-URL</key>
 	<string>http://api.content.idiomicsapp.com</string>
 	<key>ImageProxy-Server-URL</key>
@@ -28,8 +28,7 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Laffayette_Comic_Pro.ttf</string>
-		<string>KRONIKA_.ttf</string>
+		<string>KMKDSP__.ttf</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

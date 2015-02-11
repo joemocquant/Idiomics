@@ -8,6 +8,7 @@
 
 #import "APIClient.h"
 #import "Helper.h"
+#import <extobjc.h>
 #import <AFNetworking/AFNetworkActivityIndicatorManager.h>
 
 #ifdef __DEBUG__
@@ -31,7 +32,7 @@
             sharedConnection = [[super alloc] initWithBaseURL:[NSURL URLWithString:APIUrl]];
         }
     });
-    
+
     return sharedConnection;
 }
 
@@ -44,8 +45,8 @@
     self = [super initWithBaseURL:url];
     
     if (self) {
-        AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
-        [self setRequestSerializer:requestSerializer];
+        
+        [self.requestSerializer setCachePolicy:APICachePolicy];
         [self setResponseSerializer:[AFJSONResponseSerializer serializer]];
         [[self responseSerializer] setAcceptableContentTypes:[NSSet setWithObjects:@"application/json",
                                                                                    @"text/plain", nil]];
@@ -65,27 +66,27 @@
 
 - (void)startMonitoringAPI
 {
+    @weakify(self)
     [self.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        @strongify(self)
         
         switch (status) {
             case AFNetworkReachabilityStatusUnknown:
             case AFNetworkReachabilityStatusNotReachable:
-                [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"CONNECTION_ERROR", @"Idiomics" , nil)
-                                delegate:nil];
+                [self.requestSerializer setCachePolicy:NSURLRequestReturnCacheDataDontLoad];
                 break;
+                
             case AFNetworkReachabilityStatusReachableViaWiFi:
             case AFNetworkReachabilityStatusReachableViaWWAN:
-                
-                break;
             default:
+                [self.requestSerializer setCachePolicy:APICachePolicy];
                 break;
         }
         
     }];
-    
+
     [self.reachabilityManager startMonitoring];
 }
-
 
 #pragma mark - Instance methods
 

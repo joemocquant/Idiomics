@@ -58,10 +58,10 @@
             [self addSubview:balloonTextView];
             
             [balloonTextView setTextAlignment:NSTextAlignmentCenter];
-            [balloonTextView setFont:[Fonts laffayetteComicProForSize:balloonRect.size.height * 0.4]];
+            [balloonTextView setFont:[Fonts komikaDisplayForSize:balloonRect.size.height * 0.6]];
             [balloonTextView updateTextFontSize];
-            [balloonTextView setTextColor:[Colors gray5]];
-            [balloonTextView setTintColor:[Colors gray5]];
+            [balloonTextView setTextColor:[Colors oldPaperBlack]];
+            [balloonTextView setTintColor:[Colors oldPaperBlack]];
             [balloonTextView setBackgroundColor:[Colors clear]];
             [balloonTextView setDelegate:self];
             [balloonTextView setUserInteractionEnabled:NO];

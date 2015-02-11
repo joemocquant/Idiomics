@@ -7,7 +7,7 @@
 //
 
 #import "FullSizePanelDownloader.h"
-#import "Panel.h"
+#import <extobjc.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
 
@@ -25,64 +25,47 @@
 - (id)initWithPanel:(Panel *)panel
         atIndexPath:(NSIndexPath *)indexPath
            delegate:(id<FullSizePanelDownloaderDelegate>)delegate
+         urlRequest:(NSURLRequest *)urlRequest
 {
-    self = [super init];
+    self = [super initWithRequest:urlRequest];
     
     if (self) {
         _delegate = delegate;
         _indexPath = indexPath;
         _panel = panel;
+        
+        [self setResponseSerializer:[AFImageResponseSerializer serializer]];
+        
+#ifdef __DEBUG__
+        NSLog(@"Starting fullSize task %ld", (long)self.indexPath.item);
+#endif
+        
+        NSDate *trackingIntervalStart = [NSDate date];
+        
+        @weakify(self)
+        [self setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+            @strongify(self)
+            
+            self.downloadedImage = responseObject;
+            
+            NSInteger elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
+            id tracker = [[GAI sharedInstance] defaultTracker];
+            [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_loading_time"
+                                                                 interval:@(elapsed)
+                                                                     name:@"fullsize_panel"
+                                                                    label:nil] build]];
+            
+            [(NSObject *)self.delegate performSelectorOnMainThread:@selector(fullSizePanelDownloaderDidFinish:)
+                                                        withObject:self
+                                                     waitUntilDone:NO];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            
+        }];
+
     }
     
     return self;
-}
-
-
-#pragma mark - Downloading resized panel
-
-- (void)main
-{
-    
-#ifdef __DEBUG__
-    NSLog(@"Starting fullSize task %ld", (long)self.indexPath.item);
-#endif
-    
-    NSDate *trackingIntervalStart = [NSDate date];
-    
-    if (self.isCancelled) {
-        return;
-    }
-        
-    NSData *imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString:self.panel.imageUrl]];
-        
-    if (self.isCancelled) {
-        imageData = nil;
-        return;
-    }
-        
-    if (imageData) {
-        self.downloadedImage = [UIImage imageWithData:imageData];
-            
-    } else {
-        self.panel.failed = YES;
-    }
-        
-    imageData = nil;
-        
-    if (self.isCancelled) {
-        return;
-    }
-    
-    NSInteger elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
-    id tracker = [[GAI sharedInstance] defaultTracker];
-    [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_loading_time"
-                                                         interval:@(elapsed)
-                                                             name:@"fullsize_panel"
-                                                            label:nil] build]];
-    
-    [(NSObject *)self.delegate performSelectorOnMainThread:@selector(fullSizePanelDownloaderDidFinish:)
-                                                withObject:self
-                                             waitUntilDone:NO];
 }
 
 @end

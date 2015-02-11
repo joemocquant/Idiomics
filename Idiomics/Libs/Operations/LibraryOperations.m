@@ -10,6 +10,8 @@
 #import "Universe.h"
 #import "UniverseStore.h"
 #import "ImageStore.h"
+#import "Helper.h"
+#import "APIClient.h"
 
 @implementation LibraryOperations
 
@@ -31,6 +33,48 @@
 }
 
 
+#pragma mark - Private methods
+
+- (CGSize)getAdaptedSize
+{
+    CGFloat height;
+    
+    CGRect screen = [[UIScreen mainScreen] bounds];
+    
+    if ([Helper isIPhoneDevice]) {
+        height = screen.size.height / kRowsiPhonePortrait;
+    } else {
+        height = MAX(screen.size.height / kRowsiPadPortrait,
+                     screen.size.width / kRowsiPadPortrait);
+    }
+    
+    return CGSizeMake(roundf(height * kMashupRatio),
+                      roundf(height));
+}
+
+- (NSURLRequest *)buildUrlRequestForUniverse:(Universe *)universe
+{
+    CGSize adaptedSize = [self getAdaptedSize];
+    
+    NSURL *url = [NSURL URLWithString:[Helper getImageWithUrl:universe.imageUrl size:adaptedSize]];
+    
+    NSURLRequestCachePolicy cachePolicy = LibraryCachePolicy;
+    
+    AFNetworkReachabilityStatus networkStatus = [[[APIClient sharedConnection] reachabilityManager] networkReachabilityStatus];
+    if ((networkStatus == AFNetworkReachabilityStatusUnknown)
+        || (networkStatus == AFNetworkReachabilityStatusNotReachable)) {
+        
+        cachePolicy = NSURLRequestReturnCacheDataDontLoad;
+    }
+    
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url
+                                                cachePolicy:LibraryCachePolicy
+                                            timeoutInterval:TimeoutInterval];
+    
+    return urlRequest;
+}
+
+
 #pragma mark - Instance methods
 
 - (void)startOperationsForUniverse:(Universe *)universe atIndexPath:(NSIndexPath *)indexPath
@@ -40,14 +84,15 @@
         if ((![universeCoverDownloadsInProgress.allKeys containsObject:indexPath])
             && (![universe hasCoverImage])) {
             
+            NSURLRequest *urlRequest = [self buildUrlRequestForUniverse:universe];
             UniverseCoverDownloader *ucd = [[UniverseCoverDownloader alloc] initWithUniverse:universe
-                                                                              atIndexPath:indexPath
-                                                                                 delegate:self];
+                                                                                 atIndexPath:indexPath
+                                                                                    delegate:self
+                                                                                  urlRequest:urlRequest];
             
             [universeCoverDownloadsInProgress setObject:ucd forKey:indexPath];
             [universeCoverDownloadsQueue addOperation:ucd];
         }
-        
     }
 }
 

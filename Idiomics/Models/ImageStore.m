@@ -22,6 +22,11 @@
         
         if (!sharedStore) {
             sharedStore = [self new];
+            
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(didReceiveMemoryWarning)
+                                                         name:UIApplicationDidReceiveMemoryWarningNotification
+                                                       object:nil];
         }
     });
     
@@ -45,7 +50,12 @@
 
 - (UIImage *)panelThumbImageForKey:(NSString *)key
 {
-    return [[self.imageDictionary objectForKey:key] objectForKey:@"thumb"];
+    UIImage *image = [[self.imageDictionary objectForKey:key] objectForKey:@"thumb"];
+    if (!image) {
+        return [self panelFullSizeImageForKey:key];
+    }
+    
+    return image;
 }
 
 - (void)addPanelThumbImage:(UIImage *)image forKey:(NSString *)key
@@ -56,6 +66,15 @@
 - (UIImage *)panelFullSizeImageForKey:(NSString *)key
 {
     return [[self.imageDictionary objectForKey:key] objectForKey:@"fullSize"];
+}
+
+- (UIImage *)panelImageForKey:(NSString *)key
+{
+    if ([self panelFullSizeImageForKey:key]) {
+        return [self panelFullSizeImageForKey:key];
+    }
+    
+    return [self panelThumbImageForKey:key];
 }
 
 - (void)addPanelFullSizeImage:(UIImage *)image forKey:(NSString *)key
@@ -84,6 +103,14 @@
 - (void)deleteImageDicitonary
 {
     [self.imageDictionary removeAllObjects];
+}
+
+
+#pragma mark - Notifications
+
+- (void)didReceiveMemoryWarning
+{
+    imageDictionary = nil;
 }
 
 @end

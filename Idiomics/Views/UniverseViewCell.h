@@ -16,6 +16,4 @@
 
 @property (nonatomic, readonly, strong) UIImageView *mashupView;
 
-- (void)updateMashupConstraints;
-
 @end

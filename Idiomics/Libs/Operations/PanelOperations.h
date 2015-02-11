@@ -24,6 +24,8 @@
 
 @property (nonatomic, weak) id<PanelOperationsDelegate> delegate;
 
+- (NSURLRequest *)buildUrlRequestForPanel:(Panel *)panel
+                               dimensions:(CGSize)dimensions;
 - (void)startOperationsForPanel:(Panel *)panel atIndexPath:(NSIndexPath *)indexPath;
 - (void)loadPanelsForIndexPaths:(NSArray *)indexPaths;
 - (void)suspendAllOperations;

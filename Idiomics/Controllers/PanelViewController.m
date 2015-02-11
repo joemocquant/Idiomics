@@ -15,6 +15,7 @@
 #import "NavigationView.h"
 #import "DAKeyboardControl.h"
 #import "MMSViewController.h"
+#import <extobjc.h>
 #import <UIView+AutoLayout.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
@@ -31,16 +32,6 @@
     if (self) {
         panel = p;
         panelId = panel.panelId;
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillShow:)
-                                                     name:UIKeyboardWillShowNotification
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillHide:)
-                                                     name:UIKeyboardWillHideNotification
-                                                   object:nil];
     }
     
     return self;
@@ -84,14 +75,10 @@
     
     UIImage *image = [[[ImageStore sharedStore] panelFullSizeImageForKey:panel.imageUrl] copy];
 
-    //image size is in pixels! converting to points
-    CGSize imageSize = CGSizeMake(image.size.width / [[UIScreen mainScreen] scale],
-                                  image.size.height / [[UIScreen mainScreen] scale]);
-    
     panelView = [UIView new];
     [panelView setBackgroundColor:[Colors clear]];
     
-    CGSize contentSize = CGSizeMake(imageSize.width + 2 * Gutter, imageSize.height + 2 * Gutter);
+    CGSize contentSize = CGSizeMake(image.size.width + 2 * Gutter, image.size.height + 2 * Gutter);
     [panelView setFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)];
     [panelView setCenter:panelScrollView.center];
     
@@ -110,7 +97,7 @@
     
     panelImageView = [[UIImageView alloc] initWithImage:image];
     [panelImageView setContentScaleFactor:2];
-    [panelImageView setFrame:CGRectMake(0, 0, imageSize.width, imageSize.height)];
+    [panelImageView setFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
     [panelImageView setCenter:CGPointMake(contentSize.width / 2, contentSize.height / 2)];
     [panelView addSubview:panelImageView];
     
@@ -150,35 +137,57 @@
     
     [balloonsOverlay setNavigationView:navigationView];
 
-#pragma clang diagnostic ignored "-Warc-retain-cycles" 
-//Cannot be weakify/strongify. Will be deallocated on [self.view removeKeyboardControl];
-
+    @weakify(self)
     [self.view addKeyboardPanningWithFrameBasedActionHandler:nil
                                 constraintBasedActionHandler:^(CGRect keyboardFrameInView,
                                                                BOOL opening,
                                                                BOOL closing) {
-                                    
+
+        @strongify(self)
         CGRect screen = [[UIScreen mainScreen] bounds];
                                     
         if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
             UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
                                         
             if (UIInterfaceOrientationIsPortrait(orientation)) {
-                keyboardOffset = CGRectGetHeight(screen) - keyboardFrameInView.origin.y;
+                self->keyboardOffset = CGRectGetHeight(screen) - keyboardFrameInView.origin.y;
             } else {
-                keyboardOffset = CGRectGetWidth(screen) - keyboardFrameInView.origin.y;
+                self->keyboardOffset = CGRectGetWidth(screen) - keyboardFrameInView.origin.y;
             }
         } else {
-            keyboardOffset = CGRectGetHeight(screen) - keyboardFrameInView.origin.y;
+            self->keyboardOffset = CGRectGetHeight(screen) - keyboardFrameInView.origin.y;
         }
                                     
-        navigationViewConstraint.constant = -keyboardOffset;
+        self->navigationViewConstraint.constant = -self->keyboardOffset;
                                     
         [self resizeScrollView];
     }];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     
-#pragma clang diagnostic pop
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillShowNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -233,9 +242,8 @@
         keyboardHeight = CGRectGetHeight(keyboardBounds);
     }
 
-    if (keyboardHeight > NavigationControlHeight) {
-        keyboardOffset = keyboardHeight;
-    }
+    keyboardOffset = keyboardHeight;
+    [self resizeScrollView];
 }
 
 
@@ -371,9 +379,9 @@
         CGSize size = CGSizeMake(panelImageView.frame.size.width + 2 * Gutter,
                                  panelImageView.frame.size.height + 2 * Gutter);
         [self updateScalesWithContentSize:size];
-        
+
         if (keyboardIsPoppingUp) {
-            
+
             if ([panelScrollView zoomScale] < screenScale) {
                 [panelScrollView setZoomScale:screenScale animated:YES];
             } else {
@@ -385,6 +393,7 @@
         if (keyboardIsPoppingUp) {
             
             [UIView animateWithDuration:ScrollToBottomDuration animations:^{
+
                 [self focusOnBalloon];
                 keyboardIsPoppingUp = NO;
             }];
@@ -475,8 +484,8 @@
         [balloonsOverlay updateVisibilityWithNewFocus:-1];
     }
     
-    CGSize imageSize = CGSizeMake(panelImageView.image.size.width / [[UIScreen mainScreen] scale] + 2 * Gutter,
-                                  panelImageView.image.size.height / [[UIScreen mainScreen] scale] + 2 * Gutter);
+    CGSize imageSize = CGSizeMake(panelImageView.image.size.width + 2 * Gutter,
+                                  panelImageView.image.size.height + 2 * Gutter);
     
     CGSize newSize;
     CGFloat ratio  = 4.0/3;
