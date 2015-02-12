@@ -42,12 +42,11 @@
 
 - (void)centerContentVertically
 {
-    CGFloat topOffset = ([self frame].size.height - [self calculHeight]) / 2;
+    CGFloat topOffset = (self.frame.size.height - [self calculHeight]) / 2;
     if (topOffset < 0.0) {
         topOffset = 0.0;
     }
     
-    //topOffset += 10;
     self.textContainerInset = UIEdgeInsetsMake(topOffset, 0.0f, -topOffset, 0.0f);
 }
 

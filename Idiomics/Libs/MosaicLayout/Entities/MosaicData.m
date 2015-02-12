@@ -11,11 +11,11 @@
 
 @implementation MosaicData
 
-- (instancetype)initWithImageId:(NSString *)imageId
+- (instancetype)initWithPanel:(Panel *)panel
 {
     self = [self init];
     if (self) {
-        _imageId = imageId;
+        _panel = panel;
         _firstTimeShown = YES;
     }
     return self;

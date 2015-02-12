@@ -28,7 +28,7 @@
 {
     CGFloat width;
     
-    CGRect screen = [[UIScreen mainScreen] bounds];
+    CGRect screen = [UIScreen mainScreen].bounds;
     
     if ([Helper isIPhoneDevice]) {
         width = screen.size.width / kColumnsiPhonePortrait;
@@ -75,7 +75,7 @@
     
     [resolutions enumerateObjectsUsingBlock:^(NSValue *resolution, NSUInteger idx, BOOL *stop) {
         
-        CGSize res = [resolution CGSizeValue];
+        CGSize res = resolution.CGSizeValue;
         CGFloat area = res.width * res.height;
         
         if (desiredArea == area) {
@@ -83,10 +83,11 @@
             NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(idx, resolutions.count - idx)];
             [resolutions enumerateObjectsAtIndexes:indexes options:0 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 
-                NSURLRequest *request = [self buildUrlRequestForPanel:panel dimensions:res];
+                NSURLRequest *request = [panel buildUrlRequestForDimensions:res];
                 cachedURLResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:request];
                 
                 if (cachedURLResponse) {
+                    
                     *stop = YES;
                 }
             }];

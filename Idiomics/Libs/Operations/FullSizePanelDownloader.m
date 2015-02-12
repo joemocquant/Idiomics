@@ -8,6 +8,7 @@
 
 #import "FullSizePanelDownloader.h"
 #import <extobjc.h>
+#import <UIImageView+AFNetworking.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
 
@@ -47,9 +48,10 @@
             @strongify(self)
             
             self.downloadedImage = responseObject;
+            [[UIImageView sharedImageCache] cacheImage:responseObject forRequest:urlRequest];
             
             NSInteger elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
-            id tracker = [[GAI sharedInstance] defaultTracker];
+            id tracker = [GAI sharedInstance].defaultTracker;
             [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_loading_time"
                                                                  interval:@(elapsed)
                                                                      name:@"fullsize_panel"
@@ -66,6 +68,15 @@
     }
     
     return self;
+}
+
+
+#pragma mark - NSURLConnectionDataDelegate
+
+- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
+                  willCacheResponse:(NSCachedURLResponse *)cachedResponse
+{
+    return nil;
 }
 
 @end

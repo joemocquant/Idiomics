@@ -9,9 +9,8 @@
 
 #import "MosaicCell.h"
 #import "MosaicData.h"
+#import "Panel.h"
 #import <QuartzCore/QuartzCore.h>
-#import <AFNetworking.h>
-#import "ImageStore.h"
 #import <UIView+AutoLayout.h>
 
 @interface MosaicCell ()
@@ -36,7 +35,7 @@
         _imageView.clipsToBounds = YES;
         [self addSubview:_imageView];
         
-        [_imageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        _imageView.translatesAutoresizingMaskIntoConstraints = NO;
         [_imageView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self inset:kImageViewMargin];
         
         //Added black stroke
@@ -66,8 +65,7 @@
 {
     _mosaicData = newMosaicData;
     
-    UIImage *cached = [[ImageStore sharedStore] panelImageForKey:self.mosaicData.imageId];
-    self.imageView.image = cached;
+    self.imageView.image = [self.mosaicData.panel thumbSizeImage];
     
     float millisecondsDelay;
     

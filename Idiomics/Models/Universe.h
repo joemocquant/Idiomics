@@ -22,9 +22,11 @@
 @property (nonatomic, assign, readonly) BOOL hasCoverImage;
 @property (nonatomic, getter = isFailed) BOOL failed;
 
+- (NSURLRequest *)buildUrlRequest;
 - (NSMutableArray *)allPanels;
 - (void)addPanel:(Panel *)panel;
 - (Panel *)panelAtIndex:(NSUInteger)index;
 - (void)deleteAllPanels;
+- (UIImage *)coverImage;
 
 @end

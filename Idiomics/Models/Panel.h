@@ -16,9 +16,13 @@
 @property (nonatomic, copy, readonly) NSString *imageUrl;
 @property (nonatomic, copy, readonly) NSArray *balloons;
 @property (nonatomic, copy, readonly) UIColor *averageColor;
-@property (nonatomic, assign, readonly) BOOL hasThumbImage;
+@property (nonatomic, assign, readonly) BOOL hasThumbSizeImage;
 @property (nonatomic, assign, readonly) BOOL hasFullSizeImage;
 @property (nonatomic, getter = isFailed) BOOL failed;
 @property (nonatomic, assign) CGSize thumbSize;
+
+- (NSURLRequest *)buildUrlRequestForDimensions:(CGSize)dimensions;
+- (UIImage *)thumbSizeImage;
+- (UIImage *)fullSizeImage;
 
 @end

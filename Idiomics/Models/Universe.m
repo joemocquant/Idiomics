@@ -8,8 +8,11 @@
 
 #import "Universe.h"
 #import "ColorTransformer.h"
-#import "ImageStore.h"
 #import "Panel.h"
+#import "Helper.h"
+#import "APIClient.h"
+#import <UIImageView+AFNetworking.h>
+#import <AFNetworking.h>
 
 @interface Universe ()
 
@@ -60,20 +63,49 @@
 }
 
 
-#pragma mark - Getters/setters
+#pragma mark - Private methods
 
-- (BOOL)hasCoverImage
+- (CGSize)getAdaptedSize
 {
-    return [[ImageStore sharedStore] universeImageForKey:self.imageUrl] != nil;
-}
-
-- (BOOL)isFailed
-{
-    return _failed;
+    CGFloat height;
+    
+    CGRect screen = [UIScreen mainScreen].bounds;
+    
+    if ([Helper isIPhoneDevice]) {
+        height = screen.size.height / kRowsiPhonePortrait;
+    } else {
+        height = MAX(screen.size.height / kRowsiPadPortrait,
+                     screen.size.width / kRowsiPadPortrait);
+    }
+    
+    return CGSizeMake(roundf(height * kMashupRatio),
+                      roundf(height));
 }
 
 
 #pragma mark - Instance methods
+
+- (NSURLRequest *)buildUrlRequest
+{
+    CGSize adaptedSize = [self getAdaptedSize];
+    
+    NSURL *url = [NSURL URLWithString:[Helper getImageWithUrl:self.imageUrl size:adaptedSize]];
+    
+    NSURLRequestCachePolicy cachePolicy = LibraryCachePolicy;
+    
+    AFNetworkReachabilityStatus networkStatus = [APIClient sharedConnection].reachabilityManager.networkReachabilityStatus;
+    if ((networkStatus == AFNetworkReachabilityStatusUnknown)
+        || (networkStatus == AFNetworkReachabilityStatusNotReachable)) {
+        
+        cachePolicy = NSURLRequestReturnCacheDataDontLoad;
+    }
+    
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url
+                                                cachePolicy:LibraryCachePolicy
+                                            timeoutInterval:TimeoutInterval];
+    
+    return urlRequest;
+}
 
 - (NSMutableArray *)allPanels
 {
@@ -96,11 +128,31 @@
 
 - (void)deleteAllPanels
 {
-    for (Panel *panel in allPanels) {
-        [[ImageStore sharedStore] deleteImagesForKey:panel.imageUrl];
-    }
-    
     [self.allPanels removeAllObjects];
+}
+
+- (UIImage *)coverImage
+{
+    NSURLRequest *urlRequest = [self buildUrlRequest];
+    UIImage *image = [[UIImageView sharedImageCache] cachedImageForRequest:urlRequest];
+    
+    return image;
+}
+
+
+#pragma mark - Getters/setters
+
+- (BOOL)isFailed
+{
+    return _failed;
+}
+
+- (BOOL)hasCoverImage
+{
+    NSURLRequest *urlRequest = [self buildUrlRequest];
+    UIImage *image = [[UIImageView sharedImageCache] cachedImageForRequest:urlRequest];
+    
+    return (image != nil);
 }
 
 @end

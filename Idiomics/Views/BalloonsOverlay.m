@@ -52,27 +52,27 @@
             [overlays addObject:fov];
             
             [balloonsEdited addObject:@NO];
-            CGRect balloonRect = [balloon rect];
+            CGRect balloonRect = balloon.rect;
             
             UITextView *balloonTextView = [[UITextView alloc] initWithFrame:balloonRect];
             [self addSubview:balloonTextView];
             
-            [balloonTextView setTextAlignment:NSTextAlignmentCenter];
-            [balloonTextView setFont:[Fonts komikaDisplayForSize:balloonRect.size.height * 0.6]];
+            balloonTextView.textAlignment = NSTextAlignmentCenter;
+            balloonTextView.font = [Fonts komikaDisplayForSize:balloonRect.size.height * 0.6];
             [balloonTextView updateTextFontSize];
-            [balloonTextView setTextColor:[Colors oldPaperBlack]];
-            [balloonTextView setTintColor:[Colors oldPaperBlack]];
-            [balloonTextView setBackgroundColor:[Colors clear]];
-            [balloonTextView setDelegate:self];
-            [balloonTextView setUserInteractionEnabled:NO];
-            [balloonTextView setAutocorrectionType:UITextAutocorrectionTypeNo];
-            [balloonTextView.textContainer setLineBreakMode:NSLineBreakByWordWrapping];
-            [balloonTextView setScrollEnabled:NO];
+            balloonTextView.textColor = [Colors oldPaperBlack];
+            balloonTextView.tintColor = [Colors oldPaperBlack];
+            balloonTextView.backgroundColor = [Colors clear];
+            balloonTextView.delegate = self;
+            balloonTextView.userInteractionEnabled = NO;
+            balloonTextView.autocorrectionType = UITextAutocorrectionTypeNo;
+            balloonTextView.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
+            balloonTextView.scrollEnabled = NO;
 
             UIBezierPath *aPath = [UIBezierPath bezierPathWithRect:balloon.boundsRect];
             [aPath appendPath:fov.polyPath];
 
-            //[[balloonTextView textContainer] setExclusionPaths:@[aPath]];
+            //balloonTextView.textContainer.exclusionPaths = @[aPath];
             [speechBalloons addObject:balloonTextView];
         }];
     }
@@ -87,7 +87,7 @@
 {
     _navigationView = navigationView;
     
-    if (![speechBalloons count]) {
+    if (!speechBalloons.count) {
         panelEdited = YES;
     }
     
@@ -146,7 +146,7 @@
     
     [speechBalloons enumerateObjectsUsingBlock:^(UITextView *balloon, NSUInteger idx, BOOL *stop) {
         
-        if (CGRectContainsPoint([balloon frame], location)) { //A balloon tapped
+        if (CGRectContainsPoint(balloon.frame, location)) { //A balloon tapped
             focus = idx;
             
             if (self.focus == idx) { //Current balloon with focus
@@ -166,7 +166,7 @@
         if (self.focus != -1) { //during editing
             
             if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
-                [[self.navigationView cancel] sendActionsForControlEvents:UIControlEventTouchUpInside];
+                [self.navigationView.cancel sendActionsForControlEvents:UIControlEventTouchUpInside];
             } else {
                 [self updateVisibilityWithNewFocus:-1];
             }
@@ -176,7 +176,7 @@
                 [self.navigationView toggleVisibilityWithEdited:panelEdited];
                 
             } else { //outside
-                [[self.navigationView cancel] sendActionsForControlEvents:UIControlEventTouchUpInside];
+                [self.navigationView.cancel sendActionsForControlEvents:UIControlEventTouchUpInside];
             }
         }
     }
@@ -188,8 +188,8 @@
 - (void)textViewDidChange:(UITextView *)textView
 {
     NSRange selectedRange = textView.selectedRange;
-    textView.text = [textView.text uppercaseString];
-    [textView setSelectedRange:selectedRange];
+    textView.text = textView.text.uppercaseString;
+    textView.selectedRange = selectedRange;
     
     [textView updateTextFontSize];
     

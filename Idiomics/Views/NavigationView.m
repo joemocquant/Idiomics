@@ -23,7 +23,7 @@
         [_cancel setImage:[UIImage imageNamed:@"close.png"] forState:UIControlStateNormal];
         [self addSubview:_cancel];
         
-        [_cancel setTranslatesAutoresizingMaskIntoConstraints:NO];
+        _cancel.translatesAutoresizingMaskIntoConstraints = NO;
         [_cancel constrainToSize:buttonSize];
         [_cancel pinEdges:JRTViewPinLeftEdge | JRTViewPinBottomEdge toSameEdgesOfView:self];
         
@@ -31,7 +31,7 @@
         [_send setImage:[UIImage imageNamed:@"send.png"] forState:UIControlStateNormal];
         [self addSubview:_send];
         
-        [_send setTranslatesAutoresizingMaskIntoConstraints:NO];
+        _send.translatesAutoresizingMaskIntoConstraints = NO;
         [_send constrainToSize:buttonSize];
         [_send pinEdges:JRTViewPinRightEdge | JRTViewPinBottomEdge toSameEdgesOfView:self];
     }
@@ -44,10 +44,10 @@
     [UIView animateWithDuration:NavigationControlDuration animations:^{
         
         if (self.alpha) {
-            [super setAlpha:0.0];
+            super.alpha = 0.0;
         } else {
             if (edited) {
-                [super setAlpha:1.0];
+                super.alpha = 1.0;
             }
         }
     }];

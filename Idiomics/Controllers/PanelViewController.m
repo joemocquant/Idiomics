@@ -11,7 +11,6 @@
 #import "Panel.h"
 #import "Balloon.h"
 #import "BalloonsOverlay.h"
-#import "ImageStore.h"
 #import "NavigationView.h"
 #import "DAKeyboardControl.h"
 #import "MMSViewController.h"
@@ -44,71 +43,71 @@
     
     if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
         
-        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-        CGRect screen = [[UIScreen mainScreen] bounds];
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+        CGRect screen = [UIScreen mainScreen].bounds;
         
         if (UIInterfaceOrientationIsPortrait(orientation)) {
-            //[self.view setFrame:CGRectMake(0, 0, CGRectGetWidth(screen), CGRectGetHeight(screen))];
+            //self.view.frame = CGRectMake(0, 0, CGRectGetWidth(screen), CGRectGetHeight(screen));
         } else {
-            [self.view setFrame:CGRectMake(0, 0, CGRectGetHeight(screen), CGRectGetWidth(screen))];
+            self.view.frame = CGRectMake(0, 0, CGRectGetHeight(screen), CGRectGetWidth(screen));
         }
     }
     
-    [self.view setBackgroundColor:[panel.averageColor colorWithAlphaComponent:AlphaBackground]];
+    self.view.backgroundColor = [panel.averageColor colorWithAlphaComponent:AlphaBackground];
     
     panelScrollView = [UIScrollView new];
-    [panelScrollView setDelegate:self];
-    [panelScrollView setShowsHorizontalScrollIndicator:NO];
-    [panelScrollView setShowsVerticalScrollIndicator:NO];
+    panelScrollView.delegate = self;
+    panelScrollView.showsHorizontalScrollIndicator = NO;
+    panelScrollView.showsVerticalScrollIndicator = NO;
     
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                 action:@selector(panelScrollViewTappedTwice:)];
-    [doubleTap setNumberOfTapsRequired:2];
-    [doubleTap setNumberOfTouchesRequired:1];
+    doubleTap.numberOfTapsRequired = 2;
+    doubleTap.numberOfTouchesRequired = 1;
     
     [panelScrollView addGestureRecognizer:doubleTap];
-    [panelScrollView setUserInteractionEnabled:YES];
+    panelScrollView.userInteractionEnabled = YES;
     
     [self panelScrollViewSetFrameBeforeRotation:NO];
     
     [self.view addSubview:panelScrollView];
     
-    UIImage *image = [[[ImageStore sharedStore] panelFullSizeImageForKey:panel.imageUrl] copy];
+    UIImage *image = [panel fullSizeImage];
 
     panelView = [UIView new];
-    [panelView setBackgroundColor:[Colors clear]];
+    panelView.backgroundColor = [Colors clear];
     
     CGSize contentSize = CGSizeMake(image.size.width + 2 * Gutter, image.size.height + 2 * Gutter);
-    [panelView setFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)];
-    [panelView setCenter:panelScrollView.center];
+    panelView.frame = CGRectMake(0, 0, contentSize.width, contentSize.height);
+    panelView.center = panelScrollView.center;
     
-    [[panelView layer] setShadowColor:[[Colors white] CGColor]];
-    [[panelView layer] setShadowOpacity:1.0];
-    [[panelView layer] setShadowOffset:CGSizeZero];
-    [[panelView layer] setShadowRadius:0.8];
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:CGRectMake(-2,
-                                                                           -2,
-                                                                           contentSize.width + 2 + 2,
-                                                                           contentSize.height + 2 + 2)];
-    [[panelView layer] setShadowPath:[shadowPath CGPath]];
+    panelView.layer.shadowColor = [Colors white].CGColor;
+    panelView.layer.shadowOpacity = GutterOpacity;
+    panelView.layer.shadowOffset = CGSizeZero;
+    panelView.layer.shadowRadius = GutterRadius;
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:CGRectMake(-GutterShadowOffset,
+                                                                           -GutterShadowOffset,
+                                                                           contentSize.width + 2 * GutterShadowOffset,
+                                                                           contentSize.height + 2 * GutterShadowOffset)];
+    panelView.layer.shadowPath = shadowPath.CGPath;
     
-    [panelScrollView setContentSize:contentSize];
+    panelScrollView.contentSize = contentSize;
     [panelScrollView addSubview:panelView];
     
     panelImageView = [[UIImageView alloc] initWithImage:image];
-    [panelImageView setContentScaleFactor:2];
-    [panelImageView setFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
-    [panelImageView setCenter:CGPointMake(contentSize.width / 2, contentSize.height / 2)];
+    panelImageView.contentScaleFactor = 2;
+    panelImageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+    panelImageView.center = CGPointMake(contentSize.width / 2, contentSize.height / 2);
     [panelView addSubview:panelImageView];
     
     balloonsOverlay = [[BalloonsOverlay alloc] initWithPanel:panel];
-    [balloonsOverlay setFrame:panelImageView.frame];
+    balloonsOverlay.frame = panelImageView.frame;
     [panelView addSubview:balloonsOverlay];
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:balloonsOverlay
                                                                                 action:@selector(balloonsOverlayTappedOnce:)];
-    [singleTap setNumberOfTapsRequired:1];
-    [singleTap setNumberOfTouchesRequired:1];
+    singleTap.numberOfTapsRequired = 1;
+    singleTap.numberOfTouchesRequired = 1;
     [panelScrollView addGestureRecognizer:singleTap];
     
     [self setupNavigationView];
@@ -121,13 +120,13 @@
 {
     NavigationView *navigationView = [NavigationView new];
     
-    [[navigationView cancel] addTarget:self action:@selector(back)
-                      forControlEvents:UIControlEventTouchUpInside];
-    [[navigationView send] addTarget:self action:@selector(sendMessage)
+    [navigationView.cancel addTarget:self action:@selector(back)
                     forControlEvents:UIControlEventTouchUpInside];
+    [navigationView.send addTarget:self action:@selector(sendMessage)
+                  forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:navigationView];
-    [navigationView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    navigationView.translatesAutoresizingMaskIntoConstraints = NO;
     [navigationView pinEdges:JRTViewPinLeftEdge | JRTViewPinRightEdge toSameEdgesOfView:self.view];
     navigationViewConstraint = [navigationView pinAttribute:NSLayoutAttributeBottom
                                                 toAttribute:NSLayoutAttributeBottom
@@ -135,7 +134,7 @@
     
     [navigationView constrainToHeight:NavigationControlHeight];
     
-    [balloonsOverlay setNavigationView:navigationView];
+    balloonsOverlay.navigationView = navigationView;
 
     @weakify(self)
     [self.view addKeyboardPanningWithFrameBasedActionHandler:nil
@@ -144,10 +143,10 @@
                                                                BOOL closing) {
 
         @strongify(self)
-        CGRect screen = [[UIScreen mainScreen] bounds];
+        CGRect screen = [UIScreen mainScreen].bounds;
                                     
         if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
-            UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+            UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
                                         
             if (UIInterfaceOrientationIsPortrait(orientation)) {
                 self->keyboardOffset = CGRectGetHeight(screen) - keyboardFrameInView.origin.y;
@@ -202,9 +201,9 @@
 - (void)panelScrollViewTappedTwice:(UIGestureRecognizer *)gestureRecognizer
 {
     [UIView animateWithDuration:ZoomDuration animations:^{
-        if ([panelScrollView zoomScale] < screenScale) {
+        if (panelScrollView.zoomScale < screenScale) {
             [panelScrollView setZoomScale:screenScale animated:YES];
-        } else if ([panelScrollView zoomScale] == screenScale) {
+        } else if (panelScrollView.zoomScale == screenScale) {
                 [panelScrollView setZoomScale:screenScale * ZoomScaleFactor animated:YES];
             } else {
                 [panelScrollView setZoomScale:panelScrollView.minimumZoomScale animated:YES];
@@ -230,7 +229,7 @@
     CGFloat keyboardHeight;
     if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
         
-        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
         
         if (UIInterfaceOrientationIsPortrait(orientation)) {
             keyboardHeight = CGRectGetHeight(keyboardBounds);
@@ -276,8 +275,8 @@
 
         [self centerScrollViewContentsBeforeRotation:YES];
         
-        [panelScrollView setContentSize:CGSizeMake(panelImageView.frame.size.width + 2 * Gutter,
-                                                   panelImageView.frame.size.height + 2 * Gutter)];
+        panelScrollView.contentSize = CGSizeMake(panelImageView.frame.size.width + 2 * Gutter,
+                                                 panelImageView.frame.size.height + 2 * Gutter);
         
         [self updateScalesWithContentSize:panelScrollView.contentSize];
         
@@ -309,14 +308,14 @@
 
 - (void)panelScrollViewSetFrameBeforeRotation:(BOOL)beforeRotation
 {
-    CGRect screen = [[UIScreen mainScreen] bounds];
+    CGRect screen = [UIScreen mainScreen].bounds;
     
     CGFloat screenWidth;
     CGFloat screenHeight;
     
     if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
         
-        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
         
         if (UIInterfaceOrientationIsPortrait(orientation)) {
             screenWidth = CGRectGetWidth(screen);
@@ -337,12 +336,12 @@
     }
     
     if (keyboardOffset) {
-        [panelScrollView setFrame:CGRectMake(0,
-                                             0,
-                                             screenWidth,
-                                             screenHeight - keyboardOffset)];
+        panelScrollView.frame = CGRectMake(0,
+                                           0,
+                                           screenWidth,
+                                           screenHeight - keyboardOffset);
     } else {
-        [panelScrollView setFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
+        panelScrollView.frame = CGRectMake(0, 0, screenWidth, screenHeight);
     }
 }
 
@@ -382,7 +381,7 @@
 
         if (keyboardIsPoppingUp) {
 
-            if ([panelScrollView zoomScale] < screenScale) {
+            if (panelScrollView.zoomScale < screenScale) {
                 [panelScrollView setZoomScale:screenScale animated:YES];
             } else {
                 [panelScrollView setZoomScale:panelScrollView.zoomScale animated:YES];
@@ -403,7 +402,7 @@
 
 - (void)focusOnBalloon
 {
-    CGRect balloon = [panel.balloons[balloonsOverlay.focus] boundsRect];
+    CGRect balloon = ((Balloon *)panel.balloons[balloonsOverlay.focus]).boundsRect;
     CGRect balloonInView = [self.view convertRect:balloon fromView:panelImageView];
     
     CGFloat y = balloonInView.origin.y + balloonInView.size.height;
@@ -449,8 +448,8 @@
         minScale = screenScale * ScaleFactor;
     }
     
-    [panelScrollView setMinimumZoomScale:minScale];
-    [panelScrollView setMaximumZoomScale:minScale * MaxZoomScaleFactor];
+    panelScrollView.minimumZoomScale = minScale;
+    panelScrollView.maximumZoomScale = minScale * MaxZoomScaleFactor;
 }
 
 - (void)back
@@ -463,7 +462,7 @@
         
     } else {
 
-        id tracker = [[GAI sharedInstance] defaultTracker];
+        id tracker = [GAI sharedInstance].defaultTracker;
         [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                               action:@"panel_edition_cancel"
                                                                label:panelId
@@ -530,15 +529,15 @@
 
 - (void)messageSentAnimation
 {
-    id tracker = [[GAI sharedInstance] defaultTracker];
+    id tracker = [GAI sharedInstance].defaultTracker;
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                           action:@"message_send_success"
                                                            label:panelId
                                                            value:@([balloonsOverlay charactersCount])] build]];
     
     [UIView animateWithDuration:TransitionDuration * 2 animations:^{
-        [panelView setAlpha:0];
-        [panelView setCenter:CGPointMake(self.view.center.x, -panelView.center.y)];
+        panelView.alpha = 0;
+        panelView.center = CGPointMake(self.view.center.x, -panelView.center.y);
         
     } completion:^(BOOL finished) {
         [self.view removeKeyboardControl];

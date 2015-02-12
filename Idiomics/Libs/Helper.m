@@ -46,7 +46,7 @@
     CGFloat scaleFactor = 1;
     
     if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
-        scaleFactor = [[UIScreen mainScreen] scale];
+        scaleFactor = [UIScreen mainScreen].scale;
     }
     
     NSString *imageProxyServerUrl = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"ImageProxy-Server-URL"];

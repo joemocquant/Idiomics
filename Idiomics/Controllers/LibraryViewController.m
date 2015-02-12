@@ -11,7 +11,6 @@
 #import "APIClient.h"
 #import "Helper.h"
 #import "Colors.h"
-#import "ImageStore.h"
 #import "Universe.h"
 #import "UniverseStore.h"
 #import "UniverseViewCell.h"
@@ -33,21 +32,21 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self.navigationController setNavigationBarHidden:YES];
+    self.navigationController.navigationBarHidden = YES;
  
     libraryOperations = [LibraryOperations new];
-    [libraryOperations setDelegate:self];
+    libraryOperations.delegate = self;
     
     tv = [UITableView new];
-    [tv setDelegate:self];
-    [tv setDataSource:self];
-    [tv setShowsVerticalScrollIndicator:NO];
-    [tv setBackgroundColor:[Colors black]];
-    [tv setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    [tv registerClass:[UniverseViewCell class] forCellReuseIdentifier:LibraryCellId];
+    tv.delegate = self;
+    tv.dataSource = self;
+    tv.showsVerticalScrollIndicator = NO;
+    tv.backgroundColor = [Colors black];
+    tv.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [tv registerClass:UniverseViewCell.class forCellReuseIdentifier:LibraryCellId];
     
     [self.view addSubview:tv];
-    [tv setTranslatesAutoresizingMaskIntoConstraints:NO];
+    tv.translatesAutoresizingMaskIntoConstraints = NO;
     [tv pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
     
     [self loadAllUniverses];
@@ -59,7 +58,7 @@
     
     NSIndexPath *selectedIndexPath = [tv indexPathForSelectedRow];
     UniverseViewCell *cell = (UniverseViewCell *)[tv cellForRowAtIndexPath:selectedIndexPath];
-    [cell.mashupView setAlpha:MashupAlpha];
+    cell.mashupView.alpha = MashupAlpha;
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,7 +73,7 @@
 - (void)loadAllUniverses
 {
     SuccessHandler successHandler = ^(NSURLSessionDataTask *operation, id responseObject) {
-        switch (((NSHTTPURLResponse *)[operation response]).statusCode) {
+        switch (((NSHTTPURLResponse *)operation.response).statusCode) {
                 
             case 200:
                 //OK
@@ -97,7 +96,7 @@
     };
     
     ErrorHandler errorHandler = ^(NSURLSessionDataTask *operation, id responseObject) {
-        switch (((NSHTTPURLResponse *)[operation response]).statusCode) {
+        switch (((NSHTTPURLResponse *)operation.response).statusCode) {
                 
             case 404:
                 [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"IDIOMICS_ERROR", @"Idiomics" , nil)
@@ -120,7 +119,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[[UniverseStore sharedStore] allUniverses] count];
+    return [[UniverseStore sharedStore] allUniverses].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -132,13 +131,13 @@
     }
     
     Universe *universe = [[UniverseStore sharedStore] universeAtIndex:indexPath.row];
-    [cell.contentView setBackgroundColor:universe.averageColor];
-    [cell.mashupView setImage:nil];
+    cell.contentView.backgroundColor = universe.averageColor;
+    cell.mashupView.image = nil;
     
-    if ([universe hasCoverImage]) {
+    if (universe.hasCoverImage) {
         
         cell.mashupView.alpha = 0;
-        [cell.mashupView setImage:[[ImageStore sharedStore] universeImageForKey:universe.imageUrl]];
+        cell.mashupView.image = [universe coverImage];
         
         float millisecondsDelay = (arc4random() % 700) / 2000.0f;
 
@@ -148,7 +147,7 @@
             }];
         });
 
-    } else if ([universe isFailed]) {
+    } else if (universe.isFailed) {
         
         
     } else {
@@ -165,13 +164,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGRect screen = [[UIScreen mainScreen] bounds];
+    CGRect screen = [UIScreen mainScreen].bounds;
     
     if ([Helper isIPhoneDevice]) {
         return CGRectGetHeight(screen) / kRowsiPhonePortrait;
     } else {
         
-        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
 
         if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
             
@@ -197,7 +196,7 @@
     
     [[UniverseStore sharedStore] setCurrentUniverse:[[UniverseStore sharedStore] universeAtIndex:indexPath.row]];
     
-    id tracker = [[GAI sharedInstance] defaultTracker];
+    id tracker = [GAI sharedInstance].defaultTracker;
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                           action:@"universe_selection"
                                                            label:[UniverseStore sharedStore].currentUniverse.universeId

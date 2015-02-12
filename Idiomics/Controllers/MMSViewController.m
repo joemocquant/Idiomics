@@ -19,14 +19,13 @@
 
 - (instancetype)initWithPanel:(Panel *)p
                    imagePanel:(UIImage *)imagePanel
-
 {
     self = [super init];
     
     if (self) {
         
         panel = p;
-        [self setMessageComposeDelegate:self];
+        self.messageComposeDelegate = self;
         NSData *data = UIImageJPEGRepresentation(imagePanel, 1.0);
         [self addAttachmentData:data  typeIdentifier:@"public.data" filename:@"name.jpg"];
     }
@@ -46,7 +45,7 @@
     
     trackingIntervalStart = [NSDate date];
     
-    id tracker = [[GAI sharedInstance] defaultTracker];
+    id tracker = [GAI sharedInstance].defaultTracker;
     
     [tracker set:kGAIScreenName value:@"message_send"];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
@@ -56,9 +55,9 @@
 {
     [super viewWillDisappear:animated];
     
-    NSInteger elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
+    NSInteger elapsed = trackingIntervalStart.timeIntervalSinceNow * -1 * 1000;
     
-    id tracker = [[GAI sharedInstance] defaultTracker];
+    id tracker = [GAI sharedInstance].defaultTracker;
     [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_time_spent"
                                                          interval:@(elapsed)
                                                              name:@"message_send"
@@ -82,7 +81,7 @@
     switch (result) {
         case MessageComposeResultCancelled:
         {
-            id tracker = [[GAI sharedInstance] defaultTracker];
+            id tracker = [GAI sharedInstance].defaultTracker;
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                                   action:@"message_cancel"
                                                                    label:panel.panelId
@@ -93,7 +92,7 @@
         }
         case MessageComposeResultFailed:
         {
-            id tracker = [[GAI sharedInstance] defaultTracker];
+            id tracker = [GAI sharedInstance].defaultTracker;
             [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                                   action:@"message_send_error"
                                                                    label:panel.panelId

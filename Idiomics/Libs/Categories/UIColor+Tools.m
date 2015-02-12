@@ -24,9 +24,9 @@
     [scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&junk];
     [scanner scanUpToCharactersFromSet:[NSCharacterSet punctuationCharacterSet] intoString:&blue];
     
-    return [UIColor colorWithRed:red.intValue/255.0
-                           green:green.intValue/255.0
-                            blue:blue.intValue/255.0
+    return [UIColor colorWithRed:red.intValue / 255.0
+                           green:green.intValue / 255.0
+                            blue:blue.intValue / 255.0
                            alpha:1.0];
 }
 
@@ -45,8 +45,8 @@
 - (UIColor *)darkenColorWithPercentOfOriginal:(CGFloat)amount
 {
     float percentage = amount / 100.0; //keep x% of original color
-    long   totalComponents = CGColorGetNumberOfComponents(self.CGColor);
-    bool  isGreyscale = totalComponents == 2 ? YES : NO;
+    long totalComponents = CGColorGetNumberOfComponents(self.CGColor);
+    bool isGreyscale = totalComponents == 2 ? YES : NO;
     
     CGFloat* oldComponents = (CGFloat *)CGColorGetComponents(self.CGColor);
     CGFloat newComponents[4];

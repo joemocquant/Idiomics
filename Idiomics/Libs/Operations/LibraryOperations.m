@@ -9,9 +9,7 @@
 #import "LibraryOperations.h"
 #import "Universe.h"
 #import "UniverseStore.h"
-#import "ImageStore.h"
-#import "Helper.h"
-#import "APIClient.h"
+#import <UIImageView+AFNetworking.h>
 
 @implementation LibraryOperations
 
@@ -33,65 +31,42 @@
 }
 
 
-#pragma mark - Private methods
-
-- (CGSize)getAdaptedSize
-{
-    CGFloat height;
-    
-    CGRect screen = [[UIScreen mainScreen] bounds];
-    
-    if ([Helper isIPhoneDevice]) {
-        height = screen.size.height / kRowsiPhonePortrait;
-    } else {
-        height = MAX(screen.size.height / kRowsiPadPortrait,
-                     screen.size.width / kRowsiPadPortrait);
-    }
-    
-    return CGSizeMake(roundf(height * kMashupRatio),
-                      roundf(height));
-}
-
-- (NSURLRequest *)buildUrlRequestForUniverse:(Universe *)universe
-{
-    CGSize adaptedSize = [self getAdaptedSize];
-    
-    NSURL *url = [NSURL URLWithString:[Helper getImageWithUrl:universe.imageUrl size:adaptedSize]];
-    
-    NSURLRequestCachePolicy cachePolicy = LibraryCachePolicy;
-    
-    AFNetworkReachabilityStatus networkStatus = [[[APIClient sharedConnection] reachabilityManager] networkReachabilityStatus];
-    if ((networkStatus == AFNetworkReachabilityStatusUnknown)
-        || (networkStatus == AFNetworkReachabilityStatusNotReachable)) {
-        
-        cachePolicy = NSURLRequestReturnCacheDataDontLoad;
-    }
-    
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url
-                                                cachePolicy:LibraryCachePolicy
-                                            timeoutInterval:TimeoutInterval];
-    
-    return urlRequest;
-}
-
-
 #pragma mark - Instance methods
 
 - (void)startOperationsForUniverse:(Universe *)universe atIndexPath:(NSIndexPath *)indexPath
 {
     if (![universe hasCoverImage]) {
 
-        if ((![universeCoverDownloadsInProgress.allKeys containsObject:indexPath])
-            && (![universe hasCoverImage])) {
+        NSURLRequest *request = [universe buildUrlRequest];
+        NSCachedURLResponse *cachedURLResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:request];
+        
+        if (cachedURLResponse) {
             
-            NSURLRequest *urlRequest = [self buildUrlRequestForUniverse:universe];
-            UniverseCoverDownloader *ucd = [[UniverseCoverDownloader alloc] initWithUniverse:universe
-                                                                                 atIndexPath:indexPath
-                                                                                    delegate:self
-                                                                                  urlRequest:urlRequest];
+            UIImage *image = [UIImage imageWithData:cachedURLResponse.data scale:[UIScreen mainScreen].scale];
+            [[UIImageView sharedImageCache] cacheImage:image forRequest:request];
             
-            [universeCoverDownloadsInProgress setObject:ucd forKey:indexPath];
-            [universeCoverDownloadsQueue addOperation:ucd];
+#ifdef __DEBUG__
+            NSLog(@"Accessing cached resource (cover task %ld)", (long)indexPath.item);
+#endif
+
+            [(NSObject *)self.delegate performSelectorOnMainThread:@selector(reloadRowsAtIndexPaths:)
+                                                        withObject:[NSArray arrayWithObject:indexPath]
+                                                     waitUntilDone:NO];
+            
+        } else {
+        
+            if ((![universeCoverDownloadsInProgress.allKeys containsObject:indexPath])
+                && (!universe.hasCoverImage)) {
+            
+                NSURLRequest *urlRequest = [universe buildUrlRequest];
+                UniverseCoverDownloader *ucd = [[UniverseCoverDownloader alloc] initWithUniverse:universe
+                                                                                     atIndexPath:indexPath
+                                                                                        delegate:self
+                                                                                      urlRequest:urlRequest];
+            
+                [universeCoverDownloadsInProgress setObject:ucd forKey:indexPath];
+                [universeCoverDownloadsQueue addOperation:ucd];
+            }
         }
     }
 }
@@ -131,13 +106,13 @@
 
 - (void)suspendAllOperations
 {
-    [universeCoverDownloadsQueue setSuspended:YES];
+    universeCoverDownloadsQueue.suspended = YES;
 }
 
 
 - (void)resumeAllOperations
 {
-    [universeCoverDownloadsQueue setSuspended:NO];
+    universeCoverDownloadsQueue.suspended = NO;
 }
 
 
@@ -151,9 +126,6 @@
 
 - (void)universeCoverDownloaderDidFinish:(UniverseCoverDownloader *)downloader
 {
-    [[ImageStore sharedStore] addUniverseImage:downloader.downloadedImage
-                                        forKey:downloader.universe.imageUrl];
-    
     [self.delegate reloadRowsAtIndexPaths:[NSArray arrayWithObject:downloader.indexPath]];
     [universeCoverDownloadsInProgress removeObjectForKey:downloader.indexPath];
     
