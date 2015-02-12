@@ -25,11 +25,11 @@
     
     trackingIntervalStart = [NSDate date];
     
-    if ([self isKindOfClass:LibraryViewController.class]) {
+    if ([self isKindOfClass:[LibraryViewController class]]) {
         self.screenName = @"library";
-    } else if ([self isKindOfClass:UniverseViewController.class]) {
+    } else if ([self isKindOfClass:[UniverseViewController class]]) {
         self.screenName = @"universe";
-    } else if ([self isKindOfClass:PanelViewController.class]) {
+    } else if ([self isKindOfClass:[PanelViewController class]]) {
         self.screenName = @"panel_edition";
     }
 }
@@ -38,8 +38,8 @@
 {
     [super viewWillDisappear:animated];
     
-    NSInteger elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
-    id tracker = [[GAI sharedInstance] defaultTracker];
+    NSInteger elapsed = trackingIntervalStart.timeIntervalSinceNow * -1 * 1000;
+    id tracker = [GAI sharedInstance].defaultTracker;
     
     if ([self isKindOfClass:LibraryViewController.class]) {
         [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_time_spent"

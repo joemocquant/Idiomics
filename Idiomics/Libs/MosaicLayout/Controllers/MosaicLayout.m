@@ -24,8 +24,8 @@
     
     NSUInteger i = 0;
     for (NSNumber *heightValue in columnHeights) {
-        if ([heightValue floatValue] < shortestValue) {
-            shortestValue = [heightValue floatValue];
+        if (heightValue.floatValue < shortestValue) {
+            shortestValue = heightValue.floatValue;
             retVal = i;
         }
         i++;
@@ -40,8 +40,8 @@
     
     NSUInteger i = 0;
     for (NSNumber *heightValue in columnHeights) {
-        if ([heightValue floatValue] > longestValue) {
-            longestValue = [heightValue floatValue];
+        if (heightValue.floatValue > longestValue) {
+            longestValue = heightValue.floatValue;
             retVal = i;
         }
         i++;
@@ -54,10 +54,10 @@
     BOOL retVal = NO;
 
     if (columnIndex < self.columnsQuantity - 1) {
-        float firstColumnHeight = [columnHeights[columnIndex] floatValue];
-        float secondColumnHeight = [columnHeights[columnIndex + 1] floatValue];
+        NSNumber *firstColumnHeight = columnHeights[columnIndex];
+        NSNumber *secondColumnHeight = columnHeights[columnIndex + 1];
 
-        retVal = firstColumnHeight == secondColumnHeight;
+        retVal = [firstColumnHeight isEqualToNumber:secondColumnHeight];
     }
     
     return retVal;
@@ -90,7 +90,7 @@
     }
     
     //  Get all the items available for the section
-    NSUInteger itemsCount = [[self collectionView] numberOfItemsInSection:0];
+    NSUInteger itemsCount = [self.collectionView numberOfItemsInSection:0];
     itemsAttributes = [NSMutableArray arrayWithCapacity:itemsCount];
     
     for (NSUInteger i = 0; i < itemsCount; i++) {
@@ -133,7 +133,7 @@
         [itemsAttributes addObject:attributes];
         
         Panel *panel = [[[UniverseStore sharedStore] currentUniverse] panelAtIndex:indexPath.item];
-        [panel setThumbSize:CGSizeMake(itemWidth, itemWidth * (1 + RelativeHeightRandomModifier))];
+        panel.thumbSize = CGSizeMake(itemWidth, itemWidth * (1 + RelativeHeightRandomModifier));
     }
 }
 
@@ -141,7 +141,7 @@
 {
     NSPredicate *filterPredicate = [NSPredicate predicateWithBlock:^BOOL(UICollectionViewLayoutAttributes * evaluatedObject,
                                                                          NSDictionary *bindings) {
-        BOOL predicateRetVal = CGRectIntersectsRect(rect, [evaluatedObject frame]);
+        BOOL predicateRetVal = CGRectIntersectsRect(rect, evaluatedObject.frame);
         
         return predicateRetVal;
     }];

@@ -35,7 +35,7 @@
         _imageView.clipsToBounds = YES;
         [self addSubview:_imageView];
         
-        [_imageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        _imageView.translatesAutoresizingMaskIntoConstraints = NO;
         [_imageView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self inset:kImageViewMargin];
         
         //Added black stroke

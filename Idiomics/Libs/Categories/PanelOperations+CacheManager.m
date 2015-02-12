@@ -28,7 +28,7 @@
 {
     CGFloat width;
     
-    CGRect screen = [[UIScreen mainScreen] bounds];
+    CGRect screen = [UIScreen mainScreen].bounds;
     
     if ([Helper isIPhoneDevice]) {
         width = screen.size.width / kColumnsiPhonePortrait;
@@ -75,7 +75,7 @@
     
     [resolutions enumerateObjectsUsingBlock:^(NSValue *resolution, NSUInteger idx, BOOL *stop) {
         
-        CGSize res = [resolution CGSizeValue];
+        CGSize res = resolution.CGSizeValue;
         CGFloat area = res.width * res.height;
         
         if (desiredArea == area) {

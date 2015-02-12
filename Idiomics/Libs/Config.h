@@ -46,6 +46,9 @@ extern const CGFloat MaxZoomScaleFactor;
 extern const NSTimeInterval ZoomDuration;
 extern const CGFloat ZoomScaleFactor;
 extern const CGFloat Gutter;
+extern const CGFloat GutterOpacity;
+extern const CGFloat GutterRadius;
+extern const CGFloat GutterShadowOffset;
 extern const CGFloat ScaleFactor;
 extern const CGFloat KeyboardMoveDuration;
 extern const CGFloat ScrollToBottomDuration;
@@ -55,6 +58,7 @@ extern const CGFloat NavigationControlDuration;
 extern const CGFloat MenuMoveDuration;
 extern const CGFloat WatermarkOffset;
 extern const CGFloat WatermarkAlpha;
+
 
 //Transformers
 extern NSString *const ColorTransformerName;

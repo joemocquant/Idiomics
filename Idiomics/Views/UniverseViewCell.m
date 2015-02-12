@@ -17,7 +17,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
-        [self setSelectionStyle:UITableViewCellSelectionStyleNone];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setupMashupScrollView];
         [self setupSeparators];
     }
@@ -28,43 +28,43 @@
 - (void)setupMashupScrollView
 {
     UIScrollView *mashupScrollView = [[UIScrollView alloc] init];
-    [mashupScrollView setDelegate:self];
-    [mashupScrollView setShowsHorizontalScrollIndicator:NO];
+    mashupScrollView.delegate = self;
+    mashupScrollView.showsHorizontalScrollIndicator = NO;
     
     [self.contentView addSubview:mashupScrollView];
-    [mashupScrollView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    mashupScrollView.translatesAutoresizingMaskIntoConstraints = NO;
     [mashupScrollView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.contentView];
     
-    [mashupScrollView setUserInteractionEnabled:NO];
+    mashupScrollView.userInteractionEnabled = NO;
     [self.contentView addGestureRecognizer:mashupScrollView.panGestureRecognizer];
     
     _mashupView = [UIImageView new];
-    [_mashupView setContentMode:UIViewContentModeScaleAspectFill];
+    _mashupView.contentMode = UIViewContentModeScaleAspectFill;
     
     [mashupScrollView addSubview:_mashupView];
-    [_mashupView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    _mashupView.translatesAutoresizingMaskIntoConstraints = NO;
     [_mashupView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:mashupScrollView];
     
-    [_mashupView setAlpha:MashupAlpha];
+    _mashupView.alpha = MashupAlpha;
 }
 
 - (void)setupSeparators
 {
     UIView *separatorTop = [UIView new];
-    [separatorTop setBackgroundColor:[Colors black]];
+    separatorTop.backgroundColor = [Colors black];
     
     [self.contentView addSubview:separatorTop];
-    [separatorTop setTranslatesAutoresizingMaskIntoConstraints:NO];
+    separatorTop.translatesAutoresizingMaskIntoConstraints = NO;
     
     [separatorTop pinEdges:JRTViewPinLeftEdge | JRTViewPinTopEdge | JRTViewPinRightEdge
          toSameEdgesOfView:self.contentView];
     [separatorTop constrainToHeight:SeparatorHeight];
     
     UIView *separatorBottom = [UIView new];
-    [separatorBottom setBackgroundColor:[Colors black]];
+    separatorBottom.backgroundColor = [Colors black];
     
     [self.contentView addSubview:separatorBottom];
-    [separatorBottom setTranslatesAutoresizingMaskIntoConstraints:NO];
+    separatorBottom.translatesAutoresizingMaskIntoConstraints = NO;
     
     [separatorBottom pinEdges:JRTViewPinLeftEdge | JRTViewPinBottomEdge | JRTViewPinRightEdge
             toSameEdgesOfView:self.contentView];
@@ -76,19 +76,19 @@
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    [_mashupView setAlpha:1.0];
+    _mashupView.alpha = 1.0;
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if (!decelerate) {
-        [_mashupView setAlpha:MashupAlpha];
+        _mashupView.alpha = MashupAlpha;
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    [_mashupView setAlpha:MashupAlpha];
+    _mashupView.alpha = MashupAlpha;
 }
 
 @end

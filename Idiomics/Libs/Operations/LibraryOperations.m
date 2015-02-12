@@ -42,7 +42,7 @@
         
         if (cachedURLResponse) {
             
-            UIImage *image = [UIImage imageWithData:cachedURLResponse.data scale:[[UIScreen mainScreen] scale]];
+            UIImage *image = [UIImage imageWithData:cachedURLResponse.data scale:[UIScreen mainScreen].scale];
             [[UIImageView sharedImageCache] cacheImage:image forRequest:request];
             
 #ifdef __DEBUG__
@@ -56,7 +56,7 @@
         } else {
         
             if ((![universeCoverDownloadsInProgress.allKeys containsObject:indexPath])
-                && (![universe hasCoverImage])) {
+                && (!universe.hasCoverImage)) {
             
                 NSURLRequest *urlRequest = [universe buildUrlRequest];
                 UniverseCoverDownloader *ucd = [[UniverseCoverDownloader alloc] initWithUniverse:universe
@@ -106,13 +106,13 @@
 
 - (void)suspendAllOperations
 {
-    [universeCoverDownloadsQueue setSuspended:YES];
+    universeCoverDownloadsQueue.suspended = YES;
 }
 
 
 - (void)resumeAllOperations
 {
-    [universeCoverDownloadsQueue setSuspended:NO];
+    universeCoverDownloadsQueue.suspended = NO;
 }
 
 

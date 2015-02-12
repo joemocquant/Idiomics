@@ -33,25 +33,25 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
-    [self.navigationController setNavigationBarHidden:YES];
+    self.navigationController.navigationBarHidden = YES;
     
     panelOperations = [PanelOperations new];
-    [panelOperations setDelegate:self];
+    panelOperations.delegate = self;
     
     mosaicDatas = [NSMutableArray new];
 
     cv = [[UICollectionView alloc] initWithFrame:CGRectZero
                             collectionViewLayout:[MosaicLayout new]];
     
-    [(MosaicLayout *)cv.collectionViewLayout setDelegate:self];
-    [cv setShowsVerticalScrollIndicator:NO];
-    [cv setDelegate:self];
-    [cv setDataSource:self];
+    ((MosaicLayout *)cv.collectionViewLayout).delegate = self;
+    cv.showsVerticalScrollIndicator = NO;
+    cv.delegate = self;
+    cv.dataSource = self;
     [cv registerClass:[MosaicCell class] forCellWithReuseIdentifier:CellIdentifier];
     
     [self.view addSubview:cv];
     
-    [cv setTranslatesAutoresizingMaskIntoConstraints:NO];
+    cv.translatesAutoresizingMaskIntoConstraints = NO;
     [cv pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
     
     back = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -59,7 +59,7 @@
     [back addTarget:self action:@selector(backToLibrary) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:back];
     
-    [back setTranslatesAutoresizingMaskIntoConstraints:NO];
+    back.translatesAutoresizingMaskIntoConstraints = NO;
     
     [back constrainToSize:CGSizeMake(NavigationControlHeight, NavigationControlHeight)];
     [back pinEdges:JRTViewPinLeftEdge | JRTViewPinTopEdge toSameEdgesOfView:self.view];
@@ -116,7 +116,7 @@
 - (void)loadAllPannels
 {
     SuccessHandler successHandler = ^(NSURLSessionDataTask *operation, id responseObject) {
-        switch (((NSHTTPURLResponse *)[operation response]).statusCode) {
+        switch (((NSHTTPURLResponse *)operation.response).statusCode) {
                 
             case 200:
                 //OK
@@ -128,7 +128,7 @@
                     
                     Panel *p = [MTLJSONAdapter modelOfClass:Panel.class fromJSONDictionary:panel error:nil];
                     [mosaicDatas addObject:[[MosaicData alloc] initWithPanel:p]];
-                    [[[UniverseStore sharedStore] currentUniverse] addPanel:p];
+                    [[UniverseStore sharedStore].currentUniverse addPanel:p];
                 };
                 
                 [cv reloadData];
@@ -141,7 +141,7 @@
     };
     
     ErrorHandler errorHandler = ^(NSURLSessionDataTask *operation, id responseObject) {
-        switch (((NSHTTPURLResponse *)[operation response]).statusCode) {
+        switch (((NSHTTPURLResponse *)operation.response).statusCode) {
                 
             case 404:
                 [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"IDIOMICS_ERROR", @"Idiomics" , nil)
@@ -155,7 +155,7 @@
         }
     };
     
-    [[APIClient sharedConnection] getAllPanelForUniverse:[[UniverseStore sharedStore] currentUniverse].universeId
+    [[APIClient sharedConnection] getAllPanelForUniverse:[UniverseStore sharedStore].currentUniverse.universeId
                                           successHandler:successHandler
                                             errorHandler:errorHandler];
 }
@@ -222,7 +222,7 @@
         retVal = kColumnsiPhonePortrait;
     } else {
         
-        UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+        UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
         
         if (UIInterfaceOrientationIsLandscape(orientation)) {
             retVal = kColumnsiPadLandscape;
@@ -243,11 +243,11 @@
     MosaicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier
                                                                  forIndexPath:indexPath];
 
-    Panel *panel = [[[UniverseStore sharedStore] currentUniverse] panelAtIndex:indexPath.item];
+    Panel *panel = [[UniverseStore sharedStore].currentUniverse panelAtIndex:indexPath.item];
     
     cell.backgroundColor = panel.averageColor;
     
-    if ([panel hasThumbSizeImage]) {
+    if (panel.hasThumbSizeImage) {
 
 #ifdef __DEBUG__
         NSLog(@"Accessing in memorry resource (resized task %ld)", (long)indexPath.item);
@@ -255,7 +255,7 @@
         
         cell.mosaicData = [mosaicDatas objectAtIndex:indexPath.item];
 
-    } else if ([panel isFailed]) {
+    } else if (panel.isFailed) {
 
         //better to remove the panel than putting a placeholder
         //add to implement a remove method on PanelStore and call it here
@@ -272,7 +272,7 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
-    return [[[[UniverseStore sharedStore] currentUniverse] allPanels] count];
+    return [[UniverseStore sharedStore].currentUniverse allPanels].count;
 }
 
 
@@ -280,9 +280,9 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    Panel *panel = [[[UniverseStore sharedStore] currentUniverse] panelAtIndex:indexPath.item];
+    Panel *panel = [[UniverseStore sharedStore].currentUniverse panelAtIndex:indexPath.item];
     
-    id tracker = [[GAI sharedInstance] defaultTracker];
+    id tracker = [GAI sharedInstance].defaultTracker;
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                           action:@"panel_selection"
                                                            label:panel.panelId
@@ -296,8 +296,8 @@
     
     PanelViewController *pvc = [[PanelViewController alloc] initWithPanel:panel];
 
-    [pvc setTransitioningDelegate:self];
-    [pvc setModalPresentationStyle:UIModalPresentationCustom];
+    pvc.transitioningDelegate = self;
+    pvc.modalPresentationStyle = UIModalPresentationCustom;
     
     [self presentViewController:pvc animated:YES completion:nil];
 }
@@ -318,18 +318,18 @@
         if (currentOffset.y > 0 && ABS(distance) > DistanceMin) {
             [UIView animateWithDuration:MenuMoveDuration animations:^{
                 
-                CGPoint center = [back center];
+                CGPoint center = back.center;
                 if (distance < 0) { // scrolling up
                     
                     if (center.y < 0) {
-                        [back setAlpha:1.0];
-                        [back setCenter:CGPointMake(center.x, center.y + NavigationControlHeight)];
+                        back.alpha = 1.0;
+                        back.center = CGPointMake(center.x, center.y + NavigationControlHeight);
                     }
                 } else { // scrolling down
                     
                     if (center.y > 0) {
-                        [back setAlpha:0];
-                        [back setCenter:CGPointMake(center.x, center.y - NavigationControlHeight)];
+                        back.alpha = 0;
+                        back.center = CGPointMake(center.x, center.y - NavigationControlHeight);
                     }
                 }
             }];

@@ -37,17 +37,17 @@
     
     // Optional: automatically send uncaught exceptions to Google Analytics.
     [GAI sharedInstance].trackUncaughtExceptions = YES;
-    
+
     // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
     [GAI sharedInstance].dispatchInterval = 20;
     
     // Optional: set Logger to VERBOSE for debug information.
-    [[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelNone];
+    [GAI sharedInstance].logger.logLevel = kGAILogLevelNone;
     
     // Initialize tracker. Replace with your tracking ID.
     [[GAI sharedInstance] trackerWithTrackingId:@"UA-57412675-1"];
     
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     // Override point for customization after application launch.
     
     LibraryViewController *lvc = [LibraryViewController new];
@@ -55,7 +55,7 @@
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:lvc];
     navController.interactivePopGestureRecognizer.enabled = NO;
     
-    [[self window] setRootViewController:navController];
+    self.window.rootViewController = navController;
     [self.window makeKeyAndVisible];
 
     return YES;

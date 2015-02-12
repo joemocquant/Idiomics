@@ -51,7 +51,7 @@
             [[UIImageView sharedImageCache] cacheImage:responseObject forRequest:urlRequest];
             
             NSInteger elapsed = [trackingIntervalStart timeIntervalSinceNow] * -1 * 1000;
-            id tracker = [[GAI sharedInstance] defaultTracker];
+            id tracker = [GAI sharedInstance].defaultTracker;
             [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_loading_time"
                                                                  interval:@(elapsed)
                                                                      name:@"fullsize_panel"

@@ -41,14 +41,14 @@
 + (NSValueTransformer *)dimensionsJSONTransformer
 {
     return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSArray *dimensions) {
-        return [NSValue valueWithCGSize:CGSizeMake(roundf([dimensions[0] floatValue] / [[UIScreen mainScreen] scale]),
-                                                   roundf([dimensions[1] floatValue] / [[UIScreen mainScreen] scale]))];
+        return [NSValue valueWithCGSize:CGSizeMake(roundf([dimensions[0] floatValue] / [UIScreen mainScreen].scale),
+                                                   roundf([dimensions[1] floatValue] / [UIScreen mainScreen].scale))];
         
     } reverseBlock:^id(NSValue *dimensions) {
         
         CGSize size = [dimensions CGSizeValue];
-        return @[@(size.width * [[UIScreen mainScreen] scale]),
-                 @(size.height * [[UIScreen mainScreen] scale])];
+        return @[@(size.width * [UIScreen mainScreen].scale),
+                 @(size.height * [UIScreen mainScreen].scale)];
     }];
 }
 
@@ -71,7 +71,7 @@
     
     NSURLRequestCachePolicy cachePolicy = PanelCachePolicy;
     
-    AFNetworkReachabilityStatus networkStatus = [[[APIClient sharedConnection] reachabilityManager] networkReachabilityStatus];
+    AFNetworkReachabilityStatus networkStatus = [APIClient sharedConnection].reachabilityManager.networkReachabilityStatus;
     if ((networkStatus == AFNetworkReachabilityStatusUnknown)
         || (networkStatus == AFNetworkReachabilityStatusNotReachable)) {
         

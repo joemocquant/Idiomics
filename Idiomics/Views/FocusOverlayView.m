@@ -23,7 +23,7 @@
 
     if (self) {
 
-        [self setFrame:[balloon boundsRect]];
+        self.frame = balloon.boundsRect;
         
         _polyPath = [UIBezierPath bezierPath];
         for (int i = 0; i < balloon.polygon.count; i++) {
@@ -32,7 +32,7 @@
             
             if (i == 0) {
                 [self.polyPath moveToPoint:CGPointMake(point.x - balloon.boundsRect.origin.x,
-                                                  point.y - balloon.boundsRect.origin.y)];
+                                                       point.y - balloon.boundsRect.origin.y)];
             } else {
                 [_polyPath addLineToPoint:CGPointMake(point.x - balloon.boundsRect.origin.x,
                                                       point.y - balloon.boundsRect.origin.y)];
@@ -41,19 +41,19 @@
         [_polyPath closePath];
         
         CAShapeLayer *shapeLayer = [CAShapeLayer new];
-        [shapeLayer setPath:_polyPath.CGPath];
+        shapeLayer.path = _polyPath.CGPath;
         
-        PulsingHaloLayer *halo = [PulsingHaloLayer layer];
+        PulsingHaloLayer *halo = PulsingHaloLayer.layer;
 
-        [halo setPosition:CGPointMake([balloon rect].origin.x - balloon.boundsRect.origin.x + [balloon rect].size.width / 2,
-                                      [balloon rect].origin.y - balloon.boundsRect.origin.y + [balloon rect].size.height / 2)];
+        [halo setPosition:CGPointMake(balloon.rect.origin.x - balloon.boundsRect.origin.x + balloon.rect.size.width / 2,
+                                      balloon.rect.origin.y - balloon.boundsRect.origin.y + balloon.rect.size.height / 2)];
         
-        [halo setBackgroundColor:[balloon.backgroundColor darkenColorWithPercentOfOriginal:PercentColorKept].CGColor];
+        halo.backgroundColor = [balloon.backgroundColor darkenColorWithPercentOfOriginal:PercentColorKept].CGColor;
         
-        [halo setKeyTimeForHalfOpacity:KeyTimeForHalfOpacity];
-        [halo setRadius:[self calculRadius]];
+        halo.keyTimeForHalfOpacity = KeyTimeForHalfOpacity;
+        halo.radius = [self calculRadius];
         [self.layer addSublayer:halo];
-        [self.layer setMask:shapeLayer];
+        self.layer.mask = shapeLayer;
     }
 
     return self;
@@ -65,7 +65,7 @@
 - (void)setAlpha:(CGFloat)alpha
 {
     [UIView animateWithDuration:NavigationControlDuration animations:^{
-        [super setAlpha:alpha];
+        super.alpha = alpha;
     }];
 }
 

@@ -88,7 +88,7 @@
         if (cachedURLResponse) {
             
             NSURLRequest *request = [panel buildUrlRequestForDimensions:panel.thumbSize];
-            UIImage *image = [UIImage imageWithData:cachedURLResponse.data scale:[[UIScreen mainScreen] scale]];
+            UIImage *image = [UIImage imageWithData:cachedURLResponse.data scale:[UIScreen mainScreen].scale];
             [[UIImageView sharedImageCache] cacheImage:image forRequest:request];
             
 #ifdef __DEBUG__
@@ -111,7 +111,7 @@
         if (cachedURLResponse) {
 
             NSURLRequest *request = [panel buildUrlRequestForDimensions:panel.dimensions];
-            UIImage *image = [UIImage imageWithData:cachedURLResponse.data scale:[[UIScreen mainScreen] scale]];
+            UIImage *image = [UIImage imageWithData:cachedURLResponse.data scale:[UIScreen mainScreen].scale];
             [[UIImageView sharedImageCache] cacheImage:image forRequest:request];
             
 #ifdef __DEBUG__
@@ -128,8 +128,8 @@
 {
     NSSet *visibleItems = [NSSet setWithArray:indexPaths];
     
-    NSMutableSet *pendingOperations = [NSMutableSet setWithArray:[resizedPanelDownloadsInProgress allKeys]];
-    [pendingOperations addObjectsFromArray:[fullSizePanelDownloadsInProgress allKeys]];
+    NSMutableSet *pendingOperations = [NSMutableSet setWithArray:resizedPanelDownloadsInProgress.allKeys];
+    [pendingOperations addObjectsFromArray:fullSizePanelDownloadsInProgress.allKeys];
     
     NSMutableSet *toBeCancelled = [pendingOperations mutableCopy];
     NSMutableSet *toBeStarted = [visibleItems mutableCopy];
@@ -157,21 +157,21 @@
     
     for (NSIndexPath *indexPath in toBeStarted) {
         
-        Panel *panel = [[[UniverseStore sharedStore] currentUniverse] panelAtIndex:indexPath.item];
+        Panel *panel = [[UniverseStore sharedStore].currentUniverse panelAtIndex:indexPath.item];
         [self startOperationsForPanel:panel atIndexPath:indexPath];
     }
 }
 
 - (void)suspendAllOperations
 {
-    [resizedPanelDownloadsQueue setSuspended:YES];
-    [fullSizePanelDownloadsQueue setSuspended:YES];
+    resizedPanelDownloadsQueue.suspended = YES;
+    fullSizePanelDownloadsQueue.suspended = YES;
 }
 
 - (void)resumeAllOperations
 {
-    [resizedPanelDownloadsQueue setSuspended:NO];
-    [fullSizePanelDownloadsQueue setSuspended:NO];
+    resizedPanelDownloadsQueue.suspended = NO;
+    fullSizePanelDownloadsQueue.suspended = NO;
 }
 
 

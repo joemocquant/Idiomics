@@ -48,15 +48,15 @@
         
         [self.requestSerializer setCachePolicy:APICachePolicy];
         [self setResponseSerializer:[AFJSONResponseSerializer serializer]];
-        [[self responseSerializer] setAcceptableContentTypes:[NSSet setWithObjects:@"application/json",
-                                                                                   @"text/plain", nil]];
+        [self responseSerializer].acceptableContentTypes = [NSSet setWithObjects:@"application/json",
+                                                                                 @"text/plain", nil];
         [self startMonitoringAPI];
 
-        [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+        [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
         
 #ifdef __DEBUG__
         [[AFNetworkActivityLogger sharedLogger] startLogging];
-        [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
+        [AFNetworkActivityLogger sharedLogger].level = AFLoggerLevelDebug;
 #endif
         
     }
@@ -73,13 +73,13 @@
         switch (status) {
             case AFNetworkReachabilityStatusUnknown:
             case AFNetworkReachabilityStatusNotReachable:
-                [self.requestSerializer setCachePolicy:NSURLRequestReturnCacheDataDontLoad];
+                self.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataDontLoad;
                 break;
                 
             case AFNetworkReachabilityStatusReachableViaWiFi:
             case AFNetworkReachabilityStatusReachableViaWWAN:
             default:
-                [self.requestSerializer setCachePolicy:APICachePolicy];
+                self.requestSerializer.cachePolicy = APICachePolicy;
                 break;
         }
         
@@ -104,7 +104,7 @@
     NSString *uri;
     NSDictionary *params = nil;
     
-    if ([[self.baseURL absoluteString] isEqualToString:@"http://10.0.0.9:5984"]) {
+    if ([self.baseURL.absoluteString isEqualToString:@"http://10.0.0.9:5984"]) {
         uri = @"content/_design/panels/_view/by_book";
         
         params = [NSDictionary dictionaryWithObjectsAndKeys:

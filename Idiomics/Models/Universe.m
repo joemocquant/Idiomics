@@ -69,7 +69,7 @@
 {
     CGFloat height;
     
-    CGRect screen = [[UIScreen mainScreen] bounds];
+    CGRect screen = [UIScreen mainScreen].bounds;
     
     if ([Helper isIPhoneDevice]) {
         height = screen.size.height / kRowsiPhonePortrait;
@@ -93,7 +93,7 @@
     
     NSURLRequestCachePolicy cachePolicy = LibraryCachePolicy;
     
-    AFNetworkReachabilityStatus networkStatus = [[[APIClient sharedConnection] reachabilityManager] networkReachabilityStatus];
+    AFNetworkReachabilityStatus networkStatus = [APIClient sharedConnection].reachabilityManager.networkReachabilityStatus;
     if ((networkStatus == AFNetworkReachabilityStatusUnknown)
         || (networkStatus == AFNetworkReachabilityStatusNotReachable)) {
         

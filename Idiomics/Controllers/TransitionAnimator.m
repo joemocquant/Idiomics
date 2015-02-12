@@ -60,8 +60,8 @@
         
         [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
             
-            [panelView setAlpha:0];
-            [panelView setFrame:point];
+            panelView.alpha = 0;
+            panelView.frame = point;
             
         } completion:^(BOOL finished) {
             [transitionContext completeTransition:YES];

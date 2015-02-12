@@ -63,8 +63,8 @@
         
         NSMutableArray *res = [NSMutableArray array];
         for(NSArray *p in polygon) {
-            CGPoint point = CGPointMake(roundf([p[0] floatValue] / [[UIScreen mainScreen] scale]),
-                                        roundf([p[1] floatValue] / [[UIScreen mainScreen] scale]));
+            CGPoint point = CGPointMake(roundf([p[0] floatValue] / [UIScreen mainScreen].scale),
+                                        roundf([p[1] floatValue] / [UIScreen mainScreen].scale));
             [res addObject:[NSValue valueWithCGPoint:point]];
         }
         
@@ -74,8 +74,8 @@
 
         NSMutableArray *res = [NSMutableArray array];
         for (NSValue *point in polygon) {
-            NSArray *p = [NSArray arrayWithObjects:@([point CGPointValue].x * [[UIScreen mainScreen] scale]),
-                                                   @([point CGPointValue].y * [[UIScreen mainScreen] scale]),
+            NSArray *p = [NSArray arrayWithObjects:@([point CGPointValue].x * [UIScreen mainScreen].scale),
+                                                   @([point CGPointValue].y * [UIScreen mainScreen].scale),
                                                    nil];
             [res addObject:p];
         }
