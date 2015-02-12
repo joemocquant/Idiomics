@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 #import "LibraryViewController.h"
 #import "MMSViewController.h"
 #import <UIImageView+AFNetworking.h>
@@ -22,6 +24,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 
+    [Fabric with:@[CrashlyticsKit]];
+    
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:NSURLCacheMemoryCapacity
                                                             diskCapacity:NSURLCacheDiskCapacity
                                                                 diskPath:nil];
