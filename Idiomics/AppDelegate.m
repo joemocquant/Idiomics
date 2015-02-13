@@ -13,6 +13,7 @@
 #import "MMSViewController.h"
 #import <UIImageView+AFNetworking.h>
 #import <GAI.h>
+#import <Instabug/Instabug.h>
 
 @interface AppDelegate ()
 
@@ -25,6 +26,12 @@
     // Override point for customization after application launch.
 
     [Fabric with:@[CrashlyticsKit]];
+    
+    [Instabug startWithToken:@"3497581ae54156126c459f285585a7dd"
+               captureSource:IBGCaptureSourceUIKit
+             invocationEvent:IBGInvocationEventScreenshot];
+    
+    [Instabug setDefaultInvocationMode:IBGInvocationModeBugReporter];
     
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:NSURLCacheMemoryCapacity
                                                             diskCapacity:NSURLCacheDiskCapacity
@@ -53,7 +60,7 @@
     LibraryViewController *lvc = [LibraryViewController new];
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:lvc];
-    navController.interactivePopGestureRecognizer.enabled = NO;
+    //navController.interactivePopGestureRecognizer.enabled = NO;
     
     self.window.rootViewController = navController;
     [self.window makeKeyAndVisible];
