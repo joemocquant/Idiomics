@@ -33,12 +33,6 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -77,7 +71,6 @@
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller
                  didFinishWithResult:(MessageComposeResult)result
 {
-    
     switch (result) {
         case MessageComposeResultCancelled:
         {
@@ -93,7 +86,7 @@
         case MessageComposeResultFailed:
         {
             id tracker = [GAI sharedInstance].defaultTracker;
-            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_error"
                                                                   action:@"message_send_error"
                                                                    label:panel.panelId
                                                                    value:nil] build]];

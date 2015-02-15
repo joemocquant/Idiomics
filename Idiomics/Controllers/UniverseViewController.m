@@ -28,6 +28,18 @@
 
 #pragma mark - Lifecycle
 
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self) {
+        
+        itemId = [UniverseStore sharedStore].currentUniverse.universeId;
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

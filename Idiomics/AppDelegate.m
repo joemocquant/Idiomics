@@ -31,6 +31,7 @@
                captureSource:IBGCaptureSourceUIKit
              invocationEvent:IBGInvocationEventScreenshot];
     
+    [Instabug setIsTrackingCrashes:NO];
     [Instabug setDefaultInvocationMode:IBGInvocationModeBugReporter];
     
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:NSURLCacheMemoryCapacity

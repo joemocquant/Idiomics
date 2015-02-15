@@ -216,7 +216,7 @@
     
     id tracker = [GAI sharedInstance].defaultTracker;
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
-                                                          action:@"universe_selection"
+                                                          action:@"collection_selection"
                                                            label:[UniverseStore sharedStore].currentUniverse.universeId
                                                            value:nil] build]];
     

@@ -14,6 +14,9 @@
 #import "NavigationView.h"
 #import "DAKeyboardControl.h"
 #import "MMSViewController.h"
+#import "ShareViewController.h"
+#import "UIImage+Tools.h"
+#import "Helper.h"
 #import <extobjc.h>
 #import <UIView+AutoLayout.h>
 #import <GAI.h>
@@ -30,7 +33,7 @@
     
     if (self) {
         panel = p;
-        panelId = panel.panelId;
+        itemId = panel.panelId;
     }
     
     return self;
@@ -101,14 +104,19 @@
     [panelView addSubview:panelImageView];
     
     balloonsOverlay = [[BalloonsOverlay alloc] initWithPanel:panel];
-    balloonsOverlay.frame = panelImageView.frame;
-    [panelView addSubview:balloonsOverlay];
+    balloonsOverlay.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+    [panelImageView addSubview:balloonsOverlay];
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:balloonsOverlay
                                                                                 action:@selector(balloonsOverlayTappedOnce:)];
     singleTap.numberOfTapsRequired = 1;
     singleTap.numberOfTouchesRequired = 1;
     [panelScrollView addGestureRecognizer:singleTap];
+ 
+    share = [UIButton buttonWithType:UIButtonTypeCustom];
+    [share setImage:[UIImage imageNamed:@"share.png"] forState:UIControlStateNormal];
+    [share addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:share];
     
     [self setupNavigationView];
     [self updateScalesWithContentSize:panelScrollView.contentSize];
@@ -118,7 +126,12 @@
 
 - (void)setupNavigationView
 {
+    share.translatesAutoresizingMaskIntoConstraints = NO;
+    [share constrainToSize:CGSizeMake(NavigationControlHeight, NavigationControlHeight)];
+    [share pinEdges:JRTViewPinRightEdge | JRTViewPinTopEdge toSameEdgesOfView:self.view];
+    
     NavigationView *navigationView = [NavigationView new];
+    navigationView.share = share;
     
     [navigationView.cancel addTarget:self action:@selector(back)
                     forControlEvents:UIControlEventTouchUpInside];
@@ -285,6 +298,7 @@
         } else {
             [panelScrollView setZoomScale:panelScrollView.zoomScale animated:YES];
         }
+        
      } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 
      }];
@@ -465,7 +479,7 @@
         id tracker = [GAI sharedInstance].defaultTracker;
         [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                               action:@"panel_edition_cancel"
-                                                               label:panelId
+                                                               label:panel.panelId
                                                                value:nil] build]];
         
         [self.view removeKeyboardControl];
@@ -473,7 +487,7 @@
     }
 }
 
-- (void)sendMessage
+- (UIImage *)preparePanel
 {
     if (balloonsOverlay.focus != -1) {
         
@@ -483,39 +497,26 @@
         [balloonsOverlay updateVisibilityWithNewFocus:-1];
     }
     
-    CGSize imageSize = CGSizeMake(panelImageView.image.size.width + 2 * Gutter,
-                                  panelImageView.image.size.height + 2 * Gutter);
-    
-    CGSize newSize;
-    CGFloat ratio  = 4.0/3;
-    
-    if ((imageSize.width / imageSize.height) > ratio) {
-        newSize = CGSizeMake(imageSize.width, imageSize.width / ratio);
-    } else if ((imageSize.height / imageSize.width) > ratio) {
-        newSize = CGSizeMake(imageSize.height / ratio, imageSize.height);
-    } else {
-        newSize = CGSizeMake(imageSize.width, imageSize.height);
-    }
-
-    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0);
-    
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextTranslateCTM(ctx, (newSize.width - imageSize.width) / 2, (newSize.height - imageSize.height) / 2);
-    
-    [panelView drawViewHierarchyInRect:CGRectMake(0, 0, imageSize.width, imageSize.height) afterScreenUpdates:YES];
-    
-    UIImage *watermarkImage = [UIImage imageNamed:@"watermark.png"];
-    [watermarkImage drawInRect:CGRectMake(Gutter + WatermarkOffset,
-                                          imageSize.height - Gutter - watermarkImage.size.height - WatermarkOffset,
-                                          watermarkImage.size.width,
-                                          watermarkImage.size.height)
-                     blendMode:kCGBlendModeNormal
-                         alpha:WatermarkAlpha];
+    UIGraphicsBeginImageContextWithOptions(panelImageView.image.size, NO, 0);
+    [panelImageView drawViewHierarchyInRect:CGRectMake(0,
+                                                       0,
+                                                       panelImageView.image.size.width,
+                                                       panelImageView.image.size.height)
+                         afterScreenUpdates:YES];
     
     UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+
+    return result;
+}
+
+- (void)sendMessage
+{
+    UIImage *preparedPanel = [self preparePanel];
+    UIImage *imagePanel = [[[preparedPanel addWatermark:@"watermark.png"] addGutterSize:Gutter] resizeToRatio:4/3.0];
     
-    mmsvc = [[MMSViewController alloc] initWithPanel:panel imagePanel:result];
+    mmsvc = [[MMSViewController alloc] initWithPanel:panel
+                                          imagePanel:imagePanel];
     
     if ([mmsvc canSendPanel]) {
         
@@ -527,12 +528,41 @@
     }
 }
 
+- (void)share
+{
+    UIImage *preparedPanel = [self preparePanel];
+    UIImage *imagePanel = [[preparedPanel addWatermark:@"watermark.png"] addGutterSize:Gutter];
+    
+    UIActivityViewController *svc = [[ShareViewController alloc] initWithPanel:panel
+                                                                    imagePanel:imagePanel];
+    
+    if ([Helper isIPhoneDevice]) {
+        [self presentViewController:svc animated:YES completion:nil];
+        
+    } else {
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+            
+            UIPopoverController *popup = [[UIPopoverController alloc] initWithContentViewController:svc];
+            [popup presentPopoverFromRect:CGRectMake(self.view.frame.size.width / 2,
+                                                     self.view.frame.size.height / 2,
+                                                     0,
+                                                     0)
+                                   inView:self.view
+                 permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+
+        } else {
+            [self presentViewController:svc animated:YES completion:nil];
+        }
+    }
+}
+
 - (void)messageSentAnimation
 {
     id tracker = [GAI sharedInstance].defaultTracker;
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                           action:@"message_send_success"
-                                                           label:panelId
+                                                           label:panel.panelId
                                                            value:@([balloonsOverlay charactersCount])] build]];
     
     [UIView animateWithDuration:TransitionDuration * 2 animations:^{
