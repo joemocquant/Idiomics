@@ -49,16 +49,6 @@
     [self.view addSubview:tv];
     tv.translatesAutoresizingMaskIntoConstraints = NO;
     [tv pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
-    
-    UIButton *sendFeedback = [UIButton buttonWithType:UIButtonTypeCustom];
-    [sendFeedback setImage:[UIImage imageNamed:@"support.png"] forState:UIControlStateNormal];
-    [sendFeedback addTarget:self action:@selector(sendFeedback) forControlEvents:UIControlEventTouchUpInside];
-    sendFeedback.alpha = 0.8;
-    [self.view addSubview:sendFeedback];
-    
-    sendFeedback.translatesAutoresizingMaskIntoConstraints = NO;
-    [sendFeedback constrainToSize:CGSizeMake(NavigationControlHeight, NavigationControlHeight)];
-    [sendFeedback pinEdges:JRTViewPinLeftEdge | JRTViewPinBottomEdge toSameEdgesOfView:self.view];
 
     [self loadAllUniverses];
 }
@@ -80,13 +70,6 @@
 
 
 #pragma mark - Private methods
-
-- (void)sendFeedback
-{
-//    [Instabug setDefaultInvocationMode:IBGInvocationModeFeedbackSender];
-    [Instabug invokeFeedbackSender];
-//    [Instabug setDefaultInvocationMode:IBGInvocationModeBugReporter];
-}
 
 - (void)loadAllUniverses
 {

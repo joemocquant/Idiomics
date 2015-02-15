@@ -15,7 +15,7 @@
 
 @class Panel;
 
-@interface PanelViewController : TrackingViewController <UIScrollViewDelegate>
+@interface PanelViewController : TrackingViewController <UIScrollViewDelegate, UIPopoverControllerDelegate>
 {
     Panel *panel;
     UIScrollView *panelScrollView;
@@ -29,6 +29,7 @@
     BOOL keyboardIsPoppingUp;
     CGFloat keyboardOffset;
     MMSViewController *mmsvc;
+    UIPopoverController *popupShare;
 }
 
 - (instancetype)initWithPanel:(Panel *)p;

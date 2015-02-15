@@ -285,7 +285,7 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-
+        
         [self centerScrollViewContentsBeforeRotation:YES];
         
         panelScrollView.contentSize = CGSizeMake(panelImageView.frame.size.width + 2 * Gutter,
@@ -300,7 +300,7 @@
         }
         
      } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-
+         
      }];
     
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
@@ -543,12 +543,13 @@
         
         if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
             
-            UIPopoverController *popup = [[UIPopoverController alloc] initWithContentViewController:svc];
-            [popup presentPopoverFromRect:CGRectMake(self.view.frame.size.width / 2,
-                                                     self.view.frame.size.height / 2,
-                                                     0,
-                                                     0)
-                                   inView:self.view
+            popupShare = [[UIPopoverController alloc] initWithContentViewController:svc];
+
+            [popupShare presentPopoverFromRect:CGRectMake(self.view.frame.size.width / 2,
+                                                          self.view.frame.size.height / 2,
+                                                          0,
+                                                          0)
+                                        inView:self.view
                  permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
 
         } else {
