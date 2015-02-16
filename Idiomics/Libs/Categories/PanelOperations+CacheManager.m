@@ -14,7 +14,7 @@
 @implementation PanelOperations (CacheManager)
 
 
-- (CGFloat)getTresholdedResForOriginArea:(CGFloat)originArea
++ (CGFloat)getTresholdedResForOriginArea:(CGFloat)originArea
                              desiredArea:(CGFloat)desiredArea
 {
     if (desiredArea > (ThresholdResolution * originArea)) {
@@ -24,7 +24,7 @@
     return desiredArea;
 }
 
-- (NSArray *)getTresholdedResolutionsForPanel:(Panel *)panel
++ (NSArray *)getTresholdedResolutionsForPanel:(Panel *)panel
 {
     CGFloat width;
     
@@ -48,7 +48,7 @@
         CGSize res = [resolution CGSizeValue];
         CGFloat area = res.width * res.height;
         
-        if ([self getTresholdedResForOriginArea:originArea desiredArea:area] == originArea) {
+        if ([PanelOperations getTresholdedResForOriginArea:originArea desiredArea:area] == originArea) {
             return [NSValue valueWithCGSize:CGSizeMake(panel.dimensions.width, panel.dimensions.height)];
         }
         return resolution;
@@ -58,15 +58,15 @@
     return [NSArray arrayWithArray:[[[NSOrderedSet alloc] initWithArray:[NSArray arrayWithArray:resolutions]] array]];
 }
 
-- (NSCachedURLResponse *)getCachedURLResponseForPanel:(Panel *)panel
++ (NSCachedURLResponse *)getCachedURLResponseForPanel:(Panel *)panel
                                        withDesiredRes:(CGSize)desiredRes
 {
-    NSArray *resolutions = [self getTresholdedResolutionsForPanel:panel];
+    NSArray *resolutions = [PanelOperations getTresholdedResolutionsForPanel:panel];
     
     CGFloat originArea = panel.dimensions.width * panel.dimensions.height;
     CGFloat desiredArea = desiredRes.width * desiredRes.height;
     
-    if ([self getTresholdedResForOriginArea:originArea desiredArea:desiredArea] == originArea) {
+    if ([PanelOperations getTresholdedResForOriginArea:originArea desiredArea:desiredArea] == originArea) {
         desiredRes = CGSizeMake(panel.dimensions.width, panel.dimensions.height);
         desiredArea = originArea;
     }

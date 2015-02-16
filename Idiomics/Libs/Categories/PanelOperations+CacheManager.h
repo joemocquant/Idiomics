@@ -10,7 +10,7 @@
 
 @interface PanelOperations (CacheManager)
 
-- (NSCachedURLResponse *)getCachedURLResponseForPanel:(Panel *)panel
++ (NSCachedURLResponse *)getCachedURLResponseForPanel:(Panel *)panel
                                        withDesiredRes:(CGSize)desiredRes;
 
 @end
