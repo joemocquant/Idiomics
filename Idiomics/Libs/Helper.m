@@ -61,10 +61,10 @@
 
 + (BOOL)isIPhoneDevice
 {
-    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         return YES;
     }
-
+    
     return NO;
 }
 

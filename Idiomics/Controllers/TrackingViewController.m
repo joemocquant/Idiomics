@@ -28,7 +28,7 @@
     if ([self isKindOfClass:[LibraryViewController class]]) {
         self.screenName = @"library";
     } else if ([self isKindOfClass:[UniverseViewController class]]) {
-        self.screenName = @"universe";
+        self.screenName = @"collection";
     } else if ([self isKindOfClass:[PanelViewController class]]) {
         self.screenName = @"panel_edition";
     }
@@ -46,17 +46,18 @@
                                                              interval:@(elapsed)
                                                                  name:@"library"
                                                                 label:nil] build]];
+    
     } else if ([self isKindOfClass:UniverseViewController.class]) {
         [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_time_spent"
                                                              interval:@(elapsed)
-                                                                 name:@"universe_browsing"
-                                                                label:nil] build]];
+                                                                 name:@"collection"
+                                                                label:itemId] build]];
         
     } else if ([self isKindOfClass:PanelViewController.class]) {
         [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_time_spent"
                                                              interval:@(elapsed)
                                                                  name:@"panel_edition"
-                                                                label:panelId] build]];
+                                                                label:itemId] build]];
     }
 }
 

@@ -17,6 +17,7 @@
 #import <UIView+AutoLayout.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
+#import <Instabug.h>
 
 @interface LibraryViewController ()
 
@@ -48,7 +49,7 @@
     [self.view addSubview:tv];
     tv.translatesAutoresizingMaskIntoConstraints = NO;
     [tv pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
-    
+
     [self loadAllUniverses];
 }
 
@@ -198,7 +199,7 @@
     
     id tracker = [GAI sharedInstance].defaultTracker;
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
-                                                          action:@"universe_selection"
+                                                          action:@"collection_selection"
                                                            label:[UniverseStore sharedStore].currentUniverse.universeId
                                                            value:nil] build]];
     

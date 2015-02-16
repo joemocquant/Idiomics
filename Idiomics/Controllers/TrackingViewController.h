@@ -11,7 +11,7 @@
 
 @interface TrackingViewController : GAITrackedViewController
 {
-    NSString *panelId; //only for PanelViewController
+    NSString *itemId;
     NSDate *trackingIntervalStart;
 }
 

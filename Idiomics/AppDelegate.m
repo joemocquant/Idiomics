@@ -13,6 +13,8 @@
 #import "MMSViewController.h"
 #import <UIImageView+AFNetworking.h>
 #import <GAI.h>
+#import <Instabug/Instabug.h>
+#import <Parse/Parse.h>
 
 @interface AppDelegate ()
 
@@ -25,6 +27,25 @@
     // Override point for customization after application launch.
 
     [Fabric with:@[CrashlyticsKit]];
+    
+    [Instabug startWithToken:@"3497581ae54156126c459f285585a7dd"
+               captureSource:IBGCaptureSourceUIKit
+             invocationEvent:IBGInvocationEventScreenshot];
+    
+    [Instabug setIsTrackingCrashes:NO];
+    
+    [Parse setApplicationId:@"FQW9xYrzMVm382ChHgZw7Cw60JiCawENF1zNrfZo"
+                  clientKey:@"BbXkgpooMLLLAFVaod9sdZAqHDPk7qbtKDjGgzQ3"];
+    
+    // Register for Push Notitications
+    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                    UIUserNotificationTypeBadge |
+                                                    UIUserNotificationTypeSound);
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+                                                                             categories:nil];
+    [application registerUserNotificationSettings:settings];
+    [application registerForRemoteNotifications];
+
     
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:NSURLCacheMemoryCapacity
                                                             diskCapacity:NSURLCacheDiskCapacity
@@ -53,12 +74,23 @@
     LibraryViewController *lvc = [LibraryViewController new];
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:lvc];
-    navController.interactivePopGestureRecognizer.enabled = NO;
+    //navController.interactivePopGestureRecognizer.enabled = NO;
     
     self.window.rootViewController = navController;
     [self.window makeKeyAndVisible];
 
     return YES;
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    // Store the deviceToken in the current installation and save it to Parse.
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    [currentInstallation saveInBackground];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    //[PFPush handlePush:userInfo];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

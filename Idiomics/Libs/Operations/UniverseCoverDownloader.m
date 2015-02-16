@@ -57,7 +57,7 @@
             [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_loading_time"
                                                                  interval:@(elapsed)
                                                                      name:@"universe_cover"
-                                                                    label:nil] build]];
+                                                                    label:universe.universeId] build]];
             
             [(NSObject *)self.delegate performSelectorOnMainThread:@selector(universeCoverDownloaderDidFinish:)
                                                         withObject:self

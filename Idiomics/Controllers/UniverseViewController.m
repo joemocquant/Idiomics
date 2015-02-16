@@ -28,6 +28,18 @@
 
 #pragma mark - Lifecycle
 
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self) {
+        
+        itemId = [UniverseStore sharedStore].currentUniverse.universeId;
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -48,7 +60,6 @@
     cv.delegate = self;
     cv.dataSource = self;
     [cv registerClass:[MosaicCell class] forCellWithReuseIdentifier:CellIdentifier];
-    
     [self.view addSubview:cv];
     
     cv.translatesAutoresizingMaskIntoConstraints = NO;
@@ -60,7 +71,6 @@
     [self.view addSubview:back];
     
     back.translatesAutoresizingMaskIntoConstraints = NO;
-    
     [back constrainToSize:CGSizeMake(NavigationControlHeight, NavigationControlHeight)];
     [back pinEdges:JRTViewPinLeftEdge | JRTViewPinTopEdge toSameEdgesOfView:self.view];
     

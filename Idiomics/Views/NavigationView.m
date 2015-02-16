@@ -45,9 +45,11 @@
         
         if (self.alpha) {
             super.alpha = 0.0;
+            self.share.alpha = 0.0;
         } else {
             if (edited) {
                 super.alpha = 1.0;
+                self.share.alpha = 1.0;
             }
         }
     }];

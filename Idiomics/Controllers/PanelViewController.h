@@ -15,19 +15,21 @@
 
 @class Panel;
 
-@interface PanelViewController : TrackingViewController <UIScrollViewDelegate>
+@interface PanelViewController : TrackingViewController <UIScrollViewDelegate, UIPopoverControllerDelegate>
 {
     Panel *panel;
     UIScrollView *panelScrollView;
     UIView *panelView;
     UIImageView *panelImageView;
     BalloonsOverlay *balloonsOverlay;
+    UIButton *share;
     
     CGFloat screenScale;
     NSLayoutConstraint *navigationViewConstraint;
     BOOL keyboardIsPoppingUp;
     CGFloat keyboardOffset;
     MMSViewController *mmsvc;
+    UIPopoverController *popupShare;
 }
 
 - (instancetype)initWithPanel:(Panel *)p;

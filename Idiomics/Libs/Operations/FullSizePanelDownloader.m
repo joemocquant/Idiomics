@@ -7,6 +7,7 @@
 //
 
 #import "FullSizePanelDownloader.h"
+#import "Panel.h"
 #import <extobjc.h>
 #import <UIImageView+AFNetworking.h>
 #import <GAI.h>
@@ -55,7 +56,7 @@
             [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_loading_time"
                                                                  interval:@(elapsed)
                                                                      name:@"fullsize_panel"
-                                                                    label:nil] build]];
+                                                                    label:panel.panelId] build]];
             
             [(NSObject *)self.delegate performSelectorOnMainThread:@selector(fullSizePanelDownloaderDidFinish:)
                                                         withObject:self
