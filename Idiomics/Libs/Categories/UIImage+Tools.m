@@ -26,7 +26,7 @@
     
     UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return result;
 }
 

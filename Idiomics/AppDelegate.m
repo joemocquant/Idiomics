@@ -14,6 +14,7 @@
 #import <UIImageView+AFNetworking.h>
 #import <GAI.h>
 #import <Instabug/Instabug.h>
+#import <Parse/Parse.h>
 
 @interface AppDelegate ()
 
@@ -32,6 +33,19 @@
              invocationEvent:IBGInvocationEventScreenshot];
     
     [Instabug setIsTrackingCrashes:NO];
+    
+    [Parse setApplicationId:@"FQW9xYrzMVm382ChHgZw7Cw60JiCawENF1zNrfZo"
+                  clientKey:@"BbXkgpooMLLLAFVaod9sdZAqHDPk7qbtKDjGgzQ3"];
+    
+    // Register for Push Notitications
+    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                    UIUserNotificationTypeBadge |
+                                                    UIUserNotificationTypeSound);
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+                                                                             categories:nil];
+    [application registerUserNotificationSettings:settings];
+    [application registerForRemoteNotifications];
+
     
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:NSURLCacheMemoryCapacity
                                                             diskCapacity:NSURLCacheDiskCapacity
@@ -66,6 +80,17 @@
     [self.window makeKeyAndVisible];
 
     return YES;
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    // Store the deviceToken in the current installation and save it to Parse.
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    [currentInstallation saveInBackground];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    //[PFPush handlePush:userInfo];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

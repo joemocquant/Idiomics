@@ -13,7 +13,7 @@ target :Idiomics do
     pod 'PulsingHalo', :git => 'https://github.com/shu223/PulsingHalo.git'
     pod 'DAKeyboardControl'
     pod 'Instabug'
-
+    pod 'Parse'
 
 end
 
@@ -30,6 +30,6 @@ target :Idiomics_Local do
     pod 'PulsingHalo', :git => 'https://github.com/shu223/PulsingHalo.git'
     pod 'DAKeyboardControl'
     pod 'Instabug'
-
+    pod 'Parse'
 
 end
