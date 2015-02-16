@@ -8,8 +8,8 @@
 //
 
 #import "MosaicLayout.h"
-#import "Universe.h"
-#import "UniverseStore.h"
+#import "Collection.h"
+#import "CollectionStore.h"
 #import "Panel.h"
 
 @implementation MosaicLayout
@@ -132,7 +132,7 @@
         attributes.frame = CGRectMake(xOffset, yOffset, itemWidth, itemHeight);
         [itemsAttributes addObject:attributes];
         
-        Panel *panel = [[[UniverseStore sharedStore] currentUniverse] panelAtIndex:indexPath.item];
+        Panel *panel = [[[CollectionStore sharedStore] currentCollection] panelAtIndex:indexPath.item];
         panel.thumbSize = CGSizeMake(itemWidth, itemWidth * (1 + RelativeHeightRandomModifier));
     }
 }

@@ -1,46 +1,46 @@
 //
-//  UniverseCoverDownloader.m
+//  CollectionCoverDownloader.m
 //  Idiomics
 //
 //  Created by Joe Mocquant on 12/16/14.
 //  Copyright (c) 2014 Idiomics. All rights reserved.
 //
 
-#import "UniverseCoverDownloader.h"
-#import "Universe.h"
+#import "CollectionCoverDownloader.h"
+#import "Collection.h"
 #import "APIClient.h"
 #import <extobjc.h>
 #import <UIImageView+AFNetworking.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
 
-@interface UniverseCoverDownloader ()
+@interface CollectionCoverDownloader ()
 
 @property (nonatomic, readwrite, strong) UIImage *downloadedImage;
 
 @end
 
-@implementation UniverseCoverDownloader
+@implementation CollectionCoverDownloader
 
 
 #pragma mark - Lifecycle
 
-- (id)initWithUniverse:(Universe *)universe
-           atIndexPath:(NSIndexPath *)indexPath
-              delegate:(id<UniverseCoverDownloaderDelegate>)delegate
-            urlRequest:(NSURLRequest *)urlRequest
+- (id)initWithCollection:(Collection *)collection
+             atIndexPath:(NSIndexPath *)indexPath
+                delegate:(id<CollectionCoverDownloaderDelegate>)delegate
+              urlRequest:(NSURLRequest *)urlRequest
 {
     self = [super initWithRequest:urlRequest];
     
     if (self) {
         _delegate = delegate;
         _indexPath = indexPath;
-        _universe = universe;
+        _collection = collection;
         
         [self setResponseSerializer:[AFImageResponseSerializer serializer]];
         
 #ifdef __DEBUG__
-        NSLog(@"Starting universe cover task %ld", (long)self.indexPath.item);
+        NSLog(@"Starting collection cover task %ld", (long)self.indexPath.item);
 #endif
         
         NSDate *trackingIntervalStart = [NSDate date];
@@ -56,10 +56,10 @@
             id tracker = [GAI sharedInstance].defaultTracker;
             [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_loading_time"
                                                                  interval:@(elapsed)
-                                                                     name:@"universe_cover"
-                                                                    label:universe.universeId] build]];
+                                                                     name:@"collection_cover"
+                                                                    label:collection.collectionId] build]];
             
-            [(NSObject *)self.delegate performSelectorOnMainThread:@selector(universeCoverDownloaderDidFinish:)
+            [(NSObject *)self.delegate performSelectorOnMainThread:@selector(collectionCoverDownloaderDidFinish:)
                                                         withObject:self
                                                      waitUntilDone:NO];
             

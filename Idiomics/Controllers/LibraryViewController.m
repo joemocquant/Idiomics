@@ -7,13 +7,13 @@
 //
 
 #import "LibraryViewController.h"
-#import "UniverseViewController.h"
+#import "CollectionViewController.h"
 #import "APIClient.h"
 #import "Helper.h"
 #import "Colors.h"
-#import "Universe.h"
-#import "UniverseStore.h"
-#import "UniverseViewCell.h"
+#import "Collection.h"
+#import "CollectionStore.h"
+#import "CollectionViewCell.h"
 #import <UIView+AutoLayout.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
@@ -44,13 +44,13 @@
     tv.showsVerticalScrollIndicator = NO;
     tv.backgroundColor = [Colors black];
     tv.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [tv registerClass:UniverseViewCell.class forCellReuseIdentifier:LibraryCellId];
+    [tv registerClass:CollectionViewCell.class forCellReuseIdentifier:LibraryCellId];
     
     [self.view addSubview:tv];
     tv.translatesAutoresizingMaskIntoConstraints = NO;
     [tv pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
 
-    [self loadAllUniverses];
+    [self loadAllCollections];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -58,7 +58,7 @@
     [super viewDidDisappear:animated];
     
     NSIndexPath *selectedIndexPath = [tv indexPathForSelectedRow];
-    UniverseViewCell *cell = (UniverseViewCell *)[tv cellForRowAtIndexPath:selectedIndexPath];
+    CollectionViewCell *cell = (CollectionViewCell *)[tv cellForRowAtIndexPath:selectedIndexPath];
     cell.mashupView.alpha = MashupAlpha;
 }
 
@@ -71,7 +71,7 @@
 
 #pragma mark - Private methods
 
-- (void)loadAllUniverses
+- (void)loadAllCollections
 {
     SuccessHandler successHandler = ^(NSURLSessionDataTask *operation, id responseObject) {
         switch (((NSHTTPURLResponse *)operation.response).statusCode) {
@@ -79,12 +79,12 @@
             case 200:
                 //OK
             {
-                NSArray *universes = [[responseObject objectForKey:@"rows"] valueForKey:@"value"];
+                NSArray *collections = [[responseObject objectForKey:@"rows"] valueForKey:@"value"];
                 
-                for (NSDictionary *universe in universes) {
+                for (NSDictionary *collection in collections) {
                     
-                    Universe *u = [MTLJSONAdapter modelOfClass:Universe.class fromJSONDictionary:universe error:nil];
-                    [[UniverseStore sharedStore] addUniverse:u];
+                    Collection *u = [MTLJSONAdapter modelOfClass:Collection.class fromJSONDictionary:collection error:nil];
+                    [[CollectionStore sharedStore] addCollection:u];
                 };
 
                 [tv reloadData];
@@ -111,8 +111,8 @@
         }
     };
     
-    [[APIClient sharedConnection] getAllUniverseWithSuccessHandler:successHandler
-                                                      errorHandler:errorHandler];
+    [[APIClient sharedConnection] getAllCollectionWithSuccessHandler:successHandler
+                                                        errorHandler:errorHandler];
 }
 
 
@@ -120,25 +120,25 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[UniverseStore sharedStore] allUniverses].count;
+    return [[CollectionStore sharedStore] allCollections].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UniverseViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LibraryCellId];
+    CollectionViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LibraryCellId];
 
     if (cell == nil) {
-        cell = [[UniverseViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:LibraryCellId];
+        cell = [[CollectionViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:LibraryCellId];
     }
     
-    Universe *universe = [[UniverseStore sharedStore] universeAtIndex:indexPath.row];
-    cell.contentView.backgroundColor = universe.averageColor;
+    Collection *collection = [[CollectionStore sharedStore] collectionAtIndex:indexPath.row];
+    cell.contentView.backgroundColor = collection.averageColor;
     cell.mashupView.image = nil;
     
-    if (universe.hasCoverImage) {
+    if (collection.hasCoverImage) {
         
         cell.mashupView.alpha = 0;
-        cell.mashupView.image = [universe coverImage];
+        cell.mashupView.image = [collection coverImage];
         
         float millisecondsDelay = (arc4random() % 700) / 2000.0f;
 
@@ -148,12 +148,12 @@
             }];
         });
 
-    } else if (universe.isFailed) {
+    } else if (collection.isFailed) {
         
         
     } else {
         //if (!tv.dragging) {
-            [libraryOperations startOperationsForUniverse:universe atIndexPath:indexPath];
+            [libraryOperations startOperationsForCollection:collection atIndexPath:indexPath];
         //}
     }
     
@@ -192,18 +192,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UniverseViewCell *cell = (UniverseViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    CollectionViewCell *cell = (CollectionViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     [cell.mashupView setAlpha:1.0];
     
-    [[UniverseStore sharedStore] setCurrentUniverse:[[UniverseStore sharedStore] universeAtIndex:indexPath.row]];
+    [[CollectionStore sharedStore] setCurrentCollection:[[CollectionStore sharedStore] collectionAtIndex:indexPath.row]];
     
     id tracker = [GAI sharedInstance].defaultTracker;
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                           action:@"collection_selection"
-                                                           label:[UniverseStore sharedStore].currentUniverse.universeId
+                                                           label:[CollectionStore sharedStore].currentCollection.collectionId
                                                            value:nil] build]];
     
-    UniverseViewController *uvc = [UniverseViewController new];
+    CollectionViewController *uvc = [CollectionViewController new];
 
     [[self navigationController] pushViewController:uvc animated:YES];
 }

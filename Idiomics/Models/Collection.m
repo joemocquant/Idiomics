@@ -1,12 +1,12 @@
 //
-//  Universe.m
+//  Collection.m
 //  Idiomics
 //
 //  Created by Joe Mocquant on 12/14/14.
 //  Copyright (c) 2014 Idiomics. All rights reserved.
 //
 
-#import "Universe.h"
+#import "Collection.h"
 #import "ColorTransformer.h"
 #import "Panel.h"
 #import "Helper.h"
@@ -14,22 +14,22 @@
 #import <UIImageView+AFNetworking.h>
 #import <AFNetworking.h>
 
-@interface Universe ()
+@interface Collection ()
 
-@property (nonatomic, copy, readwrite) NSString *universeId;
+@property (nonatomic, copy, readwrite) NSString *collectionId;
 @property (nonatomic, copy, readwrite) NSString *imageUrl;
 @property (nonatomic, copy, readwrite) UIColor *averageColor;
 
 @end
 
-@implementation Universe
+@implementation Collection
 
 
 #pragma mark - Lifecycle
 
 + (void)initialize
 {
-    if (self == Universe.class) {
+    if (self == Collection.class) {
         ColorTransformer *transformer = [ColorTransformer new];
         [NSValueTransformer setValueTransformer:transformer forName:ColorTransformerName];
     }
@@ -51,7 +51,7 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"universeId": @"_id",
+    return @{@"collectionId": @"_id",
              @"imageUrl": @"cover_url",
              @"averageColor": @"cover_avg_color"
              };

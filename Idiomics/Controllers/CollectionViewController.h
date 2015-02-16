@@ -1,5 +1,5 @@
 //
-//  UniverseViewController.h
+//  CollectionViewController.h
 //  Idiomics
 //
 //  Created by Joe Mocquant on 11/6/14.
@@ -12,13 +12,12 @@
 #import "PanelOperations.h"
 
 @class MosaicCell;
-@class Universe;
 
-@interface UniverseViewController : TrackingViewController <MosaicLayoutDelegate,
-                                                            UICollectionViewDelegate,
-                                                            UICollectionViewDataSource,
-                                                            PanelOperationsDelegate,
-                                                            UIViewControllerTransitioningDelegate>
+@interface CollectionViewController : TrackingViewController <MosaicLayoutDelegate,
+                                                              UICollectionViewDelegate,
+                                                              UICollectionViewDataSource,
+                                                              PanelOperationsDelegate,
+                                                              UIViewControllerTransitioningDelegate>
 {
     PanelOperations *panelOperations;
     

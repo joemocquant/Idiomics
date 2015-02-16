@@ -90,16 +90,16 @@
 
 #pragma mark - Instance methods
 
-- (void)getAllUniverseWithSuccessHandler:(SuccessHandler)successHandler
-                            errorHandler:(ErrorHandler)errorHandler
+- (void)getAllCollectionWithSuccessHandler:(SuccessHandler)successHandler
+                              errorHandler:(ErrorHandler)errorHandler
 {
     NSString *uri = @"content/_design/books/_view/all";
     [self GET:uri parameters:nil success:successHandler failure:errorHandler];
 }
 
-- (void)getAllPanelForUniverse:(NSString *)universeId
-                successHandler:(SuccessHandler)successHandler
-                  errorHandler:(ErrorHandler)errorHandler
+- (void)getAllPanelForCollection:(NSString *)collectionId
+                  successHandler:(SuccessHandler)successHandler
+                    errorHandler:(ErrorHandler)errorHandler
 {
     NSString *uri;
     NSDictionary *params = nil;
@@ -108,10 +108,10 @@
         uri = @"content/_design/panels/_view/by_book";
         
         params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [NSString stringWithFormat:@"\"%@\"", universeId], @"key",
+                                [NSString stringWithFormat:@"\"%@\"", collectionId], @"key",
                                 nil];
     } else {
-        uri = [NSString stringWithFormat:@"content/_design/panels/_view/by_book/%@", universeId];
+        uri = [NSString stringWithFormat:@"content/_design/panels/_view/by_book/%@", collectionId];
     }
     
     [self GET:uri parameters:params success:successHandler failure:errorHandler];

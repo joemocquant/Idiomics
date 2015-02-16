@@ -1,5 +1,5 @@
 //
-//  Universe.h
+//  Collection.h
 //  Idiomics
 //
 //  Created by Joe Mocquant on 12/14/14.
@@ -11,12 +11,12 @@
 
 @class Panel;
 
-@interface Universe : MTLModel <MTLJSONSerializing>
+@interface Collection : MTLModel <MTLJSONSerializing>
 {
     NSMutableArray *allPanels;
 }
 
-@property (nonatomic, copy, readonly) NSString *universeId;
+@property (nonatomic, copy, readonly) NSString *collectionId;
 @property (nonatomic, copy, readonly) NSString *imageUrl;
 @property (nonatomic, copy, readonly) UIColor *averageColor;
 @property (nonatomic, assign, readonly) BOOL hasCoverImage;

@@ -1,16 +1,16 @@
 //
-//  UniverseViewCell.m
+//  CollectionViewCell.m
 //  Idiomics
 //
 //  Created by Joe Mocquant on 12/15/14.
 //  Copyright (c) 2014 Idiomics. All rights reserved.
 //
 
-#import "UniverseViewCell.h"
+#import "CollectionViewCell.h"
 #import "Colors.h"
 #import <UIView+AutoLayout.h>
 
-@implementation UniverseViewCell
+@implementation CollectionViewCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

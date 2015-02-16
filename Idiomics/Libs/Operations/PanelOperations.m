@@ -9,8 +9,8 @@
 #import "PanelOperations.h"
 #import "PanelOperations+CacheManager.h"
 #import "Panel.h"
-#import "Universe.h"
-#import "UniverseStore.h"
+#import "Collection.h"
+#import "CollectionStore.h"
 #import <UIImageView+AFNetworking.h>
 
 @implementation PanelOperations
@@ -157,7 +157,7 @@
     
     for (NSIndexPath *indexPath in toBeStarted) {
         
-        Panel *panel = [[UniverseStore sharedStore].currentUniverse panelAtIndex:indexPath.item];
+        Panel *panel = [[CollectionStore sharedStore].currentCollection panelAtIndex:indexPath.item];
         [self startOperationsForPanel:panel atIndexPath:indexPath];
     }
 }

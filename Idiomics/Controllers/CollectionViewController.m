@@ -1,20 +1,20 @@
 //
-//  UniverseViewController.m
+//  CollectionViewController.m
 //  Idiomics
 //
 //  Created by Joe Mocquant on 11/6/14.
 //  Copyright (c) 2014 Idiomics. All rights reserved.
 //
 
-#import "UniverseViewController.h"
+#import "CollectionViewController.h"
 #import "APIClient.h"
 #import "Helper.h"
 #import "MosaicLayout.h"
 #import "MosaicCell.h"
 #import "MosaicData.h"
 #import "Panel.h"
-#import "Universe.h"
-#import "UniverseStore.h"
+#import "Collection.h"
+#import "CollectionStore.h"
 #import "NSMutableArray+Shuffling.h"
 #import "PanelViewController.h"
 #import "TransitionAnimator.h"
@@ -23,7 +23,7 @@
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
 
-@implementation UniverseViewController
+@implementation CollectionViewController
 
 
 #pragma mark - Lifecycle
@@ -34,7 +34,7 @@
     
     if (self) {
         
-        itemId = [UniverseStore sharedStore].currentUniverse.universeId;
+        itemId = [CollectionStore sharedStore].currentCollection.collectionId;
     }
     
     return self;
@@ -85,7 +85,7 @@
 
 - (void)dealloc
 {
-    [[[UniverseStore sharedStore] currentUniverse] deleteAllPanels];
+    [[[CollectionStore sharedStore] currentCollection] deleteAllPanels];
 }
 
 #pragma mark - Rotation iPad
@@ -138,7 +138,7 @@
                     
                     Panel *p = [MTLJSONAdapter modelOfClass:Panel.class fromJSONDictionary:panel error:nil];
                     [mosaicDatas addObject:[[MosaicData alloc] initWithPanel:p]];
-                    [[UniverseStore sharedStore].currentUniverse addPanel:p];
+                    [[CollectionStore sharedStore].currentCollection addPanel:p];
                 };
                 
                 [cv reloadData];
@@ -165,9 +165,9 @@
         }
     };
     
-    [[APIClient sharedConnection] getAllPanelForUniverse:[UniverseStore sharedStore].currentUniverse.universeId
-                                          successHandler:successHandler
-                                            errorHandler:errorHandler];
+    [[APIClient sharedConnection] getAllPanelForCollection:[CollectionStore sharedStore].currentCollection.collectionId
+                                            successHandler:successHandler
+                                              errorHandler:errorHandler];
 }
 
 
@@ -253,7 +253,7 @@
     MosaicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier
                                                                  forIndexPath:indexPath];
 
-    Panel *panel = [[UniverseStore sharedStore].currentUniverse panelAtIndex:indexPath.item];
+    Panel *panel = [[CollectionStore sharedStore].currentCollection panelAtIndex:indexPath.item];
     
     cell.backgroundColor = panel.averageColor;
     
@@ -282,7 +282,7 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
-    return [[UniverseStore sharedStore].currentUniverse allPanels].count;
+    return [[CollectionStore sharedStore].currentCollection allPanels].count;
 }
 
 
@@ -290,7 +290,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    Panel *panel = [[UniverseStore sharedStore].currentUniverse panelAtIndex:indexPath.item];
+    Panel *panel = [[CollectionStore sharedStore].currentCollection panelAtIndex:indexPath.item];
     
     id tracker = [GAI sharedInstance].defaultTracker;
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"

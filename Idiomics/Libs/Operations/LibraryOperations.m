@@ -7,8 +7,8 @@
 //
 
 #import "LibraryOperations.h"
-#import "Universe.h"
-#import "UniverseStore.h"
+#import "Collection.h"
+#import "CollectionStore.h"
 #import <UIImageView+AFNetworking.h>
 
 @implementation LibraryOperations
@@ -22,9 +22,9 @@
     
     if (self) {
         
-        universeCoverDownloadsInProgress = [NSMutableDictionary dictionary];
-        universeCoverDownloadsQueue = [NSOperationQueue new];
-        universeCoverDownloadsQueue.name = @"Universe Cover Downloads Queue";
+        collectionCoverDownloadsInProgress = [NSMutableDictionary dictionary];
+        collectionCoverDownloadsQueue = [NSOperationQueue new];
+        collectionCoverDownloadsQueue.name = @"Collection Cover Downloads Queue";
     }
     
     return self;
@@ -33,11 +33,11 @@
 
 #pragma mark - Instance methods
 
-- (void)startOperationsForUniverse:(Universe *)universe atIndexPath:(NSIndexPath *)indexPath
+- (void)startOperationsForCollection:(Collection *)collection atIndexPath:(NSIndexPath *)indexPath
 {
-    if (![universe hasCoverImage]) {
+    if (![collection hasCoverImage]) {
 
-        NSURLRequest *request = [universe buildUrlRequest];
+        NSURLRequest *request = [collection buildUrlRequest];
         NSCachedURLResponse *cachedURLResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:request];
         
         if (cachedURLResponse) {
@@ -55,17 +55,17 @@
             
         } else {
         
-            if ((![universeCoverDownloadsInProgress.allKeys containsObject:indexPath])
-                && (!universe.hasCoverImage)) {
+            if ((![collectionCoverDownloadsInProgress.allKeys containsObject:indexPath])
+                && (!collection.hasCoverImage)) {
             
-                NSURLRequest *urlRequest = [universe buildUrlRequest];
-                UniverseCoverDownloader *ucd = [[UniverseCoverDownloader alloc] initWithUniverse:universe
-                                                                                     atIndexPath:indexPath
-                                                                                        delegate:self
-                                                                                      urlRequest:urlRequest];
+                NSURLRequest *urlRequest = [collection buildUrlRequest];
+                CollectionCoverDownloader *ucd = [[CollectionCoverDownloader alloc] initWithCollection:collection
+                                                                                         atIndexPath:indexPath
+                                                                                            delegate:self
+                                                                                          urlRequest:urlRequest];
             
-                [universeCoverDownloadsInProgress setObject:ucd forKey:indexPath];
-                [universeCoverDownloadsQueue addOperation:ucd];
+                [collectionCoverDownloadsInProgress setObject:ucd forKey:indexPath];
+                [collectionCoverDownloadsQueue addOperation:ucd];
             }
         }
     }
@@ -75,7 +75,7 @@
 {
     NSSet *visibleItems = [NSSet setWithArray:indexPaths];
     
-    NSMutableSet *pendingOperations = [NSMutableSet setWithArray:[universeCoverDownloadsInProgress allKeys]];
+    NSMutableSet *pendingOperations = [NSMutableSet setWithArray:[collectionCoverDownloadsInProgress allKeys]];
     
     NSMutableSet *toBeCancelled = [pendingOperations mutableCopy];
     NSMutableSet *toBeStarted = [visibleItems mutableCopy];
@@ -87,50 +87,50 @@
         
         //Should include a check to cancel only those below 60%
         
-        UniverseCoverDownloader *pendingUniverseCoverDownload = [universeCoverDownloadsInProgress objectForKey:indexPath];
-        [pendingUniverseCoverDownload cancel];
-        [universeCoverDownloadsInProgress removeObjectForKey:indexPath];
+        CollectionCoverDownloader *pendingCollectionCoverDownload = [collectionCoverDownloadsInProgress objectForKey:indexPath];
+        [pendingCollectionCoverDownload cancel];
+        [collectionCoverDownloadsInProgress removeObjectForKey:indexPath];
         
 #ifdef __DEBUG__
-        NSLog(@"Canceled universe cover task %ld", (long)indexPath.item);
+        NSLog(@"Canceled collection cover task %ld", (long)indexPath.item);
 #endif
         
     }
     
     for (NSIndexPath *indexPath in toBeStarted) {
         
-        Universe *universe = [[UniverseStore sharedStore] universeAtIndex:indexPath.item];
-        [self startOperationsForUniverse:universe atIndexPath:indexPath];
+        Collection *collection = [[CollectionStore sharedStore] collectionAtIndex:indexPath.item];
+        [self startOperationsForCollection:collection atIndexPath:indexPath];
     }
 }
 
 - (void)suspendAllOperations
 {
-    universeCoverDownloadsQueue.suspended = YES;
+    collectionCoverDownloadsQueue.suspended = YES;
 }
 
 
 - (void)resumeAllOperations
 {
-    universeCoverDownloadsQueue.suspended = NO;
+    collectionCoverDownloadsQueue.suspended = NO;
 }
 
 
 - (void)cancelAllOperations
 {
-    [universeCoverDownloadsQueue cancelAllOperations];
+    [collectionCoverDownloadsQueue cancelAllOperations];
 }
 
 
-#pragma mark - UniverseCoverDownloaderDelegate
+#pragma mark - CollectionCoverDownloaderDelegate
 
-- (void)universeCoverDownloaderDidFinish:(UniverseCoverDownloader *)downloader
+- (void)collectionCoverDownloaderDidFinish:(CollectionCoverDownloader *)downloader
 {
     [self.delegate reloadRowsAtIndexPaths:[NSArray arrayWithObject:downloader.indexPath]];
-    [universeCoverDownloadsInProgress removeObjectForKey:downloader.indexPath];
+    [collectionCoverDownloadsInProgress removeObjectForKey:downloader.indexPath];
     
 #ifdef __DEBUG__
-    NSLog(@"Finished universe cover task %ld", (long)downloader.indexPath.item);
+    NSLog(@"Finished collection cover task %ld", (long)downloader.indexPath.item);
 #endif
 }
 

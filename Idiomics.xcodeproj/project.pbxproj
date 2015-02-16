@@ -13,8 +13,8 @@
 		0129CDB51A7EBA2500CFCAC4 /* watermark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0129CDB31A7EBA2500CFCAC4 /* watermark@2x.png */; };
 		013AA30B1A30F66B003DED61 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D31A30F66B003DED61 /* AppDelegate.m */; };
 		013AA30C1A30F66B003DED61 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D31A30F66B003DED61 /* AppDelegate.m */; };
-		013AA30D1A30F66B003DED61 /* UniverseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D61A30F66B003DED61 /* UniverseViewController.m */; };
-		013AA30E1A30F66B003DED61 /* UniverseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D61A30F66B003DED61 /* UniverseViewController.m */; };
+		013AA30D1A30F66B003DED61 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D61A30F66B003DED61 /* CollectionViewController.m */; };
+		013AA30E1A30F66B003DED61 /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D61A30F66B003DED61 /* CollectionViewController.m */; };
 		013AA30F1A30F66B003DED61 /* MMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D81A30F66B003DED61 /* MMSViewController.m */; };
 		013AA3101A30F66B003DED61 /* MMSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2D81A30F66B003DED61 /* MMSViewController.m */; };
 		013AA3111A30F66B003DED61 /* PanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 013AA2DA1A30F66B003DED61 /* PanelViewController.m */; };
@@ -62,18 +62,18 @@
 		015D59F31A37E42A0004F352 /* BalloonsOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 015D59F11A37E42A0004F352 /* BalloonsOverlay.m */; };
 		0195078F1A80FCCC004B7B30 /* UITextView+VerticalAlignment.m in Sources */ = {isa = PBXBuildFile; fileRef = 0195078E1A80FCCC004B7B30 /* UITextView+VerticalAlignment.m */; };
 		019507901A80FCCC004B7B30 /* UITextView+VerticalAlignment.m in Sources */ = {isa = PBXBuildFile; fileRef = 0195078E1A80FCCC004B7B30 /* UITextView+VerticalAlignment.m */; };
-		01BF3A821A3E40CD00EF6712 /* Universe.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A811A3E40CD00EF6712 /* Universe.m */; };
-		01BF3A831A3E40CD00EF6712 /* Universe.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A811A3E40CD00EF6712 /* Universe.m */; };
+		01BF3A821A3E40CD00EF6712 /* Collection.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A811A3E40CD00EF6712 /* Collection.m */; };
+		01BF3A831A3E40CD00EF6712 /* Collection.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A811A3E40CD00EF6712 /* Collection.m */; };
 		01BF3A861A3E4E6B00EF6712 /* LibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A851A3E4E6B00EF6712 /* LibraryViewController.m */; };
 		01BF3A871A3E4E6B00EF6712 /* LibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A851A3E4E6B00EF6712 /* LibraryViewController.m */; };
-		01BF3A8A1A3E7E8800EF6712 /* UniverseStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A891A3E7E8800EF6712 /* UniverseStore.m */; };
-		01BF3A8B1A3E7E8800EF6712 /* UniverseStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A891A3E7E8800EF6712 /* UniverseStore.m */; };
-		01BF3A8E1A3E8A3900EF6712 /* UniverseViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A8D1A3E8A3900EF6712 /* UniverseViewCell.m */; };
-		01BF3A8F1A3E8A3900EF6712 /* UniverseViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A8D1A3E8A3900EF6712 /* UniverseViewCell.m */; };
+		01BF3A8A1A3E7E8800EF6712 /* CollectionStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A891A3E7E8800EF6712 /* CollectionStore.m */; };
+		01BF3A8B1A3E7E8800EF6712 /* CollectionStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A891A3E7E8800EF6712 /* CollectionStore.m */; };
+		01BF3A8E1A3E8A3900EF6712 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A8D1A3E8A3900EF6712 /* CollectionViewCell.m */; };
+		01BF3A8F1A3E8A3900EF6712 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A8D1A3E8A3900EF6712 /* CollectionViewCell.m */; };
 		01BF3A961A3FF0EE00EF6712 /* LibraryOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A951A3FF0EE00EF6712 /* LibraryOperations.m */; };
 		01BF3A971A3FF0EE00EF6712 /* LibraryOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A951A3FF0EE00EF6712 /* LibraryOperations.m */; };
-		01BF3A9E1A3FF44600EF6712 /* UniverseCoverDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A9D1A3FF44600EF6712 /* UniverseCoverDownloader.m */; };
-		01BF3A9F1A3FF44600EF6712 /* UniverseCoverDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A9D1A3FF44600EF6712 /* UniverseCoverDownloader.m */; };
+		01BF3A9E1A3FF44600EF6712 /* CollectionCoverDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A9D1A3FF44600EF6712 /* CollectionCoverDownloader.m */; };
+		01BF3A9F1A3FF44600EF6712 /* CollectionCoverDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3A9D1A3FF44600EF6712 /* CollectionCoverDownloader.m */; };
 		01BF3AA51A4027B600EF6712 /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3AA21A4027B600EF6712 /* NSMutableArray+Shuffling.m */; };
 		01BF3AA61A4027B600EF6712 /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3AA21A4027B600EF6712 /* NSMutableArray+Shuffling.m */; };
 		01BF3AA71A4027B600EF6712 /* UIColor+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BF3AA41A4027B600EF6712 /* UIColor+Tools.m */; };
@@ -125,8 +125,8 @@
 		0129CDB31A7EBA2500CFCAC4 /* watermark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "watermark@2x.png"; sourceTree = "<group>"; };
 		013AA2D21A30F66B003DED61 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		013AA2D31A30F66B003DED61 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		013AA2D51A30F66B003DED61 /* UniverseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniverseViewController.h; sourceTree = "<group>"; };
-		013AA2D61A30F66B003DED61 /* UniverseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniverseViewController.m; sourceTree = "<group>"; };
+		013AA2D51A30F66B003DED61 /* CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
+		013AA2D61A30F66B003DED61 /* CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
 		013AA2D71A30F66B003DED61 /* MMSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMSViewController.h; sourceTree = "<group>"; };
 		013AA2D81A30F66B003DED61 /* MMSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMSViewController.m; sourceTree = "<group>"; };
 		013AA2D91A30F66B003DED61 /* PanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanelViewController.h; sourceTree = "<group>"; };
@@ -174,18 +174,18 @@
 		015D59F11A37E42A0004F352 /* BalloonsOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BalloonsOverlay.m; sourceTree = "<group>"; };
 		0195078D1A80FCCC004B7B30 /* UITextView+VerticalAlignment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+VerticalAlignment.h"; sourceTree = "<group>"; };
 		0195078E1A80FCCC004B7B30 /* UITextView+VerticalAlignment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+VerticalAlignment.m"; sourceTree = "<group>"; };
-		01BF3A801A3E40CD00EF6712 /* Universe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Universe.h; sourceTree = "<group>"; };
-		01BF3A811A3E40CD00EF6712 /* Universe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Universe.m; sourceTree = "<group>"; };
+		01BF3A801A3E40CD00EF6712 /* Collection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Collection.h; sourceTree = "<group>"; };
+		01BF3A811A3E40CD00EF6712 /* Collection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Collection.m; sourceTree = "<group>"; };
 		01BF3A841A3E4E6B00EF6712 /* LibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryViewController.h; sourceTree = "<group>"; };
 		01BF3A851A3E4E6B00EF6712 /* LibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryViewController.m; sourceTree = "<group>"; };
-		01BF3A881A3E7E8700EF6712 /* UniverseStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniverseStore.h; sourceTree = "<group>"; };
-		01BF3A891A3E7E8800EF6712 /* UniverseStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniverseStore.m; sourceTree = "<group>"; };
-		01BF3A8C1A3E8A3900EF6712 /* UniverseViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniverseViewCell.h; sourceTree = "<group>"; };
-		01BF3A8D1A3E8A3900EF6712 /* UniverseViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniverseViewCell.m; sourceTree = "<group>"; };
+		01BF3A881A3E7E8700EF6712 /* CollectionStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionStore.h; sourceTree = "<group>"; };
+		01BF3A891A3E7E8800EF6712 /* CollectionStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionStore.m; sourceTree = "<group>"; };
+		01BF3A8C1A3E8A3900EF6712 /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
+		01BF3A8D1A3E8A3900EF6712 /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
 		01BF3A941A3FF0EE00EF6712 /* LibraryOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryOperations.h; sourceTree = "<group>"; };
 		01BF3A951A3FF0EE00EF6712 /* LibraryOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryOperations.m; sourceTree = "<group>"; };
-		01BF3A9C1A3FF44500EF6712 /* UniverseCoverDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniverseCoverDownloader.h; sourceTree = "<group>"; };
-		01BF3A9D1A3FF44600EF6712 /* UniverseCoverDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniverseCoverDownloader.m; sourceTree = "<group>"; };
+		01BF3A9C1A3FF44500EF6712 /* CollectionCoverDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionCoverDownloader.h; sourceTree = "<group>"; };
+		01BF3A9D1A3FF44600EF6712 /* CollectionCoverDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionCoverDownloader.m; sourceTree = "<group>"; };
 		01BF3AA11A4027B600EF6712 /* NSMutableArray+Shuffling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffling.h"; sourceTree = "<group>"; };
 		01BF3AA21A4027B600EF6712 /* NSMutableArray+Shuffling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffling.m"; sourceTree = "<group>"; };
 		01BF3AA31A4027B600EF6712 /* UIColor+Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Tools.h"; sourceTree = "<group>"; };
@@ -289,8 +289,8 @@
 				015D59ED1A37D2380004F352 /* TrackingViewController.m */,
 				01BF3A841A3E4E6B00EF6712 /* LibraryViewController.h */,
 				01BF3A851A3E4E6B00EF6712 /* LibraryViewController.m */,
-				013AA2D51A30F66B003DED61 /* UniverseViewController.h */,
-				013AA2D61A30F66B003DED61 /* UniverseViewController.m */,
+				013AA2D51A30F66B003DED61 /* CollectionViewController.h */,
+				013AA2D61A30F66B003DED61 /* CollectionViewController.m */,
 				013AA2D91A30F66B003DED61 /* PanelViewController.h */,
 				013AA2DA1A30F66B003DED61 /* PanelViewController.m */,
 				013AA2D71A30F66B003DED61 /* MMSViewController.h */,
@@ -328,10 +328,10 @@
 				013AA2F81A30F66B003DED61 /* Balloon.m */,
 				013AA2F91A30F66B003DED61 /* Panel.h */,
 				013AA2FA1A30F66B003DED61 /* Panel.m */,
-				01BF3A801A3E40CD00EF6712 /* Universe.h */,
-				01BF3A811A3E40CD00EF6712 /* Universe.m */,
-				01BF3A881A3E7E8700EF6712 /* UniverseStore.h */,
-				01BF3A891A3E7E8800EF6712 /* UniverseStore.m */,
+				01BF3A801A3E40CD00EF6712 /* Collection.h */,
+				01BF3A811A3E40CD00EF6712 /* Collection.m */,
+				01BF3A881A3E7E8700EF6712 /* CollectionStore.h */,
+				01BF3A891A3E7E8800EF6712 /* CollectionStore.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -345,8 +345,8 @@
 				013AA3081A30F66B003DED61 /* FocusOverlayView.m */,
 				013AA3091A30F66B003DED61 /* NavigationView.h */,
 				013AA30A1A30F66B003DED61 /* NavigationView.m */,
-				01BF3A8C1A3E8A3900EF6712 /* UniverseViewCell.h */,
-				01BF3A8D1A3E8A3900EF6712 /* UniverseViewCell.m */,
+				01BF3A8C1A3E8A3900EF6712 /* CollectionViewCell.h */,
+				01BF3A8D1A3E8A3900EF6712 /* CollectionViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -400,8 +400,8 @@
 				015D59D81A37CEE50004F352 /* FullSizePanelDownloader.m */,
 				01BF3A941A3FF0EE00EF6712 /* LibraryOperations.h */,
 				01BF3A951A3FF0EE00EF6712 /* LibraryOperations.m */,
-				01BF3A9C1A3FF44500EF6712 /* UniverseCoverDownloader.h */,
-				01BF3A9D1A3FF44600EF6712 /* UniverseCoverDownloader.m */,
+				01BF3A9C1A3FF44500EF6712 /* CollectionCoverDownloader.h */,
+				01BF3A9D1A3FF44600EF6712 /* CollectionCoverDownloader.m */,
 				01C24C0C1A8FB58700C8592A /* PanelItemProvider.h */,
 				01C24C0D1A8FB58700C8592A /* PanelItemProvider.m */,
 			);
@@ -755,16 +755,16 @@
 				013AA30F1A30F66B003DED61 /* MMSViewController.m in Sources */,
 				01E4B4701A3A844A0070506E /* MosaicData.m in Sources */,
 				013AA30B1A30F66B003DED61 /* AppDelegate.m in Sources */,
-				01BF3A9E1A3FF44600EF6712 /* UniverseCoverDownloader.m in Sources */,
-				01BF3A8A1A3E7E8800EF6712 /* UniverseStore.m in Sources */,
+				01BF3A9E1A3FF44600EF6712 /* CollectionCoverDownloader.m in Sources */,
+				01BF3A8A1A3E7E8800EF6712 /* CollectionStore.m in Sources */,
 				015D59E81A37CEED0004F352 /* ColorTransformer.m in Sources */,
 				015D59EA1A37CEED0004F352 /* RectTransformer.m in Sources */,
 				01BF3AA51A4027B600EF6712 /* NSMutableArray+Shuffling.m in Sources */,
-				01BF3A821A3E40CD00EF6712 /* Universe.m in Sources */,
+				01BF3A821A3E40CD00EF6712 /* Collection.m in Sources */,
 				013AA3291A30F66B003DED61 /* APIClient.m in Sources */,
 				013AA32B1A30F66B003DED61 /* Config.m in Sources */,
 				0195078F1A80FCCC004B7B30 /* UITextView+VerticalAlignment.m in Sources */,
-				01BF3A8E1A3E8A3900EF6712 /* UniverseViewCell.m in Sources */,
+				01BF3A8E1A3E8A3900EF6712 /* CollectionViewCell.m in Sources */,
 				015D59F21A37E42A0004F352 /* BalloonsOverlay.m in Sources */,
 				01E4B4791A3A84540070506E /* Colors.m in Sources */,
 				01C24C0A1A8FAF9100C8592A /* ShareViewController.m in Sources */,
@@ -773,7 +773,7 @@
 				01E4B4721A3A844A0070506E /* MosaicCell.m in Sources */,
 				01D4D54D1A8929E500169CF5 /* PanelOperations+CacheManager.m in Sources */,
 				015D59DD1A37CEE50004F352 /* FullSizePanelDownloader.m in Sources */,
-				013AA30D1A30F66B003DED61 /* UniverseViewController.m in Sources */,
+				013AA30D1A30F66B003DED61 /* CollectionViewController.m in Sources */,
 				013AA32F1A30F66B003DED61 /* Helper.m in Sources */,
 				013AA3131A30F66B003DED61 /* TransitionAnimator.m in Sources */,
 				015D59E11A37CEE50004F352 /* ResizedPanelDownloader.m in Sources */,
@@ -808,16 +808,16 @@
 				013AA3101A30F66B003DED61 /* MMSViewController.m in Sources */,
 				01E4B4711A3A844A0070506E /* MosaicData.m in Sources */,
 				013AA30C1A30F66B003DED61 /* AppDelegate.m in Sources */,
-				01BF3A9F1A3FF44600EF6712 /* UniverseCoverDownloader.m in Sources */,
-				01BF3A8B1A3E7E8800EF6712 /* UniverseStore.m in Sources */,
+				01BF3A9F1A3FF44600EF6712 /* CollectionCoverDownloader.m in Sources */,
+				01BF3A8B1A3E7E8800EF6712 /* CollectionStore.m in Sources */,
 				015D59E91A37CEED0004F352 /* ColorTransformer.m in Sources */,
 				015D59EB1A37CEED0004F352 /* RectTransformer.m in Sources */,
 				01BF3AA61A4027B600EF6712 /* NSMutableArray+Shuffling.m in Sources */,
-				01BF3A831A3E40CD00EF6712 /* Universe.m in Sources */,
+				01BF3A831A3E40CD00EF6712 /* Collection.m in Sources */,
 				013AA32A1A30F66B003DED61 /* APIClient.m in Sources */,
 				013AA32C1A30F66B003DED61 /* Config.m in Sources */,
 				019507901A80FCCC004B7B30 /* UITextView+VerticalAlignment.m in Sources */,
-				01BF3A8F1A3E8A3900EF6712 /* UniverseViewCell.m in Sources */,
+				01BF3A8F1A3E8A3900EF6712 /* CollectionViewCell.m in Sources */,
 				015D59F31A37E42A0004F352 /* BalloonsOverlay.m in Sources */,
 				01E4B47A1A3A84540070506E /* Colors.m in Sources */,
 				01C24C0B1A8FAF9100C8592A /* ShareViewController.m in Sources */,
@@ -826,7 +826,7 @@
 				01E4B4731A3A844A0070506E /* MosaicCell.m in Sources */,
 				01D4D54E1A8929E500169CF5 /* PanelOperations+CacheManager.m in Sources */,
 				015D59DE1A37CEE50004F352 /* FullSizePanelDownloader.m in Sources */,
-				013AA30E1A30F66B003DED61 /* UniverseViewController.m in Sources */,
+				013AA30E1A30F66B003DED61 /* CollectionViewController.m in Sources */,
 				013AA3301A30F66B003DED61 /* Helper.m in Sources */,
 				013AA3141A30F66B003DED61 /* TransitionAnimator.m in Sources */,
 				015D59E21A37CEE50004F352 /* ResizedPanelDownloader.m in Sources */,

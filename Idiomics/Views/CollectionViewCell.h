@@ -1,5 +1,5 @@
 //
-//  UniverseViewCell.h
+//  CollectionViewCell.h
 //  Idiomics
 //
 //  Created by Joe Mocquant on 12/15/14.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UniverseViewCell : UITableViewCell <UIScrollViewDelegate>
+@interface CollectionViewCell : UITableViewCell <UIScrollViewDelegate>
 {
     NSLayoutConstraint *mashupWidthConstraint;
     NSLayoutConstraint *mashupHeightConstraint;

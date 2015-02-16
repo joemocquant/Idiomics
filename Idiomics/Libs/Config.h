@@ -28,7 +28,7 @@ extern CGFloat MashupAlpha;
 #define kRowsiPadLandscape 3
 #define kMashupRatio 4.5
 
-//Universe
+//Collection
 extern NSString *const CellIdentifier;
 extern CGFloat TimeDiff;
 extern CGFloat DistanceMin;
