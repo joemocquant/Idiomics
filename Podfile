@@ -14,6 +14,7 @@ target :Idiomics do
     pod 'DAKeyboardControl'
     pod 'Instabug'
     pod 'Parse'
+    pod 'Fabric/Crashlytics'
 
 end
 
@@ -31,5 +32,6 @@ target :Idiomics_Local do
     pod 'DAKeyboardControl'
     pod 'Instabug'
     pod 'Parse'
+    pod 'Fabric/Crashlytics'
 
 end

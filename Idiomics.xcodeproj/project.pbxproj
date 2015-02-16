@@ -84,10 +84,6 @@
 		01C24C0B1A8FAF9100C8592A /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C24C091A8FAF9100C8592A /* ShareViewController.m */; };
 		01C24C0E1A8FB58700C8592A /* PanelItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C24C0D1A8FB58700C8592A /* PanelItemProvider.m */; };
 		01C24C0F1A8FB58700C8592A /* PanelItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C24C0D1A8FB58700C8592A /* PanelItemProvider.m */; };
-		01D1846B1A8D04F300DAA4A3 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D184691A8D04F300DAA4A3 /* Crashlytics.framework */; };
-		01D1846C1A8D04F300DAA4A3 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D184691A8D04F300DAA4A3 /* Crashlytics.framework */; };
-		01D1846D1A8D04F300DAA4A3 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D1846A1A8D04F300DAA4A3 /* Fabric.framework */; };
-		01D1846E1A8D04F300DAA4A3 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D1846A1A8D04F300DAA4A3 /* Fabric.framework */; };
 		01D4D5131A83CB2F00169CF5 /* KMKDSP__.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 01D4D5121A83CB2F00169CF5 /* KMKDSP__.ttf */; };
 		01D4D5141A83CB2F00169CF5 /* KMKDSP__.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 01D4D5121A83CB2F00169CF5 /* KMKDSP__.ttf */; };
 		01D4D54D1A8929E500169CF5 /* PanelOperations+CacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D4D54C1A8929E500169CF5 /* PanelOperations+CacheManager.m */; };
@@ -199,8 +195,6 @@
 		01C24C091A8FAF9100C8592A /* ShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
 		01C24C0C1A8FB58700C8592A /* PanelItemProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PanelItemProvider.h; sourceTree = "<group>"; };
 		01C24C0D1A8FB58700C8592A /* PanelItemProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PanelItemProvider.m; sourceTree = "<group>"; };
-		01D184691A8D04F300DAA4A3 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
-		01D1846A1A8D04F300DAA4A3 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		01D4D5121A83CB2F00169CF5 /* KMKDSP__.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = KMKDSP__.ttf; sourceTree = "<group>"; };
 		01D4D54B1A8929E500169CF5 /* PanelOperations+CacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PanelOperations+CacheManager.h"; sourceTree = "<group>"; };
 		01D4D54C1A8929E500169CF5 /* PanelOperations+CacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PanelOperations+CacheManager.m"; sourceTree = "<group>"; };
@@ -230,9 +224,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				013EDEA51A13126D009F16BD /* MessageUI.framework in Frameworks */,
-				01D1846B1A8D04F300DAA4A3 /* Crashlytics.framework in Frameworks */,
 				630D476A89766E94F4B55B01 /* libPods-Idiomics.a in Frameworks */,
-				01D1846D1A8D04F300DAA4A3 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,9 +240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01D7BDE91A17E3E500C30CE2 /* MessageUI.framework in Frameworks */,
-				01D1846C1A8D04F300DAA4A3 /* Crashlytics.framework in Frameworks */,
 				94B3259E5BD4D94272C8037B /* libPods-Idiomics_Local.a in Frameworks */,
-				01D1846E1A8D04F300DAA4A3 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -497,8 +487,6 @@
 		5A44181D8CDD5F553EB4E18C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				01D184691A8D04F300DAA4A3 /* Crashlytics.framework */,
-				01D1846A1A8D04F300DAA4A3 /* Fabric.framework */,
 				013EDEA41A13126D009F16BD /* MessageUI.framework */,
 				5DD3572DAF72C89C3E0155A2 /* libPods-Idiomics.a */,
 				B729267F366BC0D85BD08ADE /* libPods-Idiomics_Local.a */,
@@ -690,7 +678,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run 40bee87d3f680208f2d75578bab064e24ff550fb a640810a3bb1818b490913bc5597a9d131b6a7e7dd6a17935b8edbb0dc995ea5";
+			shellScript = "./Pods/Fabric/Fabric.framework/run 40bee87d3f680208f2d75578bab064e24ff550fb a640810a3bb1818b490913bc5597a9d131b6a7e7dd6a17935b8edbb0dc995ea5";
 		};
 		01D7BDD41A17E3E500C30CE2 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

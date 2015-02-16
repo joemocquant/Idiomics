@@ -25,6 +25,9 @@ PODS:
     - AFNetworking/NSURLSession
   - Bolts (1.1.3)
   - DAKeyboardControl (2.4.0)
+  - Fabric/Core (1.1.2)
+  - Fabric/Crashlytics (1.1.2):
+    - Fabric/Core
   - GoogleAnalytics-iOS-SDK (3.10):
     - GoogleAnalytics-iOS-SDK/Core (= 3.10)
   - GoogleAnalytics-iOS-SDK/Core (3.10)
@@ -77,6 +80,7 @@ DEPENDENCIES:
   - AFNetworkActivityLogger
   - AFNetworking
   - DAKeyboardControl
+  - Fabric/Crashlytics
   - GoogleAnalytics-iOS-SDK
   - Instabug
   - libextobjc
@@ -100,6 +104,7 @@ SPEC CHECKSUMS:
   AFNetworking: 8bee59492a6ff15d69130efa4d0dc67e0094a52a
   Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
   DAKeyboardControl: 45a363c85c48a7df76f21f236d9f85800e001775
+  Fabric: e02d1e589fba3b317c012447b12cd2c0c3063d72
   GoogleAnalytics-iOS-SDK: f422062075d9ccb1ea8d783fc5ba3829461e9502
   Instabug: d685b75d41100d9914262190fb3acae33c354e77
   libextobjc: d6146fce3ebea986b7f75fcb4c967639200b88b0
