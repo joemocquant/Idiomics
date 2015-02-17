@@ -82,15 +82,15 @@
 - (void)startOperationsForPanel:(Panel *)panel atIndexPath:(NSIndexPath *)indexPath
 {
     if (!panel.hasThumbSizeImage) {
-        NSCachedURLResponse *cachedURLResponse = [self getCachedURLResponseForPanel:panel
-                                                                     withDesiredRes:panel.thumbSize];
+        NSCachedURLResponse *cachedURLResponse = [PanelOperations getCachedURLResponseForPanel:panel
+                                                                                withDesiredRes:panel.thumbSize];
         
         if (cachedURLResponse) {
             
             NSURLRequest *request = [panel buildUrlRequestForDimensions:panel.thumbSize];
             UIImage *image = [UIImage imageWithData:cachedURLResponse.data scale:[UIScreen mainScreen].scale];
             [[UIImageView sharedImageCache] cacheImage:image forRequest:request];
-            
+
 #ifdef __DEBUG__
             NSLog(@"Accessing cached resource (resizing task %ld)", (long)indexPath.item);
 #endif
@@ -105,8 +105,8 @@
     }
     
     if (!panel.hasFullSizeImage) {
-        NSCachedURLResponse *cachedURLResponse = [self getCachedURLResponseForPanel:panel
-                                                                     withDesiredRes:panel.dimensions];
+        NSCachedURLResponse *cachedURLResponse = [PanelOperations getCachedURLResponseForPanel:panel
+                                                                                withDesiredRes:panel.dimensions];
 
         if (cachedURLResponse) {
 

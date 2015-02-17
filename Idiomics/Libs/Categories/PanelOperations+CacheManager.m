@@ -61,40 +61,48 @@
 + (NSCachedURLResponse *)getCachedURLResponseForPanel:(Panel *)panel
                                        withDesiredRes:(CGSize)desiredRes
 {
-    NSArray *resolutions = [PanelOperations getTresholdedResolutionsForPanel:panel];
-    
-    CGFloat originArea = panel.dimensions.width * panel.dimensions.height;
-    CGFloat desiredArea = desiredRes.width * desiredRes.height;
-    
-    if ([PanelOperations getTresholdedResForOriginArea:originArea desiredArea:desiredArea] == originArea) {
-        desiredRes = CGSizeMake(panel.dimensions.width, panel.dimensions.height);
-        desiredArea = originArea;
-    }
-    
+    __block CGSize dRes = desiredRes;
     __block NSCachedURLResponse *cachedURLResponse = nil;
     
-    [resolutions enumerateObjectsUsingBlock:^(NSValue *resolution, NSUInteger idx, BOOL *stop) {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        CGSize res = resolution.CGSizeValue;
-        CGFloat area = res.width * res.height;
+        //Call your function or whatever work that needs to be done
+        //Code in this part is run on a background thread
         
-        if (desiredArea == area) {
-            
-            NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(idx, resolutions.count - idx)];
-            [resolutions enumerateObjectsAtIndexes:indexes options:0 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                
-                NSURLRequest *request = [panel buildUrlRequestForDimensions:res];
-                cachedURLResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:request];
-                
-                if (cachedURLResponse) {
-                    
-                    *stop = YES;
-                }
-            }];
-            
-            *stop = YES;
+        NSArray *resolutions = [PanelOperations getTresholdedResolutionsForPanel:panel];
+    
+        CGFloat originArea = panel.dimensions.width * panel.dimensions.height;
+        CGFloat desiredArea = desiredRes.width * desiredRes.height;
+    
+        if ([PanelOperations getTresholdedResForOriginArea:originArea desiredArea:desiredArea] == originArea) {
+            dRes = CGSizeMake(panel.dimensions.width, panel.dimensions.height);
+            desiredArea = originArea;
         }
-    }];
+    
+        [resolutions enumerateObjectsUsingBlock:^(NSValue *resolution, NSUInteger idx, BOOL *stop) {
+        
+            CGSize res = resolution.CGSizeValue;
+            CGFloat area = res.width * res.height;
+        
+            if (desiredArea == area) {
+            
+                NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(idx, resolutions.count - idx)];
+                [resolutions enumerateObjectsAtIndexes:indexes options:0 usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                
+                    NSURLRequest *request = [panel buildUrlRequestForDimensions:res];
+                    cachedURLResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:request];
+                
+                    if (cachedURLResponse) {
+                    
+                        *stop = YES;
+                    }
+                }];
+            
+                *stop = YES;
+            }
+        }];
+
+    });
     
     return cachedURLResponse;
 }
