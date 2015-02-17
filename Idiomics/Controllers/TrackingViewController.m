@@ -8,7 +8,7 @@
 
 #import "TrackingViewController.h"
 #import "LibraryViewController.h"
-#import "UniverseViewController.h"
+#import "CollectionViewController.h"
 #import "PanelViewController.h"
 #import "Helper.h"
 #import <GAI.h>
@@ -27,7 +27,7 @@
     
     if ([self isKindOfClass:[LibraryViewController class]]) {
         self.screenName = @"library";
-    } else if ([self isKindOfClass:[UniverseViewController class]]) {
+    } else if ([self isKindOfClass:[CollectionViewController class]]) {
         self.screenName = @"collection";
     } else if ([self isKindOfClass:[PanelViewController class]]) {
         self.screenName = @"panel_edition";
@@ -47,7 +47,7 @@
                                                                  name:@"library"
                                                                 label:nil] build]];
     
-    } else if ([self isKindOfClass:UniverseViewController.class]) {
+    } else if ([self isKindOfClass:CollectionViewController.class]) {
         [tracker send:[[GAIDictionaryBuilder createTimingWithCategory:@"ui_time_spent"
                                                              interval:@(elapsed)
                                                                  name:@"collection"

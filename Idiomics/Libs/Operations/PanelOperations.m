@@ -9,8 +9,8 @@
 #import "PanelOperations.h"
 #import "PanelOperations+CacheManager.h"
 #import "Panel.h"
-#import "Universe.h"
-#import "UniverseStore.h"
+#import "Collection.h"
+#import "CollectionStore.h"
 #import <UIImageView+AFNetworking.h>
 
 @implementation PanelOperations
@@ -82,15 +82,15 @@
 - (void)startOperationsForPanel:(Panel *)panel atIndexPath:(NSIndexPath *)indexPath
 {
     if (!panel.hasThumbSizeImage) {
-        NSCachedURLResponse *cachedURLResponse = [self getCachedURLResponseForPanel:panel
-                                                                     withDesiredRes:panel.thumbSize];
+        NSCachedURLResponse *cachedURLResponse = [PanelOperations getCachedURLResponseForPanel:panel
+                                                                                withDesiredRes:panel.thumbSize];
         
         if (cachedURLResponse) {
             
             NSURLRequest *request = [panel buildUrlRequestForDimensions:panel.thumbSize];
             UIImage *image = [UIImage imageWithData:cachedURLResponse.data scale:[UIScreen mainScreen].scale];
             [[UIImageView sharedImageCache] cacheImage:image forRequest:request];
-            
+
 #ifdef __DEBUG__
             NSLog(@"Accessing cached resource (resizing task %ld)", (long)indexPath.item);
 #endif
@@ -105,8 +105,8 @@
     }
     
     if (!panel.hasFullSizeImage) {
-        NSCachedURLResponse *cachedURLResponse = [self getCachedURLResponseForPanel:panel
-                                                                     withDesiredRes:panel.dimensions];
+        NSCachedURLResponse *cachedURLResponse = [PanelOperations getCachedURLResponseForPanel:panel
+                                                                                withDesiredRes:panel.dimensions];
 
         if (cachedURLResponse) {
 
@@ -157,7 +157,7 @@
     
     for (NSIndexPath *indexPath in toBeStarted) {
         
-        Panel *panel = [[UniverseStore sharedStore].currentUniverse panelAtIndex:indexPath.item];
+        Panel *panel = [[CollectionStore sharedStore].currentCollection panelAtIndex:indexPath.item];
         [self startOperationsForPanel:panel atIndexPath:indexPath];
     }
 }

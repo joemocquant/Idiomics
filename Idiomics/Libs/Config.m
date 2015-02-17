@@ -20,7 +20,7 @@ NSString *const LibraryCellId = @"LibraryCellId";
 CGFloat SeparatorHeight = 2;
 CGFloat MashupAlpha = 0.3;
 
-//Universe
+//Collection
 NSString *const CellIdentifier = @"cell";
 CGFloat TimeDiff = 0.1;
 CGFloat DistanceMin = 20;

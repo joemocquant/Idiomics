@@ -7,19 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "UniverseCoverDownloader.h"
+#import "CollectionCoverDownloader.h"
 
 @protocol LibraryOperationsDelegate;
 
-@interface LibraryOperations : NSObject <UniverseCoverDownloaderDelegate>
+@interface LibraryOperations : NSObject <CollectionCoverDownloaderDelegate>
 {
-    NSMutableDictionary *universeCoverDownloadsInProgress;
-    NSOperationQueue *universeCoverDownloadsQueue;
+    NSMutableDictionary *collectionCoverDownloadsInProgress;
+    NSOperationQueue *collectionCoverDownloadsQueue;
 }
 
 @property (nonatomic, weak) id<LibraryOperationsDelegate> delegate;
 
-- (void)startOperationsForUniverse:(Universe *)universe atIndexPath:(NSIndexPath *)indexPath;
+- (void)startOperationsForCollection:(Collection *)collection atIndexPath:(NSIndexPath *)indexPath;
 - (void)loadPanelsForIndexPaths:(NSArray *)indexPaths;
 - (void)suspendAllOperations;
 - (void)resumeAllOperations;

@@ -16,12 +16,12 @@ typedef void (^ErrorHandler) (NSURLSessionDataTask *, NSError *);
 
 + (instancetype)sharedConnection;
 
-- (void)getAllUniverseWithSuccessHandler:(SuccessHandler)successHandler
-                            errorHandler:(ErrorHandler)errorHandler;
+- (void)getAllCollectionWithSuccessHandler:(SuccessHandler)successHandler
+                              errorHandler:(ErrorHandler)errorHandler;
 
-- (void)getAllPanelForUniverse:(NSString *)universeId
-                successHandler:(SuccessHandler)successHandler
-                  errorHandler:(ErrorHandler)errorHandler;
+- (void)getAllPanelForCollection:(NSString *)collectionId
+                  successHandler:(SuccessHandler)successHandler
+                    errorHandler:(ErrorHandler)errorHandler;
 
 - (void)getAllPanelsWithSuccessHandler:(SuccessHandler)successHandler
                           errorHandler:(ErrorHandler)errorHandler;
