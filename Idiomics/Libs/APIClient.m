@@ -93,7 +93,7 @@
 - (void)getAllCollectionWithSuccessHandler:(SuccessHandler)successHandler
                               errorHandler:(ErrorHandler)errorHandler
 {
-    NSString *uri = @"content/_design/books/_view/all";
+    NSString *uri = @"collections";
     [self GET:uri parameters:nil success:successHandler failure:errorHandler];
 }
 
@@ -101,18 +101,14 @@
                   successHandler:(SuccessHandler)successHandler
                     errorHandler:(ErrorHandler)errorHandler
 {
-    NSString *uri;
-    NSDictionary *params = nil;
-    
-    if ([self.baseURL.absoluteString isEqualToString:@"http://10.0.0.9:5984"]) {
-        uri = @"content/_design/panels/_view/by_book";
-        
-        params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [NSString stringWithFormat:@"\"%@\"", collectionId], @"key",
-                                nil];
-    } else {
-        uri = [NSString stringWithFormat:@"content/_design/panels/_view/by_book/%@", collectionId];
-    }
+    NSString *uri = @"panels";
+//    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+//                            [NSString stringWithFormat:@"\"%@\"", collectionId], @"key",
+//                            nil];
+//    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            collectionId, @"collection_id",
+                            nil];
     
     [self GET:uri parameters:params success:successHandler failure:errorHandler];
 }

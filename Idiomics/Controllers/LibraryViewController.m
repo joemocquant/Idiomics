@@ -79,9 +79,7 @@
             case 200:
                 //OK
             {
-                NSArray *collections = [[responseObject objectForKey:@"rows"] valueForKey:@"value"];
-                
-                for (NSDictionary *collection in collections) {
+                for (NSDictionary *collection in responseObject) {
                     
                     Collection *u = [MTLJSONAdapter modelOfClass:Collection.class fromJSONDictionary:collection error:nil];
                     [[CollectionStore sharedStore] addCollection:u];

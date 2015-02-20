@@ -66,9 +66,6 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        //Call your function or whatever work that needs to be done
-        //Code in this part is run on a background thread
-        
         NSArray *resolutions = [PanelOperations getTresholdedResolutionsForPanel:panel];
     
         CGFloat originArea = panel.dimensions.width * panel.dimensions.height;

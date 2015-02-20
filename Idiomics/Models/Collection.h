@@ -19,6 +19,7 @@
 @property (nonatomic, copy, readonly) NSString *collectionId;
 @property (nonatomic, copy, readonly) NSString *imageUrl;
 @property (nonatomic, copy, readonly) UIColor *averageColor;
+@property (nonatomic, copy, readonly) NSString *iconUrl;
 @property (nonatomic, assign, readonly) BOOL hasCoverImage;
 @property (nonatomic, getter = isFailed) BOOL failed;
 

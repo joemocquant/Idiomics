@@ -23,7 +23,7 @@
 
     if (self) {
 
-        self.frame = balloon.boundsRect;
+        self.frame = balloon.outsideRect;
         
         _polyPath = [UIBezierPath bezierPath];
         for (int i = 0; i < balloon.polygon.count; i++) {
@@ -31,11 +31,11 @@
             CGPoint point = [[balloon.polygon objectAtIndex:i] CGPointValue];
             
             if (i == 0) {
-                [self.polyPath moveToPoint:CGPointMake(point.x - balloon.boundsRect.origin.x,
-                                                       point.y - balloon.boundsRect.origin.y)];
+                [self.polyPath moveToPoint:CGPointMake(point.x - balloon.outsideRect.origin.x,
+                                                       point.y - balloon.outsideRect.origin.y)];
             } else {
-                [_polyPath addLineToPoint:CGPointMake(point.x - balloon.boundsRect.origin.x,
-                                                      point.y - balloon.boundsRect.origin.y)];
+                [_polyPath addLineToPoint:CGPointMake(point.x - balloon.outsideRect.origin.x,
+                                                      point.y - balloon.outsideRect.origin.y)];
             } 
         }
         [_polyPath closePath];
@@ -45,8 +45,8 @@
         
         PulsingHaloLayer *halo = PulsingHaloLayer.layer;
 
-        [halo setPosition:CGPointMake(balloon.rect.origin.x - balloon.boundsRect.origin.x + balloon.rect.size.width / 2,
-                                      balloon.rect.origin.y - balloon.boundsRect.origin.y + balloon.rect.size.height / 2)];
+        [halo setPosition:CGPointMake(balloon.insideRect.origin.x - balloon.outsideRect.origin.x + balloon.insideRect.size.width / 2,
+                                      balloon.insideRect.origin.y - balloon.outsideRect.origin.y + balloon.insideRect.size.height / 2)];
         
         halo.backgroundColor = [balloon.backgroundColor darkenColorWithPercentOfOriginal:PercentColorKept].CGColor;
         

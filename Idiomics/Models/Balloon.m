@@ -9,15 +9,6 @@
 #import "Balloon.h"
 #import "RectTransformer.h"
 
-@interface Balloon ()
-
-@property (nonatomic, copy, readwrite) UIColor *backgroundColor;
-@property (nonatomic, assign, readwrite) CGRect rect;
-@property (nonatomic, assign, readwrite) CGRect boundsRect;
-@property (nonatomic, copy, readwrite) NSArray *polygon;
-
-@end
-
 @implementation Balloon
 
 
@@ -35,26 +26,11 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"backgroundColor": @"bg_color",
-             @"rect": @"rect",
-             @"boundsRect": @"bound_rect",
-             @"polygon": @"polygon"
+    return @{@"polygon": @"polygon",
+             @"insideRect": @"inside_rect",
+             @"outsideRect": @"outside_rect",
+             @"backgroundColor": @"bg_color"
              };
-}
-
-+ (NSValueTransformer *)backgroundColorJSONTransformer
-{
-    return [NSValueTransformer valueTransformerForName:ColorTransformerName];
-}
-
-+ (NSValueTransformer *)rectJSONTransformer
-{
-    return [NSValueTransformer valueTransformerForName:RectTransformerName];
-}
-
-+ (NSValueTransformer *)boundsRectJSONTransformer
-{
-    return [NSValueTransformer valueTransformerForName:RectTransformerName];
 }
 
 + (NSValueTransformer *)polygonJSONTransformer
@@ -82,6 +58,21 @@
         
         return res;
     }];
+}
+
++ (NSValueTransformer *)insideRectJSONTransformer
+{
+    return [NSValueTransformer valueTransformerForName:RectTransformerName];
+}
+
++ (NSValueTransformer *)outsideRectJSONTransformer
+{
+    return [NSValueTransformer valueTransformerForName:RectTransformerName];
+}
+
++ (NSValueTransformer *)backgroundColorJSONTransformer
+{
+    return [NSValueTransformer valueTransformerForName:ColorTransformerName];
 }
 
 @end

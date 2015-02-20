@@ -52,7 +52,7 @@
             [overlays addObject:fov];
             
             [balloonsEdited addObject:@NO];
-            CGRect balloonRect = balloon.rect;
+            CGRect balloonRect = balloon.insideRect;
             
             UITextView *balloonTextView = [[UITextView alloc] initWithFrame:balloonRect];
             [self addSubview:balloonTextView];
@@ -69,8 +69,8 @@
             balloonTextView.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
             balloonTextView.scrollEnabled = NO;
 
-            UIBezierPath *aPath = [UIBezierPath bezierPathWithRect:balloon.boundsRect];
-            [aPath appendPath:fov.polyPath];
+            //UIBezierPath *aPath = [UIBezierPath bezierPathWithRect:balloon.outsideRect];
+            //[aPath appendPath:fov.polyPath];
 
             //balloonTextView.textContainer.exclusionPaths = @[aPath];
             [speechBalloons addObject:balloonTextView];

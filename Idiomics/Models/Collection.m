@@ -14,14 +14,6 @@
 #import <UIImageView+AFNetworking.h>
 #import <AFNetworking.h>
 
-@interface Collection ()
-
-@property (nonatomic, copy, readwrite) NSString *collectionId;
-@property (nonatomic, copy, readwrite) NSString *imageUrl;
-@property (nonatomic, copy, readwrite) UIColor *averageColor;
-
-@end
-
 @implementation Collection
 
 
@@ -51,9 +43,10 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"collectionId": @"_id",
-             @"imageUrl": @"cover_url",
-             @"averageColor": @"cover_avg_color"
+    return @{@"collectionId": @"id",
+             @"imageUrl": @"mashup_url",
+             @"averageColor": @"avg_color",
+             @"iconUrl": @"icon_url"
              };
 }
 

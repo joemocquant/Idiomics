@@ -131,7 +131,7 @@
             case 200:
                 //OK
             {
-                NSMutableArray *panels =  [NSMutableArray arrayWithArray:[[responseObject objectForKey:@"rows"] valueForKey:@"value"]];
+                NSMutableArray *panels = [NSMutableArray arrayWithArray:responseObject];
                 [panels shuffle];
                 
                 for (NSDictionary *panel in panels) {

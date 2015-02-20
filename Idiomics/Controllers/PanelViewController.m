@@ -416,7 +416,7 @@
 
 - (void)focusOnBalloon
 {
-    CGRect balloon = ((Balloon *)panel.balloons[balloonsOverlay.focus]).boundsRect;
+    CGRect balloon = ((Balloon *)panel.balloons[balloonsOverlay.focus]).outsideRect;
     CGRect balloonInView = [self.view convertRect:balloon fromView:panelImageView];
     
     CGFloat y = balloonInView.origin.y + balloonInView.size.height;

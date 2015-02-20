@@ -11,10 +11,10 @@
 
 @interface Balloon : MTLModel <MTLJSONSerializing>
 
-@property (nonatomic, copy, readonly) UIColor *backgroundColor;
-@property (nonatomic, assign, readonly) CGRect rect;
-@property (nonatomic, assign, readonly) CGRect boundsRect;
 @property (nonatomic, copy, readonly) NSArray *polygon;
+@property (nonatomic, assign, readonly) CGRect insideRect;
+@property (nonatomic, assign, readonly) CGRect outsideRect;
+@property (nonatomic, copy, readonly) UIColor *backgroundColor;
 @property (nonatomic, assign) BOOL edited;
 
 @end

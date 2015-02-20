@@ -35,9 +35,9 @@
 		</array>
 	</dict>
 	<key>Idiomics-API-URL</key>
-	<string>http://api.content.idiomicsapp.com</string>
+	<string>http://api.idiomicsapp.com/v1</string>
 	<key>ImageProxy-Server-URL</key>
-	<string>http://images.idiomicsapp.com</string>
+	<string>http://ids.idiomicsapp.com</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
