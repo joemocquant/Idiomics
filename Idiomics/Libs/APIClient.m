@@ -102,10 +102,7 @@
                     errorHandler:(ErrorHandler)errorHandler
 {
     NSString *uri = @"panels";
-//    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-//                            [NSString stringWithFormat:@"\"%@\"", collectionId], @"key",
-//                            nil];
-//    
+
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             collectionId, @"collection_id",
                             nil];

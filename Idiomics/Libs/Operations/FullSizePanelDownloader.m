@@ -58,9 +58,7 @@
                                                                      name:@"fullsize_panel"
                                                                     label:panel.panelId] build]];
             
-            [(NSObject *)self.delegate performSelectorOnMainThread:@selector(fullSizePanelDownloaderDidFinish:)
-                                                        withObject:self
-                                                     waitUntilDone:NO];
+            [self.delegate fullSizePanelDownloaderDidFinish:self];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
@@ -74,10 +72,10 @@
 
 #pragma mark - NSURLConnectionDataDelegate
 
-- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
-                  willCacheResponse:(NSCachedURLResponse *)cachedResponse
-{
-    return nil;
-}
+//- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
+//                  willCacheResponse:(NSCachedURLResponse *)cachedResponse
+//{
+//    return nil;
+//}
 
 @end

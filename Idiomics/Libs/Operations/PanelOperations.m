@@ -11,6 +11,7 @@
 #import "Panel.h"
 #import "Collection.h"
 #import "CollectionStore.h"
+#import "UIImage+Tools.h"
 #import <UIImageView+AFNetworking.h>
 
 @implementation PanelOperations
@@ -86,9 +87,10 @@
                                                                                 withDesiredRes:panel.thumbSize];
         
         if (cachedURLResponse) {
-            
+
             NSURLRequest *request = [panel buildUrlRequestForDimensions:panel.thumbSize];
-            UIImage *image = [UIImage imageWithData:cachedURLResponse.data scale:[UIScreen mainScreen].scale];
+            UIImage *image = [UIImage imageWithData:cachedURLResponse.data];
+            
             [[UIImageView sharedImageCache] cacheImage:image forRequest:request];
 
 #ifdef __DEBUG__
@@ -174,7 +176,6 @@
     fullSizePanelDownloadsQueue.suspended = NO;
 }
 
-
 - (void)cancelAllOperations
 {
     [resizedPanelDownloadsQueue cancelAllOperations];
@@ -185,9 +186,13 @@
 #pragma mark - ResizedPanelDownloaderDelegate
 
 - (void)resizedPanelDownloaderDidFinish:(ResizedPanelDownloader *)downloader
-{
-    [self.delegate reloadItemsAtIndexPaths:[NSArray arrayWithObject:downloader.indexPath]];
+{    
+    [(NSObject *)self.delegate performSelectorOnMainThread:@selector(reloadItemsAtIndexPaths:)
+                                                withObject:[NSArray arrayWithObject:downloader.indexPath]
+                                             waitUntilDone:NO];
+    
     [resizedPanelDownloadsInProgress removeObjectForKey:downloader.indexPath];
+    
     
 #ifdef __DEBUG__
     NSLog(@"Finished resizing task %ld", (long)downloader.indexPath.item);

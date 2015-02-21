@@ -126,7 +126,10 @@
 
 - (void)collectionCoverDownloaderDidFinish:(CollectionCoverDownloader *)downloader
 {
-    [self.delegate reloadRowsAtIndexPaths:[NSArray arrayWithObject:downloader.indexPath]];
+    [(NSObject *)self.delegate performSelectorOnMainThread:@selector(reloadRowsAtIndexPaths:)
+                                                withObject:[NSArray arrayWithObject:downloader.indexPath]
+                                             waitUntilDone:NO];
+
     [collectionCoverDownloadsInProgress removeObjectForKey:downloader.indexPath];
     
 #ifdef __DEBUG__

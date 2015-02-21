@@ -32,9 +32,8 @@
         //Set image view
         _imageView = [UIImageView new];
         _imageView.contentMode = UIViewContentModeScaleAspectFill;
-        _imageView.clipsToBounds = YES;
         [self addSubview:_imageView];
-        
+
         _imageView.translatesAutoresizingMaskIntoConstraints = NO;
         [_imageView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self inset:kImageViewMargin];
         
@@ -71,7 +70,7 @@
     
     if (self.mosaicData.firstTimeShown) {
         self.mosaicData.firstTimeShown = NO;
-        millisecondsDelay = (arc4random() % 700) / 2000.0f;
+        millisecondsDelay = (arc4random() % 700) / 1000.0f;
     } else {
         millisecondsDelay = (arc4random() % 700) / 4000.0f;
     }
