@@ -295,15 +295,15 @@
 {
     Panel *panel = [[CollectionStore sharedStore].currentCollection panelAtIndex:indexPath.item];
     
+    if (!panel.hasFullSizeImage) {
+        return;
+    }
+    
     id tracker = [GAI sharedInstance].defaultTracker;
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                           action:@"panel_selection"
                                                            label:panel.panelId
                                                            value:nil] build]];
-    
-    if (!panel.hasFullSizeImage) {
-        return;
-    }
     
     selectedCell = (MosaicCell *)[collectionView cellForItemAtIndexPath:indexPath];
     

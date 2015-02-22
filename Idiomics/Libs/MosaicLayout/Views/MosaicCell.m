@@ -57,6 +57,18 @@
     self.imageView.image = nil;
 }
 
+- (void)setHighlighted:(BOOL)highlighted
+{
+    if (self.mosaicData.panel.hasFullSizeImage) {
+        
+        _imageView.alpha = 0.0;
+        [UIView animateWithDuration:AlphaTransitionDuration * 2 animations:^{
+            _imageView.alpha = 1.0;
+        }];
+    }
+    
+    [super setHighlighted:highlighted];
+}
 
 #pragma mark - Getters/setters
 
