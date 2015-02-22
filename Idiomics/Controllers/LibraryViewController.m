@@ -49,8 +49,6 @@
     [self.view addSubview:tv];
     tv.translatesAutoresizingMaskIntoConstraints = NO;
     [tv pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
-
-    [self loadAllCollections];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -66,51 +64,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-
-#pragma mark - Private methods
-
-- (void)loadAllCollections
-{
-    SuccessHandler successHandler = ^(NSURLSessionDataTask *operation, id responseObject) {
-        switch (((NSHTTPURLResponse *)operation.response).statusCode) {
-                
-            case 200:
-                //OK
-            {
-                for (NSDictionary *collection in responseObject) {
-                    
-                    Collection *u = [MTLJSONAdapter modelOfClass:Collection.class fromJSONDictionary:collection error:nil];
-                    [[CollectionStore sharedStore] addCollection:u];
-                };
-
-                [tv reloadData];
-                break;
-            }
-                
-            default:
-                break;
-        }
-    };
-    
-    ErrorHandler errorHandler = ^(NSURLSessionDataTask *operation, id responseObject) {
-        switch (((NSHTTPURLResponse *)operation.response).statusCode) {
-                
-            case 404:
-                [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"IDIOMICS_ERROR", @"Idiomics" , nil)
-                                delegate:nil];
-                break;
-                
-            default:
-                [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"IDIOMICS_ERROR", @"Idiomics" , nil)
-                                delegate:nil];
-                break;
-        }
-    };
-    
-    [[APIClient sharedConnection] getAllCollectionWithSuccessHandler:successHandler
-                                                        errorHandler:errorHandler];
 }
 
 
@@ -193,7 +146,7 @@
     CollectionViewCell *cell = (CollectionViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     [cell.mashupView setAlpha:1.0];
     
-    [[CollectionStore sharedStore] setCurrentCollection:[[CollectionStore sharedStore] collectionAtIndex:indexPath.row]];
+    [CollectionStore sharedStore].currentCollection = [[CollectionStore sharedStore] collectionAtIndex:indexPath.row];
     
     id tracker = [GAI sharedInstance].defaultTracker;
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
@@ -203,7 +156,7 @@
     
     CollectionViewController *uvc = [CollectionViewController new];
 
-    [[self navigationController] pushViewController:uvc animated:YES];
+    [self.navigationController pushViewController:uvc animated:YES];
 }
 
 

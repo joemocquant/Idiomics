@@ -7,11 +7,14 @@
 //
 
 #import "AppDelegate.h"
+#import "LibraryViewController.h"
+#import "CollectionStore.h"
+#import "Collection.h"
+#import "CollectionViewController.h"
+#import "APIClient.h"
+#import "Helper.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-#import "LibraryViewController.h"
-#import "MMSViewController.h"
-#import <UIImageView+AFNetworking.h>
 #import <GAI.h>
 #import <Instabug/Instabug.h>
 #import <Parse/Parse.h>
@@ -71,12 +74,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     // Override point for customization after application launch.
     
-    LibraryViewController *lvc = [LibraryViewController new];
+    [self loadAllCollections];
     
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:lvc];
-    //navController.interactivePopGestureRecognizer.enabled = NO;
-    
-    self.window.rootViewController = navController;
     [self.window makeKeyAndVisible];
 
     return YES;
@@ -113,6 +112,60 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
+#pragma mark - Private methods
+
+- (void)loadAllCollections
+{
+    SuccessHandler successHandler = ^(NSURLSessionDataTask *operation, id responseObject) {
+        switch (((NSHTTPURLResponse *)operation.response).statusCode) {
+                
+            case 200:
+                //OK
+            {
+                for (NSDictionary *collection in responseObject) {
+                    
+                    Collection *u = [MTLJSONAdapter modelOfClass:Collection.class fromJSONDictionary:collection error:nil];
+                    [[CollectionStore sharedStore] addCollection:u];
+                };
+                
+                [CollectionStore sharedStore].currentCollection = [[CollectionStore sharedStore] collectionAtIndex:0];
+                
+                LibraryViewController *lvc = [LibraryViewController new];
+                UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:lvc];
+                
+                CollectionViewController *uvc = [CollectionViewController new];
+                [navController pushViewController:uvc animated:NO];
+                
+                self.window.rootViewController = navController;
+                
+                break;
+            }
+                
+            default:
+                break;
+        }
+    };
+    
+    ErrorHandler errorHandler = ^(NSURLSessionDataTask *operation, id responseObject) {
+        switch (((NSHTTPURLResponse *)operation.response).statusCode) {
+                
+            case 404:
+                [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"IDIOMICS_ERROR", @"Idiomics" , nil)
+                                delegate:nil];
+                break;
+                
+            default:
+                [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"IDIOMICS_ERROR", @"Idiomics" , nil)
+                                delegate:nil];
+                break;
+        }
+    };
+    
+    [[APIClient sharedConnection] getAllCollectionWithSuccessHandler:successHandler
+                                                        errorHandler:errorHandler];
 }
 
 @end
