@@ -27,6 +27,7 @@ CGFloat DistanceMin = 20;
 CGFloat ScrollSpeedThreshold = 1.0;
 CGFloat VelocityThreshold = 3.0;
 CGFloat RelativeHeightRandomModifier = 0.25;
+CGFloat CollectionAllRatio = 1.5;
 
 //Panel
 const CGFloat AlphaBackground = 0.85;

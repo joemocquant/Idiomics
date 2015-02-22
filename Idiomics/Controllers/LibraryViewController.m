@@ -8,7 +8,6 @@
 
 #import "LibraryViewController.h"
 #import "CollectionViewController.h"
-#import "APIClient.h"
 #import "Helper.h"
 #import "Colors.h"
 #import "Collection.h"
@@ -18,10 +17,6 @@
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
 #import <Instabug.h>
-
-@interface LibraryViewController ()
-
-@end
 
 @implementation LibraryViewController
 
@@ -117,9 +112,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGRect screen = [UIScreen mainScreen].bounds;
+    CGFloat height;
     
     if ([Helper isIPhoneDevice]) {
-        return CGRectGetHeight(screen) / kRowsiPhonePortrait;
+        height = CGRectGetHeight(screen) / kRowsiPhonePortrait;
     } else {
         
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -127,24 +123,29 @@
         if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
             
             if (UIInterfaceOrientationIsPortrait(orientation)) {
-                return CGRectGetHeight(screen) / kRowsiPadPortrait;
+                height = CGRectGetHeight(screen) / kRowsiPadPortrait;
             } else {
-                return CGRectGetWidth(screen) / kRowsiPadLandscape;
+                height = CGRectGetWidth(screen) / kRowsiPadLandscape;
             }
         }
         
         if (UIInterfaceOrientationIsPortrait(orientation)) {
-            return CGRectGetHeight(screen) / kRowsiPadPortrait;
+            height = CGRectGetHeight(screen) / kRowsiPadPortrait;
         } else {
-            return CGRectGetHeight(screen) / kRowsiPadLandscape;
+            height = CGRectGetHeight(screen) / kRowsiPadLandscape;
         }
     }
+    
+    if (indexPath.row == 0)
+        height *= CollectionAllRatio;
+    
+    return height;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CollectionViewCell *cell = (CollectionViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    [cell.mashupView setAlpha:1.0];
+    cell.mashupView.alpha = 1.0;
     
     [CollectionStore sharedStore].currentCollection = [[CollectionStore sharedStore] collectionAtIndex:indexPath.row];
     

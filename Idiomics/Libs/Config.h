@@ -35,6 +35,7 @@ extern CGFloat DistanceMin;
 extern CGFloat ScrollSpeedThreshold;
 extern CGFloat VelocityThreshold;
 extern CGFloat RelativeHeightRandomModifier;
+extern CGFloat CollectionAllRatio;
 #define kDoubleColumnProbability 40
 #define kColumnsiPhonePortrait 2
 #define kColumnsiPadPortrait 3

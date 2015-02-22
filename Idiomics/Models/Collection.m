@@ -71,6 +71,10 @@
                      screen.size.width / kRowsiPadPortrait);
     }
     
+    if ([self.collectionId isEqualToString:@"ALL"]) {
+        height *= CollectionAllRatio;
+    }
+    
     return CGSizeMake(roundf(height * kMashupRatio),
                       roundf(height));
 }

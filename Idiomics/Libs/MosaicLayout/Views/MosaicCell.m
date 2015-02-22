@@ -59,6 +59,8 @@
 
 - (void)setHighlighted:(BOOL)highlighted
 {
+    [super setHighlighted:highlighted];
+    
     if (self.mosaicData.panel.hasFullSizeImage) {
         
         _imageView.alpha = 0.0;
@@ -66,8 +68,6 @@
             _imageView.alpha = 1.0;
         }];
     }
-    
-    [super setHighlighted:highlighted];
 }
 
 #pragma mark - Getters/setters

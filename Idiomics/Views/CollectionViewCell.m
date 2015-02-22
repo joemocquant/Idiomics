@@ -71,6 +71,12 @@
     [separatorBottom constrainToHeight:SeparatorHeight];
 }
 
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+{
+    [super setHighlighted:highlighted animated:animated];
+    
+    _mashupView.alpha = 1.0;
+}
 
 #pragma mark - UIScrollviewDelegate
 
