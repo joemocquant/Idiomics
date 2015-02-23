@@ -86,17 +86,18 @@ DEPENDENCIES:
   - libextobjc
   - Mantle
   - Parse
-  - PulsingHalo (from `https://github.com/shu223/PulsingHalo.git`)
+  - PulsingHalo (from `https://github.com/shu223/PulsingHalo.git`, commit `f8362bea1745e24ed828c15dff4e06f19b0b67c2`)
   - RXCollections
   - UIView-Autolayout
 
 EXTERNAL SOURCES:
   PulsingHalo:
+    :commit: f8362bea1745e24ed828c15dff4e06f19b0b67c2
     :git: https://github.com/shu223/PulsingHalo.git
 
 CHECKOUT OPTIONS:
   PulsingHalo:
-    :commit: f3dbe609e6f0c15729d5abe9ec547318763481d7
+    :commit: f8362bea1745e24ed828c15dff4e06f19b0b67c2
     :git: https://github.com/shu223/PulsingHalo.git
 
 SPEC CHECKSUMS:

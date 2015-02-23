@@ -101,6 +101,7 @@
     panelImageView.contentScaleFactor = 2;
     panelImageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
     panelImageView.center = CGPointMake(contentSize.width / 2, contentSize.height / 2);
+    panelImageView.userInteractionEnabled = YES;
     [panelView addSubview:panelImageView];
     
     balloonsOverlay = [[BalloonsOverlay alloc] initWithPanel:panel];

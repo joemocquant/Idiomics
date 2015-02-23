@@ -213,9 +213,7 @@
 		01E4B4771A3A84540070506E /* Fonts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fonts.h; sourceTree = "<group>"; };
 		01E4B4781A3A84540070506E /* Fonts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fonts.m; sourceTree = "<group>"; };
 		5DD3572DAF72C89C3E0155A2 /* libPods-Idiomics.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Idiomics.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6C396B74B2D02B54D222D227 /* Pods-Idiomics.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Idiomics.release.xcconfig"; path = "Pods/Target Support Files/Pods-Idiomics/Pods-Idiomics.release.xcconfig"; sourceTree = "<group>"; };
 		935502890BF92886D987540D /* libPods-Idiomics_Local.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Idiomics_Local.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9E337EF48D37EFBB00672C43 /* Pods-Idiomics.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Idiomics.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Idiomics/Pods-Idiomics.debug.xcconfig"; sourceTree = "<group>"; };
 		B047A9E82BA0EB3A3BF4BDA7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C261360948BE75C1922FFB12 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D5CAA6471195134779528CD9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -501,8 +499,6 @@
 		FD69EDC324BD24993A69A423 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				9E337EF48D37EFBB00672C43 /* Pods-Idiomics.debug.xcconfig */,
-				6C396B74B2D02B54D222D227 /* Pods-Idiomics.release.xcconfig */,
 				C261360948BE75C1922FFB12 /* Pods.debug.xcconfig */,
 				B047A9E82BA0EB3A3BF4BDA7 /* Pods.release.xcconfig */,
 			);

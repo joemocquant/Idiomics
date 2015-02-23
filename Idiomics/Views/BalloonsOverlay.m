@@ -32,7 +32,7 @@
     self = [super init];
     
     if (self) {
-        
+                
         _focus = -1;
         
         focusOverlaysView = [UIView new];
