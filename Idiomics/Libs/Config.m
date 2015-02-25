@@ -10,7 +10,7 @@
 
 //MosaicCell
 const CGFloat MosaicBorderWidth = 0.8;
-const NSTimeInterval AlphaTransitionDuration = 0.2;
+const NSTimeInterval AlphaTransitionDuration = 0.4;
 
 //Transition
 const NSTimeInterval TransitionDuration = 0.2;

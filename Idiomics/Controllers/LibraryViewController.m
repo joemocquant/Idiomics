@@ -14,6 +14,7 @@
 #import "CollectionStore.h"
 #import "CollectionViewCell.h"
 #import <UIView+AutoLayout.h>
+#import <UIImageView+AFNetworking.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
 #import <Instabug.h>
@@ -53,6 +54,7 @@
     NSIndexPath *selectedIndexPath = [tv indexPathForSelectedRow];
     CollectionViewCell *cell = (CollectionViewCell *)[tv cellForRowAtIndexPath:selectedIndexPath];
     cell.mashupView.alpha = MashupAlpha;
+    cell.iconView.alpha = 1.0;
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,27 +74,23 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CollectionViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LibraryCellId];
-
+    
     if (cell == nil) {
-        cell = [[CollectionViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:LibraryCellId];
+        cell = [[CollectionViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:LibraryCellId];
     }
     
     Collection *collection = [[CollectionStore sharedStore] collectionAtIndex:indexPath.row];
     cell.contentView.backgroundColor = collection.averageColor;
-    cell.mashupView.image = nil;
+    
+    [cell.iconView setImageWithURL:[NSURL URLWithString:collection.iconUrl]];
     
     if (collection.hasCoverImage) {
         
-        cell.mashupView.alpha = 0;
         cell.mashupView.image = [collection coverImage];
-        
-        float millisecondsDelay = (arc4random() % 700) / 2000.0f;
 
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, millisecondsDelay * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [UIView animateWithDuration:AlphaTransitionDuration animations:^{
-                cell.mashupView.alpha = MashupAlpha;
-            }];
-        });
+        [UIView animateWithDuration:AlphaTransitionDuration animations:^{
+            cell.mashupView.alpha = MashupAlpha;
+        }];
 
     } else if (collection.isFailed) {
         
@@ -144,9 +142,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CollectionViewCell *cell = (CollectionViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    cell.mashupView.alpha = 1.0;
-    
     [CollectionStore sharedStore].currentCollection = [[CollectionStore sharedStore] collectionAtIndex:indexPath.row];
     
     id tracker = [GAI sharedInstance].defaultTracker;

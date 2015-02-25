@@ -40,14 +40,26 @@
     [Parse setApplicationId:@"FQW9xYrzMVm382ChHgZw7Cw60JiCawENF1zNrfZo"
                   clientKey:@"BbXkgpooMLLLAFVaod9sdZAqHDPk7qbtKDjGgzQ3"];
     
-    // Register for Push Notitications
-    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
-                                                    UIUserNotificationTypeBadge |
-                                                    UIUserNotificationTypeSound);
-    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
-                                                                             categories:nil];
-    [application registerUserNotificationSettings:settings];
-    [application registerForRemoteNotifications];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+        
+        // Register for Push Notitications
+        UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                        UIUserNotificationTypeBadge |
+                                                        UIUserNotificationTypeSound);
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+                                                                                 categories:nil];
+        
+        [application registerUserNotificationSettings:settings];
+        [application registerForRemoteNotifications];
+        
+    } else {
+        
+        UIRemoteNotificationType remoteNotificationTypes = (UIRemoteNotificationTypeAlert |
+                                                            UIRemoteNotificationTypeBadge |
+                                                            UIRemoteNotificationTypeSound);
+        
+        [application registerForRemoteNotificationTypes:remoteNotificationTypes];
+    }
 
     
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:NSURLCacheMemoryCapacity
@@ -75,7 +87,6 @@
     // Override point for customization after application launch.
     
     [self loadAllCollections];
-    
     [self.window makeKeyAndVisible];
 
     return YES;
