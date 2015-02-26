@@ -12,11 +12,15 @@
 
 @implementation CollectionViewCell
 
+
+#pragma mark - Lifecycle
+
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
+
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setupMashupScrollView];
         [self setupSeparators];
@@ -40,7 +44,6 @@
     
     _mashupView = [UIImageView new];
     _mashupView.contentMode = UIViewContentModeScaleAspectFill;
-    _mashupView.alpha = MashupAlpha;
     
     [mashupScrollView addSubview:_mashupView];
     _mashupView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -87,9 +90,8 @@
         _mashupView.alpha = 1.0;
         _iconView.alpha = 0.0;
     } else {
-       // _mashupView.alpha = MashupAlpha;
-       // _iconView.alpha = 1.0;
-
+       _mashupView.alpha = self.mashupAlpha;
+        _iconView.alpha = 1.0;
     }
 }
 
@@ -103,6 +105,7 @@
     _iconView.alpha = 1.0;
 }
 
+
 #pragma mark - UIScrollviewDelegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
@@ -114,14 +117,14 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if (!decelerate) {
-        _mashupView.alpha = MashupAlpha;
+        _mashupView.alpha = self.mashupAlpha;
         _iconView.alpha = 1.0;
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    _mashupView.alpha = MashupAlpha;
+    _mashupView.alpha = self.mashupAlpha;
     _iconView.alpha = 1.0;
 }
 

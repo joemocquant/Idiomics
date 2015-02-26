@@ -53,7 +53,8 @@
     
     NSIndexPath *selectedIndexPath = [tv indexPathForSelectedRow];
     CollectionViewCell *cell = (CollectionViewCell *)[tv cellForRowAtIndexPath:selectedIndexPath];
-    cell.mashupView.alpha = MashupAlpha;
+    
+    cell.mashupView.alpha = cell.mashupAlpha;
     cell.iconView.alpha = 1.0;
 }
 
@@ -79,6 +80,12 @@
         cell = [[CollectionViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:LibraryCellId];
     }
     
+    if (indexPath.row == 0) {
+        cell.mashupAlpha = MashupAlphaAll;
+    } else {
+        cell.mashupAlpha = MashupAlpha;
+    }
+    
     Collection *collection = [[CollectionStore sharedStore] collectionAtIndex:indexPath.row];
     cell.contentView.backgroundColor = collection.averageColor;
     
@@ -89,7 +96,7 @@
         cell.mashupView.image = [collection coverImage];
 
         [UIView animateWithDuration:AlphaTransitionDuration animations:^{
-            cell.mashupView.alpha = MashupAlpha;
+            cell.mashupView.alpha = cell.mashupAlpha;
         }];
 
     } else if (collection.isFailed) {
@@ -105,7 +112,7 @@
 }
 
 
-#pragma mark - UITableViewDelefate
+#pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -114,6 +121,7 @@
     
     if ([Helper isIPhoneDevice]) {
         height = CGRectGetHeight(screen) / kRowsiPhonePortrait;
+        
     } else {
         
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -134,8 +142,9 @@
         }
     }
     
-    if (indexPath.row == 0)
+    if (indexPath.row == 0) {
         height *= CollectionAllRatio;
+    }
     
     return height;
 }

@@ -23,6 +23,7 @@ extern const NSTimeInterval TransitionDuration;
 extern NSString *const LibraryCellId;
 extern CGFloat SeparatorHeight;
 extern CGFloat MashupAlpha;
+extern CGFloat MashupAlphaAll;
 #define kRowsiPhonePortrait 4
 #define kRowsiPadPortrait 4
 #define kRowsiPadLandscape 3

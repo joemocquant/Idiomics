@@ -19,6 +19,7 @@ const NSTimeInterval TransitionDuration = 0.2;
 NSString *const LibraryCellId = @"LibraryCellId";
 CGFloat SeparatorHeight = 2;
 CGFloat MashupAlpha = 0.3;
+CGFloat MashupAlphaAll = 0.7;
 
 //Collection
 NSString *const CellIdentifier = @"cell";
