@@ -59,9 +59,7 @@
                                                                      name:@"collection_cover"
                                                                     label:collection.collectionId] build]];
             
-            [(NSObject *)self.delegate performSelectorOnMainThread:@selector(collectionCoverDownloaderDidFinish:)
-                                                        withObject:self
-                                                     waitUntilDone:NO];
+            [self.delegate collectionCoverDownloaderDidFinish:self];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
@@ -74,10 +72,10 @@
 
 #pragma mark - NSURLConnectionDataDelegate
 
-- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
-                  willCacheResponse:(NSCachedURLResponse *)cachedResponse
-{
-    return nil;
-}
+//- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
+//                  willCacheResponse:(NSCachedURLResponse *)cachedResponse
+//{
+//    return nil;
+//}
 
 @end

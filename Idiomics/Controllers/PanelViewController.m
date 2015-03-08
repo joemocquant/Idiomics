@@ -98,9 +98,10 @@
     [panelScrollView addSubview:panelView];
     
     panelImageView = [[UIImageView alloc] initWithImage:image];
-    panelImageView.contentScaleFactor = 2;
+    //panelImageView.contentScaleFactor = 2;
     panelImageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
     panelImageView.center = CGPointMake(contentSize.width / 2, contentSize.height / 2);
+    panelImageView.userInteractionEnabled = YES;
     [panelView addSubview:panelImageView];
     
     balloonsOverlay = [[BalloonsOverlay alloc] initWithPanel:panel];
@@ -416,7 +417,7 @@
 
 - (void)focusOnBalloon
 {
-    CGRect balloon = ((Balloon *)panel.balloons[balloonsOverlay.focus]).boundsRect;
+    CGRect balloon = ((Balloon *)panel.balloons[balloonsOverlay.focus]).outsideRect;
     CGRect balloonInView = [self.view convertRect:balloon fromView:panelImageView];
     
     CGFloat y = balloonInView.origin.y + balloonInView.size.height;

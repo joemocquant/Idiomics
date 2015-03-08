@@ -7,11 +7,14 @@
 //
 
 #import "AppDelegate.h"
+#import "LibraryViewController.h"
+#import "CollectionStore.h"
+#import "Collection.h"
+#import "CollectionViewController.h"
+#import "APIClient.h"
+#import "Helper.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-#import "LibraryViewController.h"
-#import "MMSViewController.h"
-#import <UIImageView+AFNetworking.h>
 #import <GAI.h>
 #import <Instabug/Instabug.h>
 #import <Parse/Parse.h>
@@ -37,14 +40,26 @@
     [Parse setApplicationId:@"FQW9xYrzMVm382ChHgZw7Cw60JiCawENF1zNrfZo"
                   clientKey:@"BbXkgpooMLLLAFVaod9sdZAqHDPk7qbtKDjGgzQ3"];
     
-    // Register for Push Notitications
-    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
-                                                    UIUserNotificationTypeBadge |
-                                                    UIUserNotificationTypeSound);
-    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
-                                                                             categories:nil];
-    [application registerUserNotificationSettings:settings];
-    [application registerForRemoteNotifications];
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+        
+        // Register for Push Notitications
+        UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                        UIUserNotificationTypeBadge |
+                                                        UIUserNotificationTypeSound);
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+                                                                                 categories:nil];
+        
+        [application registerUserNotificationSettings:settings];
+        [application registerForRemoteNotifications];
+        
+    } else {
+        
+        UIRemoteNotificationType remoteNotificationTypes = (UIRemoteNotificationTypeAlert |
+                                                            UIRemoteNotificationTypeBadge |
+                                                            UIRemoteNotificationTypeSound);
+        
+        [application registerForRemoteNotificationTypes:remoteNotificationTypes];
+    }
 
     
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:NSURLCacheMemoryCapacity
@@ -71,12 +86,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     // Override point for customization after application launch.
     
-    LibraryViewController *lvc = [LibraryViewController new];
-    
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:lvc];
-    //navController.interactivePopGestureRecognizer.enabled = NO;
-    
-    self.window.rootViewController = navController;
+    [self loadAllCollections];
     [self.window makeKeyAndVisible];
 
     return YES;
@@ -113,6 +123,60 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
+#pragma mark - Private methods
+
+- (void)loadAllCollections
+{
+    SuccessHandler successHandler = ^(NSURLSessionDataTask *operation, id responseObject) {
+        switch (((NSHTTPURLResponse *)operation.response).statusCode) {
+                
+            case 200:
+                //OK
+            {
+                for (NSDictionary *collection in responseObject) {
+                    
+                    Collection *u = [MTLJSONAdapter modelOfClass:Collection.class fromJSONDictionary:collection error:nil];
+                    [[CollectionStore sharedStore] addCollection:u];
+                };
+                
+                [CollectionStore sharedStore].currentCollection = [[CollectionStore sharedStore] collectionAtIndex:0];
+                
+                LibraryViewController *lvc = [LibraryViewController new];
+                UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:lvc];
+                
+                CollectionViewController *uvc = [CollectionViewController new];
+                [navController pushViewController:uvc animated:NO];
+                
+                self.window.rootViewController = navController;
+                
+                break;
+            }
+                
+            default:
+                break;
+        }
+    };
+    
+    ErrorHandler errorHandler = ^(NSURLSessionDataTask *operation, id responseObject) {
+        switch (((NSHTTPURLResponse *)operation.response).statusCode) {
+                
+            case 404:
+                [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"IDIOMICS_ERROR", @"Idiomics" , nil)
+                                delegate:nil];
+                break;
+                
+            default:
+                [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"IDIOMICS_ERROR", @"Idiomics" , nil)
+                                delegate:nil];
+                break;
+        }
+    };
+    
+    [[APIClient sharedConnection] getAllCollectionWithSuccessHandler:successHandler
+                                                        errorHandler:errorHandler];
 }
 
 @end

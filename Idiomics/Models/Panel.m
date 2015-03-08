@@ -13,16 +13,6 @@
 #import <UIImageView+AFNetworking.h>
 #import <AFNetworking.h>
 
-@interface Panel ()
-
-@property (nonatomic, copy, readwrite) NSString *panelId;
-@property (nonatomic, assign, readwrite) CGSize dimensions;
-@property (nonatomic, copy, readwrite) NSString *imageUrl;
-@property (nonatomic, copy, readwrite) NSArray *balloons;
-@property (nonatomic, copy, readwrite) UIColor *averageColor;
-
-@end
-
 @implementation Panel
 
 
@@ -30,12 +20,17 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey
 {
-    return @{@"panelId": @"_id",
-             @"dimensions": @"dimensions",
+    return @{@"panelId": @"id",
              @"imageUrl": @"image_url",
-             @"balloons": @"balloons",
-             @"averageColor": @"avg_color"
+             @"averageColor": @"avg_color",
+             @"dimensions": @"dimensions",
+             @"balloons": @"balloons"
              };
+}
+
++ (NSValueTransformer *)averageColorJSONTransformer
+{
+    return [MTLValueTransformer valueTransformerForName:ColorTransformerName];
 }
 
 + (NSValueTransformer *)dimensionsJSONTransformer
@@ -55,11 +50,6 @@
 + (NSValueTransformer *)balloonsJSONTransformer
 {
     return [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:Balloon.class];
-}
-
-+ (NSValueTransformer *)averageColorJSONTransformer
-{
-    return [MTLValueTransformer valueTransformerForName:ColorTransformerName];
 }
 
 

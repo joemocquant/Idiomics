@@ -8,6 +8,7 @@
 
 #import "ResizedPanelDownloader.h"
 #import "Panel.h"
+#import "UIImage+Tools.h"
 #import <extobjc.h>
 #import <UIImageView+AFNetworking.h>
 #import <GAI.h>
@@ -48,8 +49,9 @@
         [self setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
             @strongify(self)
             
-            self.downloadedImage = responseObject;
-            [[UIImageView sharedImageCache] cacheImage:responseObject forRequest:urlRequest];
+            self.downloadedImage = (UIImage *)responseObject;
+            
+            [[UIImageView sharedImageCache] cacheImage:self.downloadedImage forRequest:urlRequest];
             
             NSInteger elapsed = trackingIntervalStart.timeIntervalSinceNow * -1 * 1000;
             id tracker = [GAI sharedInstance].defaultTracker;
@@ -58,9 +60,7 @@
                                                                      name:@"resized_panel"
                                                                     label:panel.panelId] build]];
             
-            [(NSObject *)self.delegate performSelectorOnMainThread:@selector(resizedPanelDownloaderDidFinish:)
-                                                        withObject:self
-                                                     waitUntilDone:NO];
+            [self.delegate resizedPanelDownloaderDidFinish:self];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
@@ -73,10 +73,10 @@
 
 #pragma mark - NSURLConnectionDataDelegate
 
-- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
-                  willCacheResponse:(NSCachedURLResponse *)cachedResponse
-{
-    return nil;
-}
+//- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
+//                  willCacheResponse:(NSCachedURLResponse *)cachedResponse
+//{
+//    return nil;
+//}
 
 @end

@@ -10,7 +10,7 @@
 
 //MosaicCell
 const CGFloat MosaicBorderWidth = 0.8;
-const NSTimeInterval AlphaTransitionDuration = 0.2;
+const NSTimeInterval AlphaTransitionDuration = 0.4;
 
 //Transition
 const NSTimeInterval TransitionDuration = 0.2;
@@ -19,6 +19,7 @@ const NSTimeInterval TransitionDuration = 0.2;
 NSString *const LibraryCellId = @"LibraryCellId";
 CGFloat SeparatorHeight = 2;
 CGFloat MashupAlpha = 0.3;
+CGFloat MashupAlphaAll = 0.7;
 
 //Collection
 NSString *const CellIdentifier = @"cell";
@@ -27,6 +28,7 @@ CGFloat DistanceMin = 20;
 CGFloat ScrollSpeedThreshold = 1.0;
 CGFloat VelocityThreshold = 3.0;
 CGFloat RelativeHeightRandomModifier = 0.25;
+CGFloat CollectionAllRatio = 1.5;
 
 //Panel
 const CGFloat AlphaBackground = 0.85;

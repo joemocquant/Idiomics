@@ -8,20 +8,16 @@
 
 #import "LibraryViewController.h"
 #import "CollectionViewController.h"
-#import "APIClient.h"
 #import "Helper.h"
 #import "Colors.h"
 #import "Collection.h"
 #import "CollectionStore.h"
 #import "CollectionViewCell.h"
 #import <UIView+AutoLayout.h>
+#import <UIImageView+AFNetworking.h>
 #import <GAI.h>
 #import <GAIDictionaryBuilder.h>
 #import <Instabug.h>
-
-@interface LibraryViewController ()
-
-@end
 
 @implementation LibraryViewController
 
@@ -49,8 +45,6 @@
     [self.view addSubview:tv];
     tv.translatesAutoresizingMaskIntoConstraints = NO;
     [tv pinEdges:JRTViewPinAllEdges toSameEdgesOfView:self.view];
-
-    [self loadAllCollections];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -59,60 +53,15 @@
     
     NSIndexPath *selectedIndexPath = [tv indexPathForSelectedRow];
     CollectionViewCell *cell = (CollectionViewCell *)[tv cellForRowAtIndexPath:selectedIndexPath];
-    cell.mashupView.alpha = MashupAlpha;
+    
+    cell.mashupView.alpha = cell.mashupAlpha;
+    cell.iconView.alpha = 1.0;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-
-#pragma mark - Private methods
-
-- (void)loadAllCollections
-{
-    SuccessHandler successHandler = ^(NSURLSessionDataTask *operation, id responseObject) {
-        switch (((NSHTTPURLResponse *)operation.response).statusCode) {
-                
-            case 200:
-                //OK
-            {
-                NSArray *collections = [[responseObject objectForKey:@"rows"] valueForKey:@"value"];
-                
-                for (NSDictionary *collection in collections) {
-                    
-                    Collection *u = [MTLJSONAdapter modelOfClass:Collection.class fromJSONDictionary:collection error:nil];
-                    [[CollectionStore sharedStore] addCollection:u];
-                };
-
-                [tv reloadData];
-                break;
-            }
-                
-            default:
-                break;
-        }
-    };
-    
-    ErrorHandler errorHandler = ^(NSURLSessionDataTask *operation, id responseObject) {
-        switch (((NSHTTPURLResponse *)operation.response).statusCode) {
-                
-            case 404:
-                [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"IDIOMICS_ERROR", @"Idiomics" , nil)
-                                delegate:nil];
-                break;
-                
-            default:
-                [Helper showErrorWithMsg:NSLocalizedStringFromTable(@"IDIOMICS_ERROR", @"Idiomics" , nil)
-                                delegate:nil];
-                break;
-        }
-    };
-    
-    [[APIClient sharedConnection] getAllCollectionWithSuccessHandler:successHandler
-                                                        errorHandler:errorHandler];
 }
 
 
@@ -126,27 +75,29 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CollectionViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LibraryCellId];
-
+    
     if (cell == nil) {
-        cell = [[CollectionViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:LibraryCellId];
+        cell = [[CollectionViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:LibraryCellId];
+    }
+    
+    if (indexPath.row == 0) {
+        cell.mashupAlpha = MashupAlphaAll;
+    } else {
+        cell.mashupAlpha = MashupAlpha;
     }
     
     Collection *collection = [[CollectionStore sharedStore] collectionAtIndex:indexPath.row];
     cell.contentView.backgroundColor = collection.averageColor;
-    cell.mashupView.image = nil;
+    
+    [cell.iconView setImageWithURL:[NSURL URLWithString:collection.iconUrl]];
     
     if (collection.hasCoverImage) {
         
-        cell.mashupView.alpha = 0;
         cell.mashupView.image = [collection coverImage];
-        
-        float millisecondsDelay = (arc4random() % 700) / 2000.0f;
 
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, millisecondsDelay * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [UIView animateWithDuration:AlphaTransitionDuration animations:^{
-                cell.mashupView.alpha = MashupAlpha;
-            }];
-        });
+        [UIView animateWithDuration:AlphaTransitionDuration animations:^{
+            cell.mashupView.alpha = cell.mashupAlpha;
+        }];
 
     } else if (collection.isFailed) {
         
@@ -161,14 +112,16 @@
 }
 
 
-#pragma mark - UITableViewDelefate
+#pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGRect screen = [UIScreen mainScreen].bounds;
+    CGFloat height;
     
     if ([Helper isIPhoneDevice]) {
-        return CGRectGetHeight(screen) / kRowsiPhonePortrait;
+        height = CGRectGetHeight(screen) / kRowsiPhonePortrait;
+        
     } else {
         
         UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -176,26 +129,29 @@
         if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
             
             if (UIInterfaceOrientationIsPortrait(orientation)) {
-                return CGRectGetHeight(screen) / kRowsiPadPortrait;
+                height = CGRectGetHeight(screen) / kRowsiPadPortrait;
             } else {
-                return CGRectGetWidth(screen) / kRowsiPadLandscape;
+                height = CGRectGetWidth(screen) / kRowsiPadLandscape;
             }
         }
         
         if (UIInterfaceOrientationIsPortrait(orientation)) {
-            return CGRectGetHeight(screen) / kRowsiPadPortrait;
+            height = CGRectGetHeight(screen) / kRowsiPadPortrait;
         } else {
-            return CGRectGetHeight(screen) / kRowsiPadLandscape;
+            height = CGRectGetHeight(screen) / kRowsiPadLandscape;
         }
     }
+    
+    if (indexPath.row == 0) {
+        height *= CollectionAllRatio;
+    }
+    
+    return height;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CollectionViewCell *cell = (CollectionViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    [cell.mashupView setAlpha:1.0];
-    
-    [[CollectionStore sharedStore] setCurrentCollection:[[CollectionStore sharedStore] collectionAtIndex:indexPath.row]];
+    [CollectionStore sharedStore].currentCollection = [[CollectionStore sharedStore] collectionAtIndex:indexPath.row];
     
     id tracker = [GAI sharedInstance].defaultTracker;
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
@@ -205,7 +161,7 @@
     
     CollectionViewController *uvc = [CollectionViewController new];
 
-    [[self navigationController] pushViewController:uvc animated:YES];
+    [self.navigationController pushViewController:uvc animated:YES];
 }
 
 

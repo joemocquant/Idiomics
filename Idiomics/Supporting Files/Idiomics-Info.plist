@@ -19,7 +19,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>14</string>
+	<string>16</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -35,9 +35,9 @@
 		</array>
 	</dict>
 	<key>Idiomics-API-URL</key>
-	<string>http://api.content.idiomicsapp.com</string>
+	<string>http://api.idiomicsapp.com/v1</string>
 	<key>ImageProxy-Server-URL</key>
-	<string>http://images.idiomicsapp.com</string>
+	<string>http://ids.idiomicsapp.com</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>

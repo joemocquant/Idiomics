@@ -23,6 +23,7 @@ extern const NSTimeInterval TransitionDuration;
 extern NSString *const LibraryCellId;
 extern CGFloat SeparatorHeight;
 extern CGFloat MashupAlpha;
+extern CGFloat MashupAlphaAll;
 #define kRowsiPhonePortrait 4
 #define kRowsiPadPortrait 4
 #define kRowsiPadLandscape 3
@@ -35,6 +36,7 @@ extern CGFloat DistanceMin;
 extern CGFloat ScrollSpeedThreshold;
 extern CGFloat VelocityThreshold;
 extern CGFloat RelativeHeightRandomModifier;
+extern CGFloat CollectionAllRatio;
 #define kDoubleColumnProbability 40
 #define kColumnsiPhonePortrait 2
 #define kColumnsiPadPortrait 3

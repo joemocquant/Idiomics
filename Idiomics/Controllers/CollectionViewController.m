@@ -131,7 +131,7 @@
             case 200:
                 //OK
             {
-                NSMutableArray *panels =  [NSMutableArray arrayWithArray:[[responseObject objectForKey:@"rows"] valueForKey:@"value"]];
+                NSMutableArray *panels = [NSMutableArray arrayWithArray:responseObject];
                 [panels shuffle];
                 
                 for (NSDictionary *panel in panels) {
@@ -252,7 +252,7 @@
 {
     MosaicCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier
                                                                  forIndexPath:indexPath];
-
+    
     Panel *panel = [[CollectionStore sharedStore].currentCollection panelAtIndex:indexPath.item];
     
     cell.backgroundColor = panel.averageColor;
@@ -262,7 +262,7 @@
 #ifdef __DEBUG__
         NSLog(@"Accessing in memorry resource (resized task %ld)", (long)indexPath.item);
 #endif
-        
+
         cell.mosaicData = [mosaicDatas objectAtIndex:indexPath.item];
 
     } else if (panel.isFailed) {
@@ -272,7 +272,10 @@
         
     } else {
         if (!collectionView.dragging) {
-            [panelOperations startOperationsForPanel:panel atIndexPath:indexPath];
+
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [panelOperations startOperationsForPanel:panel atIndexPath:indexPath];
+            });
         }
     }
 
@@ -292,15 +295,15 @@
 {
     Panel *panel = [[CollectionStore sharedStore].currentCollection panelAtIndex:indexPath.item];
     
+    if (!panel.hasFullSizeImage) {
+        return;
+    }
+    
     id tracker = [GAI sharedInstance].defaultTracker;
     [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"ui_action"
                                                           action:@"panel_selection"
                                                            label:panel.panelId
                                                            value:nil] build]];
-    
-    if (!panel.hasFullSizeImage) {
-        return;
-    }
     
     selectedCell = (MosaicCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
@@ -351,8 +354,11 @@
             isScrollingFast = YES;
         } else {
             isScrollingFast = NO;
-            [panelOperations loadPanelsForIndexPaths:[cv indexPathsForVisibleItems]];
-            [panelOperations resumeAllOperations];
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [panelOperations loadPanelsForIndexPaths:[cv indexPathsForVisibleItems]];
+                [panelOperations resumeAllOperations];
+            });
         }
         
         lastOffset = currentOffset;
@@ -362,8 +368,10 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    [panelOperations loadPanelsForIndexPaths:[cv indexPathsForVisibleItems]];
-    [panelOperations resumeAllOperations];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [panelOperations loadPanelsForIndexPaths:[cv indexPathsForVisibleItems]];
+        [panelOperations resumeAllOperations];
+    });
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
@@ -371,14 +379,18 @@
               targetContentOffset:(inout CGPoint *)targetContentOffset
 {
     if (velocity.x >= VelocityThreshold) {
-        [panelOperations suspendAllOperations];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [panelOperations suspendAllOperations];
+        });
     }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    [panelOperations loadPanelsForIndexPaths:[cv indexPathsForVisibleItems]];
-    [panelOperations resumeAllOperations];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [panelOperations loadPanelsForIndexPaths:[cv indexPathsForVisibleItems]];
+        [panelOperations resumeAllOperations];
+    });
 }
 
 

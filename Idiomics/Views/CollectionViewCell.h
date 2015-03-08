@@ -15,5 +15,7 @@
 }
 
 @property (nonatomic, readonly, strong) UIImageView *mashupView;
+@property (nonatomic, readwrite, strong) UIImageView *iconView;
+@property (nonatomic, readwrite, assign) CGFloat mashupAlpha;
 
 @end

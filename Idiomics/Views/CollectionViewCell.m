@@ -12,11 +12,15 @@
 
 @implementation CollectionViewCell
 
+
+#pragma mark - Lifecycle
+
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
+
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setupMashupScrollView];
         [self setupSeparators];
@@ -45,7 +49,14 @@
     _mashupView.translatesAutoresizingMaskIntoConstraints = NO;
     [_mashupView pinEdges:JRTViewPinAllEdges toSameEdgesOfView:mashupScrollView];
     
-    _mashupView.alpha = MashupAlpha;
+    _iconView = [UIImageView new];
+    _iconView.contentMode = UIViewContentModeScaleAspectFill;
+    [self.contentView insertSubview:_iconView aboveSubview:_mashupView];
+    
+    _iconView.translatesAutoresizingMaskIntoConstraints = NO;
+    [_iconView pinAttribute:NSLayoutAttributeCenterX toAttribute:NSLayoutAttributeCenterX ofItem:self.contentView];
+    [_iconView pinAttribute:NSLayoutAttributeCenterY toAttribute:NSLayoutAttributeCenterY ofItem:self.contentView];
+    [_iconView constrainToSize:CGSizeMake(100, 100)];
 }
 
 - (void)setupSeparators
@@ -71,24 +82,50 @@
     [separatorBottom constrainToHeight:SeparatorHeight];
 }
 
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+{
+    [super setHighlighted:highlighted animated:animated];
+    
+    if (highlighted) {
+        _mashupView.alpha = 1.0;
+        _iconView.alpha = 0.0;
+    } else {
+       _mashupView.alpha = self.mashupAlpha;
+        _iconView.alpha = 1.0;
+    }
+}
+
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    
+    _mashupView.image = nil;
+    _mashupView.alpha = 0;
+    _iconView.image = nil;
+    _iconView.alpha = 1.0;
+}
+
 
 #pragma mark - UIScrollviewDelegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     _mashupView.alpha = 1.0;
+    _iconView.alpha = 0.0;
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if (!decelerate) {
-        _mashupView.alpha = MashupAlpha;
+        _mashupView.alpha = self.mashupAlpha;
+        _iconView.alpha = 1.0;
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    _mashupView.alpha = MashupAlpha;
+    _mashupView.alpha = self.mashupAlpha;
+    _iconView.alpha = 1.0;
 }
 
 @end

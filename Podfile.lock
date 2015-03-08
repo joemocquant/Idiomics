@@ -70,7 +70,7 @@ PODS:
   - Mantle (1.5.4):
     - Mantle/extobjc (= 1.5.4)
   - Mantle/extobjc (1.5.4)
-  - Parse (1.6.2):
+  - Parse (1.6.3):
     - Bolts (~> 1.1)
   - PulsingHalo (0.0.4)
   - RXCollections (1.0)
@@ -86,17 +86,18 @@ DEPENDENCIES:
   - libextobjc
   - Mantle
   - Parse
-  - PulsingHalo (from `https://github.com/shu223/PulsingHalo.git`)
+  - PulsingHalo (from `https://github.com/shu223/PulsingHalo.git`, commit `f8362bea1745e24ed828c15dff4e06f19b0b67c2`)
   - RXCollections
   - UIView-Autolayout
 
 EXTERNAL SOURCES:
   PulsingHalo:
+    :commit: f8362bea1745e24ed828c15dff4e06f19b0b67c2
     :git: https://github.com/shu223/PulsingHalo.git
 
 CHECKOUT OPTIONS:
   PulsingHalo:
-    :commit: ebea8ca6098ead43cbb07a54cf357bf3120048a0
+    :commit: f8362bea1745e24ed828c15dff4e06f19b0b67c2
     :git: https://github.com/shu223/PulsingHalo.git
 
 SPEC CHECKSUMS:
@@ -109,7 +110,7 @@ SPEC CHECKSUMS:
   Instabug: d685b75d41100d9914262190fb3acae33c354e77
   libextobjc: d6146fce3ebea986b7f75fcb4c967639200b88b0
   Mantle: d5fbaf30fbc58031223af13812c060e15934a1fe
-  Parse: 60d65108fe39da77ec16c9e51d74b4d296b21424
+  Parse: f725f76ef200c5127420690fc6882e57c3813923
   PulsingHalo: 91a96da0e0008202039f0faf7368ed9b8b575222
   RXCollections: 96cbe2ebea1a3b5ab8ca7a50f4296fb7fa05adc1
   UIView-Autolayout: 7c05eb666738eba682f686c2da236578177e2ebb
